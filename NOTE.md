@@ -46,27 +46,37 @@ Fixing **product engraving** so the PDP toggle works reliably and the **engravin
 
 ### What I did
 
-**Admin (you):**
+**Admin:**
 
 1. Created product metafield definition **`custom.knife_num`** (integer, storefront API access on).
 2. Set **`knife_num = 1`** on the test chef knife (One Line +$19; use piece count on knife sets).
 3. Assigned the correct **product theme template** (e.g. `x05z-zhen-series`) so the engraving block appears.
+4. Created the hidden **`engraving-fee`** product (not included in the slim seed’s ~40 products): handle **`engraving-fee`**, tag **`engraving-fee`**, option **Lines** with **One Line** ($19.00) and **Two Line** ($29.00), published to Online Store.
 
 **Theme (code):**
 
 1. `snippets/engraving-fee-config.liquid` — resolves **One Line** / **Two Line** variant IDs from `all_products['engraving-fee']` and exposes `window.getXinzuoEngravingFeeVariantIds()`.
 2. `layout/theme.liquid` — loads that config on every page.
-3. `assets/product-form.js` — adds fee using dynamic variant IDs (removed debug `console.log`).
+3. `assets/product-form.js` — adds fee using dynamic variant IDs; null-safe form/variant guards; removed debug `console.log`.
 4. `assets/cart-engraving.js`, `assets/component-cart-items.js` — same dynamic IDs for cart drawer engraving + qty sync.
-5. Cart Liquid (`cart-drawer`, `cart-summary`, `cart-products`, `cart-bubble`) — detect fee lines by **`item.product.handle == 'engraving-fee'`** instead of hardcoded variant IDs.
+5. Cart Liquid (`cart-drawer`, `cart-summary`, `cart-products`, `cart-bubble`) — detect fee lines by **`item.product.handle == 'engraving-fee'`** instead of hardcoded production variant IDs.
 6. `blocks/engraving-option.liquid` — `knife_num | default: 1` so JS never breaks when metafield is unset.
 7. `blocks/buy-buttons.liquid`, `blocks/add-to-cart.liquid` — engraving product guard uses **handle**, not production product ID.
+8. `assets/global.d.ts` — extended `Window` with engraving globals so TypeScript checks pass in the IDE.
 
-**Screenshots:** `before/task2.png` (or metafield before) → `after/task2.png` (fee line + Engraving Fee in totals).
+**Debugging note:** Before the `engraving-fee` product existed, `window.getXinzuoEngravingFeeVariantIds()` returned `{ productId: 0, oneLine: null, twoLine: null }`, so add-to-cart skipped the fee line silently. After creating the product and refreshing the PDP, variant IDs resolved and the fee posted correctly.
+
+**Verified on storefront (8" Chef Knife — Zhen Series, two-line engraving):**
+
+- Cart line properties: Line 1 / Line 2 engraving text.
+- **Engraving Fee — $29.00** in cart summary.
+- Total **$428.95** ($399.95 knife + $29 fee), matching xinzuo.com.au.
+
+**Screenshots:** `before/task2.png` (engraving UI missing or fee not in totals) → `after/task2.png` (two-line engraving + Engraving Fee in cart drawer).
 
 ### What I'd do next
 
-- Confirm **Products → Engraving Fee** exists with **One Line** ($19) and **Two Line** ($29) variants.
-- Re-test two-line engraving and cart qty changes (fee should stay in sync).
-- Task 3: remove remaining debug noise (`custom.js`, cart recommendations HTML comment).
+- Re-test **one-line** engraving ($19 fee) and **cart quantity changes** (fee qty should stay in sync via `component-cart-items.js`).
+- On future dev stores: ensure **`engraving-fee`** exists (slim seed omits it; full seed or manual admin create).
+- **Task 3:** remove remaining debug noise (`sticky-add-to-cart.js`, `custom.js`, cart recommendations HTML comment).
 - Task 4+: Shoplift guard, performance, SEO, accessibility.
