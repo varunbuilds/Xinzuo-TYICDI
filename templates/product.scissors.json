@@ -103,10 +103,6 @@
               "settings": {},
               "blocks": {}
             },
-            "google_youtube_automated_discounts_price_GDLwyi": {
-              "type": "shopify://apps/google-youtube/blocks/automated_discounts_price/14ec7bd0-ac77-49a9-9417-90752398bdff",
-              "settings": {}
-            },
             "afterpay_custom": {
               "type": "_product-afterpay",
               "settings": {},
@@ -294,17 +290,13 @@
                 "padding-inline-end": 0
               },
               "blocks": {
-                "aftersell_by_rokt_pdp_upsells_QJyVAK": {
-                  "type": "shopify://apps/rokt-aftersell/blocks/pdp-upsells/509ec35d-0632-4dfc-a105-fa799cd9d149",
-                  "settings": {}
-                },
                 "icon_MzNmna": {
                   "type": "icon",
                   "name": "t:names.icon",
                   "disabled": true,
                   "settings": {
                     "icon": "price_tag",
-                    "image_upload": "shopify://shop_images/Check_3a9c0588-3838-4617-870d-05b2301e1f84.png",
+                    "image_upload": "shopify://shop_images/Check_3a9c0588-3838-4617-870d-05b2301e1f84.webp",
                     "width": 24,
                     "link": "",
                     "open_in_new_tab": false
@@ -340,7 +332,6 @@
                 }
               },
               "block_order": [
-                "aftersell_by_rokt_pdp_upsells_QJyVAK",
                 "icon_MzNmna",
                 "text_DHhbFg"
               ]
@@ -391,7 +382,7 @@
                   "disabled": true,
                   "settings": {
                     "icon": "price_tag",
-                    "image_upload": "shopify://shop_images/Check_3a9c0588-3838-4617-870d-05b2301e1f84.png",
+                    "image_upload": "shopify://shop_images/Check_3a9c0588-3838-4617-870d-05b2301e1f84.webp",
                     "width": 24,
                     "link": "",
                     "open_in_new_tab": false
@@ -791,7 +782,6 @@
             "rating_custom",
             "detail_content_custom",
             "price_custom",
-            "google_youtube_automated_discounts_price_GDLwyi",
             "afterpay_custom",
             "variant_picker_qYHynj",
             "buy_buttons_eYQEYi",
@@ -964,20 +954,8 @@
     },
     "reviews_SC05": {
       "type": "_blocks",
-      "blocks": {
-        "judge_me_reviews_review_widget_cqfCPC": {
-          "type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
-          "settings": {
-            "review_data": "real_data",
-            "max_width": 1200,
-            "show_shop_reviews": false,
-            "empty_state": "empty_widget"
-          }
-        }
-      },
-      "block_order": [
-        "judge_me_reviews_review_widget_cqfCPC"
-      ],
+      "blocks": {},
+      "block_order": [],
       "settings": {
         "content_direction": "column",
         "vertical_on_mobile": true,

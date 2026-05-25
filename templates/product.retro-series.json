@@ -103,10 +103,6 @@
               "settings": {},
               "blocks": {}
             },
-            "google_youtube_automated_discounts_price_VncVM9": {
-              "type": "shopify://apps/google-youtube/blocks/automated_discounts_price/14ec7bd0-ac77-49a9-9417-90752398bdff",
-              "settings": {}
-            },
             "afterpay_custom": {
               "type": "_product-afterpay",
               "settings": {},
@@ -233,11 +229,11 @@
               "type": "_product-detail-icons",
               "settings": {
                 "show_detail_icons": true,
-                "detail_icon1": "shopify://shop_images/StackSimple.png",
+                "detail_icon1": "shopify://shop_images/StackSimple.webp",
                 "detail_info1": "<p><strong>3-Layer Forged</strong></p><p>Composite</p>",
-                "detail_icon2": "shopify://shop_images/Hammer.png",
+                "detail_icon2": "shopify://shop_images/Hammer.webp",
                 "detail_info2": "<p><strong>~60 ±1 HRC</strong></p><p>Blade Hardness</p>",
-                "detail_icon3": "shopify://shop_images/PuzzlePiece.png",
+                "detail_icon3": "shopify://shop_images/PuzzlePiece.webp",
                 "detail_info3": "<p>10Cr15CoMoV</p><p>VG10 equivalent</p>"
               },
               "blocks": {}
@@ -301,7 +297,7 @@
                   "name": "t:names.icon",
                   "settings": {
                     "icon": "price_tag",
-                    "image_upload": "shopify://shop_images/Check.png",
+                    "image_upload": "shopify://shop_images/Check.webp",
                     "width": 24,
                     "link": "",
                     "open_in_new_tab": false
@@ -386,7 +382,7 @@
                   "name": "t:names.icon",
                   "settings": {
                     "icon": "price_tag",
-                    "image_upload": "shopify://shop_images/Check.png",
+                    "image_upload": "shopify://shop_images/Check.webp",
                     "width": 24,
                     "link": "",
                     "open_in_new_tab": false
@@ -471,7 +467,7 @@
                   "name": "t:names.icon",
                   "settings": {
                     "icon": "price_tag",
-                    "image_upload": "shopify://shop_images/Check.png",
+                    "image_upload": "shopify://shop_images/Check.webp",
                     "width": 24,
                     "link": "",
                     "open_in_new_tab": false
@@ -870,7 +866,6 @@
             "rating_custom",
             "detail_content_custom",
             "price_custom",
-            "google_youtube_automated_discounts_price_VncVM9",
             "afterpay_custom",
             "variant_picker_R3rGDr",
             "buy_buttons_eYQEYi",
@@ -908,28 +903,28 @@
         "icon_7jadN9": {
           "type": "icon",
           "settings": {
-            "image": "shopify://shop_images/Square_3.png",
+            "image": "shopify://shop_images/Square_3.webp",
             "content": "<p><strong>Carbon Hardness</strong><br/>This is the \"stays sharp\" secret. The high-carbon core holds a razor edge for months, not weeks.</p>"
           }
         },
         "icon_mxe7iw": {
           "type": "icon",
           "settings": {
-            "image": "shopify://shop_images/Square_4.png",
+            "image": "shopify://shop_images/Square_4.webp",
             "content": "<p><strong>Cobalt Stability</strong><br/>This is the pro-level support crew. It adds serious strength and wear-resistance, keeping the blade stable under heavy use.</p>"
           }
         },
         "icon_NxVM3T": {
           "type": "icon",
           "settings": {
-            "image": "shopify://shop_images/Square_1.png",
+            "image": "shopify://shop_images/Square_1.webp",
             "content": "<p><strong>Molybdenum Toughness</strong><br/>This is the \"anti-chip\" ingredient. It adds serious toughness so your blade isn't brittle. All the performance, none of the panic.</p>"
           }
         },
         "icon_GWBWPm": {
           "type": "icon",
           "settings": {
-            "image": "shopify://shop_images/Square_2.png",
+            "image": "shopify://shop_images/Square_2.webp",
             "content": "<p><strong>Vanadium Sharpness</strong><br/>This helps create a finer, tighter steel structure. In human terms? It lets the blade take a truly surgical edge and hold it.</p>"
           }
         },
@@ -970,7 +965,7 @@
       "name": "Product Info",
       "settings": {
         "width": "page",
-        "image": "shopify://shop_images/03.jpg",
+        "image": "shopify://shop_images/03.webp",
         "header_type": "left",
         "heading": "",
         "content": "<p>It's all about <strong>smart performance</strong>. The high-carbon core holds a razor edge, while the alloys keep it <strong>tough and chip-free</strong>. </p>",
@@ -1014,7 +1009,7 @@
         "block_type": "text",
         "heading_footer": "This is the sweet spot. You get a hard, surgical core that stays sharp, protected by tougher, more flexible steel. It's pro-level performance, without the panic.",
         "image_video": "image",
-        "img": "shopify://shop_images/04_4d396ad7-d0c9-4a44-b1d7-c63bca208a2d.png",
+        "img": "shopify://shop_images/04_4d396ad7-d0c9-4a44-b1d7-c63bca208a2d.webp",
         "color_scheme": "scheme-5",
         "footer_state": "hidden",
         "footer_type": "first",
@@ -1040,7 +1035,7 @@
         "block_type": "text",
         "heading_footer": "Forged with a 15° edge, delivering razor-sharp accuracy, strength, and effortless control for chefs and home cooks.",
         "image_video": "image",
-        "img": "shopify://shop_images/07.png",
+        "img": "shopify://shop_images/07.webp",
         "color_scheme": "scheme-5",
         "footer_state": "hidden",
         "footer_type": "first",
@@ -1060,7 +1055,7 @@
           "type": "block",
           "settings": {
             "heading": "",
-            "image": "shopify://shop_images/Icons_2.png",
+            "image": "shopify://shop_images/Icons_2.webp",
             "content": "<p><strong>3-Layer Composite Build</strong><br/><br/>This is our modern build. A hard 10Cr15CoMoV core is protected by tougher steel, giving you pro-level sharpness <em>and</em> chip-resistant durability.</p>"
           }
         },
@@ -1068,7 +1063,7 @@
           "type": "block",
           "settings": {
             "heading": "",
-            "image": "shopify://shop_images/Icons_3.png",
+            "image": "shopify://shop_images/Icons_3.webp",
             "content": "<p><strong>Vacuum Heat Treatment</strong><br/><br/>This is how we hit 60 HRC hardness *without* making the steel brittle. You get pro-level sharpness, minus the \"oops, it chipped\" panic.</p>"
           }
         },
@@ -1076,7 +1071,7 @@
           "type": "block",
           "settings": {
             "heading": "",
-            "image": "shopify://shop_images/Icons_4.png",
+            "image": "shopify://shop_images/Icons_4.webp",
             "content": "<p><strong>Refined by Hand</strong><br/><br/>This is our \"no-shortcuts\" step. We hand-polish and refine every angle to ensure a perfect edge, a balanced feel, and that artisan look.</p>"
           }
         }
@@ -1096,7 +1091,7 @@
         "block_type": "icon",
         "heading_footer": "We use a precise Vacuum Heat Treatment to create a pro-level blade. This is how it gets incredibly sharp, but stays tough and chip-resistant.",
         "image_video": "image",
-        "img": "shopify://shop_images/product-pm8s-006.png",
+        "img": "shopify://shop_images/product-pm8s-006.webp",
         "color_scheme": "scheme-5",
         "footer_state": "hidden",
         "footer_type": "first",
@@ -1115,7 +1110,7 @@
       "settings": {
         "width": "page",
         "heading": "The Pro Specs",
-        "img": "shopify://shop_images/06_816a66cf-c06c-4041-ae75-7b43640897f6.png",
+        "img": "shopify://shop_images/06_816a66cf-c06c-4041-ae75-7b43640897f6.webp",
         "img_text": "Artisan Hammered Finish",
         "info_header1": "Pro-Level Hardness",
         "info_content1": "60 ±1 HRC",
@@ -1139,7 +1134,7 @@
         "block_type": "text",
         "heading_footer": "",
         "image_video": "image",
-        "img": "shopify://shop_images/product-pm8s-001.png",
+        "img": "shopify://shop_images/product-pm8s-001.webp",
         "color_scheme": "scheme-5",
         "footer_state": "visible",
         "footer_type": "second",
@@ -1164,7 +1159,6 @@
         "block_type": "text",
         "heading_footer": "",
         "image_video": "video",
-        "video": "shopify://files/videos/pm8s-001.mp4",
         "color_scheme": "scheme-5",
         "footer_state": "visible",
         "footer_type": "third",
@@ -1173,9 +1167,9 @@
         "padding_top": 80,
         "padding_bottom": 80,
         "additional_footer": false,
-        "additional_image1": "shopify://shop_images/Icons.png",
+        "additional_image1": "shopify://shop_images/Icons.webp",
         "additional_content1": "<p>The longer retention of the Retro Series blade ensures chefs <strong>spend less time sharpening and more time cooking</strong>, with reliable sharpness that lasts through demanding, daily professional use.</p>",
-        "additional_image2": "shopify://shop_images/Icons_1.png",
+        "additional_image2": "shopify://shop_images/Icons_1.webp",
         "additional_content2": "<p>The artistic design of Retro Series is revealed in every detail—<strong>from the Damascus finish to wood-and-horn handles</strong>—turning a high-performance knife into a statement of culinary elegance.</p>"
       }
     },
@@ -1200,11 +1194,11 @@
           "type": "block",
           "settings": {
             "title": "Excellence",
-            "image1": "shopify://shop_images/Icons_4ca737a8-c2c7-4503-8394-2e8464fdc839.png",
+            "image1": "shopify://shop_images/Icons_4ca737a8-c2c7-4503-8394-2e8464fdc839.webp",
             "content1": "<p>Forged with <strong>3-layered VG10-level harder steel</strong>, the blade delivers superior sharpness, edge durability, and long-lasting cutting performance.</p>",
-            "image2": "shopify://shop_images/Icons_1_3fd4b30f-650d-4d53-b1dc-762b4e3307c0.png",
+            "image2": "shopify://shop_images/Icons_1_3fd4b30f-650d-4d53-b1dc-762b4e3307c0.webp",
             "content2": "<p>An <strong>anti-stick finish</strong> combined with an <strong>ergonomic grip</strong> ensures smooth food release, comfortable handling, and safe, efficient control.</p>",
-            "image3": "shopify://shop_images/Icons_2_a361cc00-44f9-4c96-860d-af10d34d43b7.png",
+            "image3": "shopify://shop_images/Icons_2_a361cc00-44f9-4c96-860d-af10d34d43b7.webp",
             "content3": "<p><strong>Advanced vacuum heat-treatment </strong>enhances blade hardness, retention, and resili-ence, ensuring reliable perfor-mance in professional use.</p>"
           }
         }
@@ -1225,20 +1219,8 @@
     },
     "1761711495286eecc9": {
       "type": "_blocks",
-      "blocks": {
-        "judge_me_reviews_review_widget_pMDhTT": {
-          "type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
-          "settings": {
-            "review_data": "real_data",
-            "max_width": 1200,
-            "show_shop_reviews": false,
-            "empty_state": "empty_widget"
-          }
-        }
-      },
-      "block_order": [
-        "judge_me_reviews_review_widget_pMDhTT"
-      ],
+      "blocks": {},
+      "block_order": [],
       "settings": {
         "content_direction": "column",
         "vertical_on_mobile": true,
@@ -1273,7 +1255,7 @@
       "name": "Product Description",
       "settings": {
         "width": "page",
-        "image": "shopify://shop_images/Frame_464.png",
+        "image": "shopify://shop_images/Frame_464.webp",
         "heading": "<h2>Respected for Precision and<br/>Timeless Craft</h2>",
         "info1": "<p>Xinzuo’s four series—Supreme, Retro, Mo, and Lan—are crafted to serve every kitchen. From everyday durability to refined Damascus luxury, each knife combines sharpness, toughness, and timeless design shaped by forging expertise.</p>",
         "info2": "<p>With a philosophy blending comfort, balance, and reliability, our knives do more than cut—they inspire confidence. Each series is built to solve kitchen challenges with durability, edge retention, and elegance that lasts a lifetime.</p>",
@@ -1310,7 +1292,7 @@
           "settings": {
             "title": "XINZUO-PM8S",
             "content": "Utility, Chef, and Santoku Knife Set",
-            "image": "shopify://shop_images/03_493adb3d-ca29-4ad8-a630-5d4cc98a2b71.png",
+            "image": "shopify://shop_images/03_493adb3d-ca29-4ad8-a630-5d4cc98a2b71.webp",
             "image_position": "right"
           }
         }
@@ -1700,7 +1682,7 @@
         "content": "<p>The perfect balance of sharpness, comfort, and design.</p>",
         "button": "Step Into Excellence",
         "url": "shopify://collections",
-        "img": "shopify://shop_images/Rectangle_267.png",
+        "img": "shopify://shop_images/Rectangle_267.webp",
         "color_scheme": "scheme-5"
       }
     }

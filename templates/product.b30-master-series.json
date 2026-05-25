@@ -103,10 +103,6 @@
               "settings": {},
               "blocks": {}
             },
-            "google_youtube_automated_discounts_price_X8WAAQ": {
-              "type": "shopify://apps/google-youtube/blocks/automated_discounts_price/14ec7bd0-ac77-49a9-9417-90752398bdff",
-              "settings": {}
-            },
             "afterpay_custom": {
               "type": "_product-afterpay",
               "settings": {},
@@ -234,11 +230,11 @@
               "type": "_product-detail-icons",
               "settings": {
                 "show_detail_icons": true,
-                "detail_icon1": "shopify://shop_images/Angle.png",
+                "detail_icon1": "shopify://shop_images/Angle.webp",
                 "detail_info1": "<p><strong>15° Angle</strong></p><p>Razor Sharp</p>",
-                "detail_icon2": "shopify://shop_images/Triangle.png",
+                "detail_icon2": "shopify://shop_images/Triangle.webp",
                 "detail_info2": "<p><strong>60±2 HRC</strong></p><p>Professional Hardness</p>",
-                "detail_icon3": "shopify://shop_images/PuzzlePiece.png",
+                "detail_icon3": "shopify://shop_images/PuzzlePiece.webp",
                 "detail_info3": "<p><strong>67 Layers</strong></p><p>Damascus Steel</p>"
               },
               "blocks": {}
@@ -302,7 +298,7 @@
                   "name": "t:names.icon",
                   "settings": {
                     "icon": "price_tag",
-                    "image_upload": "shopify://shop_images/Check_3a9c0588-3838-4617-870d-05b2301e1f84.png",
+                    "image_upload": "shopify://shop_images/Check_3a9c0588-3838-4617-870d-05b2301e1f84.webp",
                     "width": 24,
                     "link": "",
                     "open_in_new_tab": false
@@ -387,7 +383,7 @@
                   "name": "t:names.icon",
                   "settings": {
                     "icon": "price_tag",
-                    "image_upload": "shopify://shop_images/Check_3a9c0588-3838-4617-870d-05b2301e1f84.png",
+                    "image_upload": "shopify://shop_images/Check_3a9c0588-3838-4617-870d-05b2301e1f84.webp",
                     "width": 24,
                     "link": "",
                     "open_in_new_tab": false
@@ -472,7 +468,7 @@
                   "name": "t:names.icon",
                   "settings": {
                     "icon": "price_tag",
-                    "image_upload": "shopify://shop_images/Check_3a9c0588-3838-4617-870d-05b2301e1f84.png",
+                    "image_upload": "shopify://shop_images/Check_3a9c0588-3838-4617-870d-05b2301e1f84.webp",
                     "width": 24,
                     "link": "",
                     "open_in_new_tab": false
@@ -871,7 +867,6 @@
             "rating_custom",
             "detail_content_custom",
             "price_custom",
-            "google_youtube_automated_discounts_price_X8WAAQ",
             "afterpay_custom",
             "variant_picker_qYHynj",
             "buy_buttons_eYQEYi",
@@ -939,21 +934,21 @@
         "icon_7jadN9": {
           "type": "icon",
           "settings": {
-            "image": "shopify://shop_images/Square.png",
+            "image": "shopify://shop_images/Square.webp",
             "content": "<p><strong>High-Carbon Core</strong><br/>1.0% carbon content in the 10Cr15CoMoV core delivers excellent hardness and long-lasting edge retention between sharpenings.</p>"
           }
         },
         "icon_mxe7iw": {
           "type": "icon",
           "settings": {
-            "image": "shopify://shop_images/Square_1.png",
+            "image": "shopify://shop_images/Square_1.webp",
             "content": "<p><strong>15% Chromium</strong><br/>High chromium content provides strong corrosion resistance, keeping your blade protected against moisture and acidic foods.</p>"
           }
         },
         "icon_NxVM3T": {
           "type": "icon",
           "settings": {
-            "image": "shopify://shop_images/Square_2.png",
+            "image": "shopify://shop_images/Square_2.webp",
             "content": "<p><strong>67-Layer Damascus</strong><br/>The high-carbon core is wrapped in 67 alternating layers of steel, creating a protective cladding with a distinctive, beautiful pattern.</p>"
           }
         },
@@ -993,7 +988,7 @@
       "name": "Product Info",
       "settings": {
         "width": "page",
-        "image": "shopify://shop_images/8-chef-knife-master-series-b30-6799333.jpg",
+        "image": "shopify://shop_images/8-chef-knife-master-series-b30-6799333.webp",
         "header_type": "left",
         "heading": "<h2>67 layers of Damascus, masterfully forged</h2>",
         "content": "<p>The Master Series features a 10Cr15CoMoV high-carbon core wrapped in 67 layers of Damascus steel, hardened to 60 HRC. This layered construction delivers exceptional edge retention and corrosion resistance while creating the distinctive Damascus pattern that makes every blade a work of art.</p>",

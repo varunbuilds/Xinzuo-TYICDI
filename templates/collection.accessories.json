@@ -149,7 +149,6 @@
       "name": "Collection Video",
       "settings": {
         "width": "full",
-        "video": "shopify://files/videos/x02-001.mp4",
         "color_scheme": "scheme-5"
       }
     },

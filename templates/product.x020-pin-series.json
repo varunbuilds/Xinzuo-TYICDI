@@ -103,10 +103,6 @@
               "settings": {},
               "blocks": {}
             },
-            "google_youtube_automated_discounts_price_Bg3aRp": {
-              "type": "shopify://apps/google-youtube/blocks/automated_discounts_price/14ec7bd0-ac77-49a9-9417-90752398bdff",
-              "settings": {}
-            },
             "afterpay_custom": {
               "type": "_product-afterpay",
               "settings": {},
@@ -232,11 +228,11 @@
               "type": "_product-detail-icons",
               "settings": {
                 "show_detail_icons": true,
-                "detail_icon1": "shopify://shop_images/Angle.png",
+                "detail_icon1": "shopify://shop_images/Angle.webp",
                 "detail_info1": "<p><strong>15° Angle</strong></p><p>Razor Sharp</p>",
-                "detail_icon2": "shopify://shop_images/Triangle.png",
+                "detail_icon2": "shopify://shop_images/Triangle.webp",
                 "detail_info2": "<p><strong>60 HRC</strong></p><p>Professional Hardness</p>",
-                "detail_icon3": "shopify://shop_images/PuzzlePiece.png",
+                "detail_icon3": "shopify://shop_images/PuzzlePiece.webp",
                 "detail_info3": "<p><strong>3-Layer</strong></p><p>Composite Steel</p>"
               },
               "blocks": {}
@@ -300,7 +296,7 @@
                   "disabled": true,
                   "settings": {
                     "icon": "price_tag",
-                    "image_upload": "shopify://shop_images/Check_3a9c0588-3838-4617-870d-05b2301e1f84.png",
+                    "image_upload": "shopify://shop_images/Check_3a9c0588-3838-4617-870d-05b2301e1f84.webp",
                     "width": 24,
                     "link": "",
                     "open_in_new_tab": false
@@ -700,7 +696,6 @@
             "rating_custom",
             "detail_content_custom",
             "price_custom",
-            "google_youtube_automated_discounts_price_Bg3aRp",
             "afterpay_custom",
             "variant_picker_qYHynj",
             "buy_buttons_eYQEYi",
@@ -736,21 +731,21 @@
         "icon_7jadN9": {
           "type": "icon",
           "settings": {
-            "image": "shopify://shop_images/Square.png",
+            "image": "shopify://shop_images/Square.webp",
             "content": "<p><strong>High-Carbon Core</strong><br/>1.0% carbon content in the 10Cr15CoMoV core delivers excellent hardness and long-lasting edge retention between sharpenings.</p>"
           }
         },
         "icon_mxe7iw": {
           "type": "icon",
           "settings": {
-            "image": "shopify://shop_images/Square_1.png",
+            "image": "shopify://shop_images/Square_1.webp",
             "content": "<p><strong>15% Chromium</strong><br/>High chromium content provides strong corrosion resistance, keeping the blade stain-free and low-maintenance in daily kitchen use.</p>"
           }
         },
         "icon_NxVM3T": {
           "type": "icon",
           "settings": {
-            "image": "shopify://shop_images/Square_2.png",
+            "image": "shopify://shop_images/Square_2.webp",
             "content": "<p><strong>3-Layer Composite</strong><br/>San-mai construction — a hard 10Cr15CoMoV core clad in tough stainless steel — combines razor sharpness with shock absorption and durability.</p>"
           }
         },
@@ -790,7 +785,7 @@
       "name": "Product Info",
       "settings": {
         "width": "page",
-        "image": "shopify://shop_images/8-chef-knife-pin-series-x020-4936499.jpg",
+        "image": "shopify://shop_images/8-chef-knife-pin-series-x020-4936499.webp",
         "header_type": "left",
         "heading": "<h2>Premium steel, honest construction</h2>",
         "content": "<p>The Pin Series uses the same 10Cr15CoMoV core steel found in Xinzuo's Damascus lines — equivalent to Japanese VG10 — in a clean 3-layer (san-mai) construction. You get identical cutting performance without the decorative Damascus cladding.</p>",
@@ -902,20 +897,8 @@
     },
     "1761703971f48000a9": {
       "type": "_blocks",
-      "blocks": {
-        "judge_me_reviews_review_widget_cqfCPC": {
-          "type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
-          "settings": {
-            "review_data": "real_data",
-            "max_width": 1200,
-            "show_shop_reviews": false,
-            "empty_state": "empty_widget"
-          }
-        }
-      },
-      "block_order": [
-        "judge_me_reviews_review_widget_cqfCPC"
-      ],
+      "blocks": {},
+      "block_order": [],
       "settings": {
         "content_direction": "column",
         "vertical_on_mobile": true,
@@ -1289,7 +1272,7 @@
         "content": "<p>The perfect balance of sharpness, comfort, and design.</p>",
         "button": "Step Into Excellence",
         "url": "shopify://collections",
-        "img": "shopify://shop_images/Rectangle_267.png",
+        "img": "shopify://shop_images/Rectangle_267.webp",
         "color_scheme": "scheme-5"
       }
     },

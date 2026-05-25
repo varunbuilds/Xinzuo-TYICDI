@@ -103,10 +103,6 @@
               "settings": {},
               "blocks": {}
             },
-            "google_youtube_automated_discounts_price_mWWLBr": {
-              "type": "shopify://apps/google-youtube/blocks/automated_discounts_price/14ec7bd0-ac77-49a9-9417-90752398bdff",
-              "settings": {}
-            },
             "afterpay_custom": {
               "type": "_product-afterpay",
               "settings": {},
@@ -232,11 +228,11 @@
               "type": "_product-detail-icons",
               "settings": {
                 "show_detail_icons": true,
-                "detail_icon1": "shopify://shop_images/Angle.png",
+                "detail_icon1": "shopify://shop_images/Angle.webp",
                 "detail_info1": "<p><strong>15° Angle</strong></p><p>Razor Sharp</p>",
-                "detail_icon2": "shopify://shop_images/Triangle.png",
+                "detail_icon2": "shopify://shop_images/Triangle.webp",
                 "detail_info2": "<p><strong>Premium Steel</strong></p><p>Built to Perform</p>",
-                "detail_icon3": "shopify://shop_images/PuzzlePiece.png",
+                "detail_icon3": "shopify://shop_images/PuzzlePiece.webp",
                 "detail_info3": "<p><strong>Heat Treated</strong></p><p>Precision Hardened</p>"
               },
               "blocks": {}
@@ -294,18 +290,13 @@
                 "padding-inline-end": 0
               },
               "blocks": {
-                "aftersell_by_rokt_pdp_upsells_QJyVAK": {
-                  "type": "shopify://apps/rokt-aftersell/blocks/pdp-upsells/509ec35d-0632-4dfc-a105-fa799cd9d149",
-                  "disabled": true,
-                  "settings": {}
-                },
                 "icon_MzNmna": {
                   "type": "icon",
                   "name": "t:names.icon",
                   "disabled": true,
                   "settings": {
                     "icon": "price_tag",
-                    "image_upload": "shopify://shop_images/Check_3a9c0588-3838-4617-870d-05b2301e1f84.png",
+                    "image_upload": "shopify://shop_images/Check_3a9c0588-3838-4617-870d-05b2301e1f84.webp",
                     "width": 24,
                     "link": "",
                     "open_in_new_tab": false
@@ -341,7 +332,6 @@
                 }
               },
               "block_order": [
-                "aftersell_by_rokt_pdp_upsells_QJyVAK",
                 "icon_MzNmna",
                 "text_DHhbFg"
               ]
@@ -392,7 +382,7 @@
                   "disabled": true,
                   "settings": {
                     "icon": "price_tag",
-                    "image_upload": "shopify://shop_images/Check_3a9c0588-3838-4617-870d-05b2301e1f84.png",
+                    "image_upload": "shopify://shop_images/Check_3a9c0588-3838-4617-870d-05b2301e1f84.webp",
                     "width": 24,
                     "link": "",
                     "open_in_new_tab": false
@@ -792,7 +782,6 @@
             "rating_custom",
             "detail_content_custom",
             "price_custom",
-            "google_youtube_automated_discounts_price_mWWLBr",
             "afterpay_custom",
             "variant_picker_qYHynj",
             "buy_buttons_eYQEYi",
@@ -829,21 +818,21 @@
         "icon_7jadN9": {
           "type": "icon",
           "settings": {
-            "image": "shopify://shop_images/Square.png",
+            "image": "shopify://shop_images/Square.webp",
             "content": "<p><strong>Premium Steel</strong><br/>Every Xinzuo series uses carefully selected steel — from German 1.4116 stainless to Japanese Damascus and powder steel — chosen for the job it needs to do.</p>"
           }
         },
         "icon_mxe7iw": {
           "type": "icon",
           "settings": {
-            "image": "shopify://shop_images/Square_1.png",
+            "image": "shopify://shop_images/Square_1.webp",
             "content": "<p><strong>Precision Ground</strong><br/>Each blade is ground to a 15° cutting angle per side, delivering razor sharpness that glides through ingredients with minimal effort.</p>"
           }
         },
         "icon_NxVM3T": {
           "type": "icon",
           "settings": {
-            "image": "shopify://shop_images/Square_2.png",
+            "image": "shopify://shop_images/Square_2.webp",
             "content": "<p><strong>Heat Treated</strong><br/>Vacuum heat treatment and cryogenic processing ensure optimal hardness and edge retention across every knife in the range.</p>"
           }
         },
@@ -883,7 +872,7 @@
       "name": "Product Info",
       "settings": {
         "width": "page",
-        "image": "shopify://shop_images/8-chef-knife-pin-series-x020-4936499.jpg",
+        "image": "shopify://shop_images/8-chef-knife-pin-series-x020-4936499.webp",
         "header_type": "left",
         "heading": "<h2>Crafted in Yangjiang, the Capital of Knives</h2>",
         "content": "<p>Every Xinzuo knife is forged in Yangjiang, China — a city with over 1,400 years of blade-making tradition. Using premium steels sourced from Japan, Germany, and China, each blade undergoes vacuum heat treatment and precision grinding to deliver professional-grade performance.</p>",
@@ -983,20 +972,8 @@
     },
     "1761703971f48000a9": {
       "type": "_blocks",
-      "blocks": {
-        "judge_me_reviews_review_widget_cqfCPC": {
-          "type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
-          "settings": {
-            "review_data": "real_data",
-            "max_width": 1200,
-            "show_shop_reviews": false,
-            "empty_state": "empty_widget"
-          }
-        }
-      },
-      "block_order": [
-        "judge_me_reviews_review_widget_cqfCPC"
-      ],
+      "blocks": {},
+      "block_order": [],
       "settings": {
         "content_direction": "column",
         "vertical_on_mobile": true,
@@ -1038,7 +1015,7 @@
       "name": "Product Description",
       "settings": {
         "width": "page",
-        "image": "shopify://shop_images/Frame_464.png",
+        "image": "shopify://shop_images/Frame_464.webp",
         "heading": "<h2>Respected for Precision and<br/>Timeless Craft</h2>",
         "info1": "<p>Xinzuo's four series—Supreme, Retro, Mo, and Lan—are crafted to serve every kitchen. From everyday durability to refined Damascus luxury, each knife combines sharpness, toughness, and timeless design shaped by forging expertise.</p>",
         "info2": "<p>With a philosophy blending comfort, balance, and reliability, our knives do more than cut—they inspire confidence. Each series is built to solve kitchen challenges with durability, edge retention, and elegance that lasts a lifetime.</p>",
@@ -1410,7 +1387,7 @@
         "content": "<p>The perfect balance of sharpness, comfort, and design.</p>",
         "button": "Step Into Excellence",
         "url": "shopify://collections",
-        "img": "shopify://shop_images/Rectangle_267.png",
+        "img": "shopify://shop_images/Rectangle_267.webp",
         "color_scheme": "scheme-5"
       }
     },

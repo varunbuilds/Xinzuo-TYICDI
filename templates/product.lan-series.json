@@ -103,10 +103,6 @@
               "settings": {},
               "blocks": {}
             },
-            "google_youtube_automated_discounts_price_LKNkC7": {
-              "type": "shopify://apps/google-youtube/blocks/automated_discounts_price/14ec7bd0-ac77-49a9-9417-90752398bdff",
-              "settings": {}
-            },
             "afterpay_custom": {
               "type": "_product-afterpay",
               "settings": {},
@@ -235,11 +231,11 @@
               "type": "_product-detail-icons",
               "settings": {
                 "show_detail_icons": true,
-                "detail_icon1": "shopify://shop_images/StackSimple.png",
+                "detail_icon1": "shopify://shop_images/StackSimple.webp",
                 "detail_info1": "<p><strong>73-Layer Damascus</strong></p><p>Composite</p>",
-                "detail_icon2": "shopify://shop_images/Hammer.png",
+                "detail_icon2": "shopify://shop_images/Hammer.webp",
                 "detail_info2": "<p><strong>62-64 HRC</strong></p><p>Extreme Hardness</p>",
-                "detail_icon3": "shopify://shop_images/PuzzlePiece.png",
+                "detail_icon3": "shopify://shop_images/PuzzlePiece.webp",
                 "detail_info3": "<p><strong>14Cr14MoVNb</strong></p><p>Powder Steel Core</p>"
               },
               "blocks": {}
@@ -303,7 +299,7 @@
                   "name": "t:names.icon",
                   "settings": {
                     "icon": "price_tag",
-                    "image_upload": "shopify://shop_images/Check_3a9c0588-3838-4617-870d-05b2301e1f84.png",
+                    "image_upload": "shopify://shop_images/Check_3a9c0588-3838-4617-870d-05b2301e1f84.webp",
                     "width": 24,
                     "link": "",
                     "open_in_new_tab": false
@@ -388,7 +384,7 @@
                   "name": "t:names.icon",
                   "settings": {
                     "icon": "price_tag",
-                    "image_upload": "shopify://shop_images/Check_3a9c0588-3838-4617-870d-05b2301e1f84.png",
+                    "image_upload": "shopify://shop_images/Check_3a9c0588-3838-4617-870d-05b2301e1f84.webp",
                     "width": 24,
                     "link": "",
                     "open_in_new_tab": false
@@ -473,7 +469,7 @@
                   "name": "t:names.icon",
                   "settings": {
                     "icon": "price_tag",
-                    "image_upload": "shopify://shop_images/Check_3a9c0588-3838-4617-870d-05b2301e1f84.png",
+                    "image_upload": "shopify://shop_images/Check_3a9c0588-3838-4617-870d-05b2301e1f84.webp",
                     "width": 24,
                     "link": "",
                     "open_in_new_tab": false
@@ -872,7 +868,6 @@
             "rating_custom",
             "detail_content_custom",
             "price_custom",
-            "google_youtube_automated_discounts_price_LKNkC7",
             "afterpay_custom",
             "variant_picker_nfG9H7",
             "buy_buttons_BPWXER",
@@ -910,42 +905,42 @@
         "icon_7jadN9": {
           "type": "icon",
           "settings": {
-            "image": "shopify://shop_images/Square_3.png",
+            "image": "shopify://shop_images/Square_3.webp",
             "content": "<p><strong>Carbon Hardness</strong><br>This is the \"stays sharp\" secret. The high-carbon core holds a razor edge for months, not weeks.</p>"
           }
         },
         "icon_mxe7iw": {
           "type": "icon",
           "settings": {
-            "image": "shopify://shop_images/Square.png",
+            "image": "shopify://shop_images/Square.webp",
             "content": "<p><strong>Chromium Protection</strong><br>This is your defense against rust and stains. It keeps the blade clean and hassle-free, even in a busy, wet kitchen.</p>"
           }
         },
         "icon_NxVM3T": {
           "type": "icon",
           "settings": {
-            "image": "shopify://shop_images/Square_1.png",
+            "image": "shopify://shop_images/Square_1.webp",
             "content": "<p><strong>Molybdenum Toughness</strong><br>This is the \"anti-chip\" ingredient. It adds serious toughness so your blade isn't brittle. All the performance, none of the panic.</p>"
           }
         },
         "icon_GWBWPm": {
           "type": "icon",
           "settings": {
-            "image": "shopify://shop_images/Square_2.png",
+            "image": "shopify://shop_images/Square_2.webp",
             "content": "<p><strong>Vanadium Sharpness</strong><br>This helps create a finer, tighter steel structure. In human terms? It lets the blade take a truly surgical edge and hold it.</p>"
           }
         },
         "icon_4HNknW": {
           "type": "icon",
           "settings": {
-            "image": "shopify://shop_images/Square_4.png",
+            "image": "shopify://shop_images/Square_4.webp",
             "content": "<p><strong>Cobalt Stability</strong><br>This is the pro-level support crew. It adds serious strength and wear-resistance, keeping the blade stable under heavy use.</p>"
           }
         },
         "icon_QbUatt": {
           "type": "icon",
           "settings": {
-            "image": "shopify://shop_images/Square_32275f87-7708-4c45-9407-e6c3fcd0f2a5.png",
+            "image": "shopify://shop_images/Square_32275f87-7708-4c45-9407-e6c3fcd0f2a5.webp",
             "content": "<p><strong>Niobium Performance</strong><br>This is the flagship's secret weapon. It lets us push the hardness to the extreme for incredible edge retention, but keeps the blade tough enough for real kitchen work.</p>"
           }
         },
@@ -997,7 +992,7 @@
       "name": "Product Info",
       "settings": {
         "width": "page",
-        "image": "shopify://shop_images/image_128_b35a7974-cbcd-440f-bfdf-e777b9df4fba.png",
+        "image": "shopify://shop_images/image_128_b35a7974-cbcd-440f-bfdf-e777b9df4fba.webp",
         "header_type": "left",
         "heading": "<h2>Every element chosen with purpose</h2>",
         "content": "<p>This is our flagship steel for a reason. Powder metallurgy creates an incredibly fine, dense blade structure that <strong>takes a surgical edge and holds it longer than anything else we make.</strong> </p>",
@@ -1022,7 +1017,7 @@
         "block_position": "side",
         "heading_footer": "Its fine 15° edge, stabilized by niobium alloying, holds razor keenness longer — enduring even heavy kitchen use.",
         "image_video": "image",
-        "img": "shopify://shop_images/product-b37-002.png",
+        "img": "shopify://shop_images/product-b37-002.webp",
         "image_width": 0,
         "image_height": 440,
         "image_width_mobile": 0,
@@ -1051,7 +1046,7 @@
         "block_position": "side",
         "heading_footer": "",
         "image_video": "image",
-        "img": "shopify://shop_images/image_259_560500f0-1175-4a34-8b00-2615c772f865.png",
+        "img": "shopify://shop_images/image_259_560500f0-1175-4a34-8b00-2615c772f865.webp",
         "image_width": 800,
         "image_height": 590,
         "image_width_mobile": 0,
@@ -1063,9 +1058,9 @@
         "padding_top": 80,
         "padding_bottom": 80,
         "additional_footer": true,
-        "additional_image1": "shopify://shop_images/Icons_13.png",
+        "additional_image1": "shopify://shop_images/Icons_13.webp",
         "additional_content1": "<p>The blade's geometry is <strong>obsessively designed</strong>. A gentle curve for that smooth rock-chop, and a fine tip for precision work. It’s your go-to for everything.</p>",
-        "additional_image2": "shopify://shop_images/Icons_14.png",
+        "additional_image2": "shopify://shop_images/Icons_14.webp",
         "additional_content2": "<p>Less resistance means <strong>cleaner cuts and better-looking food</strong>. It’s the kind of upgrade that instantly makes you a more confident cook.</p>"
       }
     },
@@ -1098,7 +1093,7 @@
         "heading_title": "",
         "heading_content": "<h2>A Curve Mastered</h2>",
         "header_type": "center",
-        "img": "shopify://shop_images/04_65f8d085-4069-4831-ad65-8966bdc589dc.png",
+        "img": "shopify://shop_images/04_65f8d085-4069-4831-ad65-8966bdc589dc.webp",
         "heading_footer": "The knives' geometry is sculpted for mastery — a curved belly flows for effortless rocking, while the pointed tip ensures detailed precision. From chopping to slicing, mincing to delicate work, it adapts seamlessly, delivering control, versatility, and performance at a level ordinary knives cannot approach.",
         "color_scheme": "scheme-5",
         "padding_top": 80,
@@ -1151,7 +1146,7 @@
       "name": "Product Info",
       "settings": {
         "width": "full",
-        "image": "shopify://shop_images/06_b87af953-409c-4b0e-bc87-3d9041c80978.png",
+        "image": "shopify://shop_images/06_b87af953-409c-4b0e-bc87-3d9041c80978.webp",
         "header_type": "center",
         "heading": "<h2>Damascus Waves</h2><h2>The artistry beyond</h2><h2>craft perfection</h2>",
         "content": "<p>Each Lan Series blade carries a polished Damascus surface, forged from seventy-three layers into flowing waves of steel. No two patterns are alike — each a singular mark of Damascus artistry and prestige. <strong>Luxurious and enduring</strong> — Damascus perfection forged beyond limits, a legacy of master craftsmanship.</p>",
@@ -1170,7 +1165,7 @@
           "type": "block",
           "settings": {
             "heading": "",
-            "image": "shopify://shop_images/Icons_d1ec9970-de7c-4394-93d8-abd7d8d2024f.png",
+            "image": "shopify://shop_images/Icons_d1ec9970-de7c-4394-93d8-abd7d8d2024f.webp",
             "content": "<p><strong>Perfectly Balanced for Effortless Handling</strong><br/>Weighted to feel like an extension of your hand. Nimble, comfortable, and fatigue-free.</p>"
           }
         },
@@ -1178,7 +1173,7 @@
           "type": "block",
           "settings": {
             "heading": "",
-            "image": "shopify://shop_images/Icons_3.png",
+            "image": "shopify://shop_images/Icons_3.webp",
             "content": "<p><strong>Advanced Heat Treatment</strong><br/>Our vacuum and deep-freeze process creates an ultra-resilient blade. All the hardness, none of the brittleness.</p>"
           }
         },
@@ -1186,7 +1181,7 @@
           "type": "block",
           "settings": {
             "heading": "",
-            "image": "shopify://shop_images/Icons_15.png",
+            "image": "shopify://shop_images/Icons_15.webp",
             "content": "<p><strong>Refined at a Microscopic Level</strong><br/>Powder metallurgy creates an ultra-fine grain. That’s the secret to an edge that gets sharper and stays sharper, longer.</p>"
           }
         }
@@ -1207,7 +1202,7 @@
         "block_position": "below",
         "heading_footer": "From the premium steel to the hand-finished handle, every detail is designed to give you the best experience in the kitchen.",
         "image_video": "image",
-        "img": "shopify://shop_images/img_477.png",
+        "img": "shopify://shop_images/img_477.webp",
         "image_width": 0,
         "image_height": 440,
         "image_width_mobile": 0,
@@ -1230,7 +1225,7 @@
       "settings": {
         "width": "page",
         "heading": "Defined by Strength",
-        "img": "shopify://shop_images/06_816a66cf-c06c-4041-ae75-7b43640897f6.png",
+        "img": "shopify://shop_images/06_816a66cf-c06c-4041-ae75-7b43640897f6.webp",
         "img_text": "Hammered Patterns for Unique Durability",
         "info_header1": "Hardness That Lasts",
         "info_content1": "~60 ±1 HRC",
@@ -1255,7 +1250,7 @@
         "block_position": "below",
         "heading_footer": "",
         "image_video": "image",
-        "img": "shopify://shop_images/product-pm8s-001.png",
+        "img": "shopify://shop_images/product-pm8s-001.webp",
         "image_width": 0,
         "image_height": 440,
         "image_width_mobile": 0,
@@ -1281,10 +1276,10 @@
         "heading_content": "<h2>The Shape of</h2><h2>Mastery</h2>",
         "header_type": "center",
         "heading_footer": "",
-        "left_img": "shopify://shop_images/image_582.png",
+        "left_img": "shopify://shop_images/image_582.webp",
         "left_title": "<h2>Luxurious</h2>",
         "left_content": "<p>The Lan Series blade features 73-layer Damascus artistry polished to brilliance, each wave pattern unique. Its powder-metallurgy core delivers strength and precision, combining refined beauty with a professional presence beyond ordinary Damascus.</p>",
-        "right_img": "shopify://shop_images/product-b37-003.png",
+        "right_img": "shopify://shop_images/product-b37-003.webp",
         "right_title": "<h2>Elegant</h2>",
         "right_content": "<p>The Lan Series handle blends rich olive wood with copper-flower rivets, hand-finished for luxury. Ergonomic shaping ensures a fatigue-free grip, while natural warmth and fine detailing balance comfort, artistry, and enduring sophistication.</p>",
         "color_scheme": "scheme-5",
@@ -1305,7 +1300,6 @@
         "block_position": "below",
         "heading_footer": "",
         "image_video": "video",
-        "video": "shopify://files/videos/b37-001.mp4",
         "image_width": 0,
         "image_height": 440,
         "image_width_mobile": 0,
@@ -1317,9 +1311,9 @@
         "padding_top": 80,
         "padding_bottom": 80,
         "additional_footer": true,
-        "additional_image1": "shopify://shop_images/Icons_16.png",
+        "additional_image1": "shopify://shop_images/Icons_16.webp",
         "additional_content1": "<p><strong>Our Most Intricate Damascus</strong><br/>With 73 layers, this is our most stunning and complex pattern. It’s a work of art that also protects the blade’s ultra-hard core.</p>",
-        "additional_image2": "shopify://shop_images/Icons_17.png",
+        "additional_image2": "shopify://shop_images/Icons_17.webp",
         "additional_content2": "<p><strong>Hand-finished details and bespoke gift packaging</strong> transform the Lan Series from a knife into an heirloom — a statement of prestige, artistry, and timeless refinement.</p>"
       }
     },
@@ -1333,9 +1327,9 @@
         "padding_top": 80,
         "padding_bottom": 80,
         "footer_state": true,
-        "footer-img1": "shopify://shop_images/Icons_8c3a9e09-e479-403e-9ed1-555e70442b84.png",
+        "footer-img1": "shopify://shop_images/Icons_8c3a9e09-e479-403e-9ed1-555e70442b84.webp",
         "footer_content1": "<p>This chef knife excels at refined cutting, delivering <strong>flawless slices of vegetables, meats, and herbs</strong>, enhancing presentation and efficiency for chefs who demand precision and artistry.</p>",
-        "footer-img2": "shopify://shop_images/Icons_1_a43303c7-8345-4fc9-b3c3-2e3d54f7527a.png",
+        "footer-img2": "shopify://shop_images/Icons_1_a43303c7-8345-4fc9-b3c3-2e3d54f7527a.webp",
         "footer_content2": "<p>The Lan Series chef knife features powdered Damascus steel with superior hardness, <strong>combining luxury craftsmanship and strength</strong> for unmatched sharpness, balance, and enduring performance.</p>"
       }
     },
@@ -1345,7 +1339,7 @@
       "settings": {
         "width": "page",
         "title": "<h2>A Gift-Worthy Experience</h2>",
-        "image": "shopify://shop_images/02_b765cf35-27d2-418b-b71f-248ff9fa2368.png",
+        "image": "shopify://shop_images/02_b765cf35-27d2-418b-b71f-248ff9fa2368.webp",
         "content": "<p>Whether it’s for a very lucky friend or a well-deserved gift to yourself, the experience matters. Every Lan Series knife arrives in a beautiful, premium gift box, ensuring the unboxing is as memorable as the first slice.</p>",
         "color_scheme": "scheme-5",
         "padding_top": 80,
@@ -1358,7 +1352,7 @@
         "block_GWYtUR": {
           "type": "block",
           "settings": {
-            "image": "shopify://shop_images/Stack.png",
+            "image": "shopify://shop_images/Stack.webp",
             "image_type": "icon",
             "content": "<p>73-Layer Damascus</p>"
           }
@@ -1380,7 +1374,7 @@
         "block_YGcREx": {
           "type": "block",
           "settings": {
-            "image": "shopify://shop_images/Icons_6_3aed62ba-7315-432c-bd4f-be484067c0e2.png",
+            "image": "shopify://shop_images/Icons_6_3aed62ba-7315-432c-bd4f-be484067c0e2.webp",
             "image_type": "icon",
             "content": "<p><strong>Vacuum + Cryo Treated</strong></p><p>Extreme toughness, edge retention,</p><p>corrosion resistance.<br/></p>"
           }
@@ -1388,7 +1382,7 @@
         "block_VMJrxx": {
           "type": "block",
           "settings": {
-            "image": "shopify://shop_images/Rectangle_345_1.png",
+            "image": "shopify://shop_images/Rectangle_345_1.webp",
             "image_type": "background",
             "content": "<p><strong>Olive-Wood Handle</strong></p><p>luxury with copper-flower rivets</p>"
           }
@@ -1396,7 +1390,7 @@
         "block_nrqYL7": {
           "type": "block",
           "settings": {
-            "image": "shopify://shop_images/Rectangle_346_2.png",
+            "image": "shopify://shop_images/Rectangle_346_2.webp",
             "image_type": "normal",
             "content": "<p>Minimal resistance,</p><p>smoother cutting flow.</p><p><strong>2.1 mm Slim Blade</strong></p>"
           }
@@ -1418,7 +1412,7 @@
         "header_left": "<p>A few ways Lan Series gives you more.</p>",
         "header_right": "<p>Crafted for</p><p>Chefs and Collectors</p>",
         "color_scheme": "scheme-5",
-        "footer_img": "shopify://shop_images/Frame_34_6717962b-87c3-468e-971f-fd7f651aeb8c.png",
+        "footer_img": "shopify://shop_images/Frame_34_6717962b-87c3-468e-971f-fd7f651aeb8c.webp",
         "footer_content": "A knife created to inspire, perform, and endure."
       }
     },
@@ -1429,11 +1423,11 @@
           "type": "block",
           "settings": {
             "title": "Precision",
-            "image1": "shopify://shop_images/Leaf_715d58e1-5363-4448-9e39-5c4b8ffab059.png",
+            "image1": "shopify://shop_images/Leaf_715d58e1-5363-4448-9e39-5c4b8ffab059.webp",
             "content1": "<p>Responsibly sourced from renewable forests, <strong>olive wood offers durability and elegance</strong> while supporting sustainable practices and environmentally conscious craftsmanship.</p>",
-            "image2": "shopify://shop_images/Infinity_7efc16a7-46e3-4a00-9543-a037d568e8de.png",
+            "image2": "shopify://shop_images/Infinity_7efc16a7-46e3-4a00-9543-a037d568e8de.webp",
             "content2": "<p>Built with heirloom quality in mind, the Lan Series reduces unnecessary waste by <strong>providing enduring long-term value</strong> instead of ordinary short-lived disposable tools.</p>",
-            "image3": "shopify://shop_images/ListChecks_07d3ff48-9ba3-4806-a015-8ff784ad588f.png",
+            "image3": "shopify://shop_images/ListChecks_07d3ff48-9ba3-4806-a015-8ff784ad588f.webp",
             "content3": "<p><strong>Twelve detailed stages of manufacturing</strong> and rigorous quality controls ensure consistency, dependable strength, and enduring reliability in every Lan Series knife.</p>"
           }
         },
@@ -1441,11 +1435,11 @@
           "type": "block",
           "settings": {
             "title": "Safety",
-            "image1": "shopify://shop_images/Icons_10_4922674c-a744-4673-9280-91b903ed557f.png",
+            "image1": "shopify://shop_images/Icons_10_4922674c-a744-4673-9280-91b903ed557f.webp",
             "content1": "<p>Select Lan Series models are LFGB certified — <strong>compliant with EU food-safety standards</strong>. Tested non-toxic, crafted for hygienic kitchens.</p>",
-            "image2": "shopify://shop_images/Icons_11.png",
+            "image2": "shopify://shop_images/Icons_11.webp",
             "content2": "<p>From blade steel to olive-wood handle, every element of the Lan Series is crafted with materials <strong>chosen for safety, quality, and reliability</strong>.</p>",
-            "image3": "shopify://shop_images/Icons_12.png",
+            "image3": "shopify://shop_images/Icons_12.webp",
             "content3": "<p><strong>Certified safe and rigorously tested</strong>, the Lan Series offers assur-ance for professional kitchens — hygienic performance with lasting confidence.</p>"
           }
         }
@@ -1467,20 +1461,8 @@
     },
     "1761835043ecfb99da": {
       "type": "_blocks",
-      "blocks": {
-        "judge_me_reviews_review_widget_pDzeEd": {
-          "type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
-          "settings": {
-            "review_data": "real_data",
-            "max_width": 1200,
-            "show_shop_reviews": false,
-            "empty_state": "empty_widget"
-          }
-        }
-      },
-      "block_order": [
-        "judge_me_reviews_review_widget_pDzeEd"
-      ],
+      "blocks": {},
+      "block_order": [],
       "settings": {
         "content_direction": "column",
         "vertical_on_mobile": true,
@@ -1515,7 +1497,7 @@
       "name": "Product Description",
       "settings": {
         "width": "page",
-        "image": "shopify://shop_images/Frame_464.png",
+        "image": "shopify://shop_images/Frame_464.webp",
         "heading": "<h2>Respected for Precision and<br/>Timeless Craft</h2>",
         "info1": "<p>Xinzuo's four series—Supreme, Retro, Mo, and Lan—are crafted to serve every kitchen. From everyday durability to refined Damascus luxury, each knife combines sharpness, toughness, and timeless design shaped by forging expertise.</p>",
         "info2": "<p>With a philosophy blending comfort, balance, and reliability, our knives do more than cut—they inspire confidence. Each series is built to solve kitchen challenges with durability, edge retention, and elegance that lasts a lifetime.</p>",
@@ -1549,7 +1531,7 @@
           "settings": {
             "title": "XINZUO-B37",
             "content": "Utility, Chef Knife Set",
-            "image": "shopify://shop_images/03_e8aef4e2-789b-44a3-9b8e-d9b5b5b28e0b.png",
+            "image": "shopify://shop_images/03_e8aef4e2-789b-44a3-9b8e-d9b5b5b28e0b.webp",
             "image_position": "right"
           }
         },
@@ -1558,7 +1540,7 @@
           "settings": {
             "title": "XINZUO-B37",
             "content": "Utility, Chef, and Santoku Knife Set",
-            "image": "shopify://shop_images/01.png",
+            "image": "shopify://shop_images/01.webp",
             "image_position": "left"
           }
         }
@@ -1583,7 +1565,7 @@
         "content": "<p>The perfect balance of sharpness, comfort, and design.</p>",
         "button": "Step Into Excellence",
         "url": "shopify://collections",
-        "img": "shopify://shop_images/Rectangle_267.png",
+        "img": "shopify://shop_images/Rectangle_267.webp",
         "color_scheme": "scheme-5"
       }
     },

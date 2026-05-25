@@ -164,7 +164,6 @@
       "type": "collection_video",
       "settings": {
         "width": "full",
-        "video": "shopify://files/videos/Mo_Preview__RF32.mp4",
         "color_scheme": "scheme-5"
       }
     },

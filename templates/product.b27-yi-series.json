@@ -103,10 +103,6 @@
               "settings": {},
               "blocks": {}
             },
-            "google_youtube_automated_discounts_price_fidUCp": {
-              "type": "shopify://apps/google-youtube/blocks/automated_discounts_price/14ec7bd0-ac77-49a9-9417-90752398bdff",
-              "settings": {}
-            },
             "afterpay_custom": {
               "type": "_product-afterpay",
               "settings": {},
@@ -232,11 +228,11 @@
               "type": "_product-detail-icons",
               "settings": {
                 "show_detail_icons": true,
-                "detail_icon1": "shopify://shop_images/Angle.png",
+                "detail_icon1": "shopify://shop_images/Angle.webp",
                 "detail_info1": "<p><strong>15° Angle</strong></p><p>Razor Sharp</p>",
-                "detail_icon2": "shopify://shop_images/Triangle.png",
+                "detail_icon2": "shopify://shop_images/Triangle.webp",
                 "detail_info2": "<p><strong>60±2 HRC</strong></p><p>Professional Hardness</p>",
-                "detail_icon3": "shopify://shop_images/PuzzlePiece.png",
+                "detail_icon3": "shopify://shop_images/PuzzlePiece.webp",
                 "detail_info3": "<p><strong>67 Layers</strong></p><p>Damascus Steel</p>"
               },
               "blocks": {}
@@ -300,7 +296,7 @@
                   "disabled": true,
                   "settings": {
                     "icon": "price_tag",
-                    "image_upload": "shopify://shop_images/Check_3a9c0588-3838-4617-870d-05b2301e1f84.png",
+                    "image_upload": "shopify://shop_images/Check_3a9c0588-3838-4617-870d-05b2301e1f84.webp",
                     "width": 24,
                     "link": "",
                     "open_in_new_tab": false
@@ -700,7 +696,6 @@
             "rating_custom",
             "detail_content_custom",
             "price_custom",
-            "google_youtube_automated_discounts_price_fidUCp",
             "afterpay_custom",
             "variant_picker_qYHynj",
             "buy_buttons_eYQEYi",
@@ -736,21 +731,21 @@
         "icon_7jadN9": {
           "type": "icon",
           "settings": {
-            "image": "shopify://shop_images/Square.png",
+            "image": "shopify://shop_images/Square.webp",
             "content": "<p><strong>High-Carbon Core</strong><br/>1.0% carbon content in the 10Cr15CoMoV core creates a fine grain structure for excellent edge retention and easy resharpening.</p>"
           }
         },
         "icon_mxe7iw": {
           "type": "icon",
           "settings": {
-            "image": "shopify://shop_images/Square_1.png",
+            "image": "shopify://shop_images/Square_1.webp",
             "content": "<p><strong>15% Chromium</strong><br/>High chromium content provides strong corrosion resistance, keeping the blade stain-free even with daily use in wet kitchen environments.</p>"
           }
         },
         "icon_NxVM3T": {
           "type": "icon",
           "settings": {
-            "image": "shopify://shop_images/Square_2.png",
+            "image": "shopify://shop_images/Square_2.webp",
             "content": "<p><strong>67-Layer Damascus</strong><br/>The high-carbon core is wrapped in 67 layers of Damascus cladding, providing protective armour and a stunning visual pattern unique to each blade.</p>"
           }
         },
@@ -902,20 +897,8 @@
     },
     "1761703971f48000a9": {
       "type": "_blocks",
-      "blocks": {
-        "judge_me_reviews_review_widget_cqfCPC": {
-          "type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
-          "settings": {
-            "review_data": "real_data",
-            "max_width": 1200,
-            "show_shop_reviews": false,
-            "empty_state": "empty_widget"
-          }
-        }
-      },
-      "block_order": [
-        "judge_me_reviews_review_widget_cqfCPC"
-      ],
+      "blocks": {},
+      "block_order": [],
       "settings": {
         "content_direction": "column",
         "vertical_on_mobile": true,
@@ -950,7 +933,7 @@
       "name": "Product Description",
       "settings": {
         "width": "page",
-        "image": "shopify://shop_images/Frame_464.png",
+        "image": "shopify://shop_images/Frame_464.webp",
         "heading": "<h2>Respected for Precision and<br/>Timeless Craft</h2>",
         "info1": "<p>Xinzuo's four series—Supreme, Retro, Mo, and Lan—are crafted to serve every kitchen. From everyday durability to refined Damascus luxury, each knife combines sharpness, toughness, and timeless design shaped by forging expertise.</p>",
         "info2": "<p>With a philosophy blending comfort, balance, and reliability, our knives do more than cut—they inspire confidence. Each series is built to solve kitchen challenges with durability, edge retention, and elegance that lasts a lifetime.</p>",
@@ -1328,7 +1311,7 @@
         "content": "<p>The perfect balance of sharpness, comfort, and design.</p>",
         "button": "Step Into Excellence",
         "url": "shopify://collections",
-        "img": "shopify://shop_images/Rectangle_267.png",
+        "img": "shopify://shop_images/Rectangle_267.webp",
         "color_scheme": "scheme-5"
       }
     },

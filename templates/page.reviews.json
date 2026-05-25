@@ -85,15 +85,10 @@
             "padding-inline-end": 0
           },
           "blocks": {}
-        },
-        "judge_me_reviews_all_reviews_page_6GmTKP": {
-          "type": "shopify://apps/judge-me-reviews/blocks/all_reviews_page/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
-          "settings": {}
         }
       },
       "block_order": [
-        "text_xHAwRf",
-        "judge_me_reviews_all_reviews_page_6GmTKP"
+        "text_xHAwRf"
       ],
       "settings": {
         "content_direction": "column",

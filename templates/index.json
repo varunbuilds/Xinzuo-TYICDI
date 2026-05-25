@@ -24,8 +24,8 @@
         "content_mobile": "<h2>Japanese & Damascus Steel. Shipped from Australia.</h2>",
         "link_text": "Shop Now",
         "desktop_img": "shopify://shop_images/BLACK_FRIDAY_UP_TO_20_OFF_STOREWIDE_c6d276e0-482c-4275-aec5-b3ab13a2a4a9.webp",
-        "middle_desktop_img": "shopify://shop_images/800.png",
-        "mobile_img": "shopify://shop_images/IMG_5941_1.png"
+        "middle_desktop_img": "shopify://shop_images/800.webp",
+        "mobile_img": "shopify://shop_images/IMG_5941_1.webp"
       }
     },
     "customer_GD7Dyr": {
@@ -34,85 +34,85 @@
         "block_KAUNd9": {
           "type": "block",
           "settings": {
-            "image": "shopify://shop_images/f53f9cd53d7fc70618cab554523609b88c7ed00f.png"
+            "image": "shopify://shop_images/f53f9cd53d7fc70618cab554523609b88c7ed00f.webp"
           }
         },
         "block_kkUVp8": {
           "type": "block",
           "settings": {
-            "image": "shopify://shop_images/865d5b6dd731c632c70035599bac742bd57f776f.png"
+            "image": "shopify://shop_images/865d5b6dd731c632c70035599bac742bd57f776f.webp"
           }
         },
         "block_k6iwgF": {
           "type": "block",
           "settings": {
-            "image": "shopify://shop_images/15f4ed50e1938c2559ac2dd27cd7c0f9786dcc1f.png"
+            "image": "shopify://shop_images/15f4ed50e1938c2559ac2dd27cd7c0f9786dcc1f.webp"
           }
         },
         "block_XLReiW": {
           "type": "block",
           "settings": {
-            "image": "shopify://shop_images/6c6567de95b59e7cad654cfde3982a3a01ed0ee5.png"
+            "image": "shopify://shop_images/6c6567de95b59e7cad654cfde3982a3a01ed0ee5.webp"
           }
         },
         "block_PfwktR": {
           "type": "block",
           "settings": {
-            "image": "shopify://shop_images/2c42065ef798de4da3e515f69fce5eaefb325ddf.png"
+            "image": "shopify://shop_images/2c42065ef798de4da3e515f69fce5eaefb325ddf.webp"
           }
         },
         "block_etEYMz": {
           "type": "block",
           "settings": {
-            "image": "shopify://shop_images/eddc385d765d4ef44e77c064ab6cdbd654948d14.png"
+            "image": "shopify://shop_images/eddc385d765d4ef44e77c064ab6cdbd654948d14.webp"
           }
         },
         "block_VHaRwb": {
           "type": "block",
           "settings": {
-            "image": "shopify://shop_images/c5a07ccdf50b366e30c52ec33a16eda3d270acb9.png"
+            "image": "shopify://shop_images/c5a07ccdf50b366e30c52ec33a16eda3d270acb9.webp"
           }
         },
         "block_qVjXXN": {
           "type": "block",
           "settings": {
-            "image": "shopify://shop_images/f53f9cd53d7fc70618cab554523609b88c7ed00f.png"
+            "image": "shopify://shop_images/f53f9cd53d7fc70618cab554523609b88c7ed00f.webp"
           }
         },
         "block_Pq7HW4": {
           "type": "block",
           "settings": {
-            "image": "shopify://shop_images/865d5b6dd731c632c70035599bac742bd57f776f.png"
+            "image": "shopify://shop_images/865d5b6dd731c632c70035599bac742bd57f776f.webp"
           }
         },
         "block_U6KYNQ": {
           "type": "block",
           "settings": {
-            "image": "shopify://shop_images/15f4ed50e1938c2559ac2dd27cd7c0f9786dcc1f.png"
+            "image": "shopify://shop_images/15f4ed50e1938c2559ac2dd27cd7c0f9786dcc1f.webp"
           }
         },
         "block_6bKPj4": {
           "type": "block",
           "settings": {
-            "image": "shopify://shop_images/6c6567de95b59e7cad654cfde3982a3a01ed0ee5.png"
+            "image": "shopify://shop_images/6c6567de95b59e7cad654cfde3982a3a01ed0ee5.webp"
           }
         },
         "block_AeTVpz": {
           "type": "block",
           "settings": {
-            "image": "shopify://shop_images/2c42065ef798de4da3e515f69fce5eaefb325ddf.png"
+            "image": "shopify://shop_images/2c42065ef798de4da3e515f69fce5eaefb325ddf.webp"
           }
         },
         "block_PJW7yM": {
           "type": "block",
           "settings": {
-            "image": "shopify://shop_images/eddc385d765d4ef44e77c064ab6cdbd654948d14.png"
+            "image": "shopify://shop_images/eddc385d765d4ef44e77c064ab6cdbd654948d14.webp"
           }
         },
         "block_ghRDXx": {
           "type": "block",
           "settings": {
-            "image": "shopify://shop_images/c5a07ccdf50b366e30c52ec33a16eda3d270acb9.png"
+            "image": "shopify://shop_images/c5a07ccdf50b366e30c52ec33a16eda3d270acb9.webp"
           }
         }
       },
@@ -387,7 +387,7 @@
       "name": "Reviews",
       "settings": {
         "heading": "<h2>Chefs Love Them </h2><h2><strong>You Will Too</strong></h2>",
-        "img": "shopify://shop_images/Rectangle_457.png"
+        "img": "shopify://shop_images/Rectangle_457.webp"
       }
     },
     "homepage_guides_seo": {

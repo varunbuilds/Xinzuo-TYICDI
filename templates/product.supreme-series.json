@@ -103,10 +103,6 @@
               "settings": {},
               "blocks": {}
             },
-            "google_youtube_automated_discounts_price_AUrGfH": {
-              "type": "shopify://apps/google-youtube/blocks/automated_discounts_price/14ec7bd0-ac77-49a9-9417-90752398bdff",
-              "settings": {}
-            },
             "afterpay_custom": {
               "type": "_product-afterpay",
               "settings": {},
@@ -234,11 +230,11 @@
               "type": "_product-detail-icons",
               "settings": {
                 "show_detail_icons": true,
-                "detail_icon1": "shopify://shop_images/Angle.png",
+                "detail_icon1": "shopify://shop_images/Angle.webp",
                 "detail_info1": "<p><strong>15° Angle</strong></p><p>Razor Sharp</p>",
-                "detail_icon2": "shopify://shop_images/Triangle.png",
+                "detail_icon2": "shopify://shop_images/Triangle.webp",
                 "detail_info2": "<p><strong>~2.2mm Spine</strong></p><p>Perfectly Balanced</p>",
-                "detail_icon3": "shopify://shop_images/PuzzlePiece.png",
+                "detail_icon3": "shopify://shop_images/PuzzlePiece.webp",
                 "detail_info3": "<p><strong>German Steel</strong></p><p>1.4116 Stainless</p>"
               },
               "blocks": {}
@@ -302,7 +298,7 @@
                   "name": "t:names.icon",
                   "settings": {
                     "icon": "price_tag",
-                    "image_upload": "shopify://shop_images/Check_3a9c0588-3838-4617-870d-05b2301e1f84.png",
+                    "image_upload": "shopify://shop_images/Check_3a9c0588-3838-4617-870d-05b2301e1f84.webp",
                     "width": 24,
                     "link": "",
                     "open_in_new_tab": false
@@ -387,7 +383,7 @@
                   "name": "t:names.icon",
                   "settings": {
                     "icon": "price_tag",
-                    "image_upload": "shopify://shop_images/Check_3a9c0588-3838-4617-870d-05b2301e1f84.png",
+                    "image_upload": "shopify://shop_images/Check_3a9c0588-3838-4617-870d-05b2301e1f84.webp",
                     "width": 24,
                     "link": "",
                     "open_in_new_tab": false
@@ -472,7 +468,7 @@
                   "name": "t:names.icon",
                   "settings": {
                     "icon": "price_tag",
-                    "image_upload": "shopify://shop_images/Check_3a9c0588-3838-4617-870d-05b2301e1f84.png",
+                    "image_upload": "shopify://shop_images/Check_3a9c0588-3838-4617-870d-05b2301e1f84.webp",
                     "width": 24,
                     "link": "",
                     "open_in_new_tab": false
@@ -871,7 +867,6 @@
             "rating_custom",
             "detail_content_custom",
             "price_custom",
-            "google_youtube_automated_discounts_price_AUrGfH",
             "afterpay_custom",
             "variant_picker_qYHynj",
             "buy_buttons_eYQEYi",
@@ -909,21 +904,21 @@
         "icon_7jadN9": {
           "type": "icon",
           "settings": {
-            "image": "shopify://shop_images/Square.png",
+            "image": "shopify://shop_images/Square.webp",
             "content": "<p><strong>Chromium Protection</strong><br/>This is what fights off rust and stains. It keeps your knife looking clean and sharp, even in a busy, wet kitchen.</p>"
           }
         },
         "icon_mxe7iw": {
           "type": "icon",
           "settings": {
-            "image": "shopify://shop_images/Square_1.png",
+            "image": "shopify://shop_images/Square_1.webp",
             "content": "<p><strong>Molybdenum Toughness</strong><br/>This adds serious toughness and stops the steel from becoming brittle. It means you can handle daily chopping without worrying about chips.</p>"
           }
         },
         "icon_NxVM3T": {
           "type": "icon",
           "settings": {
-            "image": "shopify://shop_images/Square_2.png",
+            "image": "shopify://shop_images/Square_2.webp",
             "content": "<p><strong>Vanadium for Sharpness</strong><br/>This helps create a finer, tighter steel structure. In human terms? It lets the blade take a sharper edge and hold it for longer.</p>"
           }
         },
@@ -963,7 +958,7 @@
       "name": "Product Info",
       "settings": {
         "width": "page",
-        "image": "shopify://shop_images/image_128.png",
+        "image": "shopify://shop_images/image_128.webp",
         "header_type": "left",
         "heading": "",
         "content": "<p>This is German 1.4116 steel, the classic kitchen workhorse. It’s engineered with a perfect balance of elements (like Chromium and Molybdenum) to be super tough, highly stain-resistant, and famously easy to sharpen.</p>",
@@ -1005,7 +1000,7 @@
       "settings": {
         "width": "page",
         "heading": "Built to Perform",
-        "img": "shopify://shop_images/product-x02-004.png",
+        "img": "shopify://shop_images/product-x02-004.webp",
         "img_text": "Full Tang for Perfect Balance",
         "info_header1": "A Breeze to Maintain",
         "info_content1": "~56-58 HRC",
@@ -1053,7 +1048,6 @@
         "block_type": "text",
         "heading_footer": "",
         "image_video": "video",
-        "video": "shopify://files/videos/x02-001.mp4",
         "color_scheme": "scheme-5",
         "footer_state": "visible",
         "footer_type": "third",
@@ -1082,20 +1076,8 @@
     },
     "1761703971f48000a9": {
       "type": "_blocks",
-      "blocks": {
-        "judge_me_reviews_review_widget_cqfCPC": {
-          "type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
-          "settings": {
-            "review_data": "real_data",
-            "max_width": 1200,
-            "show_shop_reviews": false,
-            "empty_state": "empty_widget"
-          }
-        }
-      },
-      "block_order": [
-        "judge_me_reviews_review_widget_cqfCPC"
-      ],
+      "blocks": {},
+      "block_order": [],
       "settings": {
         "content_direction": "column",
         "vertical_on_mobile": true,
@@ -1130,7 +1112,7 @@
       "name": "Product Description",
       "settings": {
         "width": "page",
-        "image": "shopify://shop_images/Frame_464.png",
+        "image": "shopify://shop_images/Frame_464.webp",
         "heading": "<h2>Respected for Precision and<br/>Timeless Craft</h2>",
         "info1": "<p>Xinzuo’s four series—Supreme, Retro, Mo, and Lan—are crafted to serve every kitchen. From everyday durability to refined Damascus luxury, each knife combines sharpness, toughness, and timeless design shaped by forging expertise.</p>",
         "info2": "<p>With a philosophy blending comfort, balance, and reliability, our knives do more than cut—they inspire confidence. Each series is built to solve kitchen challenges with durability, edge retention, and elegance that lasts a lifetime.</p>",
@@ -1509,7 +1491,7 @@
         "content": "<p>The perfect balance of sharpness, comfort, and design.</p>",
         "button": "Step Into Excellence",
         "url": "shopify://collections",
-        "img": "shopify://shop_images/Rectangle_267.png",
+        "img": "shopify://shop_images/Rectangle_267.webp",
         "color_scheme": "scheme-5"
       }
     }

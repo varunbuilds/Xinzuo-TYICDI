@@ -113,22 +113,19 @@
         "block_N8NbLP": {
           "type": "block",
           "settings": {
-            "image": "shopify:\/\/shop_images\/image_588.png",
-            "description": "<p><strong>Master Craftsmanship<\/strong> – Every Xinzuo knife is forged with a balance of tradition and modern innovation, refined through years of dedication to the art of bladesmithing.<\/p>"
+            "description": "<p><strong>Master Craftsmanship</strong> – Every Xinzuo knife is forged with a balance of tradition and modern innovation, refined through years of dedication to the art of bladesmithing.</p>"
           }
         },
         "block_aew4jN": {
           "type": "block",
           "settings": {
-            "image": "shopify:\/\/shop_images\/Step_9_Handle_Polishing.png",
-            "description": "<p><strong>Relentless Precision<\/strong> – From blade geometry to hand-polished edges, each detail is engineered for accuracy, ensuring consistent performance with every cut.<\/p>"
+            "description": "<p><strong>Relentless Precision</strong> – From blade geometry to hand-polished edges, each detail is engineered for accuracy, ensuring consistent performance with every cut.</p>"
           }
         },
         "block_dWkdxp": {
           "type": "block",
           "settings": {
-            "image": "shopify:\/\/shop_images\/image_588.png",
-            "description": "<p><strong>Master Craftsmanship<\/strong> – Every Xinzuo knife is forged with a balance of tradition and modern innovation, refined through years of dedication to the art of bladesmithing.<\/p>"
+            "description": "<p><strong>Master Craftsmanship</strong> – Every Xinzuo knife is forged with a balance of tradition and modern innovation, refined through years of dedication to the art of bladesmithing.</p>"
           }
         }
       },
@@ -150,7 +147,6 @@
           "type": "block",
           "settings": {
             "collection": "hezhen-supreme-series-knives",
-            "image": "shopify:\/\/shop_images\/04.png",
             "image_position": "left",
             "first_block_header": "Hardness",
             "first_block_content": "56–58 HRC",
@@ -161,14 +157,13 @@
             "third_block_header": "Design",
             "third_block_content": "Full Tang",
             "third_block_footer": "comfort grip",
-            "description": "<p>The Supreme Series Chef Knife is a versatile all-rounder, perfect for chopping, slicing, dicing, mincing, and preparing ingredients for everyday cooking.<br\/>Balanced design with German steel ensures durability, easy sharpening, and dependable, reliable daily performance.<\/p>"
+            "description": "<p>The Supreme Series Chef Knife is a versatile all-rounder, perfect for chopping, slicing, dicing, mincing, and preparing ingredients for everyday cooking.<br/>Balanced design with German steel ensures durability, easy sharpening, and dependable, reliable daily performance.</p>"
           }
         },
         "block_f3DkPp": {
           "type": "block",
           "settings": {
             "collection": "hezhen-retro-series-knives",
-            "image": "shopify:\/\/shop_images\/03_723e214b-431d-4f52-9786-ea1992de1b98.png",
             "image_position": "right",
             "first_block_header": "Hardness",
             "first_block_content": "58-60 HRC",
@@ -179,14 +174,13 @@
             "third_block_header": "Design",
             "third_block_content": "Retro-style",
             "third_block_footer": "redwood with buffalo horn",
-            "description": "<p>The Retro Series Chef Knife delivers sharpness and Damascus beauty, excelling at slicing, chopping, dicing, and mincing with refined precision.<br\/>Premium Damascus steel core provides long-lasting edge retention, excellent balance, and a comfortable, artistic handle grip.<\/p>"
+            "description": "<p>The Retro Series Chef Knife delivers sharpness and Damascus beauty, excelling at slicing, chopping, dicing, and mincing with refined precision.<br/>Premium Damascus steel core provides long-lasting edge retention, excellent balance, and a comfortable, artistic handle grip.</p>"
           }
         },
         "block_JTa8cV": {
           "type": "block",
           "settings": {
             "collection": "xinzuo-mo-series-knives",
-            "image": "shopify:\/\/shop_images\/03_e826fa8a-301c-4ff6-9f20-92db5084672c.png",
             "image_position": "left",
             "first_block_header": "Hardness",
             "first_block_content": "60-62 HRC",
@@ -197,14 +191,13 @@
             "third_block_header": "Handle",
             "third_block_content": "Burnt White Oak",
             "third_block_footer": "comfort and refined grip",
-            "description": "<p>The Mo Series Chef Knife blends 67-layer Damascus craftsmanship with precision, perfect for mastering slicing, chopping, and dicing tasks.<br\/>Refined oak and G10 handle pairs with premium Damascus edge for balance, sharpness, and durability.<\/p>"
+            "description": "<p>The Mo Series Chef Knife blends 67-layer Damascus craftsmanship with precision, perfect for mastering slicing, chopping, and dicing tasks.<br/>Refined oak and G10 handle pairs with premium Damascus edge for balance, sharpness, and durability.</p>"
           }
         },
         "block_QJTmc6": {
           "type": "block",
           "settings": {
             "collection": "xinzuo-lan-series-knives",
-            "image": "shopify:\/\/shop_images\/03_d662372f-4811-40f9-b3a7-d11f31542a4a.png",
             "image_position": "right",
             "first_block_header": "Hardness",
             "first_block_content": "62–64 HRC",
@@ -215,7 +208,7 @@
             "third_block_header": "Handle",
             "third_block_content": "Olive Wood",
             "third_block_footer": "luxury craftsmanship",
-            "description": "<p>The Lan Series Chef Knife embodies luxury and performance, featuring powdered Damascus steel for hardness, effortless slicing, and edge retention.<br\/>Olive wood handle with copper rivets elevates comfort, artistry, and precision for passionate chefs and collectors.<\/p>"
+            "description": "<p>The Lan Series Chef Knife embodies luxury and performance, featuring powdered Damascus steel for hardness, effortless slicing, and edge retention.<br/>Olive wood handle with copper rivets elevates comfort, artistry, and precision for passionate chefs and collectors.</p>"
           }
         }
       },
@@ -237,7 +230,7 @@
       "name": "Collection Slider",
       "settings": {
         "title": "THIN. SHARP. POWERFUL",
-        "heading": "<h2>The knives, <br\/>People love most<\/h2>",
+        "heading": "<h2>The knives, <br/>People love most</h2>",
         "show_header": true,
         "products": [
           "xinzuo-lan-carving-knife-10-inch",
@@ -261,7 +254,6 @@
           "settings": {
             "title": "XINZUO-X06",
             "content": "Utility, Chef, and Santoku Knife Set",
-            "image": "shopify:\/\/shop_images\/02_f0218d90-dacc-402b-aa19-e7c219e7fde1.png",
             "image_position": "right"
           }
         },
@@ -270,7 +262,6 @@
           "settings": {
             "title": "XINZUO-B37",
             "content": "Utility, Chef and Santoku  Knife Set",
-            "image": "shopify:\/\/shop_images\/02_5c85fa05-0cea-4772-ad34-e79b4a33b2a5.png",
             "image_position": "left"
           }
         }
@@ -281,7 +272,7 @@
       ],
       "name": "Collection Complete",
       "settings": {
-        "heading": "<h2>Complete<\/h2><h2>the Collection<\/h2>",
+        "heading": "<h2>Complete</h2><h2>the Collection</h2>",
         "color_scheme": "scheme-5"
       }
     },
@@ -319,7 +310,7 @@
           "type": "text",
           "name": "t:names.heading",
           "settings": {
-            "text": "<h2>FAQs<\/h2>",
+            "text": "<h2>FAQs</h2>",
             "width": "100%",
             "max_width": "narrow",
             "alignment": "center",
@@ -372,7 +363,7 @@
                 "text_JVh3WE": {
                   "type": "text",
                   "settings": {
-                    "text": "<p>Xinzuo knives combine premium steel, precision forging, and ergonomic design. Each blade is carefully crafted to deliver durability, sharpness, and balance, creating a superior cutting experience for both chefs and home cooks.<\/p>",
+                    "text": "<p>Xinzuo knives combine premium steel, precision forging, and ergonomic design. Each blade is carefully crafted to deliver durability, sharpness, and balance, creating a superior cutting experience for both chefs and home cooks.</p>",
                     "width": "100%",
                     "max_width": "normal",
                     "alignment": "left",
@@ -411,7 +402,7 @@
                 "text_z8XFyz": {
                   "type": "text",
                   "settings": {
-                    "text": "<p>Xinzuo knives combine premium steel, precision forging, and ergonomic design. Each blade is carefully crafted to deliver durability, sharpness, and balance, creating a superior cutting experience for both chefs and home cooks.<\/p>",
+                    "text": "<p>Xinzuo knives combine premium steel, precision forging, and ergonomic design. Each blade is carefully crafted to deliver durability, sharpness, and balance, creating a superior cutting experience for both chefs and home cooks.</p>",
                     "width": "100%",
                     "max_width": "normal",
                     "alignment": "left",
@@ -452,7 +443,7 @@
                   "type": "text",
                   "name": "t:names.text",
                   "settings": {
-                    "text": "<p>Xinzuo knives combine premium steel, precision forging, and ergonomic design. Each blade is carefully crafted to deliver durability, sharpness, and balance, creating a superior cutting experience for both chefs and home cooks.<\/p>",
+                    "text": "<p>Xinzuo knives combine premium steel, precision forging, and ergonomic design. Each blade is carefully crafted to deliver durability, sharpness, and balance, creating a superior cutting experience for both chefs and home cooks.</p>",
                     "width": "100%",
                     "max_width": "normal",
                     "alignment": "left",
@@ -493,7 +484,7 @@
                   "type": "text",
                   "name": "t:names.text",
                   "settings": {
-                    "text": "<p>Xinzuo knives combine premium steel, precision forging, and ergonomic design. Each blade is carefully crafted to deliver durability, sharpness, and balance, creating a superior cutting experience for both chefs and home cooks.<\/p>",
+                    "text": "<p>Xinzuo knives combine premium steel, precision forging, and ergonomic design. Each blade is carefully crafted to deliver durability, sharpness, and balance, creating a superior cutting experience for both chefs and home cooks.</p>",
                     "width": "100%",
                     "max_width": "normal",
                     "alignment": "left",
@@ -534,7 +525,7 @@
                   "type": "text",
                   "name": "t:names.text",
                   "settings": {
-                    "text": "<p>Xinzuo knives combine premium steel, precision forging, and ergonomic design. Each blade is carefully crafted to deliver durability, sharpness, and balance, creating a superior cutting experience for both chefs and home cooks.<\/p>",
+                    "text": "<p>Xinzuo knives combine premium steel, precision forging, and ergonomic design. Each blade is carefully crafted to deliver durability, sharpness, and balance, creating a superior cutting experience for both chefs and home cooks.</p>",
                     "width": "100%",
                     "max_width": "normal",
                     "alignment": "left",
@@ -574,7 +565,7 @@
           "type": "text",
           "name": "t:names.text",
           "settings": {
-            "text": "<p>still have any question, <a href=\"\/pages\/contact\" title=\"Contact\">Contact Us<\/a><\/p>",
+            "text": "<p>still have any question, <a href=\"/pages/contact\" title=\"Contact\">Contact Us</a></p>",
             "width": "100%",
             "max_width": "normal",
             "alignment": "center",
@@ -635,11 +626,11 @@
       "type": "img-with-text",
       "name": "Img with text",
       "settings": {
-        "heading": "<p>Experience Precision<\/p><p>in Every Cut<\/p>",
-        "content": "<p>The perfect balance of sharpness, comfort, and design.<\/p>",
+        "heading": "<p>Experience Precision</p><p>in Every Cut</p>",
+        "content": "<p>The perfect balance of sharpness, comfort, and design.</p>",
         "button": "Step Into Excellence",
-        "url": "shopify:\/\/collections",
-        "img": "shopify:\/\/shop_images\/Rectangle_267.png",
+        "url": "shopify://collections",
+        "img": "shopify://shop_images/Rectangle_267.webp",
         "color_scheme": "scheme-5"
       }
     }
