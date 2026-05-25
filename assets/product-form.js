@@ -162,13 +162,16 @@ class ProductFormComponent extends Component {
   handleSubmit(event) {
     event.preventDefault();
 
-    const form = this.querySelector("form");
-    const formData = new FormData(form);
-    const quantity = Number(formData.get("quantity")) || 1;
-    const variantId = formData.get("id");
+    const form = this.querySelector('form');
+    if (!form) return;
 
-    const SHOW_FEE = window.engravingSelected && window.engravingText;
-    const SHOW_FEE2 = window.engravingSecondSelected && window.engravingText2;
+    const formData = new FormData(form);
+    const quantity = Number(formData.get('quantity')) || 1;
+    const variantId = formData.get('id');
+    if (typeof variantId !== 'string') return;
+
+    const SHOW_FEE = Boolean(window.engravingSelected && window.engravingText);
+    const SHOW_FEE2 = Boolean(window.engravingSecondSelected && window.engravingText2);
     const feeIds = typeof window.getXinzuoEngravingFeeVariantIds === 'function'
       ? window.getXinzuoEngravingFeeVariantIds()
       : { oneLine: null, twoLine: null };
@@ -176,57 +179,56 @@ class ProductFormComponent extends Component {
     const knife_num = Number(window.knife_num) || 1;
 
     const addMainProduct = () => {
-      return fetch("/cart/add.js", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+      return fetch('/cart/add.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           id: variantId,
           quantity,
           properties: SHOW_FEE
             ? SHOW_FEE2
-            ? { "Engraving Text": window.engravingText, "Engraving Text2": window.engravingText2, "Knife Quantity": window.knife_num }
-            : { "Engraving Text": window.engravingText, "Knife Quantity": window.knife_num }
-            : { "Knife Quantity": window.knife_num }
-        })
+            ? { 'Engraving Text': window.engravingText, 'Engraving Text2': window.engravingText2, 'Knife Quantity': window.knife_num }
+            : { 'Engraving Text': window.engravingText, 'Knife Quantity': window.knife_num }
+            : { 'Knife Quantity': window.knife_num },
+        }),
       });
     };
 
-    const addFeeProduct = () => {
-      if (!SHOW_FEE || !FEE_ID) return Promise.resolve();
+    const addFeeProduct = async () => {
+      if (!SHOW_FEE || !FEE_ID) return;
 
-      return fetch("/cart/add.js", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+      const response = await fetch('/cart/add.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           id: FEE_ID,
           quantity: quantity * knife_num,
         }),
       });
-    };
 
-    const refreshCartDrawer = async () => {
-      const res = await fetch("/?sections=cart-drawer,cart-icon-bubble");
-      const sections = await res.json();
-      document.dispatchEvent(
-        new CustomEvent("cart:update", { detail: { data: { sections } } })
-      );
+      if (!response.ok) {
+        throw new Error('Failed to add engraving fee to cart');
+      }
     };
 
     addMainProduct()
-      .then(addFeeProduct)
-      .then(async () => {
-        const cart = await fetch("/cart.js").then(r => r.json());
+      .then(async (response) => {
+        if (!response.ok) {
+          throw new Error('Failed to add product to cart');
+        }
+        await addFeeProduct();
+        const cart = await fetch('/cart.js').then((r) => r.json());
 
         document.dispatchEvent(
           new CartAddEvent({}, variantId, {
-            source: "product-form-component",
+            source: 'product-form-component',
             itemCount: cart.item_count,
             productId: variantId,
-            sections: [],
+            sections: {},
           })
         );
       })
-      .catch(err => console.error("Add to cart error:", err));
+      .catch((err) => console.error('Add to cart error:', err));
   }
 
   /**

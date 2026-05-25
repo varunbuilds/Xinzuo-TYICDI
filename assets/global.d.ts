@@ -41,6 +41,24 @@ declare global {
 
   interface Window {
     Shopify: Shopify;
+    /** Engraving UI state (blocks/engraving-option.liquid) */
+    engravingSelected?: boolean;
+    engravingSecondSelected?: boolean;
+    engravingText?: string;
+    engravingText2?: string;
+    knife_num?: number;
+    XinzuoEngravingFee?: {
+      productId: number;
+      productHandle: string;
+      oneLineVariantId: number;
+      twoLineVariantId: number;
+    };
+    getXinzuoEngravingFeeVariantIds?: () => {
+      productId: number;
+      oneLine: number | null;
+      twoLine: number | null;
+    };
+    isXinzuoEngravingFeeVariant?: (variantId: number | string) => boolean;
   }
 
   declare const Shopify: Shopify;
