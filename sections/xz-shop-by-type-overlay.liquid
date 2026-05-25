@@ -1,0 +1,158 @@
+{%- doc -%}
+  Xinzuo Shop By Type — full-screen desktop dropdown overlay.
+
+  Per designer image 16: triggered from main-nav "Shop By Type" link.
+  Displays: × CLOSE top-left, XINZUO centered, then a 5-col grid of
+  type tiles (knife isolated images + label + FROM: $X.XX price).
+
+  Wiring:
+    1. Drop this section into the theme via theme editor on any template
+       (or via header-group.json so it's globally available).
+    2. Tag your main-nav "Shop by Type" link with one of:
+         - href ending in #shop-by-type
+         - data-shop-by-type
+       The inline JS at the bottom of this section listens for clicks
+       on either pattern and toggles .xz-type-overlay--open.
+    3. Configure up to 10 type tiles in the section settings (each is a
+       collection picker). The tile shows that collection's featured
+       image + lowest-price product.
+{%- enddoc -%}
+
+<div class="xz-type-overlay" id="xz-type-overlay-{{ section.id }}" hidden>
+  <div class="xz-type-overlay__top">
+    <button type="button" class="xz-type-overlay__close" aria-label="Close shop by type" data-xz-type-close>
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+        <path d="M2 2L12 12M12 2L2 12" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+      </svg>
+      <span>CLOSE</span>
+    </button>
+    <span class="xz-type-overlay__brand">{{ shop.name | upcase | default: 'XINZUO' }}</span>
+    <span class="xz-type-overlay__top-spacer"></span>
+  </div>
+
+  <div class="xz-type-overlay__grid">
+    {%- for block in section.blocks -%}
+      {%- if block.settings.collection -%}
+        {% render 'xz-type-tile',
+          collection: block.settings.collection,
+          type_label: block.settings.label,
+          promo_text: block.settings.promo_text %}
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+</div>
+
+{% style %}
+  .xz-type-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: var(--xz-bg, #000);
+    color: var(--xz-ink, #FFFFFF);
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    font-family: var(--xz-font, "Sen", Arial, sans-serif);
+  }
+  .xz-type-overlay[hidden] { display: none; }
+
+  .xz-type-overlay__top {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    padding: 24px 40px;
+    border-bottom: 1px solid var(--xz-border, rgba(255, 255, 255, 0.08));
+  }
+  .xz-type-overlay__close {
+    justify-self: start;
+    background: none;
+    border: none;
+    color: var(--xz-ink, #FFFFFF);
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    padding: 0;
+  }
+  .xz-type-overlay__close:hover { color: var(--xz-accent, #FFD380); }
+  .xz-type-overlay__brand {
+    justify-self: center;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+  }
+
+  .xz-type-overlay__grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+    padding: 32px 40px 40px;
+  }
+  @media screen and (max-width: 1199px) {
+    .xz-type-overlay__grid { grid-template-columns: repeat(4, 1fr); }
+  }
+  @media screen and (max-width: 991px) {
+    .xz-type-overlay__grid { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media screen and (max-width: 749px) {
+    .xz-type-overlay__top { padding: 16px; }
+    .xz-type-overlay__grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      padding: 16px;
+    }
+  }
+{% endstyle %}
+
+<script>
+  (function () {
+    var overlay = document.getElementById('xz-type-overlay-{{ section.id }}');
+    if (!overlay) return;
+    function open(e) { e && e.preventDefault(); overlay.hidden = false; document.body.style.overflow = 'hidden'; }
+    function close() { overlay.hidden = true; document.body.style.overflow = ''; }
+
+    // Open on nav-link clicks: any <a href="#shop-by-type"> or [data-shop-by-type]
+    document.querySelectorAll('a[href$="#shop-by-type"], [data-shop-by-type]').forEach(function (el) {
+      el.addEventListener('click', open);
+    });
+    // Close handlers
+    overlay.querySelectorAll('[data-xz-type-close]').forEach(function (el) {
+      el.addEventListener('click', close);
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && !overlay.hidden) close();
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Shop By Type Overlay",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Full-screen dropdown triggered by clicking a nav link with `href=\"#shop-by-type\"` or `data-shop-by-type` attribute. Add up to 10 collection tiles below."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "type_tile",
+      "name": "Type tile",
+      "limit": 10,
+      "settings": [
+        { "type": "collection", "id": "collection", "label": "Collection" },
+        { "type": "text", "id": "label", "label": "Label override (defaults to collection title uppercased)" },
+        { "type": "text", "id": "promo_text", "label": "Promo badge text (e.g. 12% OFF)" }
+      ]
+    }
+  ],
+  "presets": [
+    { "name": "Shop By Type Overlay" }
+  ]
+}
+{% endschema %}

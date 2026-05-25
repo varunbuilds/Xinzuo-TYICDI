@@ -1,0 +1,534 @@
+{%- doc -%}
+  Xinzuo Style Guide v1.0 product card.
+
+  Replaces the theme-editor block composition inside snippets/product-card.liquid
+  with a fixed Style-Guide-accurate layout: image, NEW/promo badge top-left,
+  white pill + title + series + price + full-width gold "+ ADD TO CART".
+
+  Pill / title / series are derived from product.title + product.type +
+  product.template_suffix per the rules confirmed in chat:
+    - PILL  : N-Piece (sets) > X/Y (whetstone grit) > X" (knife size)
+              > category fallback (SHEATH / ROD / APRON / OIL / BOARD /
+              MAGNETIC / LEATHER / STROP / SCISSORS / WHETSTONE / type-upper)
+    - TITLE : product.product_type with friendly normalisations
+              (Kitchen Knife Set -> Knife Set, Whetstone / ... -> Whetstone, etc.)
+    - SERIES: template_suffix mapped to LAN / RETRO / MO / SUPREME / YU / YI /
+              MASTER / ELEGANT / ZHEN / PIN / ULIASSI / JI SERIES.
+              Fallback: product.vendor with " Australia" stripped (XINZUO /
+              GILLY'S / HEZHEN / etc.).
+
+  SEO: full product.title is preserved on the card link's aria-label,
+  visually-hidden span, and image alt — search engines + screen readers still
+  see the long descriptive name even though the visible card shows the short
+  type.
+
+  @param {object} product - Shopify product object
+  @param {object} [variant_to_link] - Variant whose URL the card should link
+                                      to. Defaults to selected_or_first_available_variant.
+{%- enddoc -%}
+
+{%- liquid
+  if variant_to_link == blank
+    assign variant_to_link = product.selected_or_first_available_variant
+  endif
+
+  assign t      = product.title | strip
+  assign suffix = product.template_suffix | default: ''
+  assign type   = product.product_type | default: '' | strip
+
+  # ─── TYPE FALLBACK FROM TITLE ─────────────────────────────────────────────
+  # Shopify's storefront context can return an empty product_type for some
+  # products even when it's set in the admin. Without this, every downstream
+  # check (pill category fallback, title normalisation) fails. Derive the
+  # type from the title before any of the logic that depends on it.
+  # Title structure: "{size or N-Piece prefix}? {Type} - {Series} ({sku})"
+  if type == ''
+    assign t_parse = t
+    # Drop trailing " - Series Name (sku)" or just " (sku)"
+    if t_parse contains ' - '
+      assign t_parse = t_parse | split: ' - ' | first
+    endif
+    if t_parse contains ' ('
+      assign t_parse = t_parse | split: ' (' | first
+    endif
+
+    if t_parse contains 'Knife Sheath'
+      assign type = 'Knife Sheath'
+    elsif t_parse contains '-Piece'
+      if t_parse contains 'Steak'
+        assign type = 'Steak Knife Set'
+      else
+        assign type = 'Kitchen Knife Set'
+      endif
+    else
+      # Drop leading size word like '8.5"' or '7"' if present
+      assign first_word = t_parse | split: ' ' | first
+      if first_word contains '"'
+        assign size_len = first_word | size | plus: 1
+        assign type = t_parse | slice: size_len, 200 | strip
+      else
+        assign type = t_parse | strip
+      endif
+    endif
+  endif
+
+  # ─── PILL ────────────────────────────────────────────────────────────────
+  assign pill = ''
+
+  # 0) Manual override via metafield wins over all derivation logic.
+  #    Set product.metafields.custom.pill_label on a product to force a
+  #    specific pill — e.g. board dimensions ("41 × 31 × 4 CM") or a
+  #    wood-stock label ("WALNUT") that can't be derived from
+  #    title/product_type.
+  assign manual_pill = product.metafields.custom.pill_label
+  if manual_pill != blank
+    assign pill = manual_pill | upcase
+  endif
+
+  # 1) N-Piece set ("3-Piece Knife Set ..." -> "3-PIECE SET")
+  if pill == ''
+    if t contains '-Piece'
+      assign before_piece = t | split: '-Piece' | first
+      assign maybe_n = before_piece | split: ' ' | last
+      assign n_int = maybe_n | times: 1
+      if n_int > 0
+        assign pill = maybe_n | append: '-PIECE SET'
+      endif
+    endif
+  endif
+
+  # 2) Whetstone grit ("1000/5000 Premium ..." -> "1000/5000")
+  if pill == ''
+    assign first_word = t | split: ' ' | first
+    if first_word contains '/'
+      assign p1 = first_word | split: '/' | first | times: 1
+      assign p2 = first_word | split: '/' | last | times: 1
+      if p1 > 0 and p2 > 0
+        assign pill = first_word
+      endif
+    endif
+  endif
+
+  # 3) Knife size in inches ('8.5" Chef Knife ...' -> '8.5"')
+  if pill == ''
+    assign first_word = t | split: ' ' | first
+    if first_word contains '"'
+      # Confirm it starts with a number
+      assign maybe_num_part = first_word | replace: '"', '' | times: 1
+      if maybe_num_part > 0
+        assign pill = first_word
+      endif
+    endif
+  endif
+
+  # 3b) Length in cm — covers "50cm Magnetic Knife Holder / Knife Strip"
+  #     and vendor-prefixed "HEZHEN 40cm Walnut Magnetic Knife Holder /
+  #     Strip". Scans the first 4 words so the cm token can sit after a
+  #     brand prefix like HEZHEN.
+  if pill == ''
+    assign cm_words = t | split: ' '
+    for word in cm_words limit: 4
+      assign w_lower = word | downcase
+      if w_lower contains 'cm'
+        assign num_part = w_lower | replace: 'cm', ''
+        assign as_num = num_part | times: 1
+        if as_num > 0
+          assign pill = num_part | append: 'CM'
+          break
+        endif
+      endif
+    endfor
+  endif
+
+  # 4) Category fallback by product_type
+  if pill == ''
+    case type
+      when 'Knife Sheath'
+        assign pill = 'SHEATH'
+      when 'Sharpening Rod'
+        assign pill = 'ROD'
+      when 'Apron'
+        assign pill = 'APRON'
+      when 'Wood Care'
+        assign pill = 'OIL'
+      when 'Cutting Board / Chopping Board', 'End Grain Cutting Board / Chopping Board'
+        assign pill = 'BOARD'
+      when 'Magnetic Knife Holder / Knife Strip', 'Magnetic Knife Block / Freestanding Knife Holder', 'Double-Sided Freestanding Magnetic Knife Holder'
+        assign pill = 'MAGNETIC'
+      when 'Knife Roll'
+        # Canvas and leather knife rolls share product_type — split them
+        # so the pill describes the actual material.
+        if t contains 'Canvas'
+          assign pill = 'CANVAS'
+        else
+          assign pill = 'LEATHER'
+        endif
+      when 'Leather Strop / Knife Sharpening Paddle'
+        assign pill = 'STROP'
+      when 'Kitchen Scissors'
+        assign pill = 'SCISSORS'
+      when 'Whetstone / Sharpening Stone', 'Premium Whetstone Set'
+        assign pill = 'WHETSTONE'
+    endcase
+  endif
+
+  # 5) Title-keyword fallback. Storefront context occasionally returns an
+  #    empty product_type even when set in the admin; when that happens
+  #    `type` is the full title and the case above misses, so we match
+  #    the same category keywords directly in the title instead of
+  #    upcasing the whole product name (which produced multi-line pills).
+  if pill == ''
+    if t contains 'Chopping Board' or t contains 'Cutting Board'
+      assign pill = 'BOARD'
+    elsif t contains 'Knife Roll'
+      if t contains 'Canvas'
+        assign pill = 'CANVAS'
+      else
+        assign pill = 'LEATHER'
+      endif
+    elsif t contains 'Knife Sheath'
+      assign pill = 'SHEATH'
+    elsif t contains 'Strop'
+      assign pill = 'STROP'
+    elsif t contains 'Knife Holder' or t contains 'Knife Strip' or t contains 'Knife Block'
+      assign pill = 'MAGNETIC'
+    elsif t contains 'Whetstone'
+      assign pill = 'WHETSTONE'
+    elsif t contains 'Apron'
+      assign pill = 'APRON'
+    elsif t contains 'Scissors'
+      assign pill = 'SCISSORS'
+    elsif t contains 'Sharpening Rod'
+      assign pill = 'ROD'
+    endif
+  endif
+
+  # 6) Last-resort: upcase the product_type, but only when it's short
+  #    enough to fit the badge cleanly. Long types (typically the full
+  #    title leaked through the type fallback) are left blank rather
+  #    than producing a wrapping pill.
+  if pill == ''
+    if type != ''
+      assign type_word_count = type | split: ' ' | size
+      if type_word_count <= 3
+        assign pill = type | upcase
+      endif
+    endif
+  endif
+
+  # ─── TITLE (visible) ─────────────────────────────────────────────────────
+  # Two-source strategy: try product.product_type first, then parse from
+  # product.title. Title parsing is the SOURCE OF TRUTH for sets — title
+  # always says "N-Piece..." even if the product_type field is empty.
+  assign card_title = type | strip
+
+  # 1) N-Piece sets ALWAYS map to "Knife Set" regardless of product_type
+  #    (covers cases where product_type is empty or wrongly set).
+  if t contains '-Piece'
+    assign card_title = 'Knife Set'
+    if t contains 'Steak Knife Set'
+      assign card_title = 'Steak Knife Set'
+    endif
+  endif
+
+  # 2) Friendly normalisations for common product_type values
+  case card_title
+    when 'Kitchen Knife Set'
+      assign card_title = 'Knife Set'
+    when 'Whetstone / Sharpening Stone'
+      assign card_title = 'Whetstone'
+    when 'Premium Whetstone Set'
+      assign card_title = 'Whetstone Set'
+    when 'Cutting Board / Chopping Board', 'End Grain Cutting Board / Chopping Board'
+      assign card_title = 'Cutting Board'
+    when 'Magnetic Knife Holder / Knife Strip', 'Magnetic Knife Block / Freestanding Knife Holder', 'Double-Sided Freestanding Magnetic Knife Holder'
+      assign card_title = 'Knife Holder'
+    when 'Leather Strop / Knife Sharpening Paddle'
+      assign card_title = 'Leather Strop'
+  endcase
+
+  # 3) Fallback parse from product.title when product_type is empty.
+  #    Title structure is highly consistent: "{size}? {Type} - {Series} ({sku})"
+  #    e.g. '8.5" Chef Knife - Lan Series (B37)' → 'Chef Knife'
+  #         'Sharpening Rod - Master Series (B30)' → 'Sharpening Rod'
+  #         'Wooden Knife Sheath for Chef Knife (CS03)' → 'Knife Sheath'
+  if card_title == ''
+    assign t_clean = t
+    # Drop the trailing " - Series Name (sku)" part if present
+    if t_clean contains ' - '
+      assign t_clean = t_clean | split: ' - ' | first
+    endif
+    # Drop trailing " (sku)" if no series dash
+    if t_clean contains ' ('
+      assign t_clean = t_clean | split: ' (' | first
+    endif
+    # Drop leading size word like '8.5"' or '7"'
+    assign first_word = t_clean | split: ' ' | first
+    if first_word contains '"'
+      assign size_len = first_word | size | plus: 1
+      assign t_clean = t_clean | slice: size_len, 200
+    endif
+    # Special pattern: "Wooden Knife Sheath for ..." → "Knife Sheath"
+    if t_clean contains 'Knife Sheath'
+      assign t_clean = 'Knife Sheath'
+    endif
+    assign card_title = t_clean | strip
+  endif
+
+  # 4) Last-ditch: use product.title if everything else failed
+  if card_title == ''
+    assign card_title = product.title
+  endif
+
+  # ─── SERIES ──────────────────────────────────────────────────────────────
+  assign series = ''
+  case suffix
+    when 'lan-series'
+      assign series = 'LAN SERIES'
+    when 'retro-series'
+      assign series = 'RETRO SERIES'
+    when 'mo-series'
+      assign series = 'MO SERIES'
+    when 'supreme-series', 'supreme-series-butchers-cleaver'
+      assign series = 'SUPREME SERIES'
+    when 'b13r-yu-series'
+      assign series = 'YU SERIES'
+    when 'b27-yi-series'
+      assign series = 'YI SERIES'
+    when 'b30-master-series', 'b30-master-series-2'
+      assign series = 'MASTER SERIES'
+    when 'b38l-elegant-series'
+      assign series = 'ELEGANT SERIES'
+    when 'pm8m-zhen-series', 'pm8o-zhen-series', 'x05z-zhen-series'
+      assign series = 'ZHEN SERIES'
+    when 'x020-pin-series'
+      assign series = 'PIN SERIES'
+    when 'x03-uliassi-series'
+      assign series = 'ULIASSI SERIES'
+    when 'x08-ji-series'
+      assign series = 'JI SERIES'
+  endcase
+  if series == ''
+    # Vendor fallback — strip " Australia" so Xinzuo Australia -> XINZUO,
+    # Gilly's Australia -> GILLY'S, Hezhen -> HEZHEN.
+    assign series = product.vendor | replace: ' Australia', '' | upcase
+  endif
+
+  # ─── PRICE / SALE ────────────────────────────────────────────────────────
+  assign on_sale = false
+  assign discount_pct = 0
+  if product.compare_at_price > product.price
+    assign on_sale = true
+    assign diff = product.compare_at_price | minus: product.price
+    # Use 100.0 to force float division so e.g. 11.99 rounds to 12 (not 11).
+    assign discount_pct = diff | times: 100.0 | divided_by: product.compare_at_price | round
+  endif
+
+  # ─── NEW BADGE ───────────────────────────────────────────────────────────
+  # Spec rule: NEW takes precedence over % OFF — never stack two red badges.
+  assign show_new = false
+  if product.tags contains 'new' or product.tags contains 'New' or product.tags contains 'NEW'
+    assign show_new = true
+  endif
+
+  # ─── IMAGE ───────────────────────────────────────────────────────────────
+  assign card_image = product.featured_media.preview_image
+  if variant_to_link.featured_image != blank
+    assign card_image = variant_to_link.featured_image
+  endif
+  # Custom override: product.metafields.custom.main_image (file_reference,
+  # image type) wins over the variant/product image when present.
+  assign card_metafield_image = product.metafields.custom.main_image
+  if card_metafield_image != blank
+    # MediaImage (file_reference metafield) → unwrap to inner Image so
+    # downstream image_url filters work; plain Image objects pass through.
+    if card_metafield_image.image
+      assign card_metafield_image = card_metafield_image.image
+    endif
+    assign card_image = card_metafield_image
+  endif
+-%}
+
+<div class="xz-product-card" data-product-id="{{ product.id }}">
+  {%- comment -%}
+    Markup mirrors the Webflow spec at shop-collections.webflow.io exactly:
+      .xz-product-card                     (flex column, justify-content: space-between)
+      ├─ .xz-card-link                     (stretched link, z-1)
+      ├─ .xz-card-info-wrp                 (image + descr stack)
+      │   ├─ .xz-card-img-wrap             (1:1 image)
+      │   └─ .xz-card-descr                (16px padding all)
+      │       ├─ .xz-card-pill-wrap        (margin-bottom 8/4)
+      │       │   └─ .xz-card-pill-text    (white bg, 2px 6px padding)
+      │       ├─ h3.xz-card-title          (Sen 700 14/12)
+      │       ├─ .xz-card-subttl-wrap      (margin-top 2)
+      │       │   └─ .xz-card-series       (Sen 400 12 upper, ink-80)
+      │       └─ .xz-card-price            (margin-top 4, flex row)
+      │           ├─ .xz-price-old         (red strikethrough, optional)
+      │           └─ .xz-price-new
+      ├─ .xz-card-btn-wrap                 (padding 0 16 16 — no top)
+      │   └─ a.xz-card-atc                 (gold 40px, 4px radius)
+      └─ .xz-card-promo-wrap               (absolute top-left 16/16, optional)
+  {%- endcomment -%}
+
+  <a
+    href="{{ variant_to_link.url | default: product.url }}"
+    class="xz-card-link"
+    aria-label="{{ product.title | escape }}"
+  >
+    <span class="visually-hidden">{{ product.title }}</span>
+  </a>
+
+  <div class="xz-card-info-wrp">
+    <div class="xz-card-img-wrap">
+      {%- if card_image -%}
+        <img
+          src="{{ card_image | image_url: width: 600 }}"
+          srcset="
+            {{ card_image | image_url: width: 300 }} 300w,
+            {{ card_image | image_url: width: 450 }} 450w,
+            {{ card_image | image_url: width: 600 }} 600w,
+            {{ card_image | image_url: width: 800 }} 800w
+          "
+          sizes="(max-width: 749px) 45vw, (max-width: 1199px) 30vw, 22vw"
+          alt="{{ product.title | escape }}"
+          loading="lazy"
+          width="600"
+          height="600"
+        >
+      {%- endif -%}
+    </div>
+
+    <div class="xz-card-descr">
+      {%- if pill != '' -%}
+        <div class="xz-card-pill-wrap">
+          <span class="xz-card-pill-text">{{ pill }}</span>
+        </div>
+      {%- endif -%}
+
+      <h3 class="xz-card-title">{{ card_title }}</h3>
+
+      {%- if series != '' -%}
+        <div class="xz-card-subttl-wrap">
+          <span class="xz-card-series">{{ series }}</span>
+        </div>
+      {%- endif -%}
+
+      <div class="xz-card-price">
+        {%- if on_sale -%}
+          <span class="xz-price-old">{{ product.compare_at_price | money }}</span>
+        {%- endif -%}
+        <span class="xz-price-new">{{ product.price | money }}</span>
+      </div>
+    </div>
+  </div>
+
+  {%- liquid
+    # ─── ATC STATE ───────────────────────────────────────────────────────
+    # Single available variant → real AJAX add-to-cart button.
+    # Multiple variants → link to PDP so the customer can pick options.
+    # Unavailable → disabled "Sold out" state.
+    assign atc_url = variant_to_link.url | default: product.url
+    assign atc_sold_out = false
+    assign atc_multi = false
+    unless product.available
+      assign atc_sold_out = true
+    endunless
+    if product.has_only_default_variant == false and product.variants.size > 1
+      assign atc_multi = true
+    endif
+  -%}
+
+  <div class="xz-card-btn-wrap">
+    {%- if atc_sold_out -%}
+      <span class="xz-card-atc xz-card-atc--soldout" aria-disabled="true">Sold out</span>
+    {%- elsif atc_multi -%}
+      <a href="{{ atc_url }}" class="xz-card-atc xz-card-atc--choose">Choose options</a>
+    {%- else -%}
+      <button
+        type="button"
+        class="xz-card-atc xz-card-atc--add"
+        data-variant-id="{{ variant_to_link.id }}"
+        data-product-url="{{ atc_url }}"
+        data-default-text="+ Add to cart"
+        aria-label="Add {{ product.title | escape }} to cart"
+      >+ Add to cart</button>
+    {%- endif -%}
+  </div>
+
+  {%- if show_new or on_sale -%}
+    <div class="xz-card-promo-wrap">
+      {%- if show_new -%}
+        <span class="xz-card-promo-text xz-card-promo-text--new">NEW</span>
+      {%- else -%}
+        <span class="xz-card-promo-text">{{ discount_pct }}% OFF</span>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+</div>
+
+<script>
+  (function () {
+    if (window.__xzCardAtcInit) return;
+    window.__xzCardAtcInit = true;
+
+    document.addEventListener('click', function (event) {
+      var btn = event.target.closest('.xz-card-atc--add');
+      if (!btn) return;
+
+      event.preventDefault();
+      event.stopPropagation();
+
+      if (btn.disabled || btn.classList.contains('is-loading') || btn.classList.contains('is-added')) return;
+
+      var variantId = parseInt(btn.dataset.variantId, 10);
+      var productUrl = btn.dataset.productUrl;
+      var defaultText = btn.dataset.defaultText || btn.textContent;
+
+      if (!variantId) {
+        if (productUrl) window.location.href = productUrl;
+        return;
+      }
+
+      btn.classList.add('is-loading');
+      btn.disabled = true;
+      btn.textContent = 'Adding…';
+
+      fetch('/cart/add.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({ items: [{ id: variantId, quantity: 1 }] }),
+      })
+        .then(function (response) {
+          if (!response.ok) throw new Error('add-to-cart failed');
+          return response.json();
+        })
+        .then(function () {
+          return fetch('/cart.js').then(function (r) { return r.json(); });
+        })
+        .then(function (cart) {
+          btn.classList.remove('is-loading');
+          btn.classList.add('is-added');
+          btn.textContent = 'Added ✓';
+
+          document.dispatchEvent(
+            new CustomEvent('cart:update', {
+              bubbles: true,
+              detail: { data: { itemCount: cart.item_count, source: 'xz-card-atc' } },
+            })
+          );
+
+          setTimeout(function () {
+            btn.classList.remove('is-added');
+            btn.disabled = false;
+            btn.textContent = defaultText;
+          }, 1800);
+        })
+        .catch(function () {
+          btn.classList.remove('is-loading');
+          btn.disabled = false;
+          btn.textContent = defaultText;
+          if (productUrl) window.location.href = productUrl;
+        });
+    });
+  })();
+</script>

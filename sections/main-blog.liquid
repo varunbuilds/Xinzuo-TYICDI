@@ -1,0 +1,698 @@
+{%- comment -%}
+  ============================================
+  SEO: Blog Listing Page
+  ============================================
+  Meta tags are handled by meta-tags.liquid (in theme.liquid head)
+  This section handles: Blog Schema, Breadcrumbs, Pagination SEO
+{%- endcomment -%}
+
+{%- comment -%} SEO: Blog Page JSON-LD Schema {%- endcomment -%}
+{%- liquid
+  assign blog_description = blog.description | strip_html | strip_newlines | truncate: 320
+  if blog_description == blank
+    assign blog_description = 'Read the latest articles about kitchen knives, cooking tips, and knife care from ' | append: shop.name | append: '. Expert guides and tutorials for home cooks and professional chefs.'
+  endif
+-%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Blog",
+  "@id": {{ blog.url | prepend: shop.url | append: "#blog" | json }},
+  "name": {{ blog.title | json }},
+  "description": {{ blog_description | json }},
+  "url": {{ blog.url | prepend: shop.url | json }},
+  "inLanguage": "en-AU",
+  "publisher": {
+    "@type": "Organization",
+    "@id": {{ shop.url | append: "#organization" | json }},
+    "name": {{ shop.name | json }},
+    "url": {{ shop.url | json }}
+    {%- if settings.logo -%}
+    ,"logo": {
+      "@type": "ImageObject",
+      "url": {{ settings.logo | image_url: width: 600 | prepend: "https:" | json }}
+    }
+    {%- endif -%}
+  },
+  "isPartOf": {
+    "@type": "WebSite",
+    "@id": {{ shop.url | append: "#website" | json }}
+  }
+  {%- if blog.articles.size > 0 -%}
+  ,"blogPost": [
+    {%- for article in blog.articles limit: 10 -%}
+    {
+      "@type": "BlogPosting",
+      "headline": {{ article.title | json }},
+      "url": {{ article.url | prepend: shop.url | json }},
+      "datePublished": {{ article.published_at | date: "%Y-%m-%dT%H:%M:%S%z" | json }},
+      "dateModified": {{ article.updated_at | default: article.published_at | date: "%Y-%m-%dT%H:%M:%S%z" | json }},
+      {%- if article.image -%}
+      "image": {{ article.image | image_url: width: 1200 | prepend: "https:" | json }},
+      {%- endif -%}
+      "author": {
+        "@type": "Person",
+        "name": {{ article.author | default: shop.name | json }}
+      },
+      "description": {{ article.excerpt | default: article.content | strip_html | strip_newlines | truncate: 160 | json }}
+    }{% unless forloop.last %},{% endunless %}
+    {%- endfor -%}
+  ]
+  {%- endif -%}
+}
+</script>
+
+{%- comment -%} SEO: BreadcrumbList Schema for Blog Listing {%- endcomment -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": {{ shop.url | json }}
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": {{ blog.title | json }},
+      "item": {{ blog.url | prepend: shop.url | json }}
+    }
+  ]
+}
+</script>
+
+{%- comment -%} SEO: CollectionPage Schema for Blog Listing {%- endcomment -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "@id": {{ canonical_url | json }},
+  "name": {{ blog.title | json }},
+  "description": {{ blog_description | json }},
+  "url": {{ canonical_url | json }},
+  "isPartOf": {
+    "@id": {{ shop.url | append: "#website" | json }}
+  },
+  "about": {
+    "@type": "Thing",
+    "name": "Kitchen Knives and Cooking"
+  },
+  "mainEntity": {
+    "@type": "ItemList",
+    "numberOfItems": {{ blog.articles_count }},
+    "itemListElement": [
+      {%- for article in blog.articles limit: 12 -%}
+      {
+        "@type": "ListItem",
+        "position": {{ forloop.index }},
+        "url": {{ article.url | prepend: shop.url | json }},
+        "name": {{ article.title | json }}
+      }{% unless forloop.last %},{% endunless %}
+      {%- endfor -%}
+    ]
+  }
+}
+</script>
+
+{%- paginate blog.articles by 12 -%}
+{%- comment -%} SEO: Pagination rel links for blog pages {%- endcomment -%}
+{%- liquid
+  assign blog_base_url = blog.url | prepend: shop.url
+  assign prev_page = paginate.current_page | minus: 1
+  assign next_page = paginate.current_page | plus: 1
+-%}
+
+{%- if paginate.current_page > 1 -%}
+  <link rel="prev" href="{% if prev_page == 1 %}{{ blog_base_url }}{% else %}{{ blog_base_url }}?page={{ prev_page }}{% endif %}">
+{%- endif -%}
+
+{%- if paginate.current_page < paginate.pages -%}
+  <link rel="next" href="{{ blog_base_url }}?page={{ next_page }}">
+{%- endif -%}
+
+<div class="section-background color-{{ section.settings.color_scheme }}"></div>
+<div
+  class="
+    section
+    color-{{ section.settings.color_scheme }}
+    blog-posts
+    spacing-style
+  "
+  style="{% render 'spacing-style', settings: section.settings %}"
+>
+  {%- comment -%} SEO: Breadcrumb Navigation {%- endcomment -%}
+  <nav class="blog-breadcrumbs" aria-label="Breadcrumb">
+    <ol class="breadcrumbs-list" itemscope itemtype="https://schema.org/BreadcrumbList">
+      <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a href="{{ routes.root_url }}" itemprop="item"><span itemprop="name">Home</span></a>
+        <meta itemprop="position" content="1">
+      </li>
+      <li class="breadcrumb-separator" aria-hidden="true">›</li>
+      <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <span itemprop="name" aria-current="page">{{ blog.title }}</span>
+        <meta itemprop="position" content="2">
+      </li>
+    </ol>
+  </nav>
+
+  {%- comment -%} Blog Header {%- endcomment -%}
+  <div class="blog-header">
+    <h1 class="blog-title">{{ blog.title }}</h1>
+    {%- if blog.description != blank -%}
+      <p class="blog-description">{{ blog.description }}</p>
+    {%- endif -%}
+  </div>
+
+  {%- comment -%} Blog Articles Grid {%- endcomment -%}
+  <div class="blog-posts-container">
+    {% for article in blog.articles %}
+      <article class="blog-post-card">
+        <a href="{{ article.url }}" class="blog-card-link">
+          {%- if article.image -%}
+            <div class="blog-card-image">
+              <img
+                src="{{ article.image | image_url: width: 800 }}"
+                alt="{{ article.image.alt | escape }}"
+                loading="lazy"
+                width="800"
+                height="500"
+              >
+            </div>
+          {%- endif -%}
+
+          <div class="blog-card-content">
+            <div class="blog-card-meta">
+              <time datetime="{{ article.published_at | date: '%Y-%m-%d' }}">
+                {{ article.published_at | date: '%B %d, %Y' }}
+              </time>
+              {%- if article.content != blank -%}
+                {%- assign word_count = article.content | strip_html | split: ' ' | size -%}
+                {%- assign reading_time = word_count | plus: 199 | divided_by: 200 | at_least: 1 -%}
+                <span class="reading-time">{{ reading_time }} min read</span>
+              {%- endif -%}
+            </div>
+
+            <h2 class="blog-card-title">{{ article.title }}</h2>
+
+            {%- if article.excerpt != blank -%}
+              <p class="blog-card-excerpt">{{ article.excerpt | strip_html | truncate: 120 }}</p>
+            {%- endif -%}
+
+            <span class="blog-card-cta">Read Article →</span>
+          </div>
+        </a>
+      </article>
+    {% endfor %}
+  </div>
+
+  {%- comment -%} Pagination {%- endcomment -%}
+  {%- if paginate.pages > 1 -%}
+    <nav class="blog-pagination" aria-label="Blog pagination">
+      <ul class="blog-pagination-list">
+        {%- if paginate.previous -%}
+          <li>
+            <a href="{{ paginate.previous.url }}" rel="prev" class="blog-pagination-link blog-pagination-prev" aria-label="Previous page">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 12L6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Previous
+            </a>
+          </li>
+        {%- endif -%}
+
+        {%- for part in paginate.parts -%}
+          <li>
+            {%- if part.is_link -%}
+              <a href="{{ part.url }}" class="blog-pagination-link blog-pagination-number">{{ part.title }}</a>
+            {%- else -%}
+              <span class="blog-pagination-link blog-pagination-number blog-pagination-current" aria-current="page">{{ part.title }}</span>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+
+        {%- if paginate.next -%}
+          <li>
+            <a href="{{ paginate.next.url }}" rel="next" class="blog-pagination-link blog-pagination-next" aria-label="Next page">
+              Next
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+          </li>
+        {%- endif -%}
+      </ul>
+    </nav>
+  {%- endif -%}
+</div>
+{%- endpaginate -%}
+
+{% stylesheet %}
+  /* ==========================================================================
+     BLOG LISTING PAGE - MODERN CLEAN DESIGN
+     ========================================================================== */
+  
+  /* Breadcrumb Navigation
+     ========================================================================== */
+  .blog-breadcrumbs {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 24px var(--page-margin, 16px) 0;
+  }
+
+  .breadcrumbs-list {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  .breadcrumbs-list li {
+    display: flex;
+    align-items: center;
+  }
+
+  .breadcrumbs-list a {
+    color: rgba(255, 255, 255, 0.6);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .breadcrumbs-list a:hover {
+    color: #C9A86A;
+  }
+
+  .breadcrumb-separator {
+    color: rgba(255, 255, 255, 0.3);
+    margin: 0 4px;
+  }
+
+  .breadcrumbs-list span[aria-current="page"] {
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  @media screen and (max-width: 749px) {
+    .blog-breadcrumbs {
+      padding-top: 16px;
+    }
+    
+    .breadcrumbs-list {
+      font-size: 0.8125rem;
+    }
+  }
+
+  /* Pagination
+     ========================================================================== */
+  .blog-pagination {
+    max-width: 1400px;
+    margin: 0 auto 80px;
+    padding: 0 var(--page-margin, 16px);
+  }
+
+  .blog-pagination-list {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .blog-pagination-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    font-family: 'Sen', sans-serif;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    color: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: transparent;
+  }
+
+  .blog-pagination-link:hover {
+    color: #C9A86A;
+    border-color: rgba(201, 168, 106, 0.3);
+    background: rgba(201, 168, 106, 0.08);
+  }
+
+  .blog-pagination-number {
+    min-width: 44px;
+    justify-content: center;
+    padding: 10px 8px;
+  }
+
+  .blog-pagination-current {
+    color: #FFFFFF;
+    background: rgba(201, 168, 106, 0.15);
+    border-color: #C9A86A;
+  }
+
+  .blog-pagination-prev,
+  .blog-pagination-next {
+    gap: 8px;
+  }
+
+  .blog-pagination-prev svg,
+  .blog-pagination-next svg {
+    flex-shrink: 0;
+  }
+
+  @media screen and (max-width: 749px) {
+    .blog-pagination {
+      margin-bottom: 48px;
+    }
+
+    .blog-pagination-list {
+      gap: 4px;
+      flex-wrap: wrap;
+    }
+
+    .blog-pagination-link {
+      padding: 8px 12px;
+      font-size: 0.875rem;
+    }
+
+    .blog-pagination-number {
+      min-width: 40px;
+      padding: 8px 6px;
+    }
+  }
+
+  .blog-posts {
+    --page-content-width: var(--normal-page-width);
+    --page-width: calc(var(--page-content-width) + (var(--page-margin) * 2));
+    max-width: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+  }
+
+  /* Blog Header
+     ========================================================================== */
+  .blog-header {
+    text-align: center;
+    padding-top: 80px;
+    margin-bottom: 80px;
+    padding-left: var(--page-margin, 16px);
+    padding-right: var(--page-margin, 16px);
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  @media screen and (max-width: 749px) {
+    .blog-header {
+      padding-top: 48px;
+      margin-bottom: 48px;
+    }
+  }
+
+  .blog-title {
+    font-size: 3.5rem;
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    margin: 0 0 16px 0;
+    color: #FFFFFF;
+  }
+
+  @media screen and (max-width: 749px) {
+    .blog-title {
+      font-size: 2.5rem;
+    }
+  }
+
+  .blog-description {
+    font-size: 1.25rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.7);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  @media screen and (max-width: 749px) {
+    .blog-description {
+      font-size: 1.125rem;
+    }
+  }
+
+  /* Blog Grid
+     ========================================================================== */
+  .blog-posts-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    margin-bottom: 100px;
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: var(--page-margin, 16px);
+    padding-right: var(--page-margin, 16px);
+  }
+
+  @media screen and (max-width: 990px) {
+    .blog-posts-container {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 32px;
+      margin-bottom: 80px;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .blog-posts-container {
+      grid-template-columns: 1fr;
+      gap: 24px;
+      margin-bottom: 64px;
+    }
+  }
+
+  /* Blog Card
+     ========================================================================== */
+  .blog-post-card {
+    background: linear-gradient(135deg, #2A2B33 0%, #23242B 100%);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .blog-post-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    border-color: rgba(255, 255, 255, 0.15);
+    background: linear-gradient(135deg, #2D2E36 0%, #26272E 100%);
+  }
+
+  .blog-card-link {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  /* Card Image
+     ========================================================================== */
+  .blog-card-image {
+    position: relative;
+    width: 100%;
+    padding-top: 62.5%; /* 16:10 aspect ratio */
+    overflow: hidden;
+    background: rgba(0, 0, 0, 0.2);
+  }
+
+  .blog-card-image img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .blog-post-card:hover .blog-card-image img {
+    transform: scale(1.05);
+  }
+
+  /* Card Content
+     ========================================================================== */
+  .blog-card-content {
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+
+  @media screen and (max-width: 749px) {
+    .blog-card-content {
+      padding: 24px;
+    }
+  }
+
+  .blog-card-meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.6);
+    margin-bottom: 16px;
+  }
+
+  .blog-card-meta time {
+    font-weight: 600;
+    color: #C9A86A;
+    letter-spacing: 0.01em;
+  }
+
+  .reading-time {
+    position: relative;
+    padding-left: 12px;
+  }
+
+  .reading-time::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: rgba(255, 255, 255, 0.3);
+  }
+
+  .blog-card-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1.3;
+    margin: 0 0 12px 0;
+    color: #FFFFFF;
+    transition: color 0.2s ease;
+  }
+
+  @media screen and (max-width: 749px) {
+    .blog-card-title {
+      font-size: 1.375rem;
+    }
+  }
+
+  .blog-post-card:hover .blog-card-title {
+    color: #C9A86A;
+  }
+
+  .blog-card-excerpt {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0 0 20px 0;
+    flex-grow: 1;
+  }
+
+  .blog-card-cta {
+    display: inline-flex;
+    align-items: center;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: #C9A86A;
+    transition: gap 0.2s ease, color 0.2s ease;
+  }
+
+  .blog-post-card:hover .blog-card-cta {
+    gap: 8px;
+    color: #D4B87A;
+  }
+
+  /* Cards without images
+     ========================================================================== */
+  .blog-post-card:not(:has(.blog-card-image)) .blog-card-content {
+    padding: 40px 32px;
+  }
+
+  @media screen and (max-width: 749px) {
+    .blog-post-card:not(:has(.blog-card-image)) .blog-card-content {
+      padding: 32px 24px;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.blog_posts",
+  "blocks": [
+    {
+      "type": "@theme"
+    },
+    {
+      "type": "@app"
+    },
+    {
+      "type": "text"
+    },
+    {
+      "type": "icon"
+    },
+    {
+      "type": "image"
+    },
+    {
+      "type": "button"
+    },
+    {
+      "type": "video"
+    },
+    {
+      "type": "group"
+    },
+    {
+      "type": "spacer"
+    },
+    {
+      "type": "_divider"
+    }
+  ],
+  "disabled_on": {
+    "groups": ["header"]
+  },
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,1302 @@
+
+{% style %}
+  .collection-wrapper {
+    max-width:1440px;
+    margin: 0 auto;
+    overflow-x: clip;
+  }
+
+  /* Single source of truth for the page's left axis — fluid via --xz-page-edge.
+     At ≤940 the outer page wrapper takes over (16px min), so reset to 0 here. */
+  .collection-wrapper {
+    padding: 0 var(--xz-page-edge, 52px);
+  }
+  @media screen and (max-width: 940px) {
+    .collection-wrapper { padding: 0; }
+  }
+{% endstyle %}
+<script
+  src="{{ 'results-list.js' | asset_url }}"
+  type="module"
+  fetchpriority="low"
+></script>
+
+{% javascript %}
+  const url = new URL(window.location.href);
+  if (url.hash) {
+    document.addEventListener(
+      'DOMContentLoaded',
+      () => {
+        const card = document.getElementById(url.hash.slice(1));
+        if (card) {
+          card.scrollIntoView({ behavior: 'instant' });
+        }
+      },
+      { once: true }
+    );
+  }
+
+  // Mobile product card buttons and layout
+  // Store pending operations to batch them
+  const pendingCardUpdates = [];
+  let isProcessingCards = false;
+  
+  function initMobileProductButtons() {
+    if (window.innerWidth >= 750) return;
+    
+    const productCards = document.querySelectorAll('.product-grid__item');
+    
+    productCards.forEach(card => {
+      // Skip if already processed
+      if (card.dataset.mobileProcessed === 'true') return;
+      card.dataset.mobileProcessed = 'true';
+      
+      const content = card.querySelector('.product-card__content');
+      if (!content) return;
+      
+      const productLink = card.querySelector('a[href*="/products/"]');
+      if (!productLink) return;
+      
+      const productUrl = productLink.getAttribute('href');
+      const variantMatch = productUrl.match(/variant=(\d+)/);
+      const variantId = variantMatch ? variantMatch[1] : null;
+      
+      // Find the title link and price elements
+      const titleLink = content.querySelector('a.contents.user-select-text');
+      const priceEl = content.querySelector('product-price.text-block');
+      
+      // Queue this card for processing
+      pendingCardUpdates.push({ card, content, titleLink, priceEl, productUrl, variantId });
+    });
+    
+    // Process all cards in a single batch
+    if (pendingCardUpdates.length > 0 && !isProcessingCards) {
+      isProcessingCards = true;
+      requestAnimationFrame(() => {
+        processPendingCards();
+        isProcessingCards = false;
+      });
+    }
+  }
+  
+  function processPendingCards() {
+    // Use DocumentFragment to batch DOM operations
+    pendingCardUpdates.forEach(({ card, content, titleLink, priceEl, productUrl, variantId }) => {
+      // Skip if already has button row (double-check)
+      if (card.querySelector('.mobile-btn-row')) return;
+      
+      // Create info row wrapper for title + price (only if both exist)
+      if (titleLink && priceEl && !content.querySelector('.mobile-info-row')) {
+        const infoRow = document.createElement('div');
+        infoRow.className = 'mobile-info-row';
+        
+        // Insert before titleLink, then move title and price into it
+        titleLink.parentNode.insertBefore(infoRow, titleLink);
+        infoRow.appendChild(titleLink);
+        infoRow.appendChild(priceEl);
+      }
+      
+      // Create button row
+      const btnRow = document.createElement('div');
+      btnRow.className = 'mobile-btn-row';
+      
+      // View Details button (secondary/subtle)
+      const viewBtn = document.createElement('a');
+      viewBtn.href = productUrl;
+      viewBtn.className = 'mobile-btn mobile-btn--secondary';
+      viewBtn.textContent = 'SHOP NOW';
+      viewBtn.addEventListener('click', (e) => e.stopPropagation());
+      
+      // Add to Cart button (primary/red)
+      const cartBtn = document.createElement('button');
+      cartBtn.type = 'button';
+      cartBtn.className = 'mobile-btn mobile-btn--primary';
+      cartBtn.textContent = 'Add to Cart';
+      cartBtn.dataset.variantId = variantId;
+      
+      cartBtn.addEventListener('click', async (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        if (!variantId) {
+          window.location.href = productUrl;
+          return;
+        }
+        
+        cartBtn.textContent = 'Adding...';
+        cartBtn.disabled = true;
+        
+        try {
+          const response = await fetch('/cart/add.js', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ items: [{ id: parseInt(variantId), quantity: 1 }] })
+          });
+          
+          if (response.ok) {
+            cartBtn.textContent = 'Added ✓';
+            
+            // Fetch updated cart to get total item count
+            const cartResponse = await fetch('/cart.js');
+            const cart = await cartResponse.json();
+            
+            // Dispatch cart:update event (theme's expected event)
+            document.dispatchEvent(new CustomEvent('cart:update', {
+              bubbles: true,
+              detail: {
+                data: {
+                  itemCount: cart.item_count,
+                  source: 'mobile-add-to-cart'
+                }
+              }
+            }));
+            
+            setTimeout(() => {
+              cartBtn.textContent = 'Add to Cart';
+              cartBtn.disabled = false;
+            }, 2000);
+          } else {
+            throw new Error('Failed to add');
+          }
+        } catch (err) {
+          cartBtn.textContent = 'View Options';
+          cartBtn.addEventListener('click', () => window.location.href = productUrl, { once: true });
+        }
+      });
+      
+      btnRow.appendChild(viewBtn);
+      btnRow.appendChild(cartBtn);
+      
+      // Insert button row at the end of content
+      content.appendChild(btnRow);
+    });
+    
+    // Clear the queue
+    pendingCardUpdates.length = 0;
+  }
+  
+  // Initialize immediately if DOM is ready, otherwise wait
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initMobileProductButtons, { once: true });
+  } else {
+    // Run immediately but in next frame to not block rendering
+    requestAnimationFrame(initMobileProductButtons);
+  }
+  
+  // Re-run for infinite scroll (debounced)
+  let scrollTimeout = null;
+  const observer = new MutationObserver((mutations) => {
+    let hasNewProducts = false;
+    mutations.forEach((mutation) => {
+      if (mutation.addedNodes.length) hasNewProducts = true;
+    });
+    
+    if (hasNewProducts) {
+      // Debounce to batch multiple additions
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(initMobileProductButtons, 50);
+    }
+  });
+  
+  // Set up observer
+  const setupObserver = () => {
+    const grid = document.querySelector('.product-grid');
+    if (grid) {
+      observer.observe(grid, { childList: true, subtree: true });
+    }
+  };
+  
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setupObserver, { once: true });
+  } else {
+    setupObserver();
+  }
+{% endjavascript %}
+
+{%- comment -%}
+  ============================================
+  SEO: Collection Page Hidden Content
+  No visual changes - all content is for search engines only
+  JSON-LD schema is in seo-schema.liquid
+  ============================================
+{%- endcomment -%}
+
+{%- liquid
+  # SEO: Generate keyword-rich descriptions based on collection
+  assign seo_collection_name = collection.title
+  assign seo_collection_desc = 'Premium kitchen products from Xinzuo Australia'
+  
+  case collection.handle
+    when 'all-products'
+      assign seo_collection_desc = 'Shop the complete range of premium kitchen knives and accessories. Hand-forged Damascus steel blades with lifetime warranty and free Australian shipping over $100.'
+    when 'knives'
+      assign seo_collection_desc = 'Professional-grade kitchen knives crafted from premium Damascus steel. Hand-forged for exceptional sharpness and edge retention. Perfect for home cooks and professional chefs.'
+    when 'chopping-boards'
+      assign seo_collection_desc = 'Premium wooden chopping boards designed for professional kitchens. Durable, knife-friendly surfaces that protect your blades.'
+    when 'knife-holders'
+      assign seo_collection_desc = 'Magnetic knife holders and blocks for safe knife storage. Designed to protect blade edges while showcasing your collection.'
+    when 'knife-sharpening-tools'
+      assign seo_collection_desc = 'Professional knife sharpening whetstones and tools. From Japanese whetstones to honing steels, maintain razor-sharp edges on all your knives.'
+    when 'accessories'
+      assign seo_collection_desc = 'Premium knife accessories including sheaths, roll bags, cutting boards, and sharpening tools. Quality accessories for serious cooks.'
+  endcase
+  
+  # Check for series collections
+  if collection.handle contains '-series'
+    assign series_name = collection.title | remove: 'Xinzuo ' | remove: ' Knives'
+    assign seo_collection_desc = series_name | append: ' Damascus kitchen knives with exceptional craftsmanship. Hand-forged blades for superior performance and edge retention. Free shipping over $100.'
+  endif
+-%}
+
+{%- comment -%} SEO: Hidden semantic content for crawlers - visually hidden but accessible {%- endcomment -%}
+<div class="seo-hidden-content" aria-hidden="true" style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;">
+  <div itemscope itemtype="https://schema.org/CollectionPage">
+    <meta itemprop="name" content="{{ seo_collection_name }}">
+    <meta itemprop="description" content="{{ seo_collection_desc }}">
+    <meta itemprop="url" content="{{ canonical_url }}">
+    <meta itemprop="numberOfItems" content="{{ collection.products_count }}">
+    
+    {%- comment -%} Hidden keyword-rich content for SEO {%- endcomment -%}
+    <p>{{ seo_collection_desc }}</p>
+    <p>Shop {{ collection.title }} at {{ shop.name }}. We offer premium quality kitchen knives with free shipping on orders over $100 and lifetime warranty on all products. Browse {{ collection.products_count }} products in this collection.</p>
+    
+    {%- comment -%} Product links for internal linking {%- endcomment -%}
+    <nav aria-label="Products in {{ collection.title }}">
+      <ul>
+        {%- for product in collection.products limit: 30 -%}
+          {%- unless product.tags contains 'engraving-fee' -%}
+            <li>
+              <a href="{{ product.url }}" title="{{ product.title }} - {{ product.vendor }}">
+                {{ product.title }} - {{ product.price | money_without_trailing_zeros }}
+              </a>
+            </li>
+          {%- endunless -%}
+        {%- endfor -%}
+      </ul>
+    </nav>
+  </div>
+</div>
+
+{% comment %} We always render this full-width, as the child blocks have width: page/full settings {% endcomment %}
+<div class="section-background color-{{ section.settings.color_scheme }}"></div>
+<results-list
+  class="section product-grid-container color-{{ section.settings.color_scheme }}"
+  style="--padding-block-start: {{ section.settings.padding-block-start }}px; padding: 0;"
+  section-id="{{ section.id }}"
+>
+  {% render 'skip-to-content-link', href: '#ResultsList', text: 'accessibility.skip_to_results_list' %}
+
+  <div
+    class="collection-wrapper grid gap-style custom-filter-layout"
+  >
+    {% render 'custom-collection-filters' %}
+
+    <div class="collection-right-column" id="collection-right-column">
+    {% paginate collection.products by 24 %}
+      {% capture children %}
+        {% assign product_display_index = 0 %}
+        {% for product in collection.products %}
+          {% unless product.tags contains 'engraving-fee' %}
+            {% assign product_display_index = product_display_index | plus: 1 %}
+            {%- comment -%}Product index for lazy loading: first 4 on page 1 get eager loading via data attribute{%- endcomment -%}
+            {% assign effective_index = product_display_index %}
+            {% if paginate.current_page > 1 %}
+              {% assign effective_index = 999 %}
+            {% endif %}
+            <li
+              id="{{ section.id }}-{{ product.id }}"
+              class="product-grid__item product-grid__item--{{ forloop.index0 }}"
+              data-page="{{ paginate.current_page }}"
+              data-product-id="{{ product.id }}"
+              data-product-index="{{ effective_index }}"
+              ref="cards[]"
+            >
+              {% # theme-check-disable %}
+              {% content_for 'block', type: '_product-card', id: 'product-card', closest.product: product %}
+              {% # theme-check-enable %}
+            </li>
+          {% endunless %}
+        {% endfor %}
+      {% endcapture %}
+
+      {% render 'product-grid',
+        section: section,
+        children: children,
+        products: collection.products,
+        paginate: paginate
+      %}
+
+      {%- comment -%}
+        Load More button — SEO-friendly: uses a real <a href> so Googlebot can follow
+        the link to the next paginated page. JavaScript intercepts clicks for AJAX loading.
+      {%- endcomment -%}
+      {% if paginate.pages > 1 %}
+        <div class="load-more-wrapper" id="load-more-wrapper"
+             data-current-page="{{ paginate.current_page }}"
+             data-total-pages="{{ paginate.pages }}"
+             data-section-id="{{ section.id }}"
+             data-collection-url="{{ collection.url }}">
+          {% if paginate.next %}
+            <a href="{{ paginate.next.url }}"
+               class="load-more-btn"
+               id="load-more-collection"
+               rel="next">
+              Load More Products
+            </a>
+          {% else %}
+            <span class="load-more-btn load-more-btn--done">All products loaded</span>
+          {% endif %}
+        </div>
+      {% endif %}
+
+      {%- comment -%}
+        SEO pagination — hidden from users but present in HTML source.
+        Googlebot follows these <a href> links to discover all paginated product pages.
+        Each page has a self-referencing canonical tag (Google best practice since 2019).
+      {%- endcomment -%}
+      {% if paginate.pages > 1 %}
+        <nav class="seo-pagination" aria-label="Pagination">
+          <ul>
+            {% if paginate.previous %}
+              <li>
+                <a rel="prev" href="{{ paginate.previous.url }}">Previous</a>
+              </li>
+            {% endif %}
+
+            {% for part in paginate.parts %}
+              <li>
+                {% if part.is_link %}
+                  <a href="{{ part.url }}">{{ part.title }}</a>
+                {% else %}
+                  <span aria-current="{% if part.title == paginate.current_page %}page{% else %}false{% endif %}">
+                    {{ part.title }}
+                  </span>
+                {% endif %}
+              </li>
+            {% endfor %}
+
+            {% if paginate.next %}
+              <li>
+                <a rel="next" href="{{ paginate.next.url }}">Next</a>
+              </li>
+            {% endif %}
+          </ul>
+        </nav>
+      {% endif %}
+    {% endpaginate %}
+    </div>
+  </div>
+</results-list>
+
+{% comment %} Desktop: move SEO collection header into right column (above products). Mobile: keep original order. {% endcomment %}
+<script>
+(function() {
+  var DESKTOP_BP = 1000;
+
+  function collectionLayoutDesktop() {
+    var filterLayout = document.querySelector('.custom-filter-layout');
+    var headerEl = document.querySelector('.seo-collection-header');
+    if (!filterLayout || !headerEl) return;
+    var headerSection = headerEl.closest('.shopify-section');
+    if (!headerSection) return;
+    /* Place header ABOVE the filter layout so sidebar + products start at the same level */
+    if (headerSection.parentNode !== filterLayout.parentNode || headerSection.nextElementSibling !== filterLayout) {
+      filterLayout.parentNode.insertBefore(headerSection, filterLayout);
+    }
+    headerSection.classList.add('cls-ready');
+  }
+
+  function collectionLayoutMobile() {
+    var rightCol = document.getElementById('collection-right-column');
+    var resultsList = document.querySelector('results-list');
+    if (!rightCol || !resultsList) return;
+    var headerInRight = rightCol.querySelector('.seo-collection-header');
+    if (!headerInRight) return;
+    var headerSection = headerInRight.closest('.shopify-section');
+    var mainSection = resultsList.closest('.shopify-section');
+    if (!headerSection || !mainSection || !mainSection.parentNode) return;
+    mainSection.parentNode.insertBefore(headerSection, mainSection);
+    headerSection.classList.add('cls-ready');
+  }
+
+  function applyCollectionLayout() {
+    if (window.matchMedia('(min-width: ' + DESKTOP_BP + 'px)').matches) {
+      collectionLayoutDesktop();
+    } else {
+      collectionLayoutMobile();
+    }
+  }
+
+  function init() {
+    applyCollectionLayout();
+    window.matchMedia('(min-width: ' + DESKTOP_BP + 'px)').addEventListener('change', applyCollectionLayout);
+  }
+
+  // Run immediately — all required DOM elements exist at this point in the HTML
+  // Running synchronously prevents layout shift by executing before browser first paint
+  init();
+})();
+</script>
+
+{% comment %} Apply single view preference immediately after grid is rendered {% endcomment %}
+<script>
+(function() {
+  var savedView = localStorage.getItem('collection-grid-view');
+  if (savedView === 'single') {
+    var grid = document.querySelector('.product-grid');
+    if (grid) {
+      grid.classList.remove('mobile-view-grid');
+      grid.classList.add('mobile-view-single');
+    }
+  }
+})();
+</script>
+
+{% comment %} Load More button handler — disables theme infinite scroll, uses AJAX to load pages {% endcomment %}
+<script>
+(function() {
+  var wrapper = document.getElementById('load-more-wrapper');
+  if (!wrapper) return;
+
+  var btn = document.getElementById('load-more-collection');
+  if (!btn) return;
+
+  var grid = document.querySelector('.product-grid[ref="grid"]');
+  if (!grid) return;
+
+  var sectionId = wrapper.dataset.sectionId;
+  var currentPage = parseInt(wrapper.dataset.currentPage, 10);
+  var totalPages = parseInt(wrapper.dataset.totalPages, 10);
+  var loading = false;
+
+  // Disable theme's infinite scroll by disconnecting its IntersectionObserver
+  // The results-list component stores it as .infinityScrollObserver
+  requestAnimationFrame(function() {
+    var resultsList = document.querySelector('results-list');
+    if (resultsList && resultsList.infinityScrollObserver) {
+      resultsList.infinityScrollObserver.disconnect();
+      resultsList.infinityScrollObserver = null;
+    }
+  });
+
+  // Expose resetLoadMore so the sort handler can reset pagination state
+  wrapper.resetLoadMore = function(newTotalPages) {
+    currentPage = 1;
+    totalPages = newTotalPages || totalPages;
+    loading = false;
+    btn.textContent = 'Load More Products';
+    btn.classList.remove('loading', 'load-more-btn--done');
+    btn.removeAttribute('style');
+    // Update href to page 2 with current URL params (includes sort_by)
+    var nextUrl = new URL(window.location.href);
+    nextUrl.searchParams.set('page', '2');
+    nextUrl.searchParams.delete('section_id');
+    btn.href = nextUrl.toString();
+    btn.setAttribute('rel', 'next');
+    wrapper.dataset.currentPage = '1';
+  };
+
+  btn.addEventListener('click', function(e) {
+    e.preventDefault();
+    if (loading || currentPage >= totalPages) return;
+
+    loading = true;
+    btn.textContent = 'Loading...';
+    btn.classList.add('loading');
+
+    var nextPage = currentPage + 1;
+    var url = new URL(window.location.href);
+    url.searchParams.set('page', nextPage.toString());
+    // Use URLSearchParams for clean section_id handling (preserves sort_by automatically)
+    url.searchParams.set('section_id', sectionId);
+
+    fetch(url.toString())
+      .then(function(response) { return response.text(); })
+      .then(function(html) {
+        var parser = new DOMParser();
+        var doc = parser.parseFromString(html, 'text/html');
+        var newGrid = doc.querySelector('.product-grid[ref="grid"]');
+
+        if (newGrid) {
+          var newItems = newGrid.querySelectorAll(':scope > [ref="cards[]"]');
+          var existingIds = new Set();
+          grid.querySelectorAll('.product-grid__item').forEach(function(el) {
+            var id = el.getAttribute('data-product-id');
+            if (id) existingIds.add(id);
+          });
+
+          var fragment = document.createDocumentFragment();
+          var added = 0;
+          newItems.forEach(function(item) {
+            var id = item.getAttribute('data-product-id');
+            if (id && !existingIds.has(id)) {
+              existingIds.add(id);
+              item.setAttribute('data-page', nextPage);
+              fragment.appendChild(item);
+              added++;
+            }
+          });
+
+          if (added > 0) {
+            grid.appendChild(fragment);
+          }
+        }
+
+        currentPage = nextPage;
+        // Update URL (replaceState so back button works naturally)
+        var cleanUrl = new URL(window.location.href);
+        cleanUrl.searchParams.set('page', currentPage.toString());
+        cleanUrl.searchParams.delete('section_id');
+        history.replaceState(null, '', cleanUrl.toString());
+
+        if (currentPage >= totalPages) {
+          btn.textContent = 'All products loaded';
+          btn.classList.add('load-more-btn--done');
+          btn.classList.remove('loading');
+          btn.removeAttribute('href');
+        } else {
+          var nextUrl = new URL(window.location.href);
+          nextUrl.searchParams.set('page', (currentPage + 1).toString());
+          nextUrl.searchParams.delete('section_id');
+          btn.href = nextUrl.toString();
+          btn.textContent = 'Load More Products';
+          btn.classList.remove('loading');
+        }
+
+        loading = false;
+      })
+      .catch(function() {
+        btn.textContent = 'Load More Products';
+        btn.classList.remove('loading');
+        loading = false;
+      });
+  });
+})();
+</script>
+
+{% stylesheet %}
+
+  @media screen and (max-width: 749px) {
+
+    .product-grid.mobile-view-single {
+      grid-template-columns: 1fr !important;
+      gap: 0 !important;
+    }
+    
+    .product-grid.mobile-view-single .product-grid__item {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding-bottom: 16px !important;
+      margin-bottom: 16px !important;
+    }
+    
+    .product-grid.mobile-view-single .product-grid__item:last-child {
+      border-bottom: none;
+      margin-bottom: 0 !important;
+    }
+
+    .product-grid.mobile-view-grid {
+      grid-template-columns: repeat(2, 1fr) !important;
+      gap: 8px !important;                  /* spec: 8px gutter on mobile */
+      padding-bottom: 30px;
+    }
+
+    .product-grid.mobile-view-grid .product-grid__item {
+      border-bottom: none !important;
+      padding-bottom: 0 !important;
+      margin-bottom: 8px !important;        /* match the 8px gutter */
+    }
+
+    .product-grid.mobile-view-grid .product-grid__item {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .product-grid.mobile-view-grid .product-grid__item > * {
+      width: 100% !important;
+    }
+    .product-grid.mobile-view-grid .product-card__content {
+      display: flex !important;
+      flex-direction: column !important;
+      flex-grow: 1 !important;
+    }
+
+    .product-grid.mobile-view-grid .mobile-info-row {
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: flex-start !important;
+      gap: 2px !important;
+      margin-top: 8px !important;
+      flex-grow: 1 !important; 
+    }
+
+    .product-grid.mobile-view-grid .mobile-info-row > a.contents {
+      flex: none !important;
+      width: 100% !important;
+    }
+
+    .product-grid.mobile-view-grid .mobile-info-row a.contents .text-block {
+      white-space: normal !important;
+      overflow: hidden !important;
+      display: -webkit-box !important;
+      line-clamp: 2 !important;
+      -webkit-line-clamp: 2 !important;
+      -webkit-box-orient: vertical !important;
+      text-overflow: ellipsis !important;
+      max-width: 100% !important;
+      width: 100% !important;
+    }
+
+    .product-grid.mobile-view-grid .mobile-info-row .text-block.rte p,
+    .product-grid.mobile-view-grid .mobile-info-row a.contents p {
+      font-size: 14px !important; 
+      line-height: 1.3 !important;
+      margin: 0 !important;
+      white-space: normal !important;
+      display: -webkit-box !important;
+      line-clamp: 2 !important;
+      -webkit-line-clamp: 2 !important;
+      -webkit-box-orient: vertical !important;
+      overflow: hidden !important;
+    }
+
+    .product-grid.mobile-view-grid .mobile-info-row > product-price {
+      flex-shrink: 0 !important;
+    }
+
+    .product-grid.mobile-view-grid .mobile-info-row product-price .price {
+      font-size: 19px !important;
+      font-weight: 600 !important;
+    }
+
+    .product-grid.mobile-view-grid .mobile-btn-row {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 6px !important;
+      margin-top: 8px !important;
+      flex-shrink: 0 !important; 
+    }
+
+    .product-grid.mobile-view-grid .mobile-btn {
+      flex: none !important;
+      width: 100% !important;
+      padding: 8px 6px !important;
+      font-size: 12px !important;
+      letter-spacing: 0.03em !important;
+      background-color: var(--xinzuo-accent, #FFD380);
+    }
+
+    .product-grid.mobile-view-grid .mobile-btn--secondary {
+      display: none !important;
+    }
+
+    .product-grid.mobile-view-grid .mobile-btn--primary {
+      display: inline-flex !important;
+    }
+
+    .product-grid.mobile-view-grid .product-grid__item .card-gallery {
+      border-radius: 0 !important;
+      aspect-ratio: 1 / 1 !important;
+      overflow: hidden !important;
+    }
+
+    .product-grid.mobile-view-grid .product-grid__item .card-gallery img {
+      width: 100% !important;
+      height: 100% !important;
+      object-fit: cover !important;
+    }
+
+    .product-grid.mobile-view-grid .product-card__link {
+      position: relative !important;
+    }
+
+    .product-grid__item {
+      position: relative;
+    }
+    
+    .product-grid__item .product-grid__card {
+      --product-card-gap: 8px !important;
+    }
+
+    .product-grid__item .quick-add {
+      display: none !important;
+    }
+    
+    .product-grid__item .product-grid-view-zoom-out--details {
+      display: none !important;
+    }
+    
+    .product-grid__item slideshow-arrows,
+    .product-grid__item .slideshow-control,
+    .product-grid__item slideshow-controls {
+      display: none !important;
+    }
+    
+    .product-grid__item slideshow-slide:not(:first-child) {
+      display: none !important;
+    }
+    
+    .product-grid__item slideshow-slides {
+      overflow: hidden !important;
+      scroll-snap-type: none !important;
+    }
+    
+    .product-grid__item .card-gallery {
+      overflow: hidden !important;
+      border-radius: 4px;
+    }
+    
+    .product-grid__item .card-gallery img {
+      width: 100% !important;
+      height: auto !important;
+      object-fit: cover !important;
+      display: block !important;
+    }
+    
+    .product-grid__item slideshow-component {
+      gap: 0 !important;
+    }
+    
+    .product-grid__item .product-media-container {
+      width: 100% !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+    
+    .mobile-info-row {
+      display: flex !important;
+      align-items: baseline !important;
+      justify-content: space-between !important;
+      gap: 12px !important;
+      width: 100% !important;
+    }
+    
+    .mobile-info-row > a.contents {
+      flex: 1 !important;
+      min-width: 0 !important;
+      overflow: hidden !important;
+    }
+    
+    .mobile-info-row a.contents .text-block {
+      width: auto !important;
+      max-width: 100% !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+      white-space: nowrap !important;
+      --width: auto !important;
+    }
+    
+    .product-grid__item .text-block.rte,
+    .product-grid__item a.contents .text-block,
+    .product-grid__item .product-card__content .text-block,
+    .mobile-info-row .text-block.rte,
+    .mobile-info-row a.contents .text-block {
+      font-size: 0.875rem !important;
+      font-weight: 500 !important;
+      line-height: 1.3 !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      --padding-block-start: 0 !important;
+      --padding-block-end: 0 !important;
+    }
+    
+    .product-grid__item .text-block.rte p,
+    .product-grid__item a.contents p,
+    .product-grid__item .product-card__content p,
+    .mobile-info-row .text-block.rte p,
+    .mobile-info-row a.contents p {
+      margin: 0 !important;
+      padding: 0 !important;
+      display: block !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+      white-space: nowrap !important;
+      font-size: 18px !important;
+    }
+    
+    .mobile-info-row > product-price {
+      flex-shrink: 0 !important;
+      width: auto !important;
+      --width: auto !important;
+    }
+    
+    .mobile-info-row product-price .price {
+      font-size: 22px !important;
+      font-weight: 600 !important;
+      color: var(--color-foreground) !important;
+      white-space: nowrap;
+    }
+
+    .mobile-btn-row {
+      display: flex !important;
+      gap: 8px !important;
+      margin-top: 10px !important;
+      clear: both !important;
+      position: relative;
+      z-index: 2;
+    }
+    
+    .mobile-btn {
+      flex: 1;
+      display: inline-flex;
+      align-items: center;
+      background-color: var(--xinzuo-accent, #FFD380);
+      justify-content: center;
+      padding: 10px 12px;
+      font-family: "Sen", sans-serif;
+      font-size: 0.6875rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 1px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-align: center;
+      position: relative;
+      z-index: 3;
+      color: #fff;
+      -webkit-tap-highlight-color: transparent;
+    }
+    
+    .product-grid__item .product-card__link {
+      -webkit-tap-highlight-color: transparent;
+    }
+    
+    .product-grid__item .product-card {
+      -webkit-tap-highlight-color: transparent;
+    }
+    
+    .product-grid__item a.contents {
+      -webkit-tap-highlight-color: transparent;
+    }
+    
+    .mobile-btn--secondary {
+      background: var(--xinzuo-accent, #FFD380);
+      color: var(--xinzuo-accent-text, #1A1A1E);
+      border: none;
+    }
+
+    .mobile-btn--secondary:hover {
+      background: var(--xinzuo-accent-hover, #FFDC99);
+      color: var(--xinzuo-accent-text, #1A1A1E);
+    }
+
+    .mobile-btn--secondary:active {
+      background: var(--xinzuo-accent-active, #E5BC73);
+      color: var(--xinzuo-accent-text, #1A1A1E);
+      transform: scale(0.98);
+    }
+
+    .mobile-btn--primary {
+      background: var(--xinzuo-accent, #FFD380);
+      color: var(--xinzuo-accent-text, #1A1A1E);
+      border: 1px solid var(--xinzuo-accent, #FFD380);
+    }
+
+    .mobile-btn--primary:hover {
+      background: var(--xinzuo-accent-hover, #FFDC99);
+      border-color: var(--xinzuo-accent-hover, #FFDC99);
+    }
+
+    .mobile-btn--primary:active {
+      background: var(--xinzuo-accent-active, #E5BC73);
+      transform: scale(0.98);
+    }
+    
+    .mobile-btn--primary:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
+
+  @media screen and (min-width: 750px) {
+    .product-grid__item .text-block.rte p,
+    .product-grid__item a.contents p,
+    .product-grid__item .product-card__title,
+    .product-grid__item [class*="product"] p,
+    .product-grid__item .product-card__content p {
+      font-size: 0.9375rem !important;
+      font-weight: 500 !important;
+      line-height: 1.35 !important;
+      margin: 0 !important;
+    }
+    
+    .product-grid__item product-price .price {
+      font-size: 0.875rem !important;
+      font-weight: 400 !important;
+      color: rgba(255, 255, 255, 0.7) !important;
+    }
+    
+    .product-grid__item product-price .price--on-sale .price__sale {
+      font-weight: 500 !important;
+      color: var(--color-foreground) !important;
+    }
+  }
+
+  .product-grid__item .product-grid__card > product-price {
+    margin-top: auto;
+  }
+
+  .custom-filter-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 0 0px 30px 0px;
+  }
+
+  /* Desktop: two columns – sticky filterbar on left, products flow naturally on right.
+     Single page scroll — no nested scroll containers. */
+  @media (min-width: 1000px) {
+    .custom-filter-layout {
+      flex-direction: row;
+      align-items: flex-start;
+      gap: 24px;
+    }
+
+    .collection-right-column {
+      flex: 1;
+      min-width: 0;
+    }
+
+    /* SEO header sits above the filter layout – full width, compact spacing */
+    .seo-collection-header {
+      text-align: center;
+      padding: 0 0 24px 0;
+    }
+  }
+
+  /* 750px–999px: row layout but sidebar hidden (mobile filter bar); right column full width, no scroll constraint */
+  @media (min-width: 750px) and (max-width: 999px) {
+    .custom-filter-layout {
+      flex-direction: row;
+      align-items: flex-start;
+      gap: 24px;
+    }
+
+    /* Force 2-column grid at tablet — card minmax too wide for single container */
+    .product-grid {
+      grid-template-columns: repeat(2, 1fr) !important;
+    }
+  }
+
+  .main-collection-grid {
+    grid-column: var(--grid-column--mobile);
+    flex: 1;
+
+    @media screen and (min-width: 750px) {
+      grid-column: var(--grid-column--desktop);
+    }
+  }
+
+  @media screen and (max-width: 750px) {
+    .custom-filter-layout {
+      padding:0;
+      margin: 0 !important;
+    }
+    .collection-list-title {
+      gap: 0;
+      padding:0 !important;
+    }
+    
+  }
+
+  .collection-wrapper {
+    @media screen and (min-width: 750px) {
+      grid-template-columns:
+        1fr repeat(
+          var(--centered-column-number),
+          minmax(0, calc((var(--page-width) - var(--page-margin) * 2) / var(--centered-column-number)))
+        )
+        1fr;
+    }
+  }
+
+  .collection-wrapper:has(.facets-block-wrapper--full-width),
+  .collection-wrapper:has(.collection-wrapper--full-width) {
+    @media screen and (min-width: 750px) {
+      grid-column: 1 / -1;
+      grid-template-columns:
+        minmax(var(--page-margin), 1fr) repeat(
+          var(--centered-column-number),
+          minmax(0, calc((var(--page-width) - var(--page-margin) * 2) / var(--centered-column-number)))
+        )
+        minmax(var(--page-margin), 1fr);
+    }
+  }
+
+  .collection-wrapper:has(.facets--vertical) .facets-block-wrapper--vertical:not(.hidden) ~ .main-collection-grid {
+    @media screen and (min-width: 750px) {
+      grid-column: var(--facets-vertical-col-width) / var(--full-width-column-number);
+    }
+  }
+
+  .collection-wrapper:has(.facets-block-wrapper--vertical:not(#filters-drawer)):has(.collection-wrapper--full-width) {
+    @media screen and (min-width: 750px) {
+      grid-column: 1 / -1;
+      grid-template-columns: 0fr repeat(var(--centered-column-number), minmax(0, 1fr)) 0fr;
+    }
+  }
+
+  :is(.collection-wrapper--full-width, .collection-wrapper--full-width-on-mobile)
+    [product-grid-view='default']
+    .product-grid__card {
+    @media screen and (max-width: 749px) {
+      padding-inline-start: max(var(--padding-xs), var(--padding-inline-start));
+      padding-inline-end: max(var(--padding-xs), var(--padding-inline-end));
+    }
+  }
+
+  :is(.collection-wrapper--full-width, .collection-wrapper--full-width-on-mobile)
+    [product-grid-view='mobile-single']
+    .product-grid__card {
+    @media screen and (max-width: 749px) {
+      padding-inline-start: max(var(--padding-xs), var(--padding-inline-start));
+      padding-inline-end: max(var(--padding-xs), var(--padding-inline-end));
+    }
+  }
+
+  :is(.collection-wrapper--full-width) .card-gallery,
+  :is(.collection-wrapper--full-width-on-mobile) .card-gallery {
+    @media screen and (max-width: 749px) {
+      margin-inline-start: calc(-1 * max(var(--padding-xs), var(--padding-inline-start)));
+      margin-inline-end: calc(-1 * max(var(--padding-xs), var(--padding-inline-end)));
+    }
+  }
+
+  .seo-pagination {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    overflow: hidden !important;
+    clip-path: inset(50%) !important;
+    white-space: nowrap !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+
+  .seo-pagination a {
+    pointer-events: auto !important;
+  }
+
+  /* Disable theme infinite scroll triggers — we use Load More button instead */
+  [ref="viewMoreNext"],
+  [ref="viewMorePrevious"] {
+    display: none !important;
+  }
+
+  /* Load More button */
+  .load-more-wrapper {
+    display: flex;
+    justify-content: center;
+    padding: 32px 16px;
+  }
+
+  .load-more-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 48px;
+    font-family: "Sen", sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--xinzuo-accent-text, #1A1A1E);
+    background-color: var(--xinzuo-accent, #FFD380);
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, opacity 0.2s ease;
+    min-width: 220px;
+    text-align: center;
+  }
+
+  .load-more-btn:hover {
+    background-color: var(--xinzuo-accent-hover, #FFDC99);
+    color: var(--xinzuo-accent-text, #1A1A1E);
+  }
+
+  .load-more-btn:active {
+    transform: scale(0.98);
+  }
+
+  .load-more-btn.loading {
+    opacity: 0.7;
+    pointer-events: none;
+  }
+
+  .load-more-btn--done {
+    background-color: var(--xinzuo-charcoal, #292A33);
+    cursor: default;
+    pointer-events: none;
+    opacity: 0.6;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.collection_container",
+  "enabled_on": {
+    "templates": ["collection"]
+  },
+  "settings": [
+    {
+      "type": "select",
+      "id": "layout_type",
+      "label": "t:settings.type",
+      "options": [
+        {
+          "value": "grid",
+          "label": "t:options.grid"
+        },
+        {
+          "value": "organic",
+          "label": "t:options.editorial"
+        }
+      ],
+      "default": "grid"
+    },
+    {
+      "type": "select",
+      "id": "product_card_size",
+      "label": "t:settings.card_size",
+      "options": [
+        {
+          "value": "small",
+          "label": "t:options.small"
+        },
+        {
+          "value": "medium",
+          "label": "t:options.medium"
+        },
+        {
+          "value": "large",
+          "label": "t:options.large"
+        },
+        {
+          "value": "extra-large",
+          "label": "t:options.extra_large"
+        }
+      ],
+      "default": "medium",
+      "visible_if": "{{ section.settings.layout_type == 'grid' }}"
+    },
+    {
+      "type": "select",
+      "id": "mobile_product_card_size",
+      "label": "t:settings.mobile_card_size",
+      "options": [
+        {
+          "value": "small",
+          "label": "t:options.small"
+        },
+        {
+          "value": "large",
+          "label": "t:options.large"
+        }
+      ],
+      "default": "small"
+    },
+    {
+      "type": "header",
+      "content": "t:content.layout"
+    },
+    {
+      "type": "select",
+      "id": "product_grid_width",
+      "label": "t:settings.width",
+      "options": [
+        {
+          "value": "centered",
+          "label": "t:options.page"
+        },
+        {
+          "value": "full-width",
+          "label": "t:options.full"
+        }
+      ],
+      "default": "centered"
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width_on_mobile",
+      "label": "t:settings.full_width_on_mobile",
+      "default": true,
+      "visible_if": "{{ section.settings.product_grid_width != 'full-width' }}"
+    },
+    {
+      "type": "range",
+      "id": "columns_gap_horizontal",
+      "label": "t:settings.horizontal_gap",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "columns_gap_vertical",
+      "label": "t:settings.vertical_gap",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-start",
+      "label": "t:settings.left_padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-end",
+      "label": "t:settings.right_padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "t:content.section_layout"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top_padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom_padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 8
+    }
+  ],
+  "presets": []
+}
+{% endschema %}

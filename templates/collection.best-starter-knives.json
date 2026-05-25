@@ -1,0 +1,178 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "collection_hero_banner": {
+      "type": "collection-hero-banner",
+      "settings": {
+        "color_scheme": "scheme-5"
+      }
+    },
+    "header": {
+      "type": "seo-collection-header",
+      "settings": {
+        "heading_override": "",
+        "subtitle": "Start Your Collection Here",
+        "intro_content": "<p>Not sure where to start? These are the <strong>best starter knives</strong> we recommend for anyone building their first serious kitchen kit. We have picked blades that balance versatility, quality, and value so you are not overwhelmed by options. Whether you are upgrading from supermarket knives or setting up a new kitchen, start here. Every XinZuo knife in this collection works as a standalone daily driver or as the foundation of a larger set. These are the blades that will handle 90% of your kitchen tasks while you figure out what specialty knives suit your cooking style.</p>",
+        "color_scheme": "scheme-5"
+      }
+    },
+    "main": {
+      "type": "main-collection",
+      "blocks": {
+        "filters": {
+          "type": "filters",
+          "static": true,
+          "settings": {
+            "enable_filtering": true,
+            "filter_style": "vertical",
+            "filter_width": "centered",
+            "text_label_case": "default",
+            "show_swatch_label": false,
+            "show_filter_label": true,
+            "enable_sorting": true,
+            "enable_grid_density": true,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "padding-block-start": 8,
+            "padding-block-end": 8,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0,
+            "facets_margin_bottom": 8,
+            "facets_margin_right": 20
+          },
+          "blocks": {}
+        },
+        "product-card": {
+          "type": "_product-card",
+          "static": true,
+          "settings": {
+            "product_card_gap": 4,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "card-gallery": {
+              "type": "_product-card-gallery",
+              "settings": {
+                "image_ratio": "adapt",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "product_title": {
+              "type": "product-title",
+              "settings": {
+                "width": "100%",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 4,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "price": {
+              "type": "price",
+              "settings": {
+                "show_sale_price_first": true,
+                "show_installments": false,
+                "show_tax_info": false,
+                "type_preset": "h6",
+                "width": "100%",
+                "alignment": "left",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "color": "var(--color-foreground)",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "card-gallery",
+            "product_title",
+            "price"
+          ]
+        }
+      },
+      "settings": {
+        "layout_type": "grid",
+        "product_card_size": "medium",
+        "mobile_product_card_size": "small",
+        "product_grid_width": "centered",
+        "full_width_on_mobile": true,
+        "columns_gap_horizontal": 16,
+        "columns_gap_vertical": 24,
+        "padding-inline-start": 0,
+        "padding-inline-end": 0,
+        "color_scheme": "scheme-5",
+        "padding-block-start": 0,
+        "padding-block-end": 32
+      }
+    },
+    "below_grid": {
+      "type": "seo-below-grid-content",
+      "settings": {
+        "heading": "Learn more about starter knives",
+        "content": "<p>Our complete beginner's guide from XinZuo explains which kitchen knives to buy first and which to add later as you grow your collection. <a href=\"/blogs/news/beginner-kitchen-knife-buying-guide\">Beginner's knife buying guide</a></p><p>The chef knife is the single most important knife in your kitchen. Here is how to choose the right one for your <strong>first kitchen knife</strong>. <a href=\"/blogs/news/how-to-choose-a-chef-knife-the-complete-buying-guide\">Chef knife buying guide</a></p><p>Set or individual knives? Our guide helps you decide the smartest way to start your collection. <a href=\"/blogs/news/kitchen-knife-sets-vs-individual-knives\">Sets vs individual knives</a></p><p>A chef knife is the first blade every kitchen needs. Browse the full range. <a href=\"/collections/chef-knives\">Shop Chef Knives</a></p><p>Prefer a lighter Japanese blade? The santoku is a brilliant <strong>starter knife</strong>. <a href=\"/collections/santoku-knives\">Shop Santoku Knives</a></p><p>Want everything in one box? Our knife sets are curated for complete kitchen coverage. <a href=\"/collections/knife-sets\">Shop Knife Sets</a></p>",
+        "show_border": true,
+        "color_scheme": "scheme-5"
+      }
+    },
+    "related_links": {
+      "type": "seo-related-links",
+      "settings": {
+        "heading": "Related Guides & Collections",
+        "color_scheme": "scheme-5"
+      }
+    }
+  },
+  "order": [
+    "collection_hero_banner",
+    "header",
+    "main",
+    "below_grid",
+    "related_links"
+  ]
+}

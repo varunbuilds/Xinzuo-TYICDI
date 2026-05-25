@@ -1,0 +1,178 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "collection_hero_banner": {
+      "type": "collection-hero-banner",
+      "settings": {
+        "color_scheme": "scheme-5"
+      }
+    },
+    "header": {
+      "type": "seo-collection-header",
+      "settings": {
+        "heading_override": "",
+        "subtitle": "The Three-Virtue Japanese Knife",
+        "intro_content": "<p>The <strong>santoku knife</strong> is Japan's most popular <strong>kitchen knife</strong>, named for its three virtues: slicing, dicing, and mincing. Lighter and more agile than a Western chef knife, the santoku delivers precision cuts through vegetables, proteins, and herbs without the heft. XinZuo santoku knives feature 67-layer Damascus steel with a hard 10Cr15CoMoV core, forged in Yangjiang using techniques refined over generations. If you want one knife that handles almost everything in an Australian kitchen, the santoku knife is a compelling choice. For dedicated vegetable work, pair it with a nakiri. For heavier tasks, consider a gyuto or chef knife.</p>",
+        "color_scheme": "scheme-5"
+      }
+    },
+    "main": {
+      "type": "main-collection",
+      "blocks": {
+        "filters": {
+          "type": "filters",
+          "static": true,
+          "settings": {
+            "enable_filtering": true,
+            "filter_style": "vertical",
+            "filter_width": "centered",
+            "text_label_case": "default",
+            "show_swatch_label": false,
+            "show_filter_label": true,
+            "enable_sorting": true,
+            "enable_grid_density": true,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "padding-block-start": 8,
+            "padding-block-end": 8,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0,
+            "facets_margin_bottom": 8,
+            "facets_margin_right": 20
+          },
+          "blocks": {}
+        },
+        "product-card": {
+          "type": "_product-card",
+          "static": true,
+          "settings": {
+            "product_card_gap": 4,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "card-gallery": {
+              "type": "_product-card-gallery",
+              "settings": {
+                "image_ratio": "adapt",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "product_title": {
+              "type": "product-title",
+              "settings": {
+                "width": "100%",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 4,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "price": {
+              "type": "price",
+              "settings": {
+                "show_sale_price_first": true,
+                "show_installments": false,
+                "show_tax_info": false,
+                "type_preset": "h6",
+                "width": "100%",
+                "alignment": "left",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "color": "var(--color-foreground)",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "card-gallery",
+            "product_title",
+            "price"
+          ]
+        }
+      },
+      "settings": {
+        "layout_type": "grid",
+        "product_card_size": "medium",
+        "mobile_product_card_size": "small",
+        "product_grid_width": "centered",
+        "full_width_on_mobile": true,
+        "columns_gap_horizontal": 16,
+        "columns_gap_vertical": 24,
+        "padding-inline-start": 0,
+        "padding-inline-end": 0,
+        "color_scheme": "scheme-5",
+        "padding-block-start": 0,
+        "padding-block-end": 32
+      }
+    },
+    "below_grid": {
+      "type": "seo-below-grid-content",
+      "settings": {
+        "heading": "Learn more about santoku knives",
+        "content": "<p><strong>Santoku vs Chef Knife</strong>: which one suits your cooking style? Our detailed comparison covers blade shape, weight, and cutting technique. <a href=\"/blogs/news/santoku-vs-chef-knife\">Read the Santoku vs Chef Knife comparison</a></p><p>Explore all Japanese knife types including the santoku, nakiri, gyuto, and bunka in our complete guide to Japanese kitchen knives. <a href=\"/blogs/news/japanese-knife-types-explained\">Japanese knife types explained</a></p><p>Finding the best knife for vegetable prep? See how the <strong>santoku knife</strong> compares to the nakiri and Chinese cleaver for different cutting tasks. <a href=\"/blogs/news/best-knife-vegetables-buying-guide\">Best knives for vegetables guide</a></p><p>Master the push cut technique that santoku knives are designed for, plus other essential knife skills. <a href=\"/blogs/news/knife-technique-rock-chop-push-cut-pull-slice\">Essential knife techniques</a></p><p>Looking for a dedicated vegetable knife? Browse our nakiri knives, the flat-bladed Japanese specialist for vegetable prep. <a href=\"/collections/nakiri-knives\">Shop Nakiri Knives</a></p><p>Prefer a Western-style blade? See our full range of chef knives in Damascus and German steel. <a href=\"/collections/chef-knives\">Shop Chef Knives</a></p>",
+        "show_border": true,
+        "color_scheme": "scheme-5"
+      }
+    },
+    "related_links": {
+      "type": "seo-related-links",
+      "settings": {
+        "heading": "Related Guides & Collections",
+        "color_scheme": "scheme-5"
+      }
+    }
+  },
+  "order": [
+    "collection_hero_banner",
+    "header",
+    "main",
+    "below_grid",
+    "related_links"
+  ]
+}

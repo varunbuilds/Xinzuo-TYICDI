@@ -1,0 +1,484 @@
+{%- comment -%}
+  Cart Recommended Products Slider
+  Displays a Swiper slider with recommended products in cart drawer and cart page
+  Mobile: Compact horizontal layout (one product at a time, like "Add Sheath")
+  Desktop: Grid layout with multiple products visible
+  
+  @param {product_list} recommended_products - List of products to display
+  @param {string} heading - Heading text for the slider
+  @param {string} context - Context: 'drawer' or 'page'
+  
+  NOTE: The Swiper initialization script is in cart-drawer.liquid to ensure it runs
+  on page load and can detect dynamically added sliders via MutationObserver.
+{%- endcomment -%}
+
+{%- if recommended_products != blank and recommended_products.size > 0 -%}
+  <div class="cart-recommended-products cart-recommended-products--{{ context }}" data-cart-recommended-slider>
+    <div class="cart-recommended-products__header">
+      {%- if heading != blank -%}
+        <h2 class="cart-recommended-products__heading">{{ heading }}</h2>
+      {%- else -%}
+        <h2 class="cart-recommended-products__heading">You might also like</h2>
+      {%- endif -%}
+      {%- if recommended_products.size > 1 -%}
+        <div class="cart-recommended-products__counter">
+          <span class="cart-recommended-products__counter-current">1</span>/<span class="cart-recommended-products__counter-total">{{ recommended_products.size }}</span>
+        </div>
+      {%- endif -%}
+    </div>
+    
+    <div class="cart-recommended-products__swiper swiper">
+      {%- if recommended_products.size > 1 -%}
+        <button 
+          class="cart-recommended-products__button cart-recommended-products__button--prev" 
+          aria-label="Previous products"
+          type="button"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path d="M15 19.5L7.5 12L15 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <button 
+          class="cart-recommended-products__button cart-recommended-products__button--next" 
+          aria-label="Next products"
+          type="button"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path d="M9 4.5L16.5 12L9 19.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      {%- endif -%}
+      <div class="swiper-wrapper">
+        {%- for product in recommended_products -%}
+          {%- liquid
+            assign variant_to_use = product.selected_or_first_available_variant
+          -%}
+          <div class="swiper-slide">
+            <div class="cart-recommended-product">
+              <a href="{{ product.url }}" class="cart-recommended-product__image-link">
+                <div class="cart-recommended-product__image">
+                  {%- if product.featured_image -%}
+                    {{
+                      product.featured_image
+                      | image_url: width: 200
+                      | image_tag:
+                        loading: 'lazy',
+                        width: product.featured_image.width,
+                        height: product.featured_image.height,
+                        alt: product.featured_image.alt | escape
+                    }}
+                  {%- else -%}
+                    {{ 'image' | placeholder_svg_tag: 'placeholder' }}
+                  {%- endif -%}
+                </div>
+              </a>
+              <div class="cart-recommended-product__info">
+                <a href="{{ product.url }}" class="cart-recommended-product__title-link">
+                  <h3 class="cart-recommended-product__title">{{ product.title }}</h3>
+                </a>
+                <div class="cart-recommended-product__price">
+                  {%- if product.compare_at_price > product.price -%}
+                    <span class="cart-recommended-product__price--sale">{{ product.price | money }}</span>
+                    <span class="cart-recommended-product__price--compare">{{ product.compare_at_price | money }}</span>
+                  {%- else -%}
+                    <span class="cart-recommended-product__price--regular">{{ product.price | money }}</span>
+                  {%- endif -%}
+                </div>
+              </div>
+              <button
+                type="button"
+                class="cart-recommended-product__add-btn"
+                data-product-id="{{ product.id }}"
+                data-variant-id="{{ variant_to_use.id }}"
+                data-product-title="{{ product.title | escape }}"
+                {% unless variant_to_use.available %}disabled{% endunless %}
+                aria-label="Add {{ product.title }} to cart"
+              >
+                <span class="cart-recommended-product__add-btn-text">Add</span>
+              </button>
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+
+{% stylesheet %}
+  /* ========================================
+     CART RECOMMENDED PRODUCTS - COMPACT SLIDER
+     Mobile: One product at a time, horizontal layout
+     Desktop: Multiple products visible
+     ======================================== */
+
+  .cart-recommended-products {
+    width: 100%;
+    padding: 16px 0;
+    margin-top: 0;
+  }
+
+  .cart-recommended-products--drawer {
+    padding: 12px 0;
+    margin-top: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  /* Header with title and counter */
+  .cart-recommended-products__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+    margin-bottom: 12px;
+  }
+
+  .cart-recommended-products__heading {
+    font-family: "Sen", sans-serif;
+    font-weight: 600;
+    font-size: 17px;
+    color: #ebebeb;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .cart-recommended-products__counter {
+    font-family: "Sen", sans-serif;
+    font-size: 12px;
+    color: #828282;
+  }
+
+  .cart-recommended-products__counter-current {
+    color: #fff;
+  }
+
+  /* Swiper container - with space for buttons on sides */
+  .cart-recommended-products__swiper {
+    overflow: hidden;
+    padding: 0 48px;
+    position: relative;
+    width: 100%;
+    touch-action: pan-y pinch-zoom;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .cart-recommended-products__swiper .swiper-wrapper {
+    display: flex;
+    align-items: stretch;
+  }
+
+  .cart-recommended-products__swiper .swiper-slide {
+    width: 100%;
+    flex-shrink: 0;
+    height: auto;
+  }
+
+  /* Navigation buttons - positioned outside the card */
+  .cart-recommended-products__button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    background:rgb(51, 49, 49);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  .cart-recommended-products__button--prev {
+    left: 6px;
+  }
+
+  .cart-recommended-products__button--next {
+    right: 6px;
+  }
+
+  .cart-recommended-products__button:hover:not(:disabled) {
+    background:rgb(43, 41, 41);
+    transform: translateY(-50%) scale(1.1);
+  }
+
+  .cart-recommended-products__button:disabled,
+  .cart-recommended-products__button--disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    background: #666;
+  }
+
+  .cart-recommended-products__button svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .cart-recommended-products__button svg path {
+    stroke: currentColor;
+    stroke-width: 2.5;
+  }
+
+  /* ========================================
+     PRODUCT CARD - COMPACT HORIZONTAL LAYOUT
+     (Like "Add Sheath" style)
+     ======================================== */
+
+  .cart-recommended-product {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 14px;
+    padding: 12px 16px;
+    text-decoration: none;
+    color: inherit;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    min-height: 80px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* Image thumbnail - bigger and square */
+  .cart-recommended-product__image-link {
+    flex-shrink: 0;
+    text-decoration: none;
+  }
+
+  .cart-recommended-product__image {
+    width: 70px;
+    height: 70px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 6px;
+    flex-shrink: 0;
+  }
+
+  .cart-recommended-product__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    background-color: black;
+  }
+
+  /* Product info - title and price in middle */
+  .cart-recommended-product__info {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 0; /* Allow text truncation */
+    gap: 2px;
+  }
+
+  .cart-recommended-product__title-link {
+    text-decoration: none;
+  }
+
+  .cart-recommended-product__title {
+    font-family: "Sen", sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    color: #fff;
+    margin: 0;
+    line-height: 1.3;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .cart-recommended-product__price {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: "Sen", sans-serif;
+  }
+
+  .cart-recommended-product__price--regular,
+  .cart-recommended-product__price--sale {
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+  }
+
+  .cart-recommended-product__price--compare {
+    font-size: 12px;
+    color: #828282;
+    text-decoration: line-through;
+  }
+
+  /* Add button - compact on the right */
+  .cart-recommended-product__add-btn {
+    flex-shrink: 0;
+    padding: 10px 20px;
+    background-color: var(--xinzuo-accent, #FFD380);
+    color: var(--xinzuo-accent-text, #1A1A1E);
+    border: none;
+    border-radius: 4px;
+    font-family: "Sen", sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+  }
+
+  .cart-recommended-product__add-btn:hover:not(:disabled):not(.cart-recommended-product__add-btn--added) {
+    background-color: #fff;
+    color: #000;
+    border-color: #fff;
+  }
+
+  .cart-recommended-product__add-btn:active:not(:disabled) {
+    transform: scale(0.98);
+  }
+
+  .cart-recommended-product__add-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  .cart-recommended-product__add-btn--adding {
+    opacity: 0.7;
+    cursor: wait;
+  }
+
+  .cart-recommended-product__add-btn--added {
+    background-color: #4caf50;
+    border-color: #4caf50;
+    color: #fff;
+    cursor: default;
+  }
+
+  .cart-recommended-product__add-btn--added:hover {
+    background-color: #4caf50;
+  }
+
+  .cart-recommended-product__add-btn-text {
+    display: inline-block;
+  }
+
+  /* ========================================
+     RESPONSIVE STYLES
+     ======================================== */
+
+  /* Mobile - compact with bigger image and clear buttons */
+  @media screen and (max-width: 767px) {
+    .cart-recommended-products__header {
+      padding: 0 16px;
+    }
+
+    .cart-recommended-products__swiper {
+      padding: 0 44px;
+    }
+
+    .cart-recommended-product {
+      padding: 10px 14px;
+      gap: 12px;
+    }
+
+    .cart-recommended-product__image {
+      width: 64px;
+      height: 64px;
+    }
+
+    .cart-recommended-product__title {
+      font-size: 13px;
+    }
+
+    .cart-recommended-product__price--regular,
+    .cart-recommended-product__price--sale {
+      font-size: 13px;
+    }
+
+    .cart-recommended-product__add-btn {
+      padding: 8px 16px;
+      font-size: 12px;
+    }
+
+    .cart-recommended-products__button {
+      width: 32px;
+      height: 32px;
+    }
+
+    .cart-recommended-products__button svg {
+      width: 14px;
+      height: 14px;
+    }
+  }
+
+  /* Tablet and Desktop */
+  @media screen and (min-width: 768px) {
+    .cart-recommended-products__header {
+      padding: 0 24px;
+    }
+
+    .cart-recommended-products__swiper {
+      padding: 0 52px;
+    }
+
+    .cart-recommended-product {
+      padding: 12px 15px;
+    }
+
+    .cart-recommended-product__image {
+      width: 75px;
+      height: 75px;
+    }
+
+    .cart-recommended-product__title {
+      font-size: 15px;
+    }
+
+    .cart-recommended-product__add-btn {
+      padding: 10px 24px;
+    }
+
+    .cart-recommended-products__button {
+      width: 36px;
+      height: 36px;
+    }
+
+    .cart-recommended-products__button svg {
+      width: 18px;
+      height: 18px;
+    }
+  }
+
+  /* Drawer specific overrides */
+  .cart-recommended-products--drawer .cart-recommended-products__header {
+    padding: 0 16px;
+  }
+
+  .cart-recommended-products--drawer .cart-recommended-products__swiper {
+    padding: 0 44px;
+  }
+
+  /* Page specific styles - larger on cart page */
+  .cart-recommended-products--page {
+    padding: 24px 0;
+  }
+
+  .cart-recommended-products--page .cart-recommended-products__heading {
+    font-size: 18px;
+  }
+
+  .cart-recommended-products--page .cart-recommended-product {
+    padding: 12px 16px;
+  }
+
+  .cart-recommended-products--page .cart-recommended-product__image {
+    width: 70px;
+    height: 70px;
+  }
+{% endstylesheet %}

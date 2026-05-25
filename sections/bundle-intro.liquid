@@ -1,0 +1,439 @@
+<style>
+    #shopify-section-{{ section.id }} {
+        position: relative;
+        z-index: 1;
+        background: var(--xz-section-bg-alt, #292A33);
+        padding: 70px 40px;
+    }
+
+    .bundle-intro-{{ section.id }} .bundle-inner {
+        max-width: 1440px;
+        margin: 0 auto;
+        display: flex;
+        gap: 60px;
+        align-items: stretch;
+    }
+
+    /* ── Left column ── */
+    .bundle-intro-{{ section.id }} .bundle-left {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .bundle-intro-{{ section.id }} .bundle-left h2 {
+        font-size: 48px;
+        color: #fff;
+        margin: 0 0 14px 0;
+    }
+
+    .bundle-intro-{{ section.id }} .bundle-left .bundle-sub {
+        font-weight: 400;
+        font-size: 17px;
+        color: #c9c9cc;
+        margin: 0 0 32px 0;
+        max-width: 420px;
+    }
+
+    .bundle-intro-{{ section.id }} .bundle-left .bundle-cta {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 14px 32px;
+        background-color: var(--xinzuo-accent, #FFD380);
+        border: none;
+        border-radius: 4px;
+        font-weight: 700;                                  /* Style Guide: only 400 + 700 */
+        font-size: 15px;
+        letter-spacing: 0.06em;
+        color: var(--xz-on-accent, #000000);                /* black on gold per spec */
+        text-decoration: none;
+        text-transform: uppercase;
+        transition: all 0.3s ease;
+        width: fit-content;
+    }
+
+    .bundle-intro-{{ section.id }} .bundle-left .bundle-cta:hover {
+        background-color: var(--xinzuo-accent-hover, #FFDC99);
+        transform: translateY(-2px);
+    }
+
+    .bundle-intro-{{ section.id }} .bundle-left .bundle-cta:active {
+        background-color: var(--xinzuo-accent-active, #E5BC73);
+        transform: translateY(0);
+    }
+
+    .bundle-intro-{{ section.id }} .bundle-left .bundle-cta svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    /* ── Right column ── */
+    .bundle-intro-{{ section.id }} .bundle-right {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        min-width: 340px;
+    }
+
+    /* Tier cards */
+    .bundle-intro-{{ section.id }} .tier-card {
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 4px;
+        padding: 24px 28px;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        transition: border-color 0.3s;
+        text-decoration: none;
+        color: inherit;
+        outline: none;
+    }
+
+    .bundle-intro-{{ section.id }} .tier-card:hover {
+        border-color: rgba(204, 170, 119, 0.35);
+    }
+
+    .bundle-intro-{{ section.id }} .tier-card:focus,
+    .bundle-intro-{{ section.id }} .tier-card:active {
+        border-color: rgba(204, 170, 119, 0.35);
+        outline: none;
+    }
+
+    .bundle-intro-{{ section.id }} .tier-card .tier-pct {
+        font-family: "Sen";
+        font-weight: 700;
+        font-size: 36px;
+        color: var(--xinzuo-gold, #D1AE6B);
+        line-height: 1;
+        min-width: 80px;
+    }
+
+    .bundle-intro-{{ section.id }} .tier-card .tier-detail strong {
+        font-family: "Sen";
+        font-weight: 600;
+        font-size: 16px;
+        color: #fff;
+        display: block;
+        margin-bottom: 2px;
+    }
+
+    .bundle-intro-{{ section.id }} .tier-card .tier-detail span {
+        font-weight: 400;
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.5);
+    }
+
+    /* Compare card */
+    .bundle-intro-{{ section.id }} .compare-card {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 4px;
+        padding: 20px 28px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        margin-top: 4px;
+    }
+
+    .bundle-intro-{{ section.id }} .compare-card:hover {
+        border-color: rgba(255, 255, 255, 0.2);
+        background: rgba(255, 255, 255, 0.05);
+    }
+
+    .bundle-intro-{{ section.id }} .compare-card .compare-text strong {
+        font-family: "Sen";
+        font-weight: 600;
+        font-size: 15px;
+        color: #fff;
+        display: block;
+        margin-bottom: 2px;
+    }
+
+    .bundle-intro-{{ section.id }} .compare-card .compare-text span {
+        font-weight: 400;
+        font-size: 13px;
+        color: rgba(255, 255, 255, 0.45);
+    }
+
+    .bundle-intro-{{ section.id }} .compare-card .compare-arrow {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        transition: all 0.3s ease;
+    }
+
+    .bundle-intro-{{ section.id }} .compare-card:hover .compare-arrow {
+        border-color: rgba(255, 255, 255, 0.35);
+        background: rgba(255, 255, 255, 0.05);
+    }
+
+    .bundle-intro-{{ section.id }} .compare-card .compare-arrow svg {
+        width: 16px;
+        height: 16px;
+        color: rgba(255, 255, 255, 0.5);
+    }
+
+    .bundle-intro-{{ section.id }} .compare-card:hover .compare-arrow svg {
+        color: #fff;
+    }
+
+    /* Mobile CTA — hidden on desktop, shown at bottom on mobile */
+    .bundle-intro-{{ section.id }} .bundle-cta-mobile {
+        display: none;
+    }
+
+    /* ── Mobile ── */
+    @media screen and (max-width: 850px) {
+        #shopify-section-{{ section.id }} {
+            padding: 30px 20px;
+        }
+
+        .bundle-intro-{{ section.id }} .bundle-inner {
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .bundle-intro-{{ section.id }} .bundle-left {
+            text-align: center;
+            align-items: center;
+        }
+
+        .bundle-intro-{{ section.id }} .bundle-left h2 {
+            font-size: 28px;
+        }
+
+        .bundle-intro-{{ section.id }} .bundle-left .bundle-sub {
+            font-size: 15px;
+            margin-bottom: 0;
+        }
+
+        /* Hide desktop CTA on mobile */
+        .bundle-intro-{{ section.id }} .bundle-left .bundle-cta {
+            display: none;
+        }
+
+        /* Show mobile CTA at bottom */
+        .bundle-intro-{{ section.id }} .bundle-cta-mobile {
+            display: flex;
+            justify-content: center;
+            margin-top: 8px;
+        }
+
+        .bundle-intro-{{ section.id }} .bundle-cta-mobile .bundle-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 32px;
+            background-color: var(--xinzuo-accent, #FFD380);
+            border: none;
+            border-radius: 4px;
+            font-weight: 700;                              /* Style Guide: only 400 + 700 */
+            font-size: 15px;
+            letter-spacing: 0.06em;
+            color: var(--xz-on-accent, #000000);            /* black on gold per spec */
+            text-decoration: none;
+            text-transform: uppercase;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .bundle-intro-{{ section.id }} .bundle-cta-mobile .bundle-cta svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .bundle-intro-{{ section.id }} .bundle-right {
+            min-width: unset;
+            gap: 12px;
+            flex-direction: row;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .bundle-intro-{{ section.id }} .tier-card {
+            width: 45%;
+            flex: 0 0 45%;
+            padding: 20px 16px;
+            gap: 12px;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .bundle-intro-{{ section.id }} .tier-card .tier-pct {
+            font-size: 28px;
+            min-width: 64px;
+        }
+
+        .bundle-intro-{{ section.id }} .tier-card .tier-detail strong {
+            font-size: 15px;
+        }
+
+        .bundle-intro-{{ section.id }} .tier-card .tier-detail span {
+            font-size: 13px;
+        }
+
+        .bundle-intro-{{ section.id }} .compare-card {
+            padding: 16px 20px;
+            width: 100%;
+            flex: 0 0 100%;
+        }
+    }
+</style>
+
+<div class="bundle-intro-{{ section.id }}">
+    <div class="bundle-inner">
+        <div class="bundle-left">
+            <h2>{{ section.settings.heading }}</h2>
+            <p class="bundle-sub">{{ section.settings.subheading }}</p>
+            <a href="{{ section.settings.link }}" class="bundle-cta">
+                {{ section.settings.link_text }}
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                    <g clip-path="url(#clip0_bundle_cta_{{ section.id }})">
+                        <path d="M5 15L15 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M6.875 5H15V13.125" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </g>
+                    <defs>
+                        <clipPath id="clip0_bundle_cta_{{ section.id }}">
+                            <rect width="20" height="20" fill="white"/>
+                        </clipPath>
+                    </defs>
+                </svg>
+            </a>
+        </div>
+        <div class="bundle-right">
+            {%- for block in section.blocks -%}
+                {%- if block.type == 'tier' -%}
+                    <a href="{{ section.settings.link }}" class="tier-card" {{ block.shopify_attributes }}>
+                        <div class="tier-pct">{{ block.settings.discount }}% off</div>
+                        <div class="tier-detail">
+                            <strong>{{ block.settings.label }}</strong>
+                            <span>{{ block.settings.condition }}</span>
+                        </div>
+                    </a>
+                {%- endif -%}
+            {%- endfor -%}
+
+            {%- if section.settings.compare_link != blank -%}
+                <a href="{{ section.settings.compare_link }}" class="compare-card">
+                    <div class="compare-text">
+                        <strong>{{ section.settings.compare_heading }}</strong>
+                        <span>{{ section.settings.compare_subheading }}</span>
+                    </div>
+                    <div class="compare-arrow">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+                        </svg>
+                    </div>
+                </a>
+            {%- endif -%}
+        </div>
+        <div class="bundle-cta-mobile">
+            <a href="{{ section.settings.link }}" class="bundle-cta">
+                {{ section.settings.link_text }}
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                    <g clip-path="url(#clip1_bundle_cta_{{ section.id }})">
+                        <path d="M5 15L15 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M6.875 5H15V13.125" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </g>
+                    <defs>
+                        <clipPath id="clip1_bundle_cta_{{ section.id }}">
+                            <rect width="20" height="20" fill="white"/>
+                        </clipPath>
+                    </defs>
+                </svg>
+            </a>
+        </div>
+    </div>
+</div>
+
+{% schema %}
+{
+    "name": "Bundle Intro",
+    "settings": [
+        {
+            "type": "text",
+            "id": "heading",
+            "label": "Heading",
+            "default": "Build Your Own Knife Set"
+        },
+        {
+            "type": "text",
+            "id": "subheading",
+            "label": "Subheading",
+            "default": "Mix and match across any series. The more you add, the more you save."
+        },
+        {
+            "type": "url",
+            "id": "link",
+            "label": "Bundle Button Link"
+        },
+        {
+            "type": "text",
+            "id": "link_text",
+            "label": "Bundle Button Text",
+            "default": "BUILD A BUNDLE"
+        },
+        {
+            "type": "header",
+            "content": "Compare Section"
+        },
+        {
+            "type": "url",
+            "id": "compare_link",
+            "label": "Compare Link"
+        },
+        {
+            "type": "text",
+            "id": "compare_heading",
+            "label": "Compare Heading",
+            "default": "Not sure which knife?"
+        },
+        {
+            "type": "text",
+            "id": "compare_subheading",
+            "label": "Compare Subheading",
+            "default": "Compare series side by side to find your perfect match"
+        }
+    ],
+    "blocks": [
+        {
+            "type": "tier",
+            "name": "Discount Tier",
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "discount",
+                    "label": "Discount Percentage",
+                    "default": "10"
+                },
+                {
+                    "type": "text",
+                    "id": "label",
+                    "label": "Tier Label",
+                    "default": "Starter Bundle"
+                },
+                {
+                    "type": "text",
+                    "id": "condition",
+                    "label": "Condition",
+                    "default": "Buy 3 or more knives"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Bundle Intro"
+        }
+    ]
+}
+{% endschema %}

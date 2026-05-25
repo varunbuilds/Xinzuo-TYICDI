@@ -1,0 +1,178 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "collection_hero_banner": {
+      "type": "collection-hero-banner",
+      "settings": {
+        "color_scheme": "scheme-5"
+      }
+    },
+    "header": {
+      "type": "seo-collection-header",
+      "settings": {
+        "heading_override": "",
+        "subtitle": "Keep Your Edge Razor Sharp",
+        "intro_content": "<p>A quality <strong>whetstone</strong> is the single best investment you can make for your <strong>kitchen knives</strong>. Unlike pull-through sharpeners that strip metal unevenly, whetstones give you full control over the edge angle and finish. XinZuo whetstones are manufactured in Yangjiang alongside our knife production, ensuring consistent grit quality and proper hardness for Japanese steel. Whether you need a 1000 grit stone for regular sharpening or a 6000 grit stone for polishing, our whetstone collection has you covered. Most home cooks find a combination 1000/6000 whetstone handles everything from a dull chef knife to fine-tuning a gyuto edge.</p>",
+        "color_scheme": "scheme-5"
+      }
+    },
+    "main": {
+      "type": "main-collection",
+      "blocks": {
+        "filters": {
+          "type": "filters",
+          "static": true,
+          "settings": {
+            "enable_filtering": true,
+            "filter_style": "vertical",
+            "filter_width": "centered",
+            "text_label_case": "default",
+            "show_swatch_label": false,
+            "show_filter_label": true,
+            "enable_sorting": true,
+            "enable_grid_density": true,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "padding-block-start": 8,
+            "padding-block-end": 8,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0,
+            "facets_margin_bottom": 8,
+            "facets_margin_right": 20
+          },
+          "blocks": {}
+        },
+        "product-card": {
+          "type": "_product-card",
+          "static": true,
+          "settings": {
+            "product_card_gap": 4,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "card-gallery": {
+              "type": "_product-card-gallery",
+              "settings": {
+                "image_ratio": "adapt",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "product_title": {
+              "type": "product-title",
+              "settings": {
+                "width": "100%",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 4,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "price": {
+              "type": "price",
+              "settings": {
+                "show_sale_price_first": true,
+                "show_installments": false,
+                "show_tax_info": false,
+                "type_preset": "h6",
+                "width": "100%",
+                "alignment": "left",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "color": "var(--color-foreground)",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "card-gallery",
+            "product_title",
+            "price"
+          ]
+        }
+      },
+      "settings": {
+        "layout_type": "grid",
+        "product_card_size": "medium",
+        "mobile_product_card_size": "small",
+        "product_grid_width": "centered",
+        "full_width_on_mobile": true,
+        "columns_gap_horizontal": 16,
+        "columns_gap_vertical": 24,
+        "padding-inline-start": 0,
+        "padding-inline-end": 0,
+        "color_scheme": "scheme-5",
+        "padding-block-start": 0,
+        "padding-block-end": 32
+      }
+    },
+    "below_grid": {
+      "type": "seo-below-grid-content",
+      "settings": {
+        "heading": "Learn more about whetstones",
+        "content": "<p>New to <strong>whetstone sharpening</strong>? Our step-by-step guide covers everything from soaking to maintaining the correct angle. <a href=\"/blogs/news/how-to-sharpen-knives-whetstone\">Whetstone sharpening guide</a></p><p>Choosing between 1000, 3000, and 6000 grit? Our <strong>whetstone</strong> grit guide explains which stones you actually need. <a href=\"/blogs/news/whetstone-grit-guide-kitchen-knives\">Whetstone grit guide</a></p><p>Master the difference between 15 and 20 degree sharpening angles for Japanese vs Western kitchen knives. <a href=\"/blogs/news/knife-sharpening-angle-guide\">Sharpening angle guide</a></p><p>Honing steel vs whetstone: understand when to hone and when to sharpen to keep your edge performing. <a href=\"/blogs/news/honing-steel-guide-knife-edge-maintenance\">Honing steel guide</a></p><p>Protect your freshly sharpened edges with our range of knife guards and blade sheaths. <a href=\"/collections/knife-guards\">Shop Knife Guards</a></p><p>The right cutting board protects your knife edge between sharpenings. See our wood and end grain options. <a href=\"/collections/chopping-boards\">Shop Cutting Boards</a></p>",
+        "show_border": true,
+        "color_scheme": "scheme-5"
+      }
+    },
+    "related_links": {
+      "type": "seo-related-links",
+      "settings": {
+        "heading": "Related Guides & Collections",
+        "color_scheme": "scheme-5"
+      }
+    }
+  },
+  "order": [
+    "collection_hero_banner",
+    "header",
+    "main",
+    "below_grid",
+    "related_links"
+  ]
+}

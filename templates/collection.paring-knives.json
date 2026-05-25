@@ -1,0 +1,178 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "collection_hero_banner": {
+      "type": "collection-hero-banner",
+      "settings": {
+        "color_scheme": "scheme-5"
+      }
+    },
+    "header": {
+      "type": "seo-collection-header",
+      "settings": {
+        "heading_override": "",
+        "subtitle": "Precision in the Palm of Your Hand",
+        "intro_content": "<p>The <strong>paring knife</strong> handles the detail work that larger blades cannot manage, from peeling apples to deveining prawns to trimming vegetables. Every serious <strong>kitchen knife</strong> collection needs a quality paring knife alongside the chef knife for tasks that demand control and precision. XinZuo paring knives are forged in Yangjiang with the same Damascus steel and edge geometry as our larger blades, delivering professional sharpness in a compact 3.5 to 4 inch format. The short blade keeps your fingers close to the cutting edge for intricate work like hulling strawberries, segmenting citrus, or creating garnishes. When you need nimble control rather than leverage, reach for the paring knife.</p>",
+        "color_scheme": "scheme-5"
+      }
+    },
+    "main": {
+      "type": "main-collection",
+      "blocks": {
+        "filters": {
+          "type": "filters",
+          "static": true,
+          "settings": {
+            "enable_filtering": true,
+            "filter_style": "vertical",
+            "filter_width": "centered",
+            "text_label_case": "default",
+            "show_swatch_label": false,
+            "show_filter_label": true,
+            "enable_sorting": true,
+            "enable_grid_density": true,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "padding-block-start": 8,
+            "padding-block-end": 8,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0,
+            "facets_margin_bottom": 8,
+            "facets_margin_right": 20
+          },
+          "blocks": {}
+        },
+        "product-card": {
+          "type": "_product-card",
+          "static": true,
+          "settings": {
+            "product_card_gap": 4,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "card-gallery": {
+              "type": "_product-card-gallery",
+              "settings": {
+                "image_ratio": "adapt",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "product_title": {
+              "type": "product-title",
+              "settings": {
+                "width": "100%",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 4,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "price": {
+              "type": "price",
+              "settings": {
+                "show_sale_price_first": true,
+                "show_installments": false,
+                "show_tax_info": false,
+                "type_preset": "h6",
+                "width": "100%",
+                "alignment": "left",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "color": "var(--color-foreground)",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "card-gallery",
+            "product_title",
+            "price"
+          ]
+        }
+      },
+      "settings": {
+        "layout_type": "grid",
+        "product_card_size": "medium",
+        "mobile_product_card_size": "small",
+        "product_grid_width": "centered",
+        "full_width_on_mobile": true,
+        "columns_gap_horizontal": 16,
+        "columns_gap_vertical": 24,
+        "padding-inline-start": 0,
+        "padding-inline-end": 0,
+        "color_scheme": "scheme-5",
+        "padding-block-start": 0,
+        "padding-block-end": 32
+      }
+    },
+    "below_grid": {
+      "type": "seo-below-grid-content",
+      "settings": {
+        "heading": "Learn more about paring knives",
+        "content": "<p>How to choose the perfect <strong>paring knife</strong>: size, steel, and handle options for every kitchen task. <a href=\"/blogs/news/paring-knife-buying-guide\">Paring knife buying guide</a></p><p>Meet the petty knife: the Japanese utility knife that sits between a paring knife and a chef knife. <a href=\"/blogs/news/petty-knife-guide-japanese-utility\">Petty knife guide</a></p><p>Building your first knife collection? Our beginner's guide explains which kitchen knives to buy first. <a href=\"/blogs/news/beginner-kitchen-knife-buying-guide\">Beginner's knife guide</a></p><p>Need a slightly larger blade for sandwiches and citrus? Browse our utility knives. <a href=\"/collections/utility-knives\">Shop Utility Knives</a></p><p>Complete your set with a chef knife for the bigger cutting tasks. <a href=\"/collections/chef-knives\">Shop Chef Knives</a></p>",
+        "show_border": true,
+        "color_scheme": "scheme-5"
+      }
+    },
+    "related_links": {
+      "type": "seo-related-links",
+      "settings": {
+        "heading": "Related Guides & Collections",
+        "color_scheme": "scheme-5"
+      }
+    }
+  },
+  "order": [
+    "collection_hero_banner",
+    "header",
+    "main",
+    "below_grid",
+    "related_links"
+  ]
+}

@@ -1,0 +1,245 @@
+{% comment %}
+  SEO Collection Header Section
+  H1 with collection title, optional subtitle, and rich text intro content
+  Mobile: CSS-truncated with max-height, "Read more" expands via class toggle
+  Desktop: Full content visible, no toggle
+  All content in DOM at all times for SEO (CSS hides overflow, not content)
+{% endcomment %}
+
+{% style %}
+  /* Layout: LEFT-aligned per Anthropic Design rebalance spec.
+     The rest of the page (.collection-wrapper, hero, sidebar) lives inside a
+     max-width 1440px centered container. SEO header must match: outer .section
+     reset to plain block, then the inner uses max-width 1440 + margin auto +
+     internal --xz-page-edge padding so its content lands at the SAME left edge
+     as the sidebar at every viewport (including very wide screens). */
+  header.section-{{ section.id }}.section {
+    display: block;
+    padding-inline: 0;
+    width: 100%;
+  }
+  .section-{{ section.id }} .seo-collection-header {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 16px var(--xz-page-edge, 52px) 32px;
+    text-align: left;
+  }
+
+  .section-{{ section.id }} .seo-collection-header__subtitle {
+    font-family: "Inter", sans-serif;
+    font-weight: 700;                   /* Sen rule: only 400 + 700 */
+    font-size: 22px;
+    color: #fff;
+    margin: 0 0 16px 0;
+    line-height: 1.3;
+  }
+
+  /* No artificial max-width on the inner text — it inherits the parent's
+     centered 1440px content width so the right edge lines up with where the
+     product grid ends. The container is already capped + centered upstream. */
+  .section-{{ section.id }} .seo-collection-header__intro {
+    margin: 0;
+    font-family: "Inter", sans-serif;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.80);
+  }
+
+  .section-{{ section.id }} .seo-collection-header__intro p {
+    margin: 0 0 12px 0;
+  }
+  .section-{{ section.id }} .seo-collection-header__intro p:last-child { margin-bottom: 0; }
+  .section-{{ section.id }} .seo-collection-header__intro a {
+    color: var(--xz-accent, #FFD380);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .section-{{ section.id }} .seo-collection-header__intro a:hover {
+    color: var(--xz-accent-hover, #FFDC99);
+  }
+
+  .section-{{ section.id }} .seo-collection-header__intro ul,
+  .section-{{ section.id }} .seo-collection-header__intro ol {
+    text-align: left;
+    margin: 12px 0;
+    padding-left: 20px;
+  }
+  .section-{{ section.id }} .seo-collection-header__intro li { margin-bottom: 6px; }
+
+  /* Content wrapper — clamps to 3 lines until "Read more" is clicked.
+     Applies on BOTH desktop and mobile per user direction. */
+  .section-{{ section.id }} .intro-content-wrapper {
+    position: relative;
+    overflow: hidden;
+    max-height: calc(15px * 1.6 * 3);   /* ~3 lines at 15px / 1.6 line-height */
+    transition: max-height 0.3s ease-out;
+  }
+  .section-{{ section.id }} .intro-content-wrapper::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 18px;
+    background: linear-gradient(to bottom, transparent, rgb(25, 25, 27));
+    pointer-events: none;
+    transition: opacity 0.3s ease-out;
+  }
+  .section-{{ section.id }} .intro-content-wrapper.expanded {
+    max-height: 2000px;
+  }
+  .section-{{ section.id }} .intro-content-wrapper.expanded::after { opacity: 0; }
+
+  /* Toggle button — gold accent, uppercase, Sen Bold per Style Guide */
+  .section-{{ section.id }} .intro-toggle-btn {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: "Sen", sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--xz-accent, #FFD380);
+  }
+  .section-{{ section.id }} .intro-toggle-btn:hover { color: var(--xz-accent-hover, #FFDC99); }
+
+  .section-{{ section.id }} .intro-toggle-btn .show-less { display: none; }
+  .section-{{ section.id }} .intro-content-wrapper.expanded ~ .intro-toggle-btn .read-more { display: none; }
+  .section-{{ section.id }} .intro-content-wrapper.expanded ~ .intro-toggle-btn .show-less { display: inline; }
+
+  /* Hide toggle when content fits without clamping (set via JS data-attr) */
+  .section-{{ section.id }} .seo-collection-header[data-no-overflow] .intro-toggle-btn { display: none; }
+  .section-{{ section.id }} .seo-collection-header[data-no-overflow] .intro-content-wrapper { max-height: none; overflow: visible; }
+  .section-{{ section.id }} .seo-collection-header[data-no-overflow] .intro-content-wrapper::after { display: none; }
+
+  @media screen and (max-width: 1025px) {
+    .section-{{ section.id }} .seo-collection-header__subtitle { font-size: 18px; }
+  }
+
+  @media screen and (max-width: 749px) {
+    .section-{{ section.id }} .seo-collection-header {
+      padding: 12px var(--xz-page-edge, 16px) 24px;
+    }
+    .section-{{ section.id }} .seo-collection-header__subtitle {
+      font-size: 16px;
+      margin-bottom: 12px;
+    }
+    .section-{{ section.id }} .seo-collection-header__intro {
+      font-size: 14px;
+      line-height: 1.55;
+    }
+    .section-{{ section.id }} .intro-content-wrapper {
+      max-height: calc(14px * 1.55 * 3);
+    }
+  }
+  /* CLS prevention: hide on desktop until JS moves section into right column */
+  @media screen and (min-width: 1000px) {
+    #shopify-section-{{ section.id }} {
+      position: absolute;
+      visibility: hidden;
+      pointer-events: none;
+    }
+    #shopify-section-{{ section.id }}.cls-ready {
+      position: static;
+      visibility: visible;
+      pointer-events: auto;
+    }
+  }
+{% endstyle %}
+
+<div class="section-background color-{{ section.settings.color_scheme }}"></div>
+<header class="section-{{ section.id }} section color-{{ section.settings.color_scheme }}">
+  <div class="seo-collection-header">
+    {%- if section.settings.subtitle != blank -%}
+      <h2 class="seo-collection-header__subtitle">{{ section.settings.subtitle }}</h2>
+    {%- endif -%}
+
+    {%- if section.settings.intro_content != blank -%}
+      <div class="seo-collection-header__intro">
+        <!-- Content wrapper with CSS truncation -->
+        <div class="intro-content-wrapper" id="intro-wrapper-{{ section.id }}">
+          {{ section.settings.intro_content }}
+        </div>
+
+        <!-- Toggle button (JS adds click handler) -->
+        <button type="button" class="intro-toggle-btn" id="intro-toggle-{{ section.id }}" aria-expanded="false">
+          <span class="read-more">Read more</span>
+          <span class="show-less">Show less</span>
+        </button>
+      </div>
+    {%- endif -%}
+  </div>
+</header>
+
+<script>
+  (function() {
+    var wrapper   = document.getElementById('intro-wrapper-{{ section.id }}');
+    var toggleBtn = document.getElementById('intro-toggle-{{ section.id }}');
+    var header    = wrapper ? wrapper.closest('.seo-collection-header') : null;
+    if (!wrapper || !toggleBtn || !header) return;
+
+    // Hide toggle entirely when content fits without clamping (recheck on resize).
+    function checkOverflow() {
+      // Temporarily un-clamp to measure
+      var wasExpanded = wrapper.classList.contains('expanded');
+      header.removeAttribute('data-no-overflow');
+      var clampedHeight = wrapper.clientHeight;
+      wrapper.classList.add('expanded');
+      var fullHeight = wrapper.scrollHeight;
+      if (!wasExpanded) wrapper.classList.remove('expanded');
+      if (fullHeight - clampedHeight < 4) header.setAttribute('data-no-overflow', '');
+    }
+
+    toggleBtn.addEventListener('click', function() {
+      var isExpanded = wrapper.classList.toggle('expanded');
+      toggleBtn.setAttribute('aria-expanded', isExpanded);
+    });
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', checkOverflow, { once: true });
+    } else { checkOverflow(); }
+    var t; window.addEventListener('resize', function () { clearTimeout(t); t = setTimeout(checkOverflow, 200); });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "SEO Collection Header",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading_override",
+      "label": "Heading override",
+      "info": "Leave blank to use collection title"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle / Tagline",
+      "info": "Optional line displayed below the heading"
+    },
+    {
+      "type": "richtext",
+      "id": "intro_content",
+      "label": "Intro content",
+      "info": "80-150 words introducing the collection. First 2 sentences visible on mobile, rest behind 'Read more' toggle. Full content always in DOM for SEO."
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-5"
+    }
+  ],
+  "presets": [
+    {
+      "name": "SEO Collection Header"
+    }
+  ]
+}
+{% endschema %}

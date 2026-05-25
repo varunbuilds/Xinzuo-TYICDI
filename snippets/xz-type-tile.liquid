@@ -1,0 +1,75 @@
+{%- doc -%}
+  Xinzuo Style Guide "Shop by Type" tile.
+
+  Spec (designer images 15 + 16):
+    - Square knife image on black background (isolated knife, no lifestyle)
+    - Below: type name in UPPER ("CHEF KNIVES ↗") with arrow icon
+    - "FROM: $X.XX" price line in gold
+    - Optional 12% OFF promo badge top-left
+    - Used in BOTH the mobile hamburger drawer AND the desktop "Shop by
+      Type" full-screen dropdown overlay.
+
+  Usage:
+    {% render 'xz-type-tile',
+       collection: collections.chef-knives,
+       type_label: 'Chef Knives',
+       on_sale: false %}
+
+  @param {object} collection - Shopify collection (provides image + price_min)
+  @param {string} [type_label] - Override label (defaults to collection.title | upcase)
+  @param {string} [url] - Override link (defaults to collection.url)
+  @param {string} [promo_text] - Optional promo badge text (e.g. "12% OFF")
+{%- enddoc -%}
+
+{%- liquid
+  assign label = type_label | default: collection.title | upcase
+  assign link  = url | default: collection.url
+  # Custom override: collection.metafields.custom.main_image (file_reference,
+  # image type) wins over the collection's featured/standard image. Falls
+  # back through featured_image → collection.image → first product image.
+  assign img = collection.metafields.custom.main_image
+  if img == blank
+    assign img = collection.featured_image | default: collection.image
+  endif
+  if img == blank and collection.products.first
+    assign img = collection.products.first.featured_image
+  endif
+  # MediaImage (from a file_reference metafield) needs .image extracted before
+  # piping through image_url; plain Image objects pass through unchanged.
+  if img.image
+    assign img = img.image
+  endif
+  assign price_from = collection.products | sort: 'price' | first
+-%}
+
+<a class="xz-type-tile" href="{{ link }}" aria-label="Shop {{ label | escape }}">
+  {%- if promo_text != blank -%}
+    <span class="xz-type-tile__promo">{{ promo_text }}</span>
+  {%- endif -%}
+  <div class="xz-type-tile__img-wrap">
+    {%- if img -%}
+      <img class="xz-type-tile__img"
+           src="{{ img | image_url: width: 600 }}"
+           srcset="{{ img | image_url: width: 300 }} 300w, {{ img | image_url: width: 450 }} 450w, {{ img | image_url: width: 600 }} 600w"
+           sizes="(max-width: 749px) 45vw, 20vw"
+           alt="{{ label | escape }}"
+           loading="lazy"
+           width="600" height="600">
+    {%- endif -%}
+  </div>
+  <div class="xz-type-tile__info">
+    <div class="xz-type-tile__label-row">
+      <span class="xz-type-tile__label">{{ label }}</span>
+      <svg class="xz-type-tile__arrow" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+        <path d="M3.5 10.5L10.5 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M5 3.5h5.5V9" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    {%- if price_from -%}
+      <div class="xz-type-tile__price">
+        <span class="xz-type-tile__price-label">FROM:</span>
+        <span class="xz-type-tile__price-value">{{ price_from.price | money }}</span>
+      </div>
+    {%- endif -%}
+  </div>
+</a>

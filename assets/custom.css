@@ -1,0 +1,335 @@
+/* ==========================================================================
+   WCAG AA Contrast Fixes — xinzuo.com.au
+   All colour overrides in one file. Do not edit base theme CSS.
+   ========================================================================== */
+
+:root {
+  /* Primary accent — gold (CTAs, buttons, active states).
+     Canonical values mirror --xz-* tokens defined in site-overrides.css. */
+  --xinzuo-accent: #FFD380;
+  --xinzuo-accent-hover: #FFDC99;
+  --xinzuo-accent-active: #E5BC73;
+  --xinzuo-accent-disabled: #FFD38088;
+  --xinzuo-accent-text: #000000;          /* Pure black per Style Guide v1.0 */
+
+  /* Tag red (NEW badges, sale tags, promo callouts, notice borders) */
+  --xinzuo-red: #C81E1E;
+  --xinzuo-red-hover: #A11919;
+
+  /* Secondary accent — deep gold (series labels, kickers, decorative) */
+  --xinzuo-gold: #D1AE6B;
+  --xinzuo-gold-light: #E0C28A;
+
+  /* Stock pill green */
+  --xinzuo-green: #22C55E;
+
+  --wcag-muted-text: #9e9e9e;
+}
+
+/* --------------------------------------------------------------------------
+   1. Global accent overrides — buttons, links, badges
+   CTAs use yellow accent with black text. Sale/promo badges stay red.
+   -------------------------------------------------------------------------- */
+
+/* --- CTA Buttons (cw-hero, bundle-intro) --- */
+.hero-cta-button {
+  background-color: var(--xinzuo-accent) !important;
+  color: var(--xinzuo-accent-text) !important;
+}
+.hero-cta-button:hover {
+  background-color: var(--xinzuo-accent-hover) !important;
+  color: var(--xinzuo-accent-text) !important;
+}
+.hero-cta-button:active {
+  background-color: var(--xinzuo-accent-active) !important;
+  color: var(--xinzuo-accent-text) !important;
+}
+
+.bundle-cta {
+  background-color: var(--xinzuo-accent) !important;
+  color: var(--xinzuo-accent-text) !important;
+}
+.bundle-cta:hover {
+  background-color: var(--xinzuo-accent-hover) !important;
+  color: var(--xinzuo-accent-text) !important;
+}
+.bundle-cta:active {
+  background-color: var(--xinzuo-accent-active) !important;
+  color: var(--xinzuo-accent-text) !important;
+}
+
+/* --- Load More button (home-products) --- */
+#load-more {
+  background-color: var(--xinzuo-accent) !important;
+  color: var(--xinzuo-accent-text) !important;
+}
+#load-more:hover {
+  background-color: var(--xinzuo-accent-hover) !important;
+  color: var(--xinzuo-accent-text) !important;
+}
+#load-more:disabled {
+  background-color: var(--xinzuo-accent-disabled) !important;
+  color: var(--xinzuo-accent-text) !important;
+}
+
+/* --- Discount / sale badge (all pages) — kept red --- */
+.price-off {
+  background-color: var(--xinzuo-red) !important;
+  color: #fff !important;
+}
+
+/* --- Heading accent text (best-reviews, reviews) — gold --- */
+.best-reviews__header h2 strong {
+  color: var(--xinzuo-gold) !important;
+}
+.home-reviews h2 strong {
+  color: var(--xinzuo-gold) !important;
+}
+
+/* --- Review card avatar fallback (best-reviews) — gold for warmth --- */
+.review-card__avatar {
+  background-color: var(--xinzuo-gold) !important;
+  color: var(--xinzuo-accent-text) !important;
+}
+
+/* --- Collection description links (cw-collection-list) --- */
+.collection-description-span a {
+  color: var(--xinzuo-accent) !important;
+}
+
+/* --- Tier card hover border (bundle-intro) — yellow accent glow --- */
+.tier-card:hover {
+  border-color: rgba(255, 211, 128, 0.4) !important;
+}
+
+
+/* --- Email signup button (site-overrides.css uses .email-signup__input-group button) --- */
+.email-signup__input-group button,
+.email-signup__button {
+  background-color: var(--xinzuo-accent) !important;
+  color: var(--xinzuo-accent-text) !important;
+}
+.email-signup__input-group button:hover,
+.email-signup__button:hover {
+  background-color: var(--xinzuo-accent-hover) !important;
+  color: var(--xinzuo-accent-text) !important;
+}
+
+/* --- Engraving modal confirm button --- */
+.engraving-modal__btn--confirm {
+  background-color: var(--xinzuo-accent) !important;
+  color: var(--xinzuo-accent-text) !important;
+}
+.engraving-modal__btn--confirm:hover {
+  background-color: var(--xinzuo-accent-hover) !important;
+  color: var(--xinzuo-accent-text) !important;
+}
+
+/* --- Judge.me star colours — gold --- */
+.jdgm-star.jdgm--on,
+.jdgm-star.jdgm--half {
+  color: var(--xinzuo-gold) !important;
+}
+.jdgm-star.jdgm--off {
+  color: #555 !important;
+}
+
+/* --- Collection filter UI elements --- */
+.filter-count-badge {
+  background-color: var(--xinzuo-accent) !important;
+  color: var(--xinzuo-accent-text) !important;
+}
+.apply-filters-btn {
+  background-color: var(--xinzuo-accent) !important;
+  color: var(--xinzuo-accent-text) !important;
+}
+.apply-filters-btn:hover {
+  background-color: var(--xinzuo-accent-hover) !important;
+  color: var(--xinzuo-accent-text) !important;
+}
+
+/* --- Review card location text (muted on dark bg) --- */
+.review-card__location {
+  color: var(--wcag-muted-text) !important;
+}
+
+/* --- Header drawer "GO BACK" text (#828282 on dark drawer bg) --- */
+.header-drawer-closebtn {
+  color: var(--wcag-muted-text) !important;
+}
+
+/* --- Generic theme primary buttons — yellow accent --- */
+.button--primary,
+.shopify-section .btn--primary {
+  background-color: var(--xinzuo-accent) !important;
+  border-color: var(--xinzuo-accent) !important;
+  color: var(--xinzuo-accent-text) !important;
+}
+.button--primary:hover,
+.shopify-section .btn--primary:hover {
+  background-color: var(--xinzuo-accent-hover) !important;
+  border-color: var(--xinzuo-accent-hover) !important;
+  color: var(--xinzuo-accent-text) !important;
+}
+
+/* --- ATC + Checkout CTA consistency: Sen 700 bold, pure black text, 4px radius (NEVER pill).
+       Per Style Guide v1.0: button text is Sen Bold 12px UPPERCASE 0.06–0.08em letter-spacing.
+       Border-radius forced to 4px because the Horizon theme defaults
+       --style-border-radius-buttons-primary to 100px (fully pill on standard heights). --- */
+.cart__checkout-button,
+.cart__checkout-button.button,
+.add-to-cart-button,
+.add-to-cart-button.button {
+  font-family: "Sen", sans-serif !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.06em !important;
+  text-transform: uppercase !important;
+  color: var(--xinzuo-accent-text, #000000) !important;
+  background-color: var(--xinzuo-accent, #FFD380) !important;
+  border-color: var(--xinzuo-accent, #FFD380) !important;
+  border-radius: var(--xz-r, 4px) !important;
+}
+.cart__checkout-button:hover,
+.cart__checkout-button.button:hover,
+.add-to-cart-button:hover,
+.add-to-cart-button.button:hover {
+  background-color: var(--xinzuo-accent-hover, #FFDC99) !important;
+  border-color: var(--xinzuo-accent-hover, #FFDC99) !important;
+  color: var(--xinzuo-accent-text, #1A1A1E) !important;
+}
+/* Ensure all spans/text inside the CTA inherit the bold weight + black colour */
+.cart__checkout-button *,
+.add-to-cart-button * {
+  color: inherit !important;
+  font-weight: inherit !important;
+}
+/* SVG icons inside CTAs follow text colour via currentColor */
+.cart__checkout-button svg,
+.add-to-cart-button svg {
+  color: var(--xinzuo-accent-text, #1A1A1E);
+}
+.cart__checkout-button svg [stroke]:not([stroke="none"]),
+.add-to-cart-button svg [stroke]:not([stroke="none"]) {
+  stroke: currentColor;
+}
+.cart__checkout-button svg [fill]:not([fill="none"]):not([fill="white"]),
+.add-to-cart-button svg [fill]:not([fill="none"]):not([fill="white"]) {
+  fill: currentColor;
+}
+
+/* Sale price text — kept red as a promo emphasis */
+.price--on-sale .price-item--sale,
+.price--on-sale .price__sale .price-item--sale {
+  color: var(--xinzuo-red) !important;
+}
+
+/* Sale badge overlay — kept red */
+.badge--sale,
+.card__badge .badge--sale {
+  background-color: var(--xinzuo-red) !important;
+  color: #fff !important;
+}
+
+/* Any inline background-color:var(--xinzuo-accent, #FFD380) used via Liquid settings.
+   NOTE: Do NOT use [style*="color: var(--xinzuo-accent, #FFD380)"] — it falsely matches
+   "background-color: var(--xinzuo-accent, #FFD380)" as a substring. */
+[style*="background-color: var(--xinzuo-accent, #FFD380)"],
+[style*="background-color:var(--xinzuo-accent, #FFD380)"],
+[style*="background: var(--xinzuo-accent, #FFD380)"],
+[style*="background:var(--xinzuo-accent, #FFD380)"] {
+  background-color: var(--xinzuo-accent) !important;
+  color: var(--xinzuo-accent-text) !important;
+}
+
+/* --- Global gold-CTA font: Sen Bold 700 per Style Guide v1.0 (never 500/600).
+       Also force 4px border-radius — spec says NEVER pill-shaped buttons. --- */
+.hero-cta-button,
+.bundle-cta,
+#load-more,
+.button--primary,
+.shopify-section .btn--primary,
+.apply-filters-btn,
+.email-signup__input-group button,
+.email-signup__button,
+.engraving-modal__btn--confirm {
+  font-family: "Sen", sans-serif !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.06em !important;
+  text-transform: uppercase !important;
+  border-radius: var(--xz-r, 4px) !important;
+}
+
+/* --------------------------------------------------------------------------
+   2. Review widget contrast — judge.me muted text
+   Replaces #828282 (3.71:1) with #9e9e9e (4.97:1) on dark backgrounds
+   -------------------------------------------------------------------------- */
+
+.jdgm-rev__timestamp,
+.jdgm-rev-widg__summary-text,
+.jdgm-rev-widg__summary-average,
+.jdgm-paginate__page,
+.jdgm-rev-widg__sort-label {
+  color: var(--wcag-muted-text) !important;
+}
+/* Badges have white text on red bg — styled in judgeme-reviews.css */
+
+/* Catch any judge.me element with muted grey on dark background */
+.jdgm-widget [style*="color: #828282"],
+.jdgm-widget [style*="color:#828282"],
+.jdgm-widget [style*="color: rgb(130, 130, 130)"] {
+  color: var(--wcag-muted-text) !important;
+}
+
+/* --------------------------------------------------------------------------
+   3. Existing custom styles (chat toggle widget)
+   -------------------------------------------------------------------------- */
+
+#hide-chat {
+    transition: 0.5s;
+    width: 16px;
+    height: 16px;
+    background: #3b3636;
+    position: fixed;
+    bottom: 52px;
+    right: 0;
+    z-index: 999999999;
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* transform: translate(90%, 0); */
+    padding: 0;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+/* #hide-chat:hover {
+    transform: translate(70%, 0px);
+} */
+
+#hide-chat .chat-icon {
+    width: 13px;
+    height: 20px;
+    stroke: #ffffff !important;
+    fill: none !important;
+    transition: opacity 0.3s;
+    flex-shrink: 0;
+    display: block;
+}
+
+#hide-chat .chat-icon-eye {
+    display: block;
+}
+
+#hide-chat .chat-icon-eye-slash {
+    display: none;
+}
+
+#hide-chat[chatvisible="false"] .chat-icon-eye {
+    display: none;
+}
+
+#hide-chat[chatvisible="false"] .chat-icon-eye-slash {
+    display: block;
+}

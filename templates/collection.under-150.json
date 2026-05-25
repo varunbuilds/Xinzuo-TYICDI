@@ -1,0 +1,178 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "collection_hero_banner": {
+      "type": "collection-hero-banner",
+      "settings": {
+        "color_scheme": "scheme-5"
+      }
+    },
+    "header": {
+      "type": "seo-collection-header",
+      "settings": {
+        "heading_override": "",
+        "subtitle": "Where Things Get Interesting",
+        "intro_content": "<p>The $100-150 range is where things get interesting. At this price point you unlock full-sized chef knives, santoku, and nakiri in both stainless and Damascus finishes. These are the blades that most home cooks reach for every day. XinZuo <strong>knives under $150</strong> deliver the same 10Cr15CoMoV steel core and hand-finished quality as our premium lines, just in different series and handle options. If you want a serious kitchen knife without stepping into premium territory, this is the sweet spot where performance and value meet.</p>",
+        "color_scheme": "scheme-5"
+      }
+    },
+    "main": {
+      "type": "main-collection",
+      "blocks": {
+        "filters": {
+          "type": "filters",
+          "static": true,
+          "settings": {
+            "enable_filtering": true,
+            "filter_style": "vertical",
+            "filter_width": "centered",
+            "text_label_case": "default",
+            "show_swatch_label": false,
+            "show_filter_label": true,
+            "enable_sorting": true,
+            "enable_grid_density": true,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "padding-block-start": 8,
+            "padding-block-end": 8,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0,
+            "facets_margin_bottom": 8,
+            "facets_margin_right": 20
+          },
+          "blocks": {}
+        },
+        "product-card": {
+          "type": "_product-card",
+          "static": true,
+          "settings": {
+            "product_card_gap": 4,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "card-gallery": {
+              "type": "_product-card-gallery",
+              "settings": {
+                "image_ratio": "adapt",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "product_title": {
+              "type": "product-title",
+              "settings": {
+                "width": "100%",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 4,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "price": {
+              "type": "price",
+              "settings": {
+                "show_sale_price_first": true,
+                "show_installments": false,
+                "show_tax_info": false,
+                "type_preset": "h6",
+                "width": "100%",
+                "alignment": "left",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "color": "var(--color-foreground)",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "card-gallery",
+            "product_title",
+            "price"
+          ]
+        }
+      },
+      "settings": {
+        "layout_type": "grid",
+        "product_card_size": "medium",
+        "mobile_product_card_size": "small",
+        "product_grid_width": "centered",
+        "full_width_on_mobile": true,
+        "columns_gap_horizontal": 16,
+        "columns_gap_vertical": 24,
+        "padding-inline-start": 0,
+        "padding-inline-end": 0,
+        "color_scheme": "scheme-5",
+        "padding-block-start": 0,
+        "padding-block-end": 32
+      }
+    },
+    "below_grid": {
+      "type": "seo-below-grid-content",
+      "settings": {
+        "heading": "Learn more about knives under $150",
+        "content": "<p>This is the price range where you can get a seriously good chef knife. Our buying guide from XinZuo helps you choose the right one. <a href=\"/blogs/news/how-to-choose-a-chef-knife-the-complete-buying-guide\">Chef knife buying guide</a></p><p>Maximising value in the $100-150 range: which <strong>knives under $150</strong> give you the best bang for your dollar. <a href=\"/blogs/news/best-kitchen-knives-every-budget\">Best value knives guide</a></p><p>Full-sized chef knives start showing up at this price point. Browse the range. <a href=\"/collections/chef-knives\">Shop Chef Knives</a></p><p>Some of our best santoku knives fall right in this range for excellent everyday performance. <a href=\"/collections/santoku-knives\">Shop Santoku Knives</a></p><p>Need to spend less? See our <strong>knives under $100</strong>. <a href=\"/collections/under-100\">Shop Under $100</a></p><p>Ready to go premium? See our knives under $200 for Damascus options. <a href=\"/collections/under-200\">Shop Under $200</a></p>",
+        "show_border": true,
+        "color_scheme": "scheme-5"
+      }
+    },
+    "related_links": {
+      "type": "seo-related-links",
+      "settings": {
+        "heading": "Related Guides & Collections",
+        "color_scheme": "scheme-5"
+      }
+    }
+  },
+  "order": [
+    "collection_hero_banner",
+    "header",
+    "main",
+    "below_grid",
+    "related_links"
+  ]
+}

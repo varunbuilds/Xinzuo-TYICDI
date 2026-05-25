@@ -1,0 +1,538 @@
+{%- comment -%} charset and viewport are in theme.liquid for performance {%- endcomment -%}
+<meta
+  http-equiv="X-UA-Compatible"
+  content="IE=edge"
+>
+<meta
+  name="view-transition"
+  content="same-origin"
+>
+<meta
+  name="theme-color"
+  content=""
+>
+
+{%- liquid
+  # ============================================
+  # SEO-Optimized Title and Description Generation
+  # ============================================
+  
+  assign og_title = page_title | default: shop.name
+  assign og_url = canonical_url | default: request.origin
+  assign og_type = 'website'
+  assign og_description = page_description | default: shop.description | default: shop.name
+  assign seo_title = page_title
+
+  # Product Page SEO
+  if request.page_type == 'product' and product
+    assign og_type = 'product'
+    
+    # Determine product category keywords
+    assign product_keywords = 'kitchen knife'
+    if product.type != blank
+      assign product_keywords = product.type | downcase
+    elsif product.tags contains 'chef'
+      assign product_keywords = 'chef knife'
+    elsif product.tags contains 'santoku'
+      assign product_keywords = 'santoku knife'
+    elsif product.tags contains 'cleaver'
+      assign product_keywords = 'cleaver'
+    elsif product.tags contains 'accessory' or product.tags contains 'accessories'
+      assign product_keywords = 'kitchen accessory'
+    endif
+    
+    # Generate SEO-optimized product title: "Product Name | Type | Brand"
+    # Only append product type if the title doesn't already contain it (avoids redundancy)
+    assign seo_title = product.title
+    if product.type != blank
+      assign type_lower = product.type | downcase
+      assign title_lower = product.title | downcase
+      unless title_lower contains type_lower
+        assign seo_title = seo_title | append: ' | ' | append: product.type
+      endunless
+    endif
+    assign seo_title = seo_title | append: ' | ' | append: shop.name
+    
+    # Generate meta description with key selling points and keywords
+    if page_description == blank
+      assign og_description = 'Buy ' | append: product.title
+      # Add price
+      assign formatted_price = product.price | money_without_trailing_zeros
+      assign og_description = og_description | append: ' for ' | append: formatted_price
+      # Add availability and shipping
+      if product.available
+        assign og_description = og_description | append: '. In Stock - Free shipping over $100.'
+      else
+        assign og_description = og_description | append: '. Currently out of stock.'
+      endif
+      # Add product keywords
+      assign og_description = og_description | append: ' Premium ' | append: product_keywords | append: ' with lifetime warranty.'
+      # Ensure under 160 chars
+      assign og_description = og_description | truncate: 155
+    endif
+
+  # Collection Page SEO
+  elsif request.page_type == 'collection' and collection
+    # Determine collection category keywords
+    assign collection_keywords = 'premium kitchen products'
+    case collection.handle
+      when 'knives', 'all-knives'
+        assign collection_keywords = 'professional kitchen knives Australia'
+      when 'chef-knives'
+        assign collection_keywords = 'chef knives for professional and home cooks'
+      when 'accessories'
+        assign collection_keywords = 'kitchen knife accessories'
+      when 'chopping-boards'
+        assign collection_keywords = 'premium wooden chopping boards'
+      when 'knife-holders', 'magnetic-knife-holders'
+        assign collection_keywords = 'magnetic knife holders and blocks'
+      when 'knife-sharpening-tools'
+        assign collection_keywords = 'knife sharpening whetstones and tools'
+      when 'all-products'
+        assign collection_keywords = 'premium kitchen knives and accessories Australia'
+    endcase
+    
+    # Check for series collections
+    if collection.handle contains '-series'
+      assign series_name = collection.title | remove: 'Xinzuo ' | remove: ' Knives'
+      assign collection_keywords = series_name | append: ' Damascus kitchen knives'
+    endif
+    
+    # Generate SEO title: "Collection Name - Keywords | Brand"
+    assign seo_title = collection.title
+    if collection.handle == 'all-products'
+      assign seo_title = 'All Kitchen Knives & Accessories'
+    endif
+    assign seo_title = seo_title | append: ' | ' | append: shop.name
+    
+    # Generate keyword-rich meta description
+    if page_description == blank or collection.description == blank
+      assign og_description = 'Shop ' | append: collection.title | append: ' - ' | append: collection_keywords | append: '. '
+      if collection.products_count > 0
+        assign og_description = og_description | append: 'Browse ' | append: collection.products_count | append: '+ products. '
+      endif
+      assign og_description = og_description | append: 'Free shipping over $100. Lifetime warranty.'
+      assign og_description = og_description | truncate: 155
+    else
+      assign og_description = collection.description | strip_html | strip_newlines | truncate: 155
+    endif
+
+  # Article Page SEO  
+  elsif request.page_type == 'article' and article
+    assign og_type = 'article'
+    assign seo_title = article.title | append: ' | ' | append: shop.name
+    if page_description == blank
+      assign og_description = article.excerpt | default: article.content | strip_html | strip_newlines | truncate: 155
+    endif
+
+  # Search Page SEO
+  elsif request.page_type == 'search'
+    assign seo_title = 'Search Results for "' | append: search.terms | append: '" | ' | append: shop.name
+    assign og_description = 'Search results for ' | append: search.terms | append: ' at ' | append: shop.name | append: '. Find premium kitchen knives and accessories.'
+
+  # Blog Page SEO
+  elsif request.page_type == 'blog' and blog
+    assign seo_title = 'Kitchen Knife Guides & News | ' | append: shop.name
+    if page_description == blank
+      if blog.description != blank
+        assign og_description = blog.description | strip_html | strip_newlines | truncate: 155
+      else
+        assign og_description = 'Read the latest articles about kitchen knives, cooking tips, knife care, and culinary guides from ' | append: shop.name | append: '. Expert advice for Australian home cooks and professional chefs.'
+        assign og_description = og_description | truncate: 155
+      endif
+    endif
+
+  # Collections Listing Page SEO
+  elsif request.page_type == 'list-collections'
+    assign seo_title = 'Shop All Collections | ' | append: shop.name
+    if page_description == blank
+      assign og_description = 'Browse all Xinzuo kitchen knife collections. Damascus chef knives, santoku, cleavers, accessories, and more. Free shipping over $100 Australia-wide.'
+    endif
+
+  # Password Page
+  elsif request.page_type == 'password'
+    assign og_url = request.origin
+
+  # Cart Page
+  elsif request.page_type == 'cart'
+    assign seo_title = 'Shopping Cart | ' | append: shop.name
+
+  # Homepage
+  elsif request.page_type == 'index'
+    assign seo_title = shop.name | append: ' | Premium Kitchen Knives & Accessories'
+    if page_description == blank
+      assign og_description = shop.description | default: 'Shop premium quality kitchen knives, chef knives, and accessories. Free shipping over $100. Lifetime warranty. Australian owned.'
+      assign og_description = og_description | truncate: 155
+    endif
+  endif
+
+  # Ensure og_title matches for social sharing
+  if og_title == page_title
+    assign og_title = seo_title
+  endif
+%}
+
+<meta
+  property="og:site_name"
+  content="{{ shop.name }}"
+>
+<meta
+  property="og:url"
+  content="{{ og_url }}"
+>
+<meta
+  property="og:title"
+  content="{{ og_title | escape }}"
+>
+<meta
+  property="og:type"
+  content="{{ og_type }}"
+>
+<meta
+  property="og:description"
+  content="{{ og_description | replace: '&amp;', '&' | escape }}"
+>
+<meta
+  property="og:locale"
+  content="en_AU"
+>
+
+{%- if page_image -%}
+  <meta
+    property="og:image"
+    content="https:{{ page_image | image_url: width: 1200 }}"
+  >
+  <meta
+    property="og:image:secure_url"
+    content="https:{{ page_image | image_url: width: 1200 }}"
+  >
+  <meta
+    property="og:image:width"
+    content="1200"
+  >
+  <meta
+    property="og:image:height"
+    content="{{ 1200 | divided_by: page_image.aspect_ratio | round }}"
+  >
+  <meta
+    property="og:image:alt"
+    content="{{ page_image.alt | default: page_title | escape }}"
+  >
+{%- elsif request.page_type == 'index' and settings.logo -%}
+  {%- comment -%} Fallback OG image for homepage using shop logo {%- endcomment -%}
+  <meta
+    property="og:image"
+    content="https:{{ settings.logo | image_url: width: 1200 }}"
+  >
+  <meta
+    property="og:image:secure_url"
+    content="https:{{ settings.logo | image_url: width: 1200 }}"
+  >
+  <meta
+    property="og:image:width"
+    content="1200"
+  >
+  <meta
+    property="og:image:alt"
+    content="{{ shop.name }} - Premium Kitchen Knives"
+  >
+{%- elsif request.page_type == 'blog' and blog.articles.first.image -%}
+  {%- comment -%} Fallback image for blog listing pages {%- endcomment -%}
+  <meta
+    property="og:image"
+    content="https:{{ blog.articles.first.image | image_url: width: 1200 }}"
+  >
+  <meta
+    property="og:image:secure_url"
+    content="https:{{ blog.articles.first.image | image_url: width: 1200 }}"
+  >
+  <meta
+    property="og:image:width"
+    content="1200"
+  >
+  <meta
+    property="og:image:height"
+    content="630"
+  >
+  <meta
+    property="og:image:alt"
+    content="{{ blog.title }} - {{ shop.name }}"
+  >
+{%- elsif request.page_type == 'article' and article.image -%}
+  {%- comment -%} Image for article pages {%- endcomment -%}
+  <meta
+    property="og:image"
+    content="https:{{ article.image | image_url: width: 1200 }}"
+  >
+  <meta
+    property="og:image:secure_url"
+    content="https:{{ article.image | image_url: width: 1200 }}"
+  >
+  <meta
+    property="og:image:width"
+    content="1200"
+  >
+  <meta
+    property="og:image:height"
+    content="{{ 1200 | divided_by: article.image.aspect_ratio | round }}"
+  >
+  <meta
+    property="og:image:alt"
+    content="{{ article.image.alt | default: article.title | escape }}"
+  >
+{%- endif -%}
+
+{%- comment -%} Enhanced Product Open Graph Tags {%- endcomment -%}
+{%- if request.page_type == 'product' -%}
+  <meta
+    property="og:price:amount"
+    content="{{ product.price | divided_by: 100.0 }}"
+  >
+  <meta
+    property="og:price:currency"
+    content="{{ cart.currency.iso_code }}"
+  >
+  <meta
+    property="product:price:amount"
+    content="{{ product.price | divided_by: 100.0 }}"
+  >
+  <meta
+    property="product:price:currency"
+    content="{{ cart.currency.iso_code }}"
+  >
+  <meta
+    property="product:availability"
+    content="{% if product.available %}in stock{% else %}out of stock{% endif %}"
+  >
+  <meta
+    property="product:condition"
+    content="new"
+  >
+  <meta
+    property="product:brand"
+    content="{{ product.vendor | escape }}"
+  >
+  {%- if product.selected_or_first_available_variant.sku != blank -%}
+    <meta
+      property="product:retailer_item_id"
+      content="{{ product.selected_or_first_available_variant.sku | escape }}"
+    >
+  {%- endif -%}
+  {%- for image in product.images limit: 4 -%}
+    <meta
+      property="og:image"
+      content="https:{{ image | image_url: width: 1200 }}"
+    >
+  {%- endfor -%}
+{%- endif -%}
+
+{%- if settings.social_twitter_link != blank -%}
+  <meta
+    name="twitter:site"
+    content="{{ settings.social_twitter_link | split: 'twitter.com/' | last | prepend: '@' }}"
+  >
+{%- endif -%}
+<meta
+  name="twitter:card"
+  content="summary_large_image"
+>
+<meta
+  name="twitter:title"
+  content="{{ og_title | escape }}"
+>
+<meta
+  name="twitter:description"
+  content="{{ og_description | replace: '&amp;', '&' | escape }}"
+>
+{%- if page_image -%}
+  <meta
+    name="twitter:image"
+    content="https:{{ page_image | image_url: width: 1200 }}"
+  >
+  <meta
+    name="twitter:image:alt"
+    content="{{ page_image.alt | default: page_title | escape }}"
+  >
+{%- endif -%}
+{%- if request.page_type == 'product' and product -%}
+  <meta
+    name="twitter:label1"
+    content="Price"
+  >
+  <meta
+    name="twitter:data1"
+    content="{{ product.price | money }}"
+  >
+  <meta
+    name="twitter:label2"
+    content="Availability"
+  >
+  <meta
+    name="twitter:data2"
+    content="{% if product.available %}In Stock{% else %}Out of Stock{% endif %}"
+  >
+{%- endif -%}
+
+<title>
+  {%- if seo_title != blank -%}
+    {{ seo_title }}
+  {%- else -%}
+    {{ page_title }}
+    {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
+  {%- endif -%}
+  {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%}
+  {%- if current_page != 1 %} &ndash; Page {{ current_page }}{% endif -%}
+</title>
+
+<link
+  rel="canonical"
+  href="{{ canonical_url }}"
+>
+
+{%- comment -%} SEO: Hreflang for Australian market (skip on 404/error pages) {%- endcomment -%}
+{%- unless template == '404' -%}
+<link rel="alternate" hreflang="en-AU" href="{{ canonical_url }}">
+<link rel="alternate" hreflang="x-default" href="{{ canonical_url }}">
+{%- endunless -%}
+
+{%- comment -%} SEO: Geographic targeting {%- endcomment -%}
+<meta name="geo.region" content="AU">
+<meta name="geo.placename" content="Australia">
+
+{%- comment -%} SEO: Additional meta tags for better indexing {%- endcomment -%}
+<meta name="author" content="{{ shop.name }}">
+<meta name="copyright" content="{{ shop.name }}">
+<meta name="language" content="en-AU">
+{%- comment -%} Duplicate product:price tags removed — already output as OG property tags above {%- endcomment -%}
+
+{%- comment -%}
+  SEO Robots Meta Tag
+  - Noindex filtered collection pages to prevent duplicate content
+  - Noindex paginated pages beyond page 1 (optional - some prefer indexing)
+  - Allow search results to be indexed but not followed
+{%- endcomment -%}
+{%- liquid
+  assign robots_content = 'index, follow'
+  
+  # Check for filter parameters that create duplicate content
+  if request.page_type == 'collection'
+    # Check if we have filter parameters in the URL
+    assign has_filters = false
+    if request.path contains '/filter.' or request.params.filter_v != blank
+      assign has_filters = true
+    endif
+    
+    # Optionally noindex paginated pages (uncomment if desired)
+    # if current_page > 1
+    #   assign robots_content = 'noindex, follow'
+    # endif
+    
+    # Noindex filtered pages to prevent duplicate content
+    if has_filters
+      assign robots_content = 'noindex, follow'
+    endif
+  endif
+  
+  # Noindex non-browsable service products (add-ons with no real content)
+  if request.page_type == 'product' and product
+    if product.handle == 'engraving-fee'
+      assign robots_content = 'noindex, nofollow'
+    endif
+  endif
+
+  # Search results
+  if request.page_type == 'search'
+    assign robots_content = 'noindex, follow'
+  endif
+
+  # Tagged collection pages create duplicate content
+  if request.page_type == 'collection' and current_tags != blank
+    assign robots_content = 'noindex, follow'
+  endif
+
+  # Cart page has no indexable content
+  if request.page_type == 'cart'
+    assign robots_content = 'noindex, follow'
+  endif
+
+  # 404 pages should not be indexed
+  if template == '404'
+    assign robots_content = 'noindex, nofollow'
+  endif
+
+  # App-generated pages with no SEO value
+  if request.page_type == 'page' and page
+    if page.handle == 'swym-share-wishlist'
+      assign robots_content = 'noindex, nofollow'
+    endif
+  endif
+-%}
+<meta name="robots" content="{{ robots_content }}">
+
+{%- comment -%}
+  Collection pagination links for SEO discovery.
+  Scoped to the All Products collection to avoid emitting incorrect rel links on filtered/search states.
+{%- endcomment -%}
+{%- if request.page_type == 'collection' and collection and has_filters == false -%}
+  {%- liquid
+    assign per_page = 24
+    assign total_pages = collection.products_count | divided_by: per_page
+    assign remainder = collection.products_count | modulo: per_page
+    if remainder > 0
+      assign total_pages = total_pages | plus: 1
+    endif
+
+    assign prev_page = current_page | minus: 1
+    assign next_page = current_page | plus: 1
+  -%}
+
+  {%- if current_page > 1 -%}
+    <link
+      rel="prev"
+      href="{% if prev_page == 1 %}{{ collection.url }}{% else %}{{ collection.url }}?page={{ prev_page }}{% endif %}"
+    >
+  {%- endif -%}
+
+  {%- if current_page < total_pages -%}
+    <link
+      rel="next"
+      href="{{ collection.url }}?page={{ next_page }}"
+    >
+  {%- endif -%}
+{%- endif -%}
+
+{%- liquid
+  assign meta_description = page_description
+  if meta_description == blank
+    if request.page_type == 'product' and product
+      assign meta_description = product.description | strip_html | strip_newlines | truncate: 160
+    elsif request.page_type == 'collection' and collection
+      # Use collection.description if available, otherwise use the generated og_description
+      assign meta_description = collection.description | strip_html | strip_newlines | truncate: 160
+      if meta_description == blank
+        assign meta_description = og_description
+      endif
+    elsif request.page_type == 'blog' and blog
+      if blog.description != blank
+        assign meta_description = blog.description | strip_html | strip_newlines | truncate: 160
+      else
+        assign meta_description = 'Read the latest articles about kitchen knives, cooking tips, knife care, and culinary guides from ' | append: shop.name | append: '.'
+        assign meta_description = meta_description | truncate: 160
+      endif
+    elsif request.page_type == 'article' and article
+      assign meta_description = article.excerpt | default: article.content | strip_html | strip_newlines | truncate: 160
+    endif
+  endif
+
+  # Ensure meta description never exceeds 160 characters regardless of source
+  if meta_description != blank
+    assign meta_description = meta_description | strip_html | strip_newlines | truncate: 160
+  endif
+-%}
+
+{% if meta_description %}
+  <meta
+    name="description"
+    content="{{ meta_description | replace: '&amp;', '&' | escape }}"
+  >
+{% endif %}

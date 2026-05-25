@@ -1,0 +1,187 @@
+{% comment %}
+  SEO Below Grid Content Section
+  Internal linking section with keyword-rich descriptions
+  Format: Checkmark + description with embedded link
+  Renders nothing if content field is empty
+{% endcomment %}
+
+{%- if section.settings.content != blank -%}
+{% style %}
+  .section-{{ section.id }} .seo-below-grid {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 48px 32px;
+  }
+
+  {%- if section.settings.show_border -%}
+  .section-{{ section.id }} .seo-below-grid {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  {%- endif -%}
+
+  .section-{{ section.id }} .seo-below-grid__inner {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .section-{{ section.id }} .seo-below-grid__heading {
+    font-family: "Sen", sans-serif;
+    font-weight: 600;
+    font-size: 28px;
+    text-align: center;
+    color: #fff;
+    margin: 0 0 28px 0;
+    line-height: 1.2;
+  }
+
+  .section-{{ section.id }} .seo-below-grid__content {
+    font-family: "Albert Sans", sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.7;
+    color: #c9c9cc;
+  }
+
+  /* Link list item styling - each paragraph is a link entry */
+  .section-{{ section.id }} .seo-below-grid__content p {
+    margin: 0 0 20px 0;
+    padding-left: 32px;
+    position: relative;
+  }
+
+  /* Checkmark bullet before each paragraph */
+  .section-{{ section.id }} .seo-below-grid__content p::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: #22c55e;
+    font-weight: 700;
+    font-size: 18px;
+  }
+
+  .section-{{ section.id }} .seo-below-grid__content p:last-child {
+    margin-bottom: 0;
+  }
+
+  .section-{{ section.id }} .seo-below-grid__content a {
+    color: #fff;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1px;
+    transition: color 0.15s ease;
+  }
+
+  .section-{{ section.id }} .seo-below-grid__content a:hover {
+    color: #dc2626;
+  }
+
+  .section-{{ section.id }} .seo-below-grid__content strong {
+    color: #fff;
+    font-weight: 600;
+  }
+
+ @media screen and (min-width: 1000px) {
+    #shopify-section-{{ section.id }} {
+      max-width: 1440px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    #shopify-section-{{ section.id }} .section-{{ section.id }} {
+      width: calc(100% - 280px) !important;
+      margin: 0;
+    }
+ }
+
+  @media screen and (max-width: 750px) {
+    .section-{{ section.id }} .seo-below-grid {
+      padding: 32px 16px;
+    }
+
+    .section-{{ section.id }} .seo-below-grid__heading {
+      font-size: 22px;
+      margin-bottom: 24px;
+    }
+
+    .section-{{ section.id }} .seo-below-grid__content {
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    .section-{{ section.id }} .seo-below-grid__content p {
+      padding-left: 28px;
+      margin-bottom: 16px;
+    }
+
+    .section-{{ section.id }} .seo-below-grid__content p::before {
+      font-size: 16px;
+    }
+
+  }
+
+  @media screen and (max-width: 550px) {
+    .section-{{ section.id }} .seo-below-grid__heading {
+      font-size: 20px;
+    }
+
+    .section-{{ section.id }} .seo-below-grid__content {
+      font-size: 14px;
+    }
+  }
+{% endstyle %}
+
+<div class="section-background color-{{ section.settings.color_scheme }}"></div>
+<section class="section-{{ section.id }} section color-{{ section.settings.color_scheme }}">
+  <div class="seo-below-grid">
+    <div class="seo-below-grid__inner">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="seo-below-grid__heading">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+
+      <div class="seo-below-grid__content">
+        {{ section.settings.content }}
+      </div>
+    </div>
+  </div>
+</section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "SEO Below Grid Content",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "info": "e.g. 'Learn more about santoku knives'"
+    },
+    {
+      "type": "richtext",
+      "id": "content",
+      "label": "Link List Content",
+      "info": "Each paragraph becomes a link entry with green checkmark. Include keyword-rich description with embedded link. Example: 'Wondering how a santoku compares to a chef knife? Read our <a href=\"/blogs/news/santoku-vs-chef\">detailed comparison</a>.'"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_border",
+      "label": "Show top border",
+      "default": true,
+      "info": "Adds a subtle separator line above this section"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-5"
+    }
+  ],
+  "presets": [
+    {
+      "name": "SEO Below Grid Content"
+    }
+  ]
+}
+{% endschema %}

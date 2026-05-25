@@ -1,0 +1,938 @@
+{%- comment -%}
+  ============================================
+  SEO Schema Markup - JSON-LD Structured Data
+  ============================================
+  This snippet outputs appropriate schema.org structured data
+  based on the current page type. Include in theme.liquid <head>.
+
+  Covers:
+  - Organization/WebSite (all pages)
+  - CollectionPage + ItemList (collection pages)
+  - BreadcrumbList (collection & product pages)
+  - Product with aggregateRating (product pages - handled in product-information.liquid)
+  - FAQPage (pages with FAQ sections)
+
+  @author Xinzuo SEO Implementation
+{%- endcomment -%}
+
+{%- comment -%} Organization Schema - appears on all pages {%- endcomment -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "@id": {{ shop.url | append: "#organization" | json }},
+  "name": {{ shop.name | json }},
+  "legalName": "Tollemache Group Pty Ltd",
+  "alternateName": ["Xinzuo Australia", "Xinzuo AU"],
+  "taxID": "ABN 95 683 886 535",
+  "url": {{ shop.url | json }},
+  "description": "Official Australian distributor for Xinzuo and Hezhen premium kitchen knives. Damascus steel, factory-direct from Yangjiang. Lifetime warranty, fast Australian dispatch.",
+  {%- if settings.logo -%}
+    "logo": {
+      "@type": "ImageObject",
+      "url": {{ settings.logo | image_url: width: 600 | prepend: "https:" | json }},
+      "width": 600
+    },
+  {%- endif -%}
+  "founder": {
+    "@type": "Person",
+    "name": "Dylan Tollemache",
+    "url": "{{ shop.url }}/pages/about-the-author",
+    "jobTitle": "Founder and Australian Distributor"
+  },
+  "foundingLocation": {
+    "@type": "Place",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Wacol",
+      "addressRegion": "QLD",
+      "addressCountry": "AU"
+    }
+  },
+  "sameAs": [
+    "https://facebook.com/xinzuoau",
+    "https://www.instagram.com/xinzuoau",
+    "https://wa.me/61493005283",
+    "https://abr.business.gov.au/ABN/View?abn=95683886535"
+  ],
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "59 Nashos Place",
+    "addressLocality": "Wacol",
+    "addressRegion": "QLD",
+    "postalCode": "4076",
+    "addressCountry": "AU"
+  },
+  "areaServed": {
+    "@type": "Country",
+    "name": "Australia"
+  },
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "contactType": "customer service",
+    "email": "support@xinzuo.com.au",
+    "telephone": "+61493005283",
+    "availableLanguage": "English",
+    "url": "{{ shop.url }}/pages/contact"
+  },
+  "brand": [
+    { "@type": "Brand", "name": "Xinzuo" },
+    { "@type": "Brand", "name": "Hezhen" }
+  ],
+  "slogan": "Premium Kitchen Knives, Factory-Direct from Yangjiang",
+  "knowsAbout": [
+    "Kitchen Knives",
+    "Chef Knives",
+    "Damascus Steel",
+    "Japanese-Style Knives",
+    "Knife Sharpening",
+    "Yangjiang Knife Manufacturing"
+  ]
+}
+</script>
+
+{%- comment -%} WebSite Schema with SearchAction {%- endcomment -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": {{ shop.url | append: "#website" | json }},
+  "name": {{ shop.name | json }},
+  "url": {{ shop.url | json }},
+  "publisher": {
+    "@id": {{ shop.url | append: "#organization" | json }}
+  },
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": {
+      "@type": "EntryPoint",
+      "urlTemplate": "{{ shop.url }}/search?q={search_term_string}"
+    },
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
+
+{%- comment -%} OnlineStore Schema - appears on homepage only {%- endcomment -%}
+{%- if request.page_type == 'index' -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "OnlineStore",
+  "name": "Xinzuo Australia",
+  "url": {{ shop.url | json }},
+  {%- if settings.logo -%}
+  "logo": {{ settings.logo | image_url: width: 600 | prepend: "https:" | json }},
+  {%- endif -%}
+  "description": "Premium kitchen knives from Yangjiang, China's knife-making capital. VG10, Damascus, and powder steel blades with lifetime warranty.",
+  "email": "support@xinzuo.com.au",
+  "telephone": "+61493005283",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "59 Nashos Place",
+    "addressLocality": "Wacol",
+    "addressRegion": "QLD",
+    "postalCode": "4076",
+    "addressCountry": "AU"
+  },
+  "sameAs": [
+    "https://www.instagram.com/xinzuoau/",
+    "https://www.facebook.com/xinzuoau/"
+  ],
+  "priceRange": "$40-$400"
+}
+</script>
+{%- endif -%}
+
+{%- comment -%} Collection Page Schema - Enhanced with Keywords {%- endcomment -%}
+{%- if request.page_type == 'collection' and collection -%}
+{%- liquid
+  # Generate SEO keywords based on collection
+  assign seo_keywords = 'kitchen knives, chef knives, Damascus steel, premium knives'
+  assign seo_description = 'Shop ' | append: collection.title | append: ' at ' | append: shop.name | append: '. Premium quality kitchen knives and accessories with free shipping over $100.'
+  
+  case collection.handle
+    when 'all-products'
+      assign seo_keywords = 'kitchen knives Australia, Damascus steel knives, chef knives, santoku knives, knife accessories, premium knives, hand-forged knives'
+      assign seo_description = 'Shop the complete range of premium kitchen knives and accessories. Hand-forged Damascus steel blades with lifetime warranty and free Australian shipping over $100.'
+    when 'knives'
+      assign seo_keywords = 'kitchen knives, chef knives, Damascus steel, Japanese knives, professional knives, hand-forged knives, santoku, cleaver'
+      assign seo_description = 'Professional-grade kitchen knives crafted from premium Damascus steel. Hand-forged for exceptional sharpness and edge retention.'
+    when 'chopping-boards'
+      assign seo_keywords = 'chopping boards, cutting boards, wooden boards, kitchen boards, butcher blocks, end grain boards'
+      assign seo_description = 'Premium wooden chopping boards designed for professional kitchens. Durable, knife-friendly surfaces.'
+    when 'knife-holders'
+      assign seo_keywords = 'knife holders, magnetic knife holder, knife block, knife storage, knife rack, magnetic knife strip'
+      assign seo_description = 'Magnetic knife holders and blocks for safe knife storage. Protect blade edges while showcasing your collection.'
+    when 'knife-sharpening-tools'
+      assign seo_keywords = 'knife sharpening, whetstones, sharpening stones, honing steel, knife maintenance, Japanese whetstones'
+      assign seo_description = 'Professional knife sharpening whetstones and tools. Maintain razor-sharp edges on all your knives.'
+    when 'accessories'
+      assign seo_keywords = 'knife accessories, knife sheaths, knife roll bags, kitchen accessories, knife care, knife protection'
+      assign seo_description = 'Premium knife accessories including sheaths, roll bags, cutting boards, and sharpening tools.'
+  endcase
+  
+  # Series collections
+  if collection.handle contains '-series'
+    assign series_name = collection.title | remove: 'Xinzuo ' | remove: ' Knives'
+    assign seo_keywords = series_name | append: ' knives, Damascus steel, Japanese knives, chef knives, premium kitchen knives, hand-forged'
+    assign seo_description = series_name | append: ' Damascus kitchen knives with exceptional craftsmanship. Hand-forged blades for superior performance.'
+  endif
+  
+  # Use collection description if available
+  if collection.description != blank
+    assign seo_description = collection.description | strip_html | strip_newlines | truncate: 320
+  endif
+-%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "@id": {{ canonical_url | json }},
+  "name": {{ collection.title | json }},
+  "url": {{ canonical_url | json }},
+  "description": {{ seo_description | json }},
+  "keywords": {{ seo_keywords | json }},
+  "numberOfItems": {{ collection.products_count }},
+  {%- if collection.image -%}
+    "image": {{ collection.image | image_url: width: 1200 | prepend: "https:" | json }},
+  {%- elsif collection.products.first.featured_image -%}
+    "image": {{ collection.products.first.featured_image | image_url: width: 1200 | prepend: "https:" | json }},
+  {%- endif -%}
+  "isPartOf": {
+    "@id": {{ shop.url | append: "#website" | json }}
+  },
+  "provider": {
+    "@type": "Organization",
+    "@id": {{ shop.url | append: "#organization" | json }}
+  },
+  "breadcrumb": {
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": {{ shop.url | json }}
+      }
+      {%- liquid
+        assign bc_parent_name = ''
+        assign bc_parent_url = ''
+        if collection.handle contains '-series'
+          assign bc_parent_name = 'Knives'
+          assign bc_parent_url = '/collections/knives'
+        elsif collection.handle contains 'under-'
+          assign bc_parent_name = 'Knives'
+          assign bc_parent_url = '/collections/knives'
+        elsif collection.handle == 'cutting-boards' or collection.handle == 'chopping-boards' or collection.handle == 'whetstones' or collection.handle == 'knife-stands' or collection.handle == 'magnetic-knife-holders' or collection.handle == 'knife-guards' or collection.handle == 'knife-rolls' or collection.handle == 'kitchen-scissors' or collection.handle == 'aprons' or collection.handle == 'chef-aprons' or collection.handle == 'knife-sharpening-tools' or collection.handle == 'wood-knife-sheaths' or collection.handle == 'chef-knife-roll-bags'
+          assign bc_parent_name = 'Accessories'
+          assign bc_parent_url = '/collections/accessories'
+        elsif collection.handle contains 'knife' or collection.handle contains 'knives'
+          unless collection.handle == 'knives'
+            assign bc_parent_name = 'Knives'
+            assign bc_parent_url = '/collections/knives'
+          endunless
+        elsif collection.handle == 'cleavers' or collection.handle == 'chinese-cleaver' or collection.handle == 'carving-forks' or collection.handle == 'damascus'
+          assign bc_parent_name = 'Knives'
+          assign bc_parent_url = '/collections/knives'
+        endif
+      -%}
+      {%- if bc_parent_name != '' -%}
+      ,{
+        "@type": "ListItem",
+        "position": 2,
+        "name": {{ bc_parent_name | json }},
+        "item": {{ bc_parent_url | prepend: shop.url | json }}
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": {{ collection.title | json }},
+        "item": {{ collection.url | prepend: shop.url | json }}
+      }
+      {%- else -%}
+      ,{
+        "@type": "ListItem",
+        "position": 2,
+        "name": {{ collection.title | json }},
+        "item": {{ collection.url | prepend: shop.url | json }}
+      }
+      {%- endif -%}
+    ]
+  },
+  "mainEntity": {
+    "@type": "ItemList",
+    "name": {{ collection.title | append: " Products" | json }},
+    "numberOfItems": {{ collection.products_count }},
+    "itemListOrder": "https://schema.org/ItemListUnordered",
+    "itemListElement": [
+      {%- assign product_count = 0 -%}
+      {%- for product in collection.products limit: 50 -%}
+        {%- unless product.tags contains 'engraving-fee' -%}
+          {%- liquid
+            # Detect manufacturer brand (Xinzuo vs Hezhen) - mirrors the
+            # detection in sections/product-information.liquid.
+            assign mfr_brand = product.metafields.custom.manufacturer_brand
+            if mfr_brand == blank
+              assign h_lower = product.handle | downcase
+              if h_lower contains 'hezhen' or h_lower contains 'supreme-series' or h_lower contains 'retro-series' or h_lower contains 'master-series' or h_lower contains 'flagship-series' or h_lower contains 'zhen-series' or h_lower contains 'pm8m' or h_lower contains 'pm8o' or h_lower contains 'pm8s'
+                assign mfr_brand = 'Hezhen'
+              else
+                assign mfr_brand = 'Xinzuo'
+              endif
+            endif
+          -%}
+          {%- assign product_count = product_count | plus: 1 -%}
+          {%- if product_count > 1 -%},{%- endif -%}
+          {
+            "@type": "ListItem",
+            "position": {{ product_count }},
+            "item": {
+              "@type": "Product",
+              "@id": {{ product.url | prepend: shop.url | append: "#product" | json }},
+              "name": {{ product.title | json }},
+              "url": {{ product.url | prepend: shop.url | json }},
+              {%- if product.featured_image -%}
+                "image": {{ product.featured_image | image_url: width: 800 | prepend: "https:" | json }},
+              {%- endif -%}
+              "description": {{ product.description | strip_html | strip_newlines | truncate: 200 | json }},
+              "brand": {
+                "@type": "Brand",
+                "name": {{ mfr_brand | json }}
+              },
+              {%- if product.selected_or_first_available_variant.sku != blank -%}
+                "sku": {{ product.selected_or_first_available_variant.sku | json }},
+                "mpn": {{ product.selected_or_first_available_variant.sku | json }},
+              {%- endif -%}
+              "offers": {
+                "@type": "Offer",
+                "priceCurrency": {{ cart.currency.iso_code | default: shop.currency | json }},
+                "price": {{ product.price | divided_by: 100.0 }},
+                {%- if product.compare_at_price > product.price -%}
+                  {%- assign next_year = 'now' | date: '%Y' | plus: 1 -%}
+                "priceValidUntil": "{{ next_year }}-12-31",
+                {%- endif -%}
+                "availability": "https://schema.org/{% if product.available %}InStock{% else %}OutOfStock{% endif %}",
+                "itemCondition": "https://schema.org/NewCondition",
+                "url": {{ product.url | prepend: shop.url | json }},
+                "seller": {
+                  "@type": "Organization",
+                  "name": {{ shop.name | json }}
+                }
+              }
+              {%- if product.metafields.reviews.rating.value != blank -%}
+                ,"aggregateRating": {
+                  "@type": "AggregateRating",
+                  "ratingValue": {{ product.metafields.reviews.rating.value.rating | json }},
+                  "reviewCount": {{ product.metafields.reviews.rating_count | default: 1 }},
+                  "bestRating": 5,
+                  "worstRating": 1
+                }
+              {%- endif -%}
+            }
+          }
+        {%- endunless -%}
+      {%- endfor -%}
+    ]
+  }
+}
+</script>
+{%- endif -%}
+
+{%- comment -%} Search Results Page Schema {%- endcomment -%}
+{%- if request.page_type == 'search' -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SearchResultsPage",
+  "@id": {{ canonical_url | json }},
+  "name": {{ "Search results for: " | append: search.terms | json }},
+  "url": {{ canonical_url | json }},
+  "isPartOf": {
+    "@id": {{ shop.url | append: "#website" | json }}
+  }
+}
+</script>
+{%- endif -%}
+
+{%- comment -%} Blog Listing Page Schema {%- endcomment -%}
+{%- if request.page_type == 'blog' and blog -%}
+{%- liquid
+  assign blog_description = blog.description | strip_html | strip_newlines | truncate: 320
+  if blog_description == blank
+    assign blog_description = 'Read the latest articles about kitchen knives, cooking tips, knife care, and culinary guides from ' | append: shop.name | append: '. Expert advice for home cooks and professional chefs.'
+  endif
+-%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Blog",
+  "@id": {{ blog.url | prepend: shop.url | append: "#blog" | json }},
+  "name": {{ blog.title | json }},
+  "description": {{ blog_description | json }},
+  "url": {{ blog.url | prepend: shop.url | json }},
+  "inLanguage": "en-AU",
+  "publisher": {
+    "@type": "Organization",
+    "@id": {{ shop.url | append: "#organization" | json }},
+    "name": {{ shop.name | json }}
+  },
+  "isPartOf": {
+    "@type": "WebSite",
+    "@id": {{ shop.url | append: "#website" | json }}
+  }
+}
+</script>
+
+{%- comment -%} BreadcrumbList for Blog Listing {%- endcomment -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": {{ shop.url | json }}
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": {{ blog.title | json }},
+      "item": {{ blog.url | prepend: shop.url | json }}
+    }
+  ]
+}
+</script>
+{%- endif -%}
+
+{%- comment -%} Blog Article Schema — removed duplicate Article block.
+  BlogPosting (richer, with wordCount/timeRequired/speakable) is output
+  by sections/main-blog-post.liquid instead. {%- endcomment -%}
+
+{%- comment -%} 
+  Note: Product schema is handled in product-information.liquid 
+  to have access to product-specific data and reviews
+{%- endcomment -%}
+
+{%- comment -%} VideoObject Schema for products with videos {%- endcomment -%}
+{%- if request.page_type == 'product' and product -%}
+  {%- for media in product.media -%}
+    {%- if media.media_type == 'video' or media.media_type == 'external_video' -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "VideoObject",
+  "name": {{ product.title | append: " - Video" | json }},
+  "description": {{ product.description | strip_html | truncate: 200 | json }},
+  "thumbnailUrl": {{ media.preview_image | image_url: width: 800 | prepend: "https:" | json }},
+  "uploadDate": {{ product.created_at | date: "%Y-%m-%dT%H:%M:%S%z" | json }},
+  {%- if media.media_type == 'external_video' and media.host == 'youtube' -%}
+    "embedUrl": {{ media.embed_url | json }},
+    "contentUrl": {{ "https://www.youtube.com/watch?v=" | append: media.external_id | json }},
+  {%- endif -%}
+  "publisher": {
+    "@type": "Organization",
+    "name": {{ shop.name | json }},
+    "url": {{ shop.url | json }}
+  }
+}
+</script>
+      {%- break -%}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endif -%}
+
+{%- comment -%} 
+  FAQPage Schema - Add common FAQs for product pages
+  These are brand-level FAQs that appear across product pages
+{%- endcomment -%}
+{%- comment -%} Related Products Schema for internal linking signals {%- endcomment -%}
+{%- if request.page_type == 'product' and product and product.collections.first -%}
+  {%- assign has_related = false -%}
+  {%- for p in product.collections.first.products limit: 6 -%}
+    {%- if p.id != product.id -%}
+      {%- assign has_related = true -%}
+      {%- break -%}
+    {%- endif -%}
+  {%- endfor -%}
+  {%- if has_related -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "Related Products",
+  "description": {{ "Products related to " | append: product.title | json }},
+  "itemListElement": [
+    {%- assign position = 0 -%}
+    {%- for related in product.collections.first.products limit: 6 -%}
+      {%- if related.id != product.id and position < 5 -%}
+        {%- assign position = position | plus: 1 -%}
+        {%- if position > 1 -%},{%- endif -%}
+      {
+        "@type": "ListItem",
+        "position": {{ position }},
+        "item": {
+          "@type": "Product",
+          "name": {{ related.title | json }},
+          "url": {{ related.url | prepend: shop.url | json }},
+          {%- if related.featured_image -%}
+            "image": {{ related.featured_image | image_url: width: 600 | prepend: "https:" | json }},
+          {%- endif -%}
+          "offers": {
+            "@type": "Offer",
+            "price": {{ related.price | divided_by: 100.0 | json }},
+            "priceCurrency": {{ cart.currency.iso_code | default: shop.currency | json }},
+            "availability": "https://schema.org/{% if related.available %}InStock{% else %}OutOfStock{% endif %}"
+          }
+        }
+      }
+      {%- endif -%}
+    {%- endfor -%}
+  ]
+}
+</script>
+  {%- endif -%}
+{%- endif -%}
+
+{%- if request.page_type == 'product' and product -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What makes Xinzuo knives stand apart from other kitchen knife brands?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Xinzuo knives combine premium steel, precision forging, and ergonomic design. Each blade is carefully crafted to deliver durability, sharpness, and balance, creating a superior cutting experience for both chefs and home cooks."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Are Xinzuo knives designed for professional chefs as well as home kitchens?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, Xinzuo knives are designed for both professional chefs and home cooks. Our range includes entry-level options for beginners and premium Damascus steel knives for professionals who demand the highest quality."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How should I properly care for my Xinzuo knife collection?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Hand wash your Xinzuo knives with mild soap and dry immediately. Avoid dishwashers, as they can damage the blade. Store in a knife block or magnetic strip. Sharpen regularly with a whetstone or honing rod to maintain optimal edge retention."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do Xinzuo products include a warranty, and what does it cover?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, all Xinzuo knives come with a lifetime warranty covering manufacturing defects. This includes blade defects, handle issues, and craftsmanship problems. Normal wear and damage from misuse are not covered."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How long does delivery of Xinzuo knives usually take?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "We offer fast shipping within Australia. Standard delivery takes 2-7 business days depending on your location. Express shipping options are available for faster delivery. Free shipping is available on orders over $100."
+      }
+    }
+  ]
+}
+</script>
+{%- endif -%}
+
+{%- comment -%} FAQPage Schema for dedicated FAQs page {%- endcomment -%}
+{%- if request.page_type == 'page' and page.handle == 'faqs' -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": {{ canonical_url | append: "#faqpage" | json }},
+  "name": "Frequently Asked Questions",
+  "description": "Find answers to common questions about Xinzuo knives, shipping, returns, knife care, and warranty information.",
+  "url": {{ canonical_url | json }},
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is the return policy?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Our goal is for every customer to be totally satisfied with their purchase. If this isn't the case, let us know and we'll do our best to work with you to make it right. We offer a 30-day money-back guarantee on all purchases."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Are any purchases final sale?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "We are unable to accept returns on certain items. These will be carefully marked before purchase. Personalized or engraved items are typically final sale."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "When will I get my order?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "We will work quickly to ship your order as soon as possible. Once your order has shipped, you will receive an email with further information. Delivery times vary depending on your location, typically 2-7 business days within Australia."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Where are your products manufactured?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Our products are manufactured in Yangjiang, China - known as the 'Capital of Knives' with over 1,400 years of knife-making history. We carefully select our manufacturing partners to ensure our products are high quality and fair value."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How much does shipping cost?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Shipping is calculated based on your location and the items in your order. You will always know the shipping price before you purchase. We offer free shipping on orders over $100 within Australia."
+      }
+    }
+  ]
+}
+</script>
+
+{%- comment -%} BreadcrumbList for FAQs page {%- endcomment -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": {{ shop.url | json }}
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "FAQs",
+      "item": {{ canonical_url | json }}
+    }
+  ]
+}
+</script>
+{%- endif -%}
+
+
+{%- comment -%} AboutPage Schema - appears on About Us page only {%- endcomment -%}
+{%- if request.page_type == 'page' and page.handle == 'about-us' -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "AboutPage",
+  "name": "About Xinzuo Australia",
+  "url": "{{ shop.url }}/pages/about-us",
+  "description": "Xinzuo Australia brings premium kitchen knives from Yangjiang, China's 1,400-year knife-making capital.",
+  "mainEntity": {
+    "@type": "Organization",
+    "name": "Xinzuo Australia",
+    "url": {{ shop.url | json }}
+  },
+  "breadcrumb": {
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": {{ shop.url | json }}
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "About Us",
+        "item": "{{ shop.url }}/pages/about-us"
+      }
+    ]
+  }
+}
+</script>
+{%- endif -%}
+
+{%- comment -%} ContactPage Schema for Contact page {%- endcomment -%}
+{%- if request.page_type == 'page' and page.handle == 'contact' -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ContactPage",
+  "@id": {{ canonical_url | append: "#contactpage" | json }},
+  "name": "Contact Us",
+  "description": "Get in touch with Xinzuo Australia. We're here to help with questions about our premium kitchen knives, orders, shipping, and customer support.",
+  "url": {{ canonical_url | json }},
+  "mainEntity": {
+    "@type": "Organization",
+    "@id": {{ shop.url | append: "#organization" | json }},
+    "name": {{ shop.name | json }},
+    "url": {{ shop.url | json }},
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "contactType": "customer service",
+      "email": "support@xinzuo.com.au",
+      "telephone": "+61493005283",
+      "availableLanguage": "English",
+      "url": "{{ shop.url }}/pages/contact",
+      "areaServed": {
+        "@type": "Country",
+        "name": "Australia"
+      }
+    }
+  }
+}
+</script>
+
+{%- comment -%} BreadcrumbList for Contact page {%- endcomment -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": {{ shop.url | json }}
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Contact",
+      "item": {{ canonical_url | json }}
+    }
+  ]
+}
+</script>
+{%- endif -%}
+
+
+{%- comment -%} BreadcrumbList Schema for Series Comparison page {%- endcomment -%}
+{%- if request.page_type == 'page' and page.handle == 'series-comparison' -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": {{ shop.url | json }}
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Series Comparison",
+      "item": "{{ shop.url }}/pages/series-comparison"
+    }
+  ]
+}
+</script>
+{%- endif -%}
+
+{%- comment -%} BreadcrumbList Schema for Warranty page {%- endcomment -%}
+{%- if request.page_type == 'page' and page.handle == 'warranty' -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": {{ shop.url | json }}
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Warranty",
+      "item": "{{ shop.url }}/pages/warranty"
+    }
+  ]
+}
+</script>
+{%- endif -%}
+
+{%- comment -%} BreadcrumbList Schema for Returns & Exchanges page {%- endcomment -%}
+{%- if request.page_type == 'page' and page.handle == 'return-exchange' -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": {{ shop.url | json }}
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Returns & Exchanges",
+      "item": "{{ shop.url }}/pages/return-exchange"
+    }
+  ]
+}
+</script>
+{%- endif -%}
+
+{%- comment -%} BreadcrumbList Schema for Shipping & Delivery page {%- endcomment -%}
+{%- if request.page_type == 'page' and page.handle == 'shipping-delivery' -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": {{ shop.url | json }}
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Shipping & Delivery",
+      "item": "{{ shop.url }}/pages/shipping-delivery"
+    }
+  ]
+}
+</script>
+{%- endif -%}
+
+{%- comment -%} BreadcrumbList Schema for Maintenance Guide page {%- endcomment -%}
+{%- if request.page_type == 'page' and page.handle == 'maintenance-guide' -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": {{ shop.url | json }}
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Knife Maintenance Guide",
+      "item": "{{ shop.url }}/pages/maintenance-guide"
+    }
+  ]
+}
+</script>
+{%- endif -%}
+
+{%- comment -%} BreadcrumbList Schema for Reviews page {%- endcomment -%}
+{%- if request.page_type == 'page' and page.handle == 'reviews' -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": {{ shop.url | json }}
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Reviews",
+      "item": "{{ shop.url }}/pages/reviews"
+    }
+  ]
+}
+</script>
+{%- endif -%}
+
+{%- comment -%} BreadcrumbList Schema for Bundle Builder page {%- endcomment -%}
+{%- if request.page_type == 'page' and page.handle == 'bundle-builder' -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": {{ shop.url | json }}
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Bundle Builder",
+      "item": "{{ shop.url }}/pages/bundle-builder"
+    }
+  ]
+}
+</script>
+{%- endif -%}
+
+{%- comment -%} FAQPage Schema for Homepage FAQs {%- endcomment -%}
+{%- if request.page_type == 'index' -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": {{ shop.url | append: "#homepage-faq" | json }},
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "You've got four main series. What's the actual difference?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Supreme (The Workhorse): Your durable, reliable first great knife. Retro (The Upgrade): A big step up. Stays seriously sharp, for longer. Mo (The Stunner): All the sharpness of the Upgrade, in a beautiful Damascus finish. LAN (The Pro): Our absolute best. Elite steel for an edge that just doesn't quit."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is the wavy 'Damascus' pattern on the Mo and LAN series real?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Oh, 100%. That's not a cheap laser-etch you'll see on knock-offs. It's the real, beautiful result of folding 67+ layers of steel over that high-performance core. It looks incredible, and it even helps food slide right off the blade. This is the real deal."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I put my knife in the dishwasher?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "That's the one hard 'no.' A dishwasher's high heat and harsh soap are brutal on a sharp blade and a beautiful handle. The simple fix: Just give it a 10-second hand wash with warm, soapy water right after use. Done."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Aren't these just 'Made in China' knives?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yep. They're made in Yangjiang, the 'Capital of Knives.' Here's a fun fact: Yangjiang has been mastering this craft for over 1,400 years. That's centuries before the famous hubs in Germany and Japan even got started. So we take world-class steel, send it to the city with the longest history of making world-class blades, and skip the legacy-brand markups. It's not just a good knife; it's a smart one."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What's the warranty? What if I don't like it?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Easy. If it's not love at first slice, send it back within 30 days for a full refund. You're also covered by a lifetime warranty against manufacturing defects. And as a 100% Aussie company, you're always protected by Australian Consumer Law. We've got your back."
+      }
+    }
+  ]
+}
+</script>
+{%- endif -%}

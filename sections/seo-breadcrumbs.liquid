@@ -1,0 +1,204 @@
+{% comment %}
+  SEO Breadcrumbs Section
+  Displays visible breadcrumbs with automatic parent category detection:
+  - Top-level: Home > Collection Title
+  - Subcollections: Home > Parent Category > Collection Title
+
+  Parent categories are auto-detected from collection handle:
+  - Series collections (-series suffix) → Knives
+  - Price ranges (under- prefix) → Knives
+  - Knife types (contains knife/knives, or specific handles) → Knives
+  - Accessory types (boards, whetstones, holders, etc.) → Accessories
+
+  Uses shop.url to ensure canonical domain (xinzuo.com.au) is always used.
+  Microdata matches JSON-LD in seo-schema.liquid for consistent signals.
+{% endcomment %}
+
+{%- liquid
+  assign parent_name = ''
+  assign parent_url = ''
+
+  # Series collections → child of Knives
+  if collection.handle contains '-series'
+    assign parent_name = 'Knives'
+    assign parent_url = '/collections/knives'
+
+  # Price range collections → child of Knives
+  elsif collection.handle contains 'under-'
+    assign parent_name = 'Knives'
+    assign parent_url = '/collections/knives'
+
+  # Accessory-type collections → child of Accessories
+  elsif collection.handle == 'cutting-boards' or collection.handle == 'chopping-boards' or collection.handle == 'whetstones' or collection.handle == 'knife-stands' or collection.handle == 'magnetic-knife-holders' or collection.handle == 'knife-guards' or collection.handle == 'knife-rolls' or collection.handle == 'kitchen-scissors' or collection.handle == 'aprons' or collection.handle == 'chef-aprons' or collection.handle == 'knife-sharpening-tools' or collection.handle == 'wood-knife-sheaths' or collection.handle == 'chef-knife-roll-bags'
+    assign parent_name = 'Accessories'
+    assign parent_url = '/collections/accessories'
+
+  # Knife-type collections (contains knife/knives but is not top-level 'knives')
+  elsif collection.handle contains 'knife' or collection.handle contains 'knives'
+    unless collection.handle == 'knives'
+      assign parent_name = 'Knives'
+      assign parent_url = '/collections/knives'
+    endunless
+
+  # Specific knife types without 'knife' in the handle
+  elsif collection.handle == 'cleavers' or collection.handle == 'chinese-cleaver' or collection.handle == 'carving-forks' or collection.handle == 'damascus'
+    assign parent_name = 'Knives'
+    assign parent_url = '/collections/knives'
+
+  endif
+-%}
+
+{% style %}
+  .section-{{ section.id }} .seo-breadcrumbs {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 12px 20px;
+  }
+
+  .section-{{ section.id }} .seo-breadcrumbs__list {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-family: "Sen", sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.4;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .section-{{ section.id }} .seo-breadcrumbs__item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .section-{{ section.id }} .seo-breadcrumbs__link {
+    color: #c9c9cc;
+    text-decoration: none;
+    transition: color 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .section-{{ section.id }} .seo-breadcrumbs__link:hover {
+    color: #fff;
+    text-decoration: underline;
+  }
+
+  .section-{{ section.id }} .seo-breadcrumbs__home-icon {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  .section-{{ section.id }} .seo-breadcrumbs__separator {
+    color: #666;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .section-{{ section.id }} .seo-breadcrumbs__separator svg {
+    width: 8px;
+    height: 8px;
+  }
+
+  .section-{{ section.id }} .seo-breadcrumbs__current {
+    color: #fff;
+    font-weight: 500;
+  }
+
+  @media screen and (max-width: 750px) {
+    .section-{{ section.id }} .seo-breadcrumbs {
+      padding: 12px 16px;
+    }
+
+    .section-{{ section.id }} .seo-breadcrumbs__list {
+      font-size: 13px;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .section-{{ section.id }} .seo-breadcrumbs__item {
+      gap: 6px;
+    }
+  }
+  .link-color {
+    background-color: rgb(25 25 27);
+  }
+{% endstyle %}
+
+<div class="section-background color-{{ section.settings.color_scheme }}"></div>
+<nav class="section-{{ section.id }}  link-color" aria-label="Breadcrumb">
+  <div class="seo-breadcrumbs">
+    <ol class="seo-breadcrumbs__list" itemscope itemtype="https://schema.org/BreadcrumbList">
+      {%- comment -%} Level 1: Home {%- endcomment -%}
+      <li class="seo-breadcrumbs__item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a href="{{ shop.url }}" class="seo-breadcrumbs__link" itemprop="item">
+          <svg class="seo-breadcrumbs__home-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/>
+          </svg>
+          <span itemprop="name">Home</span>
+        </a>
+        <meta itemprop="position" content="1">
+        <span class="seo-breadcrumbs__separator" aria-hidden="true">
+          <svg viewBox="0 0 8 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.5 1L6.5 6L1.5 11"/>
+          </svg>
+        </span>
+      </li>
+      {%- if parent_name != '' -%}
+        {%- comment -%} Level 2: Parent category (Knives or Accessories) {%- endcomment -%}
+        <li class="seo-breadcrumbs__item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="{{ parent_url | prepend: shop.url }}" class="seo-breadcrumbs__link" itemprop="item">
+            <span itemprop="name">{{ parent_name }}</span>
+          </a>
+          <meta itemprop="position" content="2">
+          <span class="seo-breadcrumbs__separator" aria-hidden="true">
+            <svg viewBox="0 0 8 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" xmlns="http://www.w3.org/2000/svg">
+              <path d="M1.5 1L6.5 6L1.5 11"/>
+            </svg>
+          </span>
+        </li>
+        {%- comment -%} Level 3: Current collection {%- endcomment -%}
+        <li class="seo-breadcrumbs__item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <span class="seo-breadcrumbs__current" itemprop="name">{{ collection.title }}</span>
+          <meta itemprop="item" content="{{ collection.url | prepend: shop.url }}">
+          <meta itemprop="position" content="3">
+        </li>
+      {%- else -%}
+        {%- comment -%} Level 2: Current collection (top-level) {%- endcomment -%}
+        <li class="seo-breadcrumbs__item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <span class="seo-breadcrumbs__current" itemprop="name">{{ collection.title }}</span>
+          <meta itemprop="item" content="{{ collection.url | prepend: shop.url }}">
+          <meta itemprop="position" content="2">
+        </li>
+      {%- endif -%}
+    </ol>
+  </div>
+</nav>
+
+{% schema %}
+{
+  "name": "SEO Breadcrumbs",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-5"
+    }
+  ],
+  "presets": [
+    {
+      "name": "SEO Breadcrumbs"
+    }
+  ]
+}
+{% endschema %}

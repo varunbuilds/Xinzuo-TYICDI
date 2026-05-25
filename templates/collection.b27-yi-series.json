@@ -1,0 +1,230 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "collection_hero_banner": {
+      "type": "collection-hero-banner",
+      "settings": {
+        "color_scheme": "scheme-5"
+      }
+    },
+    "header": {
+      "type": "seo-collection-header",
+      "settings": {
+        "heading_override": "",
+        "subtitle": "Classic Damascus with Warm Rosewood",
+        "intro_content": "<p>The <strong>Xinzuo B27 Yi Series</strong> pairs a <strong>10Cr15CoMoV steel core</strong> with 67 layers of Damascus cladding and beautiful <strong>rosewood handles</strong>, creating a knife that performs as well as it looks. At <strong>60 HRC</strong>, the 10Cr15CoMoV core — Xinzuo’s refined take on VG10-class steel — delivers excellent edge retention, corrosion resistance, and a balance of hardness and toughness that suits both precise slicing and everyday prep. Each blade is vacuum heat-treated and deep-frozen for optimal grain structure. With 10 knife types including paring, santoku, bunka, boning, cleaver, and bread knife, the Yi Series covers the full range of kitchen tasks. The warm rosewood handles give the Yi Series a timeless, traditional character that appeals to cooks who favour natural materials. A strong all-rounder in Xinzuo’s premium tier.</p>",
+        "color_scheme": "scheme-5"
+      }
+    },
+    "main": {
+      "type": "main-collection",
+      "blocks": {
+        "filters": {
+          "type": "filters",
+          "static": true,
+          "settings": {
+            "enable_filtering": true,
+            "filter_style": "horizontal",
+            "filter_width": "centered",
+            "text_label_case": "default",
+            "show_swatch_label": false,
+            "show_filter_label": false,
+            "enable_sorting": true,
+            "enable_grid_density": true,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "padding-block-start": 8,
+            "padding-block-end": 8,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0,
+            "facets_margin_bottom": 8,
+            "facets_margin_right": 20
+          },
+          "blocks": {}
+        },
+        "product-card": {
+          "type": "_product-card",
+          "static": true,
+          "settings": {
+            "product_card_gap": 4,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "card-gallery": {
+              "type": "_product-card-gallery",
+              "settings": {
+                "image_ratio": "adapt",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "product_title": {
+              "type": "product-title",
+              "settings": {
+                "width": "100%",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 4,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "price": {
+              "type": "price",
+              "settings": {
+                "show_sale_price_first": true,
+                "show_installments": false,
+                "show_tax_info": false,
+                "type_preset": "h6",
+                "width": "100%",
+                "alignment": "left",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "color": "var(--color-foreground)",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "card-gallery",
+            "product_title",
+            "price"
+          ]
+        }
+      },
+      "settings": {
+        "layout_type": "grid",
+        "product_card_size": "medium",
+        "mobile_product_card_size": "small",
+        "product_grid_width": "centered",
+        "full_width_on_mobile": true,
+        "columns_gap_horizontal": 16,
+        "columns_gap_vertical": 24,
+        "padding-inline-start": 0,
+        "padding-inline-end": 0,
+        "color_scheme": "scheme-5",
+        "padding-block-start": 0,
+        "padding-block-end": 32
+      }
+    },
+    "below_grid": {
+      "type": "seo-below-grid-content",
+      "settings": {
+        "heading": "What makes the Yi Series a great all-rounder",
+        "content": "<p>The Yi Series uses <strong>10Cr15CoMoV steel</strong> — Xinzuo’s take on VG10-class performance. See how it compares in independent testing. <a href=\"/blogs/news/vg10-steel-vs-10cr15comov-guide\">VG10 vs 10Cr15CoMoV compared</a></p><p>Learn how 67-layer Damascus construction protects the cutting core while adding striking visual character to each blade. <a href=\"/blogs/news/damascus-pattern-performance-price-guide\">Damascus pattern guide</a></p><p>Understand how <strong>steel hardness</strong> at 60 HRC balances edge retention with ease of sharpening for everyday kitchen use. <a href=\"/blogs/news/knife-steel-hardness-guide\">Steel hardness guide</a></p><p>Keep your Yi Series Damascus blades looking and performing their best with proper maintenance techniques. <a href=\"/blogs/news/how-to-care-for-damascus-steel-knives\">Damascus knife care guide</a></p><p>Explore the different Japanese knife types available in the Yi Series and which suits your cooking style. <a href=\"/blogs/news/japanese-knife-types-explained\">Japanese knife types guide</a></p><p>Want the same 10Cr steel with ebony wood handles? The <strong>Ji Series</strong> uses proprietary 12Cr18MoV steel in a 67-layer Damascus build. <a href=\"/collections/x08-ji-series\">Shop the Ji Series</a></p>",
+        "show_border": true,
+        "color_scheme": "scheme-5"
+      }
+    },
+    "related_links": {
+      "type": "seo-related-links",
+      "settings": {
+        "heading": "Related Guides & Collections",
+        "color_scheme": "scheme-5"
+      },
+      "blocks": {
+        "link_1": {
+          "type": "link",
+          "settings": {
+            "link_text": "Full Series Comparison Guide",
+            "link_url": "/blogs/news/xinzuo-knives-series-comparison-guide"
+          }
+        },
+        "link_2": {
+          "type": "link",
+          "settings": {
+            "link_text": "Damascus Steel Pattern Guide",
+            "link_url": "/blogs/news/damascus-pattern-performance-price-guide"
+          }
+        },
+        "link_3": {
+          "type": "link",
+          "settings": {
+            "link_text": "VG10 vs 10Cr15CoMoV Steel",
+            "link_url": "/blogs/news/vg10-steel-vs-10cr15comov-guide"
+          }
+        },
+        "link_4": {
+          "type": "link",
+          "settings": {
+            "link_text": "Damascus Knife Care Guide",
+            "link_url": "/blogs/news/how-to-care-for-damascus-steel-knives"
+          }
+        },
+        "link_5": {
+          "type": "link",
+          "settings": {
+            "link_text": "Shop the Mo Series (Same Steel)",
+            "link_url": "/collections/xinzuo-mo-series-knives"
+          }
+        },
+        "link_6": {
+          "type": "link",
+          "settings": {
+            "link_text": "Xinzuo Brand Review",
+            "link_url": "/blogs/news/xinzuo-knives-review-brand-guide"
+          }
+        }
+      },
+      "block_order": [
+        "link_1",
+        "link_2",
+        "link_3",
+        "link_4",
+        "link_5",
+        "link_6"
+      ]
+    }
+  },
+  "order": [
+    "collection_hero_banner",
+    "header",
+    "main",
+    "below_grid",
+    "related_links"
+  ]
+}

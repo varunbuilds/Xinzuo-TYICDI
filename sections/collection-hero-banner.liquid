@@ -1,0 +1,439 @@
+{% comment %}
+  Collection Hero Banner
+  Unified section: hero banner (background image + dark overlay + H1 title)
+  + breadcrumbs (home icon + chevron separators + parent category detection)
+  + CollectionPage & BreadcrumbList schema markup
+{% endcomment %}
+
+{%- liquid
+  assign parent_name = ''
+  assign parent_url = ''
+
+  if collection.handle contains '-series'
+    assign parent_name = 'Knives'
+    assign parent_url = '/collections/knives'
+  elsif collection.handle contains 'under-'
+    assign parent_name = 'Knives'
+    assign parent_url = '/collections/knives'
+  elsif collection.handle == 'cutting-boards' or collection.handle == 'chopping-boards' or collection.handle == 'whetstones' or collection.handle == 'knife-stands' or collection.handle == 'magnetic-knife-holders' or collection.handle == 'knife-guards' or collection.handle == 'knife-rolls' or collection.handle == 'kitchen-scissors' or collection.handle == 'aprons' or collection.handle == 'chef-aprons' or collection.handle == 'knife-sharpening-tools' or collection.handle == 'wood-knife-sheaths' or collection.handle == 'chef-knife-roll-bags'
+    assign parent_name = 'Accessories'
+    assign parent_url = '/collections/accessories'
+  elsif collection.handle contains 'knife' or collection.handle contains 'knives'
+    unless collection.handle == 'knives'
+      assign parent_name = 'Knives'
+      assign parent_url = '/collections/knives'
+    endunless
+  elsif collection.handle == 'cleavers' or collection.handle == 'chinese-cleaver' or collection.handle == 'carving-forks' or collection.handle == 'damascus'
+    assign parent_name = 'Knives'
+    assign parent_url = '/collections/knives'
+  endif
+
+  assign display_heading = collection.title | default: section.settings.heading | default: 'All Collections'
+  assign collection_seo_desc = 'Premium kitchen products'
+
+  case collection.handle
+    when 'chopping-boards'
+      assign display_heading = 'CHOPPING BOARDS'
+      assign collection_seo_desc = 'Premium wooden chopping boards and cutting boards for professional kitchens'
+    when 'knife-holders'
+      assign display_heading = 'KNIFE HOLDERS'
+      assign collection_seo_desc = 'Magnetic knife holders and knife blocks for safe knife storage'
+    when 'knife-sharpening-tools'
+      assign display_heading = 'SHARPENING TOOLS'
+      assign collection_seo_desc = 'Professional knife sharpening whetstones and sharpening tools'
+    when 'kitchen-scissors'
+      assign display_heading = 'KITCHEN SCISSORS'
+      assign collection_seo_desc = 'High-quality kitchen scissors and shears for culinary use'
+    when 'chef-knife-roll-bags'
+      assign display_heading = 'KNIFE ROLL BAGS'
+      assign collection_seo_desc = 'Professional chef knife roll bags for knife transport and storage'
+    when 'wood-knife-sheaths'
+      assign display_heading = 'KNIFE SHEATHS'
+      assign collection_seo_desc = 'Wooden knife sheaths for blade protection and safe storage'
+    when 'chef-aprons'
+      assign display_heading = 'CHEF APRONS'
+      assign collection_seo_desc = 'Professional chef aprons for kitchen use'
+    when 'all-products'
+      assign display_heading = 'ALL KITCHEN KNIVES & ACCESSORIES'
+      assign collection_seo_desc = 'Premium kitchen knives and accessories from Xinzuo Australia'
+    when 'knives'
+      assign display_heading = 'PREMIUM KITCHEN KNIVES'
+      assign collection_seo_desc = 'Professional kitchen knives including chef knives, santoku, and Damascus steel blades'
+    when 'accessories'
+      assign display_heading = 'KITCHEN KNIFE ACCESSORIES'
+      assign collection_seo_desc = 'Premium kitchen knife accessories including sheaths, roll bags, cutting boards, and sharpening tools'
+    when 'accessory'
+      assign display_heading = 'KITCHEN KNIFE ACCESSORIES'
+      assign collection_seo_desc = 'Premium kitchen knife accessories including sheaths, roll bags, cutting boards, and sharpening tools'
+  endcase
+
+  if collection.handle contains '-series'
+    assign series_name = collection.title | remove: 'Xinzuo ' | remove: ' Knives'
+    assign collection_seo_desc = series_name | append: ' Damascus kitchen knives - premium Japanese style blades'
+  endif
+
+  # Custom override: collection.metafields.custom.main_image (file_reference,
+  # image type) wins over the standard collection.image when present.
+  assign hero_image = collection.metafields.custom.main_image
+  if hero_image == blank
+    assign hero_image = collection.image
+  endif
+  # MediaImage (from file_reference metafield) → extract inner Image so
+  # image_url works. Plain Image objects pass through unchanged.
+  if hero_image.image
+    assign hero_image = hero_image.image
+  endif
+
+  assign has_banner_image = false
+  if hero_image
+    assign has_banner_image = true
+  elsif section.settings.default_image != blank
+    assign has_banner_image = true
+  endif
+-%}
+
+{% style %}
+  .collection-hero-banner {
+    position: relative;
+    width: 100%;
+    height: 280px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background-color: rgb(25 25 27);
+  }
+
+  .collection-hero-banner__image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .collection-hero-banner__overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    z-index: 1;
+  }
+
+  .collection-hero-banner__content {
+    position: relative;
+    z-index: 2;
+    text-align: left;                    /* rebalance: shared left axis */
+    padding: 0 var(--xz-page-edge, 52px);   /* fluid: matches sidebar/grid below */
+    max-width: 1440px;
+    width: 100%;
+  }
+
+  .collection-hero-banner__title {
+    font-family: "Sen", sans-serif;
+    font-weight: 700;                    /* spec: only 400 + 700, never 600 */
+    font-size: 50px;
+    color: #fff;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    line-height: 1.15;
+  }
+
+  /* Description visible, left-aligned, capped at ~60ch with read-more toggle */
+  .collection-hero-banner__seo-intro {
+    display: block;
+    max-width: 60ch;                     /* ~520-600px per rebalance spec */
+    margin: 16px 0 0;                    /* left-aligned (no auto centering) */
+    text-align: left;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+  }
+  /* Collapsed state: show first ~3 lines until "Read more" is clicked */
+  .collection-hero-banner__seo-intro:not(.is-expanded) {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+  }
+  .collection-hero-banner__seo-intro p,
+  .collection-hero-banner__seo-intro div {
+    font-family: "Inter", sans-serif;
+    font-weight: 400;
+    font-size: 15px;                     /* spec body 14-16px */
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.80);
+    margin: 0;
+  }
+  .collection-hero-banner__seo-intro-toggle {
+    display: inline-block;
+    margin-top: 8px;
+    font-family: "Sen", sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--xz-accent, #FFD380);
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+  }
+  .collection-hero-banner__seo-intro-toggle:hover {
+    color: var(--xz-accent-hover, #FFDC99);
+  }
+
+  /* Breadcrumbs — share the same left axis as hero title + seo header + sidebar/grid.
+     Wrapper stays edge-to-edge for the bg colour. The inner <ol> handles the
+     centered max-width 1440 + --xz-page-edge padding (existing rule below
+     already sets max-width + margin auto; we add the padding-inline there). */
+  .collection-hero-breadcrumbs {
+    background-color: rgb(25 25 27);
+    padding: 12px 0;
+  }
+
+  .collection-hero-breadcrumbs__list {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0 auto;
+    padding: 0 var(--xz-page-edge, 52px);   /* shared left axis */
+    list-style: none;
+    font-family: "Sen", sans-serif;
+    font-size: 14px;
+    font-weight: 700;                        /* Style Guide v1.0: only 400 + 700 */
+    line-height: 1.4;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    max-width: 1440px;
+  }
+
+  .collection-hero-breadcrumbs__item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .collection-hero-breadcrumbs__link {
+    color: #c9c9cc;
+    text-decoration: none;
+    transition: color 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .collection-hero-breadcrumbs__link:hover {
+    color: #fff;
+    text-decoration: underline;
+  }
+
+  .collection-hero-breadcrumbs__home-icon {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  .collection-hero-breadcrumbs__separator {
+    color: #666;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .collection-hero-breadcrumbs__separator svg {
+    width: 8px;
+    height: 8px;
+  }
+
+  .collection-hero-breadcrumbs__current {
+    color: #fff;
+    font-weight: 500;
+  }
+
+  @media screen and (max-width: 1025px) {
+    .collection-hero-banner {
+      height: 220px;
+    }
+
+    .collection-hero-banner__title {
+      font-size: 36px;
+    }
+  }
+
+  @media screen and (max-width: 750px) {
+    .collection-hero-banner {
+      height: 180px;
+    }
+
+    .collection-hero-banner__title {
+      font-size: 28px;
+      /* padding inherited via parent .collection-hero-banner__content */
+    }
+
+    .collection-hero-breadcrumbs__list {
+      font-size: 13px;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .collection-hero-breadcrumbs__item {
+      gap: 6px;
+    }
+  }
+
+  @media screen and (max-width: 550px) {
+    .collection-hero-banner__title {
+      font-size: 24px;
+    }
+  }
+{% endstyle %}
+
+{%- comment -%} ======== HERO BANNER ======== {%- endcomment -%}
+<section class="collection-hero-banner" itemscope itemtype="https://schema.org/CollectionPage">
+  {%- if hero_image -%}
+    <img
+      class="collection-hero-banner__image"
+      src="{{ hero_image | image_url: width: 1920 }}"
+      srcset="
+        {{ hero_image | image_url: width: 800 }} 800w,
+        {{ hero_image | image_url: width: 1200 }} 1200w,
+        {{ hero_image | image_url: width: 1920 }} 1920w
+      "
+      sizes="100vw"
+      alt="{{ collection.title | escape }}"
+      loading="eager"
+      fetchpriority="high"
+      width="{{ hero_image.width }}"
+      height="{{ hero_image.height }}"
+    >
+    <div class="collection-hero-banner__overlay"></div>
+  {%- elsif section.settings.default_image != blank -%}
+    <img
+      class="collection-hero-banner__image"
+      src="{{ section.settings.default_image | image_url: width: 1920 }}"
+      srcset="
+        {{ section.settings.default_image | image_url: width: 800 }} 800w,
+        {{ section.settings.default_image | image_url: width: 1200 }} 1200w,
+        {{ section.settings.default_image | image_url: width: 1920 }} 1920w
+      "
+      sizes="100vw"
+      alt="{{ collection.title | escape }}"
+      loading="eager"
+      fetchpriority="high"
+      width="{{ section.settings.default_image.width }}"
+      height="{{ section.settings.default_image.height }}"
+    >
+    <div class="collection-hero-banner__overlay"></div>
+  {%- endif -%}
+
+  <div class="collection-hero-banner__content">
+    {%- comment -%} SEO: Hidden semantic content for search engines {%- endcomment -%}
+    <meta itemprop="name" content="{{ collection.title }}">
+    <meta itemprop="description" content="{{ collection_seo_desc }}">
+    <meta itemprop="url" content="{{ collection.url | prepend: shop.url }}">
+    {%- if hero_image -%}
+      <meta itemprop="image" content="{{ hero_image | image_url: width: 1200 | prepend: 'https:' }}">
+    {%- endif -%}
+
+    <h1 class="collection-hero-banner__title" itemprop="headline">{{ display_heading }}</h1>
+
+    {%- comment -%}
+      Description used to render here but overlapped the hero image, which
+      was unreadable. It now renders AFTER the breadcrumb in
+      <div class="collection-intro"> below — same left-axis padding as the
+      breadcrumb, capped at ~60ch with a "Read more" toggle when long.
+    {%- endcomment -%}
+  </div>
+</section>
+
+{%- comment -%} ======== BREADCRUMBS ======== {%- endcomment -%}
+<nav class="collection-hero-breadcrumbs" aria-label="Breadcrumb">
+  <ol class="collection-hero-breadcrumbs__list" itemscope itemtype="https://schema.org/BreadcrumbList">
+    {%- comment -%} Level 1: Home {%- endcomment -%}
+    <li class="collection-hero-breadcrumbs__item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <a href="{{ shop.url }}" class="collection-hero-breadcrumbs__link" itemprop="item">
+        <svg class="collection-hero-breadcrumbs__home-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+          <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/>
+        </svg>
+        <span itemprop="name">Home</span>
+      </a>
+      <meta itemprop="position" content="1">
+      <span class="collection-hero-breadcrumbs__separator" aria-hidden="true">
+        <svg viewBox="0 0 8 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" xmlns="http://www.w3.org/2000/svg">
+          <path d="M1.5 1L6.5 6L1.5 11"/>
+        </svg>
+      </span>
+    </li>
+
+    {%- if parent_name != '' -%}
+      {%- comment -%} Level 2: Parent category (Knives or Accessories) {%- endcomment -%}
+      <li class="collection-hero-breadcrumbs__item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a href="{{ parent_url | prepend: shop.url }}" class="collection-hero-breadcrumbs__link" itemprop="item">
+          <span itemprop="name">{{ parent_name }}</span>
+        </a>
+        <meta itemprop="position" content="2">
+        <span class="collection-hero-breadcrumbs__separator" aria-hidden="true">
+          <svg viewBox="0 0 8 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.5 1L6.5 6L1.5 11"/>
+          </svg>
+        </span>
+      </li>
+      {%- comment -%} Level 3: Current collection {%- endcomment -%}
+      <li class="collection-hero-breadcrumbs__item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <span class="collection-hero-breadcrumbs__current" itemprop="name">{{ collection.title }}</span>
+        <meta itemprop="item" content="{{ collection.url | prepend: shop.url }}">
+        <meta itemprop="position" content="3">
+      </li>
+    {%- else -%}
+      {%- comment -%} Level 2: Current collection (top-level) {%- endcomment -%}
+      <li class="collection-hero-breadcrumbs__item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <span class="collection-hero-breadcrumbs__current" itemprop="name">{{ collection.title }}</span>
+        <meta itemprop="item" content="{{ collection.url | prepend: shop.url }}">
+        <meta itemprop="position" content="2">
+      </li>
+    {%- endif -%}
+  </ol>
+</nav>
+
+{%- comment -%}
+  Description block intentionally NOT rendered here. The curated, SEO-optimised
+  H2 + body lives in sections/seo-collection-header.liquid which is mounted
+  on each collection template separately. That section now handles its own
+  left-aligned layout + Read more on both desktop and mobile.
+{%- endcomment -%}
+
+{% schema %}
+{
+  "name": "Collection Hero Banner",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "default_image",
+      "label": "Default banner image",
+      "info": "Fallback image for collections without a collection image. If neither is set, a solid dark background is shown."
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Header Title"
+    },
+    {
+      "type": "textarea",
+      "id": "seo_description",
+      "label": "SEO Description",
+      "info": "Keyword-rich paragraph shown below the title. Leave blank to use collection description or auto-generated text."
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-5"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection Hero Banner"
+    }
+  ]
+}
+{% endschema %}

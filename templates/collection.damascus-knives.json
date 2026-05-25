@@ -1,0 +1,178 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "collection_hero_banner": {
+      "type": "collection-hero-banner",
+      "settings": {
+        "color_scheme": "scheme-5"
+      }
+    },
+    "header": {
+      "type": "seo-collection-header",
+      "settings": {
+        "heading_override": "",
+        "subtitle": "67 Layers of Folded Steel Excellence",
+        "intro_content": "<p><strong>Damascus knives</strong> are forged using an ancient technique that folds multiple layers of steel together, creating the distinctive wave patterns that have made these blades famous for centuries. XinZuo Damascus knives use 67 layers of steel with a 10Cr15CoMoV cutting core forged in Yangjiang, delivering a blade that holds a razor edge while resisting chips and lateral stress. The layered construction is not just decorative. Each fold creates micro-serrations at the cutting edge that bite into ingredients, while the softer outer layers absorb shock that would chip a mono-steel blade. Every XinZuo Damascus knife is hand-finished, so no two patterns are identical. Your blade is genuinely one of a kind. The Damascus <strong>kitchen knives</strong> in our collection range from chef knives and santoku to nakiri, full knife sets, and accessories. Whether you want a single statement piece or a complete Damascus kitchen, the collection has you covered.</p>",
+        "color_scheme": "scheme-5"
+      }
+    },
+    "main": {
+      "type": "main-collection",
+      "blocks": {
+        "filters": {
+          "type": "filters",
+          "static": true,
+          "settings": {
+            "enable_filtering": true,
+            "filter_style": "vertical",
+            "filter_width": "centered",
+            "text_label_case": "default",
+            "show_swatch_label": false,
+            "show_filter_label": true,
+            "enable_sorting": true,
+            "enable_grid_density": true,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "padding-block-start": 8,
+            "padding-block-end": 8,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0,
+            "facets_margin_bottom": 8,
+            "facets_margin_right": 20
+          },
+          "blocks": {}
+        },
+        "product-card": {
+          "type": "_product-card",
+          "static": true,
+          "settings": {
+            "product_card_gap": 4,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "card-gallery": {
+              "type": "_product-card-gallery",
+              "settings": {
+                "image_ratio": "adapt",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "product_title": {
+              "type": "product-title",
+              "settings": {
+                "width": "100%",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 4,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "price": {
+              "type": "price",
+              "settings": {
+                "show_sale_price_first": true,
+                "show_installments": false,
+                "show_tax_info": false,
+                "type_preset": "h6",
+                "width": "100%",
+                "alignment": "left",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "color": "var(--color-foreground)",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "card-gallery",
+            "product_title",
+            "price"
+          ]
+        }
+      },
+      "settings": {
+        "layout_type": "grid",
+        "product_card_size": "medium",
+        "mobile_product_card_size": "small",
+        "product_grid_width": "centered",
+        "full_width_on_mobile": true,
+        "columns_gap_horizontal": 16,
+        "columns_gap_vertical": 24,
+        "padding-inline-start": 0,
+        "padding-inline-end": 0,
+        "color_scheme": "scheme-5",
+        "padding-block-start": 0,
+        "padding-block-end": 32
+      }
+    },
+    "below_grid": {
+      "type": "seo-below-grid-content",
+      "settings": {
+        "heading": "Learn more about Damascus knives",
+        "content": "<p>Real Damascus vs fake: how to identify genuine <strong>Damascus steel</strong> and what the patterns tell you about blade quality. Our guide from XinZuo covers what to look for. <a href=\"/blogs/news/damascus-pattern-performance-price-guide\">Damascus pattern and performance guide</a></p><p><strong>Damascus knife</strong> care guide: cleaning, storage, and maintenance to keep the pattern sharp and the edge cutting for years. Crafted in Yangjiang, these blades deserve proper care. <a href=\"/blogs/news/how-to-care-for-damascus-steel-knives\">Damascus steel care guide</a></p><p>67 layers vs 73 layers: does layer count actually matter in a <strong>Damascus kitchen knife</strong>? We break down the numbers. <a href=\"/blogs/news/67-layer-vs-73-layer-damascus\">Layer count comparison</a></p><p>See our Damascus chef knives, the most popular blade in the collection for everyday kitchen work. <a href=\"/collections/damascus-chef-knife\">Shop Damascus Chef Knives</a></p><p>Get the full Damascus experience with a curated Damascus knife set at better value than buying individually. <a href=\"/collections/damascus-knife-sets\">Shop Damascus Knife Sets</a></p><p>Compare our full chef knife range across Damascus and stainless options to find your perfect blade. <a href=\"/collections/chef-knives\">Shop Chef Knives</a></p>",
+        "show_border": true,
+        "color_scheme": "scheme-5"
+      }
+    },
+    "related_links": {
+      "type": "seo-related-links",
+      "settings": {
+        "heading": "Related Guides & Collections",
+        "color_scheme": "scheme-5"
+      }
+    }
+  },
+  "order": [
+    "collection_hero_banner",
+    "header",
+    "main",
+    "below_grid",
+    "related_links"
+  ]
+}

@@ -1,0 +1,230 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "collection_hero_banner": {
+      "type": "collection-hero-banner",
+      "settings": {
+        "color_scheme": "scheme-5"
+      }
+    },
+    "header": {
+      "type": "seo-collection-header",
+      "settings": {
+        "heading_override": "",
+        "subtitle": "Proven Steel, Clean Lines, Great Value",
+        "intro_content": "<p>The <strong>Xinzuo X020 Pin Series</strong> delivers the performance of Xinzuo’s acclaimed <strong>10Cr15CoMoV steel</strong> — the same core found in their premium Damascus lines — in a clean <strong>3-layer composite construction</strong> at <strong>60 HRC</strong>. Without the Damascus cladding, these blades offer the same cutting edge at a more accessible price point. Warm <strong>olive wood handles</strong> give each knife a natural, Mediterranean character and a comfortable grip. With 14 knife types spanning paring, utility, santoku, chef, nakiri, boning, cleaver, and bread knives, the Pin Series is one of the most complete mid-premium ranges Xinzuo offers. For Australian cooks who value substance over flash, the Pin Series proves that you don’t need decorative layers to get a genuinely excellent blade — just outstanding steel and honest craftsmanship.</p>",
+        "color_scheme": "scheme-5"
+      }
+    },
+    "main": {
+      "type": "main-collection",
+      "blocks": {
+        "filters": {
+          "type": "filters",
+          "static": true,
+          "settings": {
+            "enable_filtering": true,
+            "filter_style": "horizontal",
+            "filter_width": "centered",
+            "text_label_case": "default",
+            "show_swatch_label": false,
+            "show_filter_label": false,
+            "enable_sorting": true,
+            "enable_grid_density": true,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "padding-block-start": 8,
+            "padding-block-end": 8,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0,
+            "facets_margin_bottom": 8,
+            "facets_margin_right": 20
+          },
+          "blocks": {}
+        },
+        "product-card": {
+          "type": "_product-card",
+          "static": true,
+          "settings": {
+            "product_card_gap": 4,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "card-gallery": {
+              "type": "_product-card-gallery",
+              "settings": {
+                "image_ratio": "adapt",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "product_title": {
+              "type": "product-title",
+              "settings": {
+                "width": "100%",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 4,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "price": {
+              "type": "price",
+              "settings": {
+                "show_sale_price_first": true,
+                "show_installments": false,
+                "show_tax_info": false,
+                "type_preset": "h6",
+                "width": "100%",
+                "alignment": "left",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "color": "var(--color-foreground)",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "card-gallery",
+            "product_title",
+            "price"
+          ]
+        }
+      },
+      "settings": {
+        "layout_type": "grid",
+        "product_card_size": "medium",
+        "mobile_product_card_size": "small",
+        "product_grid_width": "centered",
+        "full_width_on_mobile": true,
+        "columns_gap_horizontal": 16,
+        "columns_gap_vertical": 24,
+        "padding-inline-start": 0,
+        "padding-inline-end": 0,
+        "color_scheme": "scheme-5",
+        "padding-block-start": 0,
+        "padding-block-end": 32
+      }
+    },
+    "below_grid": {
+      "type": "seo-below-grid-content",
+      "settings": {
+        "heading": "Why choose 3-layer composite over Damascus",
+        "content": "<p>The Pin Series uses the same <strong>10Cr15CoMoV steel</strong> found in Xinzuo’s premium Damascus knives. Learn how this steel compares to VG10. <a href=\"/blogs/news/vg10-steel-vs-10cr15comov-guide\">VG10 vs 10Cr15CoMoV compared</a></p><p>Understand the <strong>san-mai (3-layer) construction</strong> method and why it delivers excellent toughness alongside a hard cutting edge. <a href=\"/blogs/news/san-mai-construction-guide\">San-mai knife guide</a></p><p>New to quality kitchen knives? Our beginner guide covers blade types, steel grades, and what to look for in your first serious knife. <a href=\"/blogs/news/beginner-kitchen-knife-buying-guide\">Beginner knife buying guide</a></p><p>Find the best kitchen knives at every price point, from entry-level to professional grade. <a href=\"/blogs/news/best-kitchen-knives-every-budget\">Best knives for every budget</a></p><p>Keep your Pin Series knife razor-sharp with a proper sharpening routine — 10Cr steel responds beautifully to a whetstone. <a href=\"/blogs/news/how-to-sharpen-knives-whetstone\">How to sharpen on a whetstone</a></p><p>Ready for Damascus? The <strong>Lan Series</strong> uses the same 10Cr15CoMoV core wrapped in 67 layers of Damascus steel. <a href=\"/collections/xinzuo-lan-series-knives\">Shop the Lan Series</a></p>",
+        "show_border": true,
+        "color_scheme": "scheme-5"
+      }
+    },
+    "related_links": {
+      "type": "seo-related-links",
+      "settings": {
+        "heading": "Related Guides & Collections",
+        "color_scheme": "scheme-5"
+      },
+      "blocks": {
+        "link_1": {
+          "type": "link",
+          "settings": {
+            "link_text": "Full Series Comparison Guide",
+            "link_url": "/blogs/news/xinzuo-knives-series-comparison-guide"
+          }
+        },
+        "link_2": {
+          "type": "link",
+          "settings": {
+            "link_text": "San-Mai 3-Layer Knife Guide",
+            "link_url": "/blogs/news/san-mai-construction-guide"
+          }
+        },
+        "link_3": {
+          "type": "link",
+          "settings": {
+            "link_text": "VG10 vs 10Cr15CoMoV Steel",
+            "link_url": "/blogs/news/vg10-steel-vs-10cr15comov-guide"
+          }
+        },
+        "link_4": {
+          "type": "link",
+          "settings": {
+            "link_text": "Beginner Knife Buying Guide",
+            "link_url": "/blogs/news/beginner-kitchen-knife-buying-guide"
+          }
+        },
+        "link_5": {
+          "type": "link",
+          "settings": {
+            "link_text": "Shop the Lan Series (Damascus)",
+            "link_url": "/collections/xinzuo-lan-series-knives"
+          }
+        },
+        "link_6": {
+          "type": "link",
+          "settings": {
+            "link_text": "Xinzuo Brand Review",
+            "link_url": "/blogs/news/xinzuo-knives-review-brand-guide"
+          }
+        }
+      },
+      "block_order": [
+        "link_1",
+        "link_2",
+        "link_3",
+        "link_4",
+        "link_5",
+        "link_6"
+      ]
+    }
+  },
+  "order": [
+    "collection_hero_banner",
+    "header",
+    "main",
+    "below_grid",
+    "related_links"
+  ]
+}

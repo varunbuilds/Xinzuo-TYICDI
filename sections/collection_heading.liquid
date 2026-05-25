@@ -1,0 +1,115 @@
+{% style %}
+    .section-{{ section.id }} .collection-header {
+        display: flex;
+        /* flex-wrap: wrap; */
+        gap: 40px;
+        margin: auto;
+        background: linear-gradient(0deg, #0C0C0C 0%, #292A33 99.48%);
+    }
+
+    .section-{{ section.id }} .collection-image {
+        width: 50%;
+        padding-top: 24px;
+    }
+
+    .section-{{ section.id }} .collection-title {
+        width: 50%;
+        padding: 20px;
+    }
+
+    .section-{{ section.id }} .collection-title h2 {
+        font-size: 48px;
+        font-family: "Sen";
+        font-weight: 600;
+    }
+
+    .section-{{ section.id }} .collection-title span {
+        font-family: "Sen";
+        font-weight: 400;
+        font-size: 16px;
+        color: #c9c9cc;
+        display: block;
+        max-width: 500px;
+    }
+
+    .section-{{ section.id }} ul {
+        padding-left: 20px;
+    }
+
+    @media screen and (max-width: 750px) {
+        .section-{{ section.id }} .collection-header {
+            display: block;
+            padding: 0 20px;
+        }
+
+        .section-{{ section.id }} .collection-image {
+            width: 100%;
+        }
+
+        .section-{{ section.id }} .collection-title {
+            width: 100%;
+            padding: 20px 0;
+        }
+
+        .section-{{ section.id }} .collection-title h2 {
+            font-size: 36px;
+        }
+    }
+{% endstyle %}
+
+<section class="section-{{ section.id }} color-{{ section.settings.color_scheme }}">
+    <div class="collection-header">
+        {% if collection.featured_image != blank %}
+            <div class="collection-image">
+                <img srcset="{{ collection.featured_image | image_url: width: 600 }} 600w, {{ collection.featured_image | image_url: width: 1000 }} 1000w" sizes="(max-width: 750px) 100vw, 50vw" src="{{ collection.featured_image | image_url: width: 800 }}" width="100%" height="100%" loading="lazy" alt="{{ collection.image.alt | default: collection.title | escape }}">
+            </div>
+        {% elsif collection.products.first.featured_image != blank %}
+            <div class="collection-image">
+                <img srcset="{{ collection.products.first.featured_image | image_url: width: 600 }} 600w, {{ collection.products.first.featured_image | image_url: width: 1000 }} 1000w" sizes="(max-width: 750px) 100vw, 50vw" src="{{ collection.products.first.featured_image | image_url: width: 800 }}" width="100%" height="100%" loading="lazy" alt="{{ collection.products.first.featured_image.alt | default: collection.title | append: ' collection' | escape }}">
+            </div>
+        {% endif %}
+        <div class="collection-title">
+            <h2>{{ collection.title }}</h2>
+            {%- comment -%}
+              Description removed from this section to avoid duplication —
+              the visible description now lives in collection-hero-banner.liquid
+              below the breadcrumb (left-aligned, 60ch capped, with Read more).
+            {%- endcomment -%}
+        </div>
+    </div>
+</section>
+
+{% schema %}
+{
+    "name": "Collection Header",
+    "settings": [
+        {
+            "type": "select",
+            "id": "width",
+            "label": "Width",
+            "options": [
+                {
+                    "label": "Page",
+                    "value": "page"
+                },
+                {
+                    "label": "Full",
+                    "value": "full"
+                }
+            ],
+            "default": "page"
+        },
+        {
+            "type": "color_scheme",
+            "id": "color_scheme",
+            "label": "t:settings.color_scheme",
+            "default": "scheme-1"
+        }
+    ],
+    "presets": [
+        {
+            "name": "Collection Header"
+        }
+    ]
+}
+{% endschema %}

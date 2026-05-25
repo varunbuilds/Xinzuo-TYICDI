@@ -1,0 +1,1705 @@
+/* ==========================================================================
+   Site-wide custom overrides — xinzuo.com.au
+   Loaded on every page. Do not confuse with judgeme-reviews.css (review-only).
+   ========================================================================== */
+
+/* ==========================================================================
+   Xinzuo Brand Design Tokens — Gold Theme (canonical, from Style Guide v1.0)
+
+   Two parallel namespaces:
+   - --xz-*       : canonical tokens (use for new work; match the Style Guide
+                    HTML 1:1)
+   - --xinzuo-*   : legacy aliases kept for the existing theme code that
+                    still references them (CTAs, badges, etc). Both resolve
+                    to the same hex values.
+
+   Bold weight is 700 (Sen). Never use 500 or 600. Body is 400.
+   CTA letter-spacing is 0.06–0.08em on uppercase labels.
+   ========================================================================== */
+:root {
+  /* === Canonical --xz-* tokens (Style Guide v1.0) === */
+  --xz-bg: #000000;            /* Pure black page background */
+  --xz-surface: #0a0a0a;       /* Card / dark surface */
+  --xz-surface-2: #141414;     /* Raised surface */
+  --xz-border: rgba(255, 255, 255, 0.08);
+
+  --xz-accent: #FFD380;        /* Main gold — CTAs, prices, highlights */
+  --xz-accent-hover: #FFDC99;  /* Button hover */
+  --xz-accent-deep: #D1AE6B;   /* Secondary gold — series labels, kickers */
+
+  --xz-red: #C81E1E;           /* Promo / NEW tags ONLY */
+  --xz-green: #22C55E;         /* Stock pills only */
+
+  --xz-ink: #FFFFFF;
+  --xz-ink-80: rgba(255, 255, 255, 0.80);
+  --xz-ink-60: rgba(255, 255, 255, 0.60);
+  --xz-ink-40: rgba(255, 255, 255, 0.40);
+  --xz-on-accent: #000000;     /* Text on gold buttons */
+
+  --xz-font: 'Sen', -apple-system, BlinkMacSystemFont, sans-serif;
+  --xz-weight-reg: 400;
+  --xz-weight-bold: 700;
+
+  --xz-r: 4px;
+  --xz-r-pill: 999px;
+
+  --xz-h-tag: 16px;
+  --xz-h-btn: 40px;
+  --xz-h-btn-lg: 48px;
+  --xz-h-header-d: 72px;
+  --xz-h-header-m: 56px;
+
+  /* Fluid page-edge gutter — single source of truth for the LEFT AXIS that
+     hero title, breadcrumb, intro, sidebar, sort, and grid all align to.
+     Scales: ~16px @ 480 viewport · ~52px @ 1440 viewport · cap 80px @ 2200+. */
+  --xz-page-edge: clamp(16px, 3.6vw, 80px);
+
+  /* === Legacy --xinzuo-* aliases (do not remove — wired into existing CSS) === */
+  --xinzuo-accent: #FFD380;
+  --xinzuo-accent-hover: #FFDC99;
+  --xinzuo-accent-active: #E5BC73;
+  --xinzuo-accent-disabled: #FFD38088;
+  --xinzuo-accent-text: #000000;          /* aligned to --xz-on-accent (was #1A1A1E) */
+
+  --xinzuo-red: #C81E1E;
+  --xinzuo-red-hover: #A11919;
+
+  --xinzuo-gold: #D1AE6B;                  /* alias of --xz-accent-deep */
+  --xinzuo-gold-light: #E0C28A;
+
+  --xinzuo-green: #22C55E;                 /* new — stock pills */
+
+  /* Neutral */
+  --xinzuo-black: #1A1A1E;
+  --xinzuo-charcoal: #292A33;
+  --xinzuo-charcoal-light: #33343D;
+  --xinzuo-white: #FFFFFF;
+  --xinzuo-off-white: #F9F9F7;
+  --xinzuo-gray: #717171;
+  --xinzuo-gray-light: #E5E5E5;
+
+  /* Text */
+  --xinzuo-text-dark: #1A1A1E;
+  --xinzuo-text-muted: #555555;
+  --xinzuo-text-light: #717171;
+  --xinzuo-footer-text: #B0B0B0;
+
+  /* Variant A: Dark (default) */
+  --xz-section-bg: #1A1A1E;
+  --xz-section-bg-alt: #292A33;
+  --xz-card-bg: #292A33;
+  --xz-text-primary: #FFFFFF;
+  --xz-text-secondary: #C9C9CC;
+  --xz-text-muted: #828282;
+  --xz-border-subtle: rgba(255, 255, 255, 0.08);
+  --xz-border-subtle-hover: rgba(255, 255, 255, 0.2);
+}
+
+/* ==========================================================================
+   Variant B: Light Content
+   ========================================================================== */
+body.xinzuo-light {
+  --xz-section-bg: #FFFFFF;
+  --xz-section-bg-alt: #F9F9F7;
+  --xz-card-bg: #F9F9F7;
+  --xz-text-primary: #1A1A1E;
+  --xz-text-secondary: #555555;
+  --xz-text-muted: #717171;
+  --xz-border-subtle: #E5E5E5;
+  --xz-border-subtle-hover: #D1AE6B;
+}
+
+/* ==========================================================================
+   Variant C: Hybrid (alternating dark/light)
+   Controlled per-section via dedicated overrides below
+   ========================================================================== */
+body.xinzuo-hybrid {
+  --xz-section-bg: #1A1A1E;
+  --xz-section-bg-alt: #292A33;
+  --xz-card-bg: #292A33;
+  --xz-text-primary: #FFFFFF;
+  --xz-text-secondary: #C9C9CC;
+  --xz-text-muted: #828282;
+  --xz-border-subtle: rgba(255, 255, 255, 0.08);
+  --xz-border-subtle-hover: rgba(255, 255, 255, 0.2);
+}
+
+/* Hybrid: Light sections for products, reviews, guides, FAQ */
+body.xinzuo-hybrid .home-products,
+body.xinzuo-hybrid .home-products .home-products-gradient {
+  background: #FFFFFF !important;
+}
+body.xinzuo-hybrid .home-products .product-item h3,
+body.xinzuo-hybrid .home-products .collection-price span.prices {
+  color: #1A1A1E !important;
+}
+body.xinzuo-hybrid .home-products .product-img {
+  background-color: #F9F9F7 !important;
+}
+
+/* Light variant: section background overrides */
+body.xinzuo-light .home-products,
+body.xinzuo-light .home-products .home-products-gradient {
+  background: #FFFFFF !important;
+}
+body.xinzuo-light .home-products .product-item h3,
+body.xinzuo-light .home-products .collection-price span.prices,
+body.xinzuo-light .home-products .collection-link {
+  color: #1A1A1E !important;
+}
+body.xinzuo-light .home-products .collection-price span.compare-price {
+  color: #717171 !important;
+}
+body.xinzuo-light .home-products .product-img {
+  background-color: #F9F9F7 !important;
+}
+body.xinzuo-light .home-products .collection-link {
+  border-bottom-color: #D1AE6B !important;
+}
+body.xinzuo-light .home-products-div > h2 {
+  color: #1A1A1E !important;
+}
+body.xinzuo-light .home-products #load-more {
+  background-color: #FFD380 !important;
+  color: #1A1A1E !important;
+}
+
+body > * {
+    padding: 0;
+    margin: 0;
+}
+
+header .header__row {
+    background-color: #292a33 !important;
+}
+
+
+@media screen and (max-width: 480px) {
+    header .header__row {
+        background-color: #282932 !important;
+    }
+}
+
+header .mega-menu__list {
+    grid-column: span var(4);
+}
+
+header .menu-list__link {
+    cursor: pointer;
+}
+
+header .menu-drawer-container .header__icon--summary {
+    padding: 0 !important;
+}
+
+header .menu-list {
+    list-style: none;
+    align-items: center;
+}
+
+header .menu-list li.menu-list__list-item {
+    padding: 0 30px;
+}
+
+header .menu-list li.menu-list__list-item .menu-list__link > span {
+    font-family: "Sen";
+    font-weight: 600;
+    font-size: 18px;
+    text-transform: uppercase;
+}
+
+header .menu-list li.menu-list__list-item .logo-block__image-wrapper img {
+    width: 50px;
+    height: 50px;
+}
+
+header .header-actions__action .svg-wrapper img {
+    width: 20px;
+    height: 20px;
+}
+
+header .header__column--right .search-action {
+    order: 1;
+}
+
+header .header__column--center > a.header-logo {
+    display: none;
+}
+
+@media screen and (max-width: 1350px) {
+    header li.menu-list__list-item {
+        padding: 0 15px !important;
+    }
+
+    header li.menu-list__list-item span {
+        font-size: 14px;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    header li.menu-list__list-item {
+        padding: 0 10px !important;
+    }
+}
+
+.menu-drawer__navigation .menu-drawer__list-item {
+    font-family: "Sen", sans-serif;
+    font-weight: 400;
+    font-size: 20px;
+    height: 50px;
+    color: #fff;
+}
+
+.menu-drawer__navigation .menu-drawer__list-item a {
+    font-family: "Sen", sans-serif;
+    font-weight: 400;
+    font-size: 20px;
+    color: #fff;
+}
+
+.menu-drawer__navigation .menu-drawer__menu menu-drawer__menu--childlist > a {
+    font-family: "Sen";
+    font-weight: 400;
+    font-size: 18px;
+    color: #fff;
+}
+
+.menu-drawer__navigation .menu-drawer__nav-buttons button {
+    font-family: "Sen";
+    font-weight: 500;
+    font-size: 16px;
+    color: #828282;
+    line-height: 1;
+}
+
+.menu-drawer__navigation .menu-drawer__nav-buttons span {
+    color: #828282 !important;
+}
+
+.menu-drawer__navigation .menu-drawer__list-item--flat {
+    height: auto;
+}
+
+.menu-drawer__navigation .menu-drawer__list-item--flat > a {
+    font-family: "Sen";
+    font-weight: 400;
+    font-size: 18px;
+    height: 50px;
+    color: #fff
+}
+
+.accordion {
+    /* max-width: 960px; */
+    margin: auto;
+    margin-top: 48px;
+    margin-bottom: 24px;
+}
+
+.border-style.custom-section-content .spacing-style.layout-panel-flex.layout-panel-flex--column.section-content-wrapper.mobile-column rte-formatter h2 {
+    font-family: "Sen";
+    font-weight: 600;
+    font-size: 48px;
+    color: white;
+}
+
+.border-style.custom-section-content .spacing-style.layout-panel-flex.layout-panel-flex--column.section-content-wrapper.mobile-column rte-formatter p {
+    font-family: "Albert Sans";
+    font-weight: 400;
+    font-size: 18px;
+    max-width: 600px;
+    color: #c9c9cc;
+}
+
+.border-style.custom-section-content .spacing-style.layout-panel-flex.layout-panel-flex--column.section-content-wrapper.mobile-column rte-formatter h2:nth-child(even) {
+    color: #FFD380;
+}
+
+.border-style.custom-section-content .spacing-style.layout-panel-flex.layout-panel-flex--column.section-content-wrapper.mobile-column rte-formatter h3 {
+    color: white;
+}
+
+.border-style.custom-section-content .spacing-style.layout-panel-flex.layout-panel-flex--column.section-content-wrapper.mobile-column rte-formatter input {
+    font-family: "Albert Sans";
+    font-weight: 400;
+    font-size: 14px;
+}
+
+.border-style.custom-section-content .spacing-style.layout-panel-flex.layout-panel-flex--column.section-content-wrapper.mobile-column a {
+    color: #fff;
+}
+
+.border-style.custom-section-content .spacing-style.layout-panel-flex.layout-panel-flex--column.section-content-wrapper.mobile-column .accordion rte-formatter p {
+    font-size: 18px;
+}
+
+.email-signup__input-group input {
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    background-color: rgba(255, 255, 255, 0.02);
+}
+
+.email-signup__input-group input::placeholder {
+    font-family: "Albert Sans";
+    font-weight: 400;
+    font-size: 14px;
+    color: #c9c9cc;
+}
+
+.email-signup__input-group button {
+    font-family: "Sen" !important;
+    font-weight: 600 !important;
+    font-size: 14px !important;
+    background-color: #FFD380 !important;
+    color: #1A1A1E !important;
+}
+
+footer .menu-title {
+    display: block;
+    font-family: "Sen";
+    font-weight: 400;
+    font-size: 15px;
+    color: #c9c9cc;
+    margin-bottom: 24px;
+    text-transform: uppercase;
+}
+
+@media screen and (max-width: 1025px) {
+    .hero__content-wrapper > div > p {
+        font-size: 60px !important;
+    }
+}
+
+@media screen and (max-width: 750px) {
+    .header__columns {
+        padding: 0;
+    }
+
+    .header__drawer {
+        display: flex;
+        gap: 15px;
+        width: max-content;
+    }
+
+    .header-logo-name {
+        color: rgba(255, 255, 255, 0.90);
+        font-family: "Sen";
+        font-weight: 500;
+        font-size: 18px;
+    }
+
+    .hero {
+        height: calc(90vh - 100px);
+    }
+
+    .hero .hero__container {
+        height: 100%;
+        padding: 15px 0;
+    }
+
+    .header__column--center > a.header-logo {
+        display: flex !important;
+    }
+
+    .header__column--center > a.header-logo img {
+        width: 50px;
+        height: 50px;
+    }
+
+    .hero__content-wrapper {
+        left: 5%;
+        width: 90% !important;
+        gap: 0;
+    }
+
+    .hero__content-wrapper div:nth-child(1) {
+        width: 50%;
+        margin-bottom: 12px;
+    }
+
+    .hero__content-wrapper div p {
+        font-size: 40px !important;
+    }
+
+    .hero__content-wrapper rte-formatter {
+        width: 62%;
+    }
+
+    .hero__content-wrapper rte-formatter p {
+        font-size: 16px;
+    }
+
+    .hero__content-wrapper div.shopify-block.icon-block {
+        margin: 0;
+        width: 100%;
+        max-width: unset;
+        margin-top: -20px;
+    }
+
+    .hero__content-wrapper div.shopify-block.icon-block img {
+        width: 100px !important;
+        margin: auto;
+    }
+
+    .hero__content-wrapper a {
+        margin: 0 auto;
+        border: none;
+        font-size: 13px;
+        color: #fff;
+        margin-top: 15px;
+    }
+
+    .hero__content-wrapper a svg {
+        width: 16px;
+    }
+
+    footer .menu-title {
+        margin-bottom: 12px;
+    }
+
+    .email-signup__input-group input {
+        padding: 10px 12px;
+    }
+
+    .email-signup__input-group button {
+        padding: 8px 12px;
+    }
+
+    .border-style.custom-section-content .spacing-style.layout-panel-flex.layout-panel-flex--column.section-content-wrapper.mobile-column {
+        gap: 12px !important;
+    }
+
+    .border-style.custom-section-content .spacing-style.layout-panel-flex.layout-panel-flex--column.section-content-wrapper.mobile-column rte-formatter h2 {
+        font-size: 28px;
+        margin:0;
+        line-height:130%;
+    }
+
+    .accordion {
+        margin-top: 36px;
+    }
+
+    .accordion .details__header {
+        padding: 16px 0;
+        font-size: 19px;
+    }
+}
+
+/* Cart bubble in header icon — yellow bg, black text, Sen font */
+header-actions .cart-bubble .cart-bubble__background {
+    background-color: #FFD380;
+}
+header-actions .cart-bubble .cart-bubble__text {
+    font-family: "Sen", sans-serif;
+    font-weight: 600;
+    color: #1A1A1E;
+}
+
+header-actions .cart-bubble-item {
+    display: none;
+}
+
+.dropdown-header .cart-bubble-item {
+    display: none;
+}
+
+.header-drawer-header .cart-bubble-item {
+    display: none;
+}
+
+header .cart-drawer__inner .cart-bubble-item {
+    display: block;
+}
+
+header .cart-drawer__inner .cart-bubble__background {
+    display: none;
+}
+
+header .cart-drawer__inner .cart-bubble__text {
+    font-family: "Sen";
+    font-weight: 600;
+    font-size: 16px;
+    color: #c9c9cc;
+}
+
+header .cart-drawer__inner .cart-drawer__heading {
+    margin-bottom: 12px;
+    margin-top: 12px;
+    font-size: 24px;
+}
+
+header .cart-drawer__inner .cart-drawer__heading .cart-bubble[data-maintain-ratio] {
+    aspect-ratio: unset;
+}
+
+header .cart-drawer__inner .cart-drawer__header p {
+    font-family: "Albert Sans";
+    font-weight: 400;
+    font-size: 14px;
+    color: #c9c9cc;
+    line-height: 150%;
+    margin: 0;
+}
+
+header .cart-drawer__inner .cart-drawer__header .progress-cart {
+    width: 100%;
+    accent-color: #FFD380;
+}
+
+header .cart-drawer__inner .cart-items__table-row {
+    grid-template-columns: 120px auto 0;
+    gap: 0;
+    border: none;
+}
+
+header .cart-drawer__inner .cart-drawer-img {
+    margin-right: 20px;
+}
+
+.cart-drawer-info {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-between;
+}
+
+.cart-drawer-info .cart-drawer-info-div1 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+}
+
+.cart-drawer-info .cart-drawer-info-div1 .cart-drawer-product a {
+    font-family: "Sen";
+    font-weight: 600;
+    font-size: 16px;
+    color: #fff;
+    text-decoration: none;
+}
+
+.cart-drawer-info .cart-drawer-info-div1 .cart-drawer-product span {
+    font-family: "Albert Sans";
+    font-weight: 400;
+    font-size: 14px;
+    color: #c9c9cc;
+}
+
+.cart-drawer-info .cart-drawer-info-div1 .cart-items__remove {
+    width: 20px;
+    height: 20px;
+}
+
+.cart-drawer-info .cart-drawer-info-div2 {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+}
+
+.cart-drawer-info .cart-drawer-info-div2 .cart-drawer-price span {
+    font-family: "Sen";
+    font-weight: 600;
+    font-size: 22px;
+    color: #fff;
+}
+
+.cart-drawer-info .cart-drawer-info-div2 .cart-drawer-price s {
+    font-family: "Sen";
+    font-weight: 500;
+    font-size: 14px;
+    color: #c9c9cc;
+}
+
+.cart-drawer-info .cart-drawer-info-div2 .cart-drawer-quantity .quantity-selector {
+    width: 90px;
+    height: 30px;
+    border: none;
+}
+
+.cart-drawer-info .cart-drawer-info-div2 .cart-drawer-quantity .quantity-selector button {
+    width: 30%;
+    height: 100%;
+}
+
+.cart-drawer-info .cart-drawer-info-div2 .cart-drawer-quantity * {
+    font-family: "Sen";
+    border: none;
+    font-weight: 400;
+    font-size: 16px;
+    color: #c9c9cc;
+}
+
+.drawer-progress-bar__wrapper {
+    margin-bottom: 64px;
+}
+
+.drawer-progress-bar__wrapper .progress-bar {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.drawer-progress-bar__wrapper .shipping-value {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #fff;
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+}
+
+.drawer-progress-bar__wrapper p {
+    font-family: "Albert Sans";
+    font-weight: 400;
+    font-size: 16px;
+    color: #c9c9cc;
+    margin: 0;
+}
+
+.cart-page .cart-bubble__background {
+    display: none;
+}
+
+.cart-page .cart-page__items {
+    overflow: hidden;
+}
+
+.cart-page .cart-page__title h1 {
+    align-items: baseline;
+    font-family: "Sen";
+    font-weight: 600;
+    font-size: 48px;
+    gap: 24px;
+    color: #fff;
+}
+
+@media screen and (max-width: 1025px) {
+    .cart-page .cart-page__title h1 {
+        font-size: 28px;
+    }
+}
+
+.cart-page .cart-page__title h1 .cart-bubble {
+    padding: 0;
+}
+
+.cart-page .cart-page__title h1 span.cart-bubble__text {
+    font-family: "Sen";
+    font-weight: 600;
+    font-size: 22px;
+    gap: 6px;
+    color: #c9c9cc;
+}
+
+@media screen and (max-width: 1025px) {
+    .cart-page .cart-page__title h1 span.cart-bubble__text {
+        font-size: 19px;
+    }
+}
+
+.cart-page .cart-page__title .cart-bubble__background {
+    display: none;
+}
+
+.cart-page .cart-items__details.cart-primary-typography a {
+    font-family: "Sen";
+    font-weight: 600;
+    font-size: 22px;
+    color: #fff;
+    margin-bottom: 12px;
+}
+
+.cart-page .cart-items__details.cart-primary-typography div {
+    font-family: "Albert Sans";
+    font-weight: 400;
+    font-size: 16px;
+    color: #c9c9cc;
+}
+
+.cart-page .cart-items__price.cart-secondary-typography {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.cart-page .cart-items__price.cart-secondary-typography s {
+    font-family: "Sen";
+    font-weight: 600;
+    font-size: 16px;
+    color: #c9c9cc;
+    margin-right: 6px;
+}
+
+.cart-page .cart-items__price.cart-secondary-typography span {
+    font-family: "Sen";
+    font-weight: 600;
+    font-size: 22px;
+    color: #fff;
+}
+
+.cart-page .cart-items__price.cart-secondary-typography .quantity-selector {
+    border: none;
+}
+
+.cart-page .cart-items__price.cart-secondary-typography input {
+    font-family: "Sen";
+    font-weight: 400;
+    font-size: 16px;
+    color: #c9c9cc;
+}
+
+.cart-page .cart-items__title-mobile {
+    display: none;
+}
+
+.cart-page .cart-items__table-row {
+    padding: 0 !important;
+}
+
+@media screen and (max-width: 1025px) {
+    .cart-page .quantity-selector :is(.quantity-minus,.quantity-plus) {
+        width: auto;
+    }
+
+    /* .cart-page .cart-items__table-row {
+        grid-template-columns: clamp(2.5rem, 15cqi, 7.5rem) minmax(0, 1fr) var(--cart-item-price-width);
+    } */
+
+    .cart-page .quantity-selector {
+        height: 40px;
+        width: 100px;
+    }
+
+    /* .cart-page .cart-items__table-row {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    } */
+
+    .cart-page .cart-items__media {
+        width: 30%;
+    }
+
+    .cart-page .cart-items__details {
+        width: 100%;
+        order: 1;
+        margin-top: 20px;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .cart-drawer__dialog.dialog-modal.dialog-drawer {
+        margin: 0;
+        width: 100%;
+        max-width: unset;
+    }
+}
+
+.media-gallery--two-column .media-gallery__grid {
+    grid-template-columns: 1fr;
+}
+
+ul.media-gallery__grid li.product-media-container {
+    display: none;
+}
+
+ul.media-gallery__grid li.product-media-container:first-child {
+    display: block;
+}
+
+.product-information__media {
+    padding-top: 24px;
+}
+
+.product-information__media media-gallery slideshow-controls button[aria-selected="false"] {
+    background-color: #55555522;
+}
+
+.slideshow-controls__thumbnails .slideshow-control {
+    width: 100px;
+}
+
+
+.section {
+        display: block;
+        width:100% !important;
+        margin: auto;
+        background-color: #111;
+        padding: 0 80px;
+    }
+
+
+    aside {
+        background-color: #FFD380 !important;
+    }
+
+    results-list.section {
+        padding: 0 20px 30px;
+    }
+
+    .product-information {
+        display: grid;
+        padding: 0 !important;
+}
+
+footer footer {
+    margin: auto;
+}
+
+
+@media screen and (max-width: 990px) {
+            .section {
+                display: block;
+                width:100% !important;
+                margin: auto;
+                background-color: #111;
+            }
+        }
+@media screen and (max-width: 950px) {
+            .section {
+                display: inline-grid;
+                width:100% !important;
+                margin: auto;
+                background-color: #111;
+            }
+        }
+@media screen and (max-width: 950px) {
+    .section {
+        padding: 0 40px;
+    }
+
+    results-list.section {
+        padding: 0 20px 30px;
+    }
+}
+
+@media screen and (max-width: 750px) {
+    .section {
+        display: inline-grid;
+        padding: 0 16px;
+    }
+
+    results-list.section {
+        padding: 0 20px 30px;
+    }
+}
+
+.contact-form {
+    font-family: "Albert Sans";
+    font-size: 16px;
+}
+
+.contact-form button.submit-button {
+    padding: 10px 30px;
+    border-radius: 4px;
+    background-color: #FFD380;
+    color: #1A1A1E;
+    font-family: "Albert Sans";
+    font-size: 16px;
+}
+
+/* All h2 headings — Sen everywhere */
+h2 {
+    font-family: "Sen", sans-serif !important;
+    font-weight: 600 !important;
+}
+
+/* Homepage section heading size standard — 48px desktop, 28px mobile.
+   Section-specific CSS overrides this where needed. Catches generic sections like FAQs. */
+main[data-template="index"] h2 {
+    font-size: 48px;
+    line-height: 1.5;
+}
+@media screen and (max-width: 750px) {
+    main[data-template="index"] h2 {
+        font-size: 28px;
+        line-height: 1.5;
+    }
+}
+
+/* Collection ADD TO CART + quick-add buttons — Sen font */
+.collection-wrapper .quick-add__button,
+.collection-wrapper .button {
+    font-family: "Sen", sans-serif !important;
+}
+
+.product-details rte-formatter em {
+    color: #828282;
+}
+
+.variant-option--equal-width-buttons {
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.variant-option__button-label {
+    background-color: transparent;
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    min-width: unset;
+    width: 30%;
+    object-fit:cover;
+}
+
+.variant-option__button-label .product-variant {
+    display: block;
+}
+
+@media screen and (max-width: 750px) {
+    .header__column.header__column--right > search-button {
+        display: none !important;
+    }
+}
+
+main[data-template="page.contact"] .section.page-width-content {
+    background-color: #292a33 !important;
+}
+
+.header-section:has(>#header-component[sticky=always]) {
+    z-index: 100;
+}
+
+.kl-hub-launcher {
+    display: none !important;
+}
+
+.mobile {
+    display: none !important;
+}
+
+@media screen and (max-width: 750px) {
+    .desktop {
+        display: none !important;
+    }
+
+    .mobile {
+        display: block !important;
+    }
+
+    .announcement-bar__text {
+        font-size: 14px;
+    }
+}
+
+.sec-gradient {
+    background: linear-gradient(0deg, #0C0C0C 0%, #292A33 99.48%);
+}
+
+.sec-color {
+    background-color: #292A33;
+}
+
+#faq {
+    background: linear-gradient(0deg, #0C0C0C 0%, #292A33 99.48%);
+}
+
+@media screen and (max-width: 950px) {
+    #faq {
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+}
+
+/* FAQ: center the heading + lighter question weight to match page rhythm */
+#faq .accordion .details__header {
+    font-weight: 500;
+    font-size: 20px;
+}
+
+.collection-wrapper facets-form-component span {
+    font-family: "Albert Sans";
+    font-size: 16px;
+}
+
+.collection-wrapper .product-grid__item a.user-select-text p {
+    font-family: "Sen";
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.collection-wrapper .product-grid__item .product-grid-view-zoom-out--details h3 {
+    font-family: "Sen";
+    font-weight: 600;
+}
+
+/* Collection product card prices */
+.product-grid-view-zoom-out--details span.price,
+.product-grid__item product-price span.price {
+    font-family: "Sen", sans-serif;
+    font-weight: 400;
+    color: white !important;
+    font-size: 22px !important;
+}
+
+@media screen and (max-width: 1025px) {
+    .product-grid-view-zoom-out--details span.price,
+    .product-grid__item product-price span.price {
+        font-size: 16px !important;
+    }
+}
+
+/* Collection price: compare-at + sale price side by side on one line */
+.product-grid-view-zoom-out--details [ref="priceContainer"],
+.product-grid__item product-price [ref="priceContainer"],
+product-price.text-block [ref="priceContainer"] {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: baseline !important;
+    gap: 6px !important;
+    flex-wrap: nowrap !important;
+}
+
+.product-grid-view-zoom-out--details .compare-at-price,
+.product-grid__item product-price .compare-at-price,
+product-price.text-block .compare-at-price {
+    color: var(--xinzuo-gold, #D1AE6B) !important;
+    opacity: 1 !important;
+    font-size: 14px !important;
+    font-weight: 300 !important;
+    text-decoration-line: line-through !important;
+    text-decoration-color: var(--xinzuo-gold, #D1AE6B) !important;
+}
+
+.product-badges__badge {
+    font-family: "Sen", sans-serif !important;
+    font-weight: 600 !important;
+}
+
+/* Desktop nav menu items: font-weight 600 */
+nav[header-menu] .menu-list__link {
+    font-weight: 600 !important;
+}
+
+aside {
+    border: none !important;
+    padding: 10px 0 !important;
+}
+
+.announcement-bar__slider slideshow-arrows {
+    max-width: 700px;
+    min-width: 350px;
+    left: 50%;
+    transform: translate(-50%);
+}
+
+.cart-page__items .cart-items__wrapper {
+    display: flex;
+    flex-direction: column;
+    font-family: "Sen";
+}
+
+.cart-page__items .cart-items__wrapper .cart-form {
+    order: -1;
+}
+
+.cart-drawer__items::-webkit-scrollbar             { width: 10px; }
+.cart-drawer__items::-webkit-scrollbar-track       { background: #FAFAFA; }
+.cart-drawer__items::-webkit-scrollbar-thumb       { background: rgba(32, 74, 52, 0.5); }
+.cart-drawer__items::-webkit-scrollbar-thumb:hover { background: rgba(32, 74, 52, 1); }
+
+/* ==========================================================================
+   Canonical components from Style Guide v1.0
+   These utility classes match the Style Guide spec 1:1. Use them in new
+   sections so the brand stays visually consistent.
+   Existing theme-specific selectors (cart__checkout-button, hero-cta-button,
+   etc) are styled in custom.css to inherit the same look.
+   ========================================================================== */
+
+/* Primary gold button — 40px default, 48px large hero variant */
+.xz-btn-gold {
+  height: var(--xz-h-btn, 40px);
+  padding: 0 16px;
+  background: var(--xz-accent, #FFD380);
+  color: var(--xz-on-accent, #000000);
+  font-family: var(--xz-font, "Sen", sans-serif);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border: none;
+  border-radius: var(--xz-r, 4px);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+  text-decoration: none;
+}
+.xz-btn-gold:hover { background: var(--xz-accent-hover, #FFDC99); color: var(--xz-on-accent, #000000); }
+.xz-btn-gold:disabled { opacity: 0.4; cursor: not-allowed; }
+.xz-btn-gold.xz-btn-gold--full { width: 100%; }
+.xz-btn-gold.xz-btn-gold--lg { height: var(--xz-h-btn-lg, 48px); font-size: 13px; }
+
+/* Secondary outline button — toggle / filter / secondary action */
+.xz-btn-outline {
+  height: var(--xz-h-btn, 40px);
+  padding: 0 16px;
+  background: transparent;
+  color: var(--xz-ink, #FFFFFF);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  font-family: var(--xz-font, "Sen", sans-serif);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border-radius: var(--xz-r, 4px);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+.xz-btn-outline:hover { border-color: rgba(255, 255, 255, 0.5); }
+.xz-btn-outline.is-active { border-color: var(--xz-accent, #FFD380); color: var(--xz-accent, #FFD380); }
+
+/* White tag pill — size/material label, sits on product card image */
+.xz-tag {
+  display: inline-flex;
+  align-items: center;
+  height: var(--xz-h-tag, 16px);
+  padding: 0 4px;
+  background: #FFFFFF;
+  color: #000000;
+  font-family: var(--xz-font, "Sen", sans-serif);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  border-radius: var(--xz-r, 4px);
+  line-height: 1;
+}
+
+/* Red promo chip — rectangular 4px corners — for "12% OFF" / discount */
+.xz-badge-red {
+  display: inline-block;
+  background: var(--xz-red, #C81E1E);
+  color: #FFFFFF;
+  font-family: var(--xz-font, "Sen", sans-serif);
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: var(--xz-r, 4px);
+  line-height: 1;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+/* Red NEW badge — pill 999px — for new arrivals only */
+.xz-badge-new {
+  display: inline-block;
+  background: var(--xz-red, #C81E1E);
+  color: #FFFFFF;
+  font-family: var(--xz-font, "Sen", sans-serif);
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: var(--xz-r-pill, 999px);
+  line-height: 1;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* Stock pill — green dot + uppercase label, transparent green bg, PDP only */
+.xz-pill-stock {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--xz-font, "Sen", sans-serif);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--xz-green, #22C55E);
+  background: rgba(34, 197, 94, 0.10);
+  padding: 4px 10px;
+  border-radius: var(--xz-r-pill, 999px);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.xz-pill-stock::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--xz-green, #22C55E);
+}
+
+/* Old / sale price — red strikethrough, Regular weight, precedes new price */
+.xz-price-old {
+  color: var(--xz-red, #C81E1E);
+  text-decoration: line-through;
+  font-weight: 400;
+}
+
+/* Card alignment helper — equal-height rows + flex-spacer push button to
+   bottom. Apply .xz-product-grid to the grid container and structure cards
+   with .xz-card-info > .xz-card-spacer so all buttons in a row line up. */
+.xz-product-grid { display: grid; grid-auto-rows: 1fr; }
+.xz-product-card { display: flex; flex-direction: column; }
+.xz-card-info { display: flex; flex-direction: column; flex: 1; }
+.xz-card-spacer { flex: 1; min-height: 16px; }
+
+/* ==========================================================================
+   .xz-product-card — collection product card
+   Mirrors the Webflow spec at shop-collections.webflow.io exactly.
+   Source: _design-bundle/_webflow/spec.css (parsed via parse.js).
+   Breakpoints follow Webflow: default = desktop, ≤991 = tablet/mobile,
+   ≤767 / ≤479 = small mobile.
+   ========================================================================== */
+
+/* === Card outer === */
+.xz-product-card {
+  position: relative;
+  background: var(--xz-bg, #000);
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;       /* push button-wrap to bottom */
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  font-family: var(--xz-font, "Sen", Arial, sans-serif);
+  color: var(--xz-ink, #FFFFFF);
+  cursor: pointer;
+  transition: background-color 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.xz-product-card:hover {
+  background: #292a33;                  /* spec hover: --grey-2 */
+}
+
+/* === Stretched link === */
+.xz-product-card .xz-card-link {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  text-decoration: none;
+  color: inherit;
+}
+.xz-product-card .xz-card-link:focus-visible {
+  outline: 2px solid var(--xz-accent, #FFD380);
+  outline-offset: -2px;
+}
+
+/* === Info wrap (image + descr stacked) === */
+.xz-product-card .xz-card-info-wrp {
+  display: flex;
+  flex-direction: column;
+}
+
+/* === Image area: 1:1 square, image fills via natural ratio === */
+.xz-product-card .xz-card-img-wrap {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  width: 100%;
+}
+.xz-product-card .xz-card-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* === Description: 16px padding all sides === */
+.xz-product-card .xz-card-descr {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  position: relative;
+  z-index: 2;                            /* above stretched link */
+  pointer-events: none;                  /* let stretched link own clicks */
+}
+
+/* === Pill (info-tag-wrp + tag-txt) ===
+   Wrapper has bg + padding; text inside is the typography only.
+   line-height: 1 on the wrap is critical — without it the wrap inherits
+   body line-height (~1.6) and renders ~26px tall instead of the spec 18px. */
+.xz-product-card .xz-card-pill-wrap {
+  background: #FFFFFF;
+  border-radius: 4px;
+  padding: 2px 6px;
+  margin-bottom: 8px;
+  display: inline-block;
+  line-height: 1;
+}
+.xz-product-card .xz-card-pill-text {
+  color: #000;
+  font-family: var(--xz-font, "Sen", Arial, sans-serif);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0;
+  display: inline-block;
+}
+
+/* === Title === */
+.xz-product-card .xz-card-title {
+  margin: 0;
+  font-family: var(--xz-font, "Sen", Arial, sans-serif);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--xz-ink, #FFFFFF);
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+/* === Series wrap + series text === */
+.xz-product-card .xz-card-subttl-wrap {
+  margin-top: 2px;
+  display: flex;
+  align-items: center;
+}
+.xz-product-card .xz-card-series {
+  font-family: var(--xz-font, "Sen", Arial, sans-serif);
+  font-size: 16px;                      /* desktop per Webflow spec */
+  font-weight: 400;
+  line-height: 100%;
+  color: rgba(255, 255, 255, 0.80);     /* --white-2 in spec */
+  text-transform: uppercase;
+  letter-spacing: 0;
+}
+
+/* === Price row === */
+.xz-product-card .xz-card-price {
+  display: flex;
+  align-items: center;
+  margin-top: 4px;
+}
+.xz-product-card .xz-price-new {
+  font-family: var(--xz-font, "Sen", Arial, sans-serif);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 100%;
+  color: var(--xz-ink, #FFFFFF);
+  text-transform: uppercase;
+  letter-spacing: 0;
+}
+.xz-product-card .xz-price-old {
+  font-family: var(--xz-font, "Sen", Arial, sans-serif);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 100%;
+  color: var(--xz-red, #C81E1E);
+  text-transform: uppercase;
+  text-decoration: line-through;
+  margin-right: 8px;
+}
+
+/* === Button wrap: 0 16 16 (no top — flex push handles vertical) === */
+.xz-product-card .xz-card-btn-wrap {
+  width: 100%;
+  padding: 0 16px 16px;
+  position: relative;
+  z-index: 2;
+  pointer-events: auto;
+}
+
+/* === ATC button === */
+.xz-product-card .xz-card-atc {
+  width: 100%;
+  height: 40px;
+  padding: 0;
+  background: var(--xz-accent, #FFD380);
+  color: var(--xz-on-accent, #000);
+  border: none;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--xz-font, "Sen", Arial, sans-serif);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 100%;
+  text-transform: uppercase;
+  letter-spacing: 0;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.xz-product-card .xz-card-atc:hover {
+  background: var(--xz-accent-hover, #FFDC99);
+  color: var(--xz-on-accent, #000);
+  transform: scale(1.01);
+}
+.xz-product-card .xz-card-atc.is-loading,
+.xz-product-card .xz-card-atc.is-added {
+  background: var(--xz-accent-active, #E5BC73);
+  color: var(--xz-on-accent, #000);
+  transform: none;
+  cursor: default;
+}
+.xz-product-card .xz-card-atc:disabled {
+  cursor: default;
+}
+.xz-product-card .xz-card-atc--soldout {
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.4);
+  cursor: not-allowed;
+}
+.xz-product-card .xz-card-atc--soldout:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.4);
+  transform: none;
+}
+
+/* === Promo wrap: absolute top-left, 16px from top + left === */
+.xz-product-card .xz-card-promo-wrap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding-top: 16px;
+  padding-left: 16px;
+  z-index: 3;
+  pointer-events: none;
+}
+.xz-product-card .xz-card-promo-text {
+  display: inline-block;
+  background: var(--xz-red, #C81E1E);
+  color: #FFFFFF;
+  border-radius: 4px;
+  padding: 2px 8px;
+  font-family: var(--xz-font, "Sen", Arial, sans-serif);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1;                 /* prevent body line-height from inflating box height */
+  text-transform: uppercase;
+}
+.xz-product-card .xz-card-promo-text--new {
+  border-radius: 999px;                  /* NEW pill per Style Guide */
+  padding: 2px 12px;
+}
+
+/* (Removed: .collection-intro block — superseded by the existing
+   sections/seo-collection-header.liquid which now handles its own
+   left-aligned layout + Read more toggle on both desktop and mobile.) */
+
+/* ==========================================================================
+   .xz-series-tile — "Shop by Series" mega-menu tile.
+   Layout (per xinzuo-collections-updates.webflow.io):
+     - Square 1:1 image on top
+     - Black info strip BELOW the image (not overlaid) with:
+         Row 1: SERIES NAME (Sen Bold) + ↗ arrow icon, 16px gap before arrow
+         Row 2: SERIES CODE (Sen Regular @ 80% opacity), 4px above
+     - Card bg #000 → #292a33 on hover (desktop only)
+     - 4px radius, overflow hidden
+   ========================================================================== */
+.xz-series-tile {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-decoration: none;
+  color: inherit;
+  border-radius: 4px;
+  overflow: hidden;
+  background: var(--xz-bg, #000);
+  font-family: var(--xz-font, "Sen", Arial, sans-serif);
+  cursor: pointer;
+  transition: background-color 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.xz-series-tile:hover { background-color: #292a33; }
+
+.xz-series-tile__img-wrap {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  width: 100%;
+  /* No own background — parent .xz-series-tile owns the bg, so transparent
+     PNGs (uploaded via custom.main_image metafield) show the hover bg
+     through transparent regions, matching Webflow. */
+}
+.xz-series-tile__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.xz-series-tile__info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 24px;
+  color: var(--xz-ink, #FFFFFF);
+}
+.xz-series-tile__title-row {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+.xz-series-tile__title {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--xz-ink, #FFFFFF);
+}
+.xz-series-tile__arrow {
+  flex-shrink: 0;
+  width: 15px;
+  height: 15px;
+  margin-bottom: 3px;
+  margin-left: 16px;
+  color: var(--xz-ink, #FFFFFF);
+  transition: transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.xz-series-tile:hover .xz-series-tile__arrow {
+  transform: translate(2px, -2px);
+}
+.xz-series-tile__code {
+  display: block;
+  margin-top: 4px;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: rgba(255, 255, 255, 0.80);
+}
+
+/* Mobile/tablet — 2 columns, smaller type, hover disabled (touch). */
+@media screen and (max-width: 991px) {
+  .xz-series-tile { cursor: auto; }
+  .xz-series-tile:hover { background-color: var(--xz-bg, #000); }
+  .xz-series-tile__info { padding: 16px; }
+  .xz-series-tile__title { font-size: 12px; }
+  .xz-series-tile__code  { font-size: 12px; }
+}
+
+/* ==========================================================================
+   .xz-type-tile — "Shop by Type" tile (mobile drawer + desktop overlay).
+   Layout (per shop-by-type.webflow.io reference):
+     - Square 1:1 image on top (lifestyle or isolated, fills the wrapper)
+     - Black info strip BELOW the image with:
+         Row 1: TYPE LABEL (Sen Bold) + ↗ arrow icon, 16px gap before arrow
+         Row 2: "FROM:" (Sen Regular @ 80%) + $X.XX (Sen Bold gold), 4px above
+     - Card bg #000 → #292a33 on hover (desktop only)
+     - 4px radius, overflow hidden
+   ========================================================================== */
+.xz-type-tile {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-decoration: none;
+  color: inherit;
+  background: var(--xz-bg, #000);
+  border-radius: 4px;
+  overflow: hidden;
+  font-family: var(--xz-font, "Sen", Arial, sans-serif);
+  cursor: pointer;
+  transition: background-color 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.xz-type-tile:hover { background-color: #292a33; }
+
+.xz-type-tile__promo {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 2;
+  background: var(--xz-red, #C81E1E);
+  color: #FFFFFF;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+  padding: 4px 8px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.xz-type-tile__img-wrap {
+  aspect-ratio: 1 / 1;
+  width: 100%;
+  /* No own background — the parent .xz-type-tile owns the bg colour, so
+     transparent PNGs (isolated knives) show the hover bg through the
+     transparent areas, matching the Webflow reference. Lifestyle photos
+     with object-fit:cover fully fill the box so this is a no-op for them. */
+}
+.xz-type-tile__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;              /* fill the wrapper (lifestyle imagery) */
+  display: block;
+  box-sizing: border-box;
+}
+
+.xz-type-tile__info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 24px;
+  color: var(--xz-ink, #FFFFFF);
+}
+.xz-type-tile__label-row {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+.xz-type-tile__label {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--xz-ink, #FFFFFF);
+}
+.xz-type-tile__arrow {
+  flex-shrink: 0;
+  width: 15px;
+  height: 15px;
+  margin-bottom: 3px;
+  margin-left: 16px;
+  color: var(--xz-ink, #FFFFFF);
+  transition: transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.xz-type-tile:hover .xz-type-tile__arrow {
+  transform: translate(2px, -2px);
+}
+.xz-type-tile__price {
+  margin-top: 4px;
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  font-size: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  line-height: 1;
+}
+.xz-type-tile__price-label {
+  color: rgba(255, 255, 255, 0.80);
+  font-weight: 400;
+}
+.xz-type-tile__price-value {
+  color: var(--xz-accent, #FFD380);
+  font-weight: 700;
+}
+
+/* Mobile/tablet — matches Webflow's ≤991px breakpoint:
+   2 columns are wired by the drawer/overlay grid; the tile itself just
+   shrinks the type and disables hover for touch. */
+@media screen and (max-width: 991px) {
+  .xz-type-tile { cursor: auto; }
+  .xz-type-tile:hover { background-color: var(--xz-bg, #000); }
+  .xz-type-tile__info  { padding: 16px; }
+  .xz-type-tile__label { font-size: 12px; }
+  .xz-type-tile__price { font-size: 12px; }
+}
+
+/* === Tablet / mobile (≤991, mirrors Webflow's primary mobile breakpoint) === */
+@media screen and (max-width: 991px) {
+  .xz-product-card { cursor: auto; }
+  .xz-product-card:hover { background: var(--xz-bg, #000); }   /* no hover on touch */
+
+  .xz-product-card .xz-card-pill-wrap { margin-bottom: 4px; }
+  .xz-product-card .xz-card-pill-text { font-size: 12px; }
+  .xz-product-card .xz-card-title    { font-size: 12px; }
+  .xz-product-card .xz-card-series   { font-size: 12px; }
+  .xz-product-card .xz-card-price,
+  .xz-product-card .xz-price-new     { font-size: 12px; }
+  .xz-product-card .xz-price-old     { font-size: 12px; }
+  .xz-product-card .xz-card-atc      { font-size: 12px; }
+  .xz-product-card .xz-card-atc:hover { background: var(--xz-accent, #FFD380); transform: none; }
+  .xz-product-card .xz-card-promo-text { font-size: 12px; }
+}

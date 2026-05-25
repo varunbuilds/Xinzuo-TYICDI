@@ -1,0 +1,144 @@
+{% style %}
+    .section-{{ section.id }} {
+        background-color: var(--xz-section-bg, #1A1A1E);
+    }
+
+    .section-{{ section.id }} .customers {
+        position: relative;
+        background-color: var(--xz-section-bg, #1A1A1E);
+        padding: 50px 0;
+    }
+
+    .section-{{ section.id }} .customers h2 {
+        font-family: "Sen", sans-serif;
+        font-weight: 600;
+        font-size: 48px;
+        color: white;
+        text-align: center;
+        padding: 0 16px;
+        margin-bottom: 40px;
+    }
+
+    .section-{{ section.id }} .customer-imgs {
+        width: 100%;
+        overflow: hidden;
+    }
+
+    .section-{{ section.id }} .marquee-track {
+        display: flex;
+        align-items: center;
+        width: max-content;
+        gap: 60px;
+        animation: logos-marquee-{{ section.id }} 60s linear infinite;
+        will-change: transform;
+    }
+
+    @keyframes logos-marquee-{{ section.id }} {
+        from { transform: translateX(0); }
+        to   { transform: translateX(-50%); }
+    }
+
+    .section-{{ section.id }} .marquee-track img {
+        width: auto;
+        height: 60px;
+        max-width: 200px;
+        display: block;
+        object-fit: contain;
+        flex-shrink: 0;
+        user-select: none;
+        -webkit-user-select: none;
+    }
+
+    @media screen and (max-width: 750px) {
+        .section-{{ section.id }} .customers {
+            padding: 40px 0 20px 0
+        }
+
+        .section-{{ section.id }} .customers h2 {
+            padding: 0 16px;
+            color: #FFF;
+            text-align: center;
+            font-size: 28px;
+            font-style: normal;
+            letter-spacing: -0.11px;
+            margin-bottom: 30px;
+        }
+
+        .section-{{ section.id }} .marquee-track {
+            gap: 40px;
+        }
+
+        .section-{{ section.id }} .marquee-track img {
+            height: 55px;
+            max-width: 150px;
+        }
+    }
+{% endstyle %}
+
+<section class="section-{{ section.id }}">
+    <div class="customers">
+        <h2>{{ section.settings.heading }}</h2>
+        <div class="customer-imgs">
+            <div class="marquee-track">
+                {%- comment -%}First set of logos{%- endcomment -%}
+                {%- for block in section.blocks -%}
+                    {%- if block.settings.image != blank -%}
+                        {%- assign image = block.settings.image -%}
+                        {%- assign alt_text = image.alt | default: 'Customer logo' -%}
+                        {{ image | image_url: width: 400 | image_tag:
+                            loading: 'lazy',
+                            alt: alt_text,
+                            class: 'customer-logo'
+                        }}
+                    {%- endif -%}
+                {%- endfor -%}
+                {%- comment -%}Duplicate set — makes the loop seamless (animation moves exactly -50%){%- endcomment -%}
+                <span aria-hidden="true" style="display:contents;">
+                {%- for block in section.blocks -%}
+                    {%- if block.settings.image != blank -%}
+                        {%- assign image = block.settings.image -%}
+                        {%- assign dup_alt_text = image.alt | default: 'Customer logo' -%}
+                        {{ image | image_url: width: 400 | image_tag:
+                            loading: 'lazy',
+                            alt: dup_alt_text,
+                            class: 'customer-logo'
+                        }}
+                    {%- endif -%}
+                {%- endfor -%}
+                </span>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% schema %}
+{
+    "name": "Customers",
+    "settings": [
+        {
+            "type": "text",
+            "id": "heading",
+            "label": "Heading",
+            "default": "Trusted by Leading Brands"
+        }
+    ],
+    "blocks": [
+        {
+            "type": "block",
+            "name": "Customer",
+            "settings": [
+                {
+                    "type": "image_picker",
+                    "id": "image",
+                    "label": "Image"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Customers"
+        }
+    ]
+}
+{% endschema %}

@@ -1,0 +1,1340 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "product-information",
+      "blocks": {
+        "media-gallery": {
+          "type": "_product-media-gallery",
+          "static": true,
+          "settings": {
+            "media_presentation": "carousel",
+            "media_columns": "two",
+            "image_gap": 4,
+            "large_first_image": false,
+            "icons_style": "chevron_large",
+            "slideshow_controls_style": "thumbnails",
+            "slideshow_mobile_controls_style": "dots",
+            "thumbnail_position": "left",
+            "thumbnail_width": 72,
+            "aspect_ratio": "adapt",
+            "constrain_to_viewport": true,
+            "media_fit": "contain",
+            "media_radius": 0,
+            "extend_media": false,
+            "zoom": true,
+            "video_loop": false,
+            "hide_variants": true,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "product-details": {
+          "type": "_product-details",
+          "static": true,
+          "settings": {
+            "width": "fill",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "details_position": "flex-start",
+            "gap": 8,
+            "sticky_details_desktop": true,
+            "inherit_color_scheme": true,
+            "color_scheme": "scheme-1",
+            "background_media": "none",
+            "video_position": "cover",
+            "background_image_position": "cover",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "padding-block-start": 24,
+            "padding-block-end": 24,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "title_custom": {
+              "type": "_product-title-custom",
+              "settings": {
+                "show_breadcrumbs": true,
+                "show_knives_link": true
+              },
+              "blocks": {}
+            },
+            "rating_custom": {
+              "type": "_custom-product-rating",
+              "settings": {
+                "star_size_mobile": 20,
+                "star_size_tablet": 22,
+                "star_size_desktop": 24,
+                "star_color": "#d1ae6b",
+                "star_empty_color": "#ffffff33",
+                "text_size_mobile": 14,
+                "text_size_tablet": 15,
+                "text_size_desktop": 16,
+                "text_color": "#c9c9cc",
+                "text_hover_color": "#ffffff"
+              },
+              "blocks": {}
+            },
+            "detail_content_custom": {
+              "type": "_product-detail-content",
+              "settings": {
+                "detail_content": "<p>Premium 10Cr15CoMoV core steel in a clean 3-layer composite construction with a warm olive wood handle — the same cutting performance as Damascus without the decorative layers.</p>"
+              },
+              "blocks": {}
+            },
+            "price_custom": {
+              "type": "_product-price-custom",
+              "settings": {},
+              "blocks": {}
+            },
+            "google_youtube_automated_discounts_price_Bg3aRp": {
+              "type": "shopify://apps/google-youtube/blocks/automated_discounts_price/14ec7bd0-ac77-49a9-9417-90752398bdff",
+              "settings": {}
+            },
+            "afterpay_custom": {
+              "type": "_product-afterpay",
+              "settings": {},
+              "blocks": {}
+            },
+            "variant_picker_qYHynj": {
+              "type": "variant-picker",
+              "name": "t:names.product_variant_picker",
+              "settings": {
+                "variant_style": "buttons",
+                "show_swatches": true,
+                "alignment": "left",
+                "padding-block-start": 0,
+                "padding-block-end": 8,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "buy_buttons_eYQEYi": {
+              "type": "buy-buttons",
+              "settings": {
+                "stacking": true,
+                "show_pickup_availability": false,
+                "gift_card_form": true,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {
+                "quantity": {
+                  "type": "quantity",
+                  "disabled": true,
+                  "static": true,
+                  "settings": {},
+                  "blocks": {}
+                },
+                "add-to-cart": {
+                  "type": "add-to-cart",
+                  "static": true,
+                  "settings": {
+                    "style_class": "button"
+                  },
+                  "blocks": {}
+                },
+                "engraving-option": {
+                  "type": "engraving-option",
+                  "disabled": true,
+                  "static": true,
+                  "settings": {
+                    "btn1": "Without engraving",
+                    "btn2": "Engrave text (+$19)",
+                    "engraving_text": "Letters, numbers, and basic punctuation only.",
+                    "engraving_length": 20
+                  },
+                  "blocks": {}
+                },
+                "accelerated-checkout": {
+                  "type": "accelerated-checkout",
+                  "disabled": true,
+                  "static": true,
+                  "settings": {},
+                  "blocks": {}
+                }
+              },
+              "block_order": []
+            },
+            "product_features": {
+              "type": "_product-features",
+              "settings": {
+                "feature_1_text": "30-day returns",
+                "feature_2_text": "Free shipping over $100",
+                "feature_3_text": "Lifetime warranty",
+                "icon_size": 20,
+                "text_size": 14,
+                "gap": 24,
+                "icon_text_gap": 8,
+                "icon_color": "#c9c9cc",
+                "text_color": "#c9c9cc"
+              },
+              "blocks": {}
+            },
+            "delivery_estimate_block": {
+              "type": "delivery-estimate",
+              "settings": {
+                "cutoff_time": "12:00",
+                "price": 60,
+                "free_delivery_state": true,
+                "free_delivery": "FAST SHIPPING",
+                "in_stock_state": true,
+                "in_stock": "IN STOCK",
+                "delivery_content": "Earliest delivery: Enter suburb or postcode",
+                "enable_public_holidays": true,
+                "show_icon": true,
+                "background_color": "#292a33",
+                "border_color": "#3a3b47",
+                "border_radius": 4,
+                "text_size": 13,
+                "padding-block-start": 16,
+                "padding-block-end": 0
+              },
+              "blocks": {}
+            },
+            "coupon_discount_block": {
+              "type": "coupon-discount",
+              "disabled": true,
+              "settings": {
+                "coupon_code": "BFSALE20",
+                "coupon_text": "Use this code at checkout for 20% off",
+                "text_size": "0.8rem",
+                "coupon_color": "#c81e1e",
+                "border_style": "dotted",
+                "stroke_width": 2,
+                "panel_bg": "#1f1f24",
+                "panel_padding": 8,
+                "radius": 1,
+                "panel_radius": 14
+              },
+              "blocks": {}
+            },
+            "detail_icons_custom": {
+              "type": "_product-detail-icons",
+              "settings": {
+                "show_detail_icons": true,
+                "detail_icon1": "shopify://shop_images/Angle.png",
+                "detail_info1": "<p><strong>15° Angle</strong></p><p>Razor Sharp</p>",
+                "detail_icon2": "shopify://shop_images/Triangle.png",
+                "detail_info2": "<p><strong>60 HRC</strong></p><p>Professional Hardness</p>",
+                "detail_icon3": "shopify://shop_images/PuzzlePiece.png",
+                "detail_info3": "<p><strong>3-Layer</strong></p><p>Composite Steel</p>"
+              },
+              "blocks": {}
+            },
+            "payment_icons_hCKkQw": {
+              "type": "payment-icons",
+              "name": "t:names.payment_icons",
+              "settings": {
+                "horizontal_alignment": "center",
+                "gap": 10,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "group_pUXHfM": {
+              "type": "group",
+              "name": "t:names.group",
+              "settings": {
+                "content_direction": "row",
+                "vertical_on_mobile": false,
+                "horizontal_alignment": "flex-start",
+                "vertical_alignment": "flex-start",
+                "align_baseline": false,
+                "horizontal_alignment_flex_direction_column": "flex-start",
+                "vertical_alignment_flex_direction_column": "center",
+                "gap": 12,
+                "width": "fill",
+                "custom_width": 100,
+                "width_mobile": "fill",
+                "custom_width_mobile": 100,
+                "height": "fit",
+                "custom_height": 100,
+                "inherit_color_scheme": true,
+                "color_scheme": "",
+                "background_media": "none",
+                "video_position": "cover",
+                "background_image_position": "cover",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0,
+                "toggle_overlay": false,
+                "overlay_color": "#00000026",
+                "overlay_style": "solid",
+                "gradient_direction": "to top",
+                "link": "",
+                "open_in_new_tab": false,
+                "placeholder": "",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {
+                "icon_DXAg9Q": {
+                  "type": "icon",
+                  "name": "t:names.icon",
+                  "disabled": true,
+                  "settings": {
+                    "icon": "price_tag",
+                    "image_upload": "shopify://shop_images/Check_3a9c0588-3838-4617-870d-05b2301e1f84.png",
+                    "width": 24,
+                    "link": "",
+                    "open_in_new_tab": false
+                  },
+                  "blocks": {}
+                },
+                "text_6Ytn7D": {
+                  "type": "text",
+                  "name": "t:names.text",
+                  "disabled": true,
+                  "settings": {
+                    "text": "<p>Secure protective packaging included at no extra cost, designed to prevent damage during shipping and handling.</p>",
+                    "width": "fit-content",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "icon_DXAg9Q",
+                "text_6Ytn7D"
+              ]
+            },
+            "accordion_xErnFV": {
+              "type": "accordion",
+              "name": "t:names.accordion",
+              "settings": {
+                "icon": "caret",
+                "dividers": true,
+                "type_preset": "h6",
+                "inherit_color_scheme": true,
+                "color_scheme": "",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {
+                "accordion_row_CUG9xJ": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "heading": "DESCRIPTION",
+                    "content": "",
+                    "open_by_default": true,
+                    "icon": "none",
+                    "width": 20
+                  },
+                  "blocks": {
+                    "text_pyDqAk": {
+                      "type": "text",
+                      "settings": {
+                        "text": "{{ closest.product.description }}",
+                        "width": "100%",
+                        "max_width": "normal",
+                        "alignment": "left",
+                        "type_preset": "rte",
+                        "font": "var(--font-body--family)",
+                        "font_size": "1rem",
+                        "line_height": "normal",
+                        "letter_spacing": "normal",
+                        "case": "none",
+                        "wrap": "pretty",
+                        "color": "var(--color-foreground)",
+                        "background": false,
+                        "background_color": "#00000026",
+                        "corner_radius": 0,
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "text_pyDqAk"
+                  ]
+                },
+                "accordion_row_6HHD9d": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "heading": "READY TO GIFT",
+                    "content": "",
+                    "open_by_default": false,
+                    "icon": "none",
+                    "width": 20
+                  },
+                  "blocks": {
+                    "text_EdgYbR": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>All our knives arrive in a beautiful, premium gift box that's ready to impress. (Whether it's for a very lucky cook, or just for you.)</p>",
+                        "width": "100%",
+                        "max_width": "normal",
+                        "alignment": "left",
+                        "type_preset": "rte",
+                        "font": "var(--font-body--family)",
+                        "font_size": "0.875rem",
+                        "line_height": "normal",
+                        "letter_spacing": "normal",
+                        "case": "none",
+                        "wrap": "pretty",
+                        "color": "var(--color-foreground)",
+                        "background": false,
+                        "background_color": "#00000026",
+                        "corner_radius": 0,
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "text_EdgYbR"
+                  ]
+                },
+                "accordion_row_UfiwpK": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "heading": "THE NERDY BITS",
+                    "content": "",
+                    "open_by_default": false,
+                    "icon": "none",
+                    "width": 20
+                  },
+                  "blocks": {
+                    "text_JKdy9F": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p><strong>Steel Type:</strong> 10Cr15CoMoV Core<br/><strong>Hardness:</strong> 60 HRC<br/><strong>Construction:</strong> 3-Layer Composite<br/><strong>Handle:</strong> Olive Wood<br/><strong>Heat Treatment:</strong> Vacuum Heat Treated</p>",
+                        "width": "100%",
+                        "max_width": "normal",
+                        "alignment": "left",
+                        "type_preset": "rte",
+                        "font": "var(--font-body--family)",
+                        "font_size": "1rem",
+                        "line_height": "normal",
+                        "letter_spacing": "normal",
+                        "case": "none",
+                        "wrap": "pretty",
+                        "color": "var(--color-foreground)",
+                        "background": false,
+                        "background_color": "#00000026",
+                        "corner_radius": 0,
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "text_JKdy9F"
+                  ]
+                }
+              },
+              "block_order": [
+                "accordion_row_CUG9xJ",
+                "accordion_row_6HHD9d",
+                "accordion_row_UfiwpK"
+              ]
+            },
+            "text_EUV7Bd": {
+              "type": "text",
+              "name": "t:names.text",
+              "disabled": true,
+              "settings": {
+                "text": "<p><em>Note - All knives tested under rigorous quality control for consistency.</em></p>",
+                "width": "fit-content",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "text_dNwVKF": {
+              "type": "text",
+              "name": "t:names.text",
+              "disabled": true,
+              "settings": {
+                "text": "<h4></h4><h4></h4><h4></h4><h4></h4><h4>Most Asked Questions</h4>",
+                "width": "fit-content",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "accordion_GU3TmD": {
+              "type": "accordion",
+              "name": "t:names.accordion",
+              "disabled": true,
+              "settings": {
+                "icon": "caret",
+                "dividers": true,
+                "type_preset": "h5",
+                "inherit_color_scheme": true,
+                "color_scheme": "",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {
+                "accordion_row_V8VGYp": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "heading": "Why choose the Supreme Series?",
+                    "content": "",
+                    "open_by_default": true,
+                    "icon": "none",
+                    "width": 20
+                  },
+                  "blocks": {
+                    "text_mz9UqL": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>The Supreme Series offers practical functionality for kitchens seeking reliable knives without unnecessary complexity, focusing on simplicity, usability, and straightforward performance.</p><p>Its approachable design allows cooks to develop confidence in handling, sharpening, and cutting techniques, supporting learning while maintaining consistent culinary results.</p>",
+                        "width": "100%",
+                        "max_width": "normal",
+                        "alignment": "left",
+                        "type_preset": "rte",
+                        "font": "var(--font-body--family)",
+                        "font_size": "1rem",
+                        "line_height": "normal",
+                        "letter_spacing": "normal",
+                        "case": "none",
+                        "wrap": "pretty",
+                        "color": "var(--color-foreground)",
+                        "background": false,
+                        "background_color": "#00000026",
+                        "corner_radius": 0,
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "text_mz9UqL"
+                  ]
+                },
+                "accordion_row_Pc4bbF": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "heading": "What makes Supreme Series suitable for beginners?",
+                    "content": "",
+                    "open_by_default": false,
+                    "icon": "none",
+                    "width": 20
+                  },
+                  "blocks": {
+                    "text_KQaBR4": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>The Supreme Series offers practical functionality for kitchens seeking reliable knives without unnecessary complexity, focusing on simplicity, usability, and straightforward performance.</p><p>Its approachable design allows cooks to develop confidence in handling, sharpening, and cutting techniques, supporting learning while maintaining consistent culinary results.</p>",
+                        "width": "100%",
+                        "max_width": "normal",
+                        "alignment": "left",
+                        "type_preset": "rte",
+                        "font": "var(--font-body--family)",
+                        "font_size": "1rem",
+                        "line_height": "normal",
+                        "letter_spacing": "normal",
+                        "case": "none",
+                        "wrap": "pretty",
+                        "color": "var(--color-foreground)",
+                        "background": false,
+                        "background_color": "#00000026",
+                        "corner_radius": 0,
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "text_KQaBR4"
+                  ]
+                },
+                "accordion_row_Fhigtk": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "heading": "How does Supreme Series perform with daily cooking?",
+                    "content": "",
+                    "open_by_default": false,
+                    "icon": "none",
+                    "width": 20
+                  },
+                  "blocks": {
+                    "text_xxNJCn": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>The Supreme Series offers practical functionality for kitchens seeking reliable knives without unnecessary complexity, focusing on simplicity, usability, and straightforward performance.</p><p>Its approachable design allows cooks to develop confidence in handling, sharpening, and cutting techniques, supporting learning while maintaining consistent culinary results.</p>",
+                        "width": "100%",
+                        "max_width": "normal",
+                        "alignment": "left",
+                        "type_preset": "rte",
+                        "font": "var(--font-body--family)",
+                        "font_size": "1rem",
+                        "line_height": "normal",
+                        "letter_spacing": "normal",
+                        "case": "none",
+                        "wrap": "pretty",
+                        "color": "var(--color-foreground)",
+                        "background": false,
+                        "background_color": "#00000026",
+                        "corner_radius": 0,
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "text_xxNJCn"
+                  ]
+                }
+              },
+              "block_order": [
+                "accordion_row_V8VGYp",
+                "accordion_row_Pc4bbF",
+                "accordion_row_Fhigtk"
+              ]
+            },
+            "sticky_add_to_cart_bar": {
+              "type": "sticky-add-to-cart-bar",
+              "settings": {
+                "enabled": true
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "title_custom",
+            "rating_custom",
+            "detail_content_custom",
+            "price_custom",
+            "google_youtube_automated_discounts_price_Bg3aRp",
+            "afterpay_custom",
+            "variant_picker_qYHynj",
+            "buy_buttons_eYQEYi",
+            "product_features",
+            "delivery_estimate_block",
+            "coupon_discount_block",
+            "detail_icons_custom",
+            "payment_icons_hCKkQw",
+            "group_pUXHfM",
+            "accordion_xErnFV",
+            "text_EUV7Bd",
+            "text_dNwVKF",
+            "accordion_GU3TmD",
+            "sticky_add_to_cart_bar"
+          ]
+        }
+      },
+      "settings": {
+        "content_width": "content-center-aligned",
+        "desktop_media_position": "left",
+        "equal_columns": false,
+        "limit_details_width": false,
+        "is_knife": true,
+        "gap": 48,
+        "color_scheme": "scheme-5",
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
+    },
+    "product_info_mmnV94": {
+      "type": "product-info",
+      "blocks": {
+        "icon_7jadN9": {
+          "type": "icon",
+          "settings": {
+            "image": "shopify://shop_images/Square.png",
+            "content": "<p><strong>High-Carbon Core</strong><br/>1.0% carbon content in the 10Cr15CoMoV core delivers excellent hardness and long-lasting edge retention between sharpenings.</p>"
+          }
+        },
+        "icon_mxe7iw": {
+          "type": "icon",
+          "settings": {
+            "image": "shopify://shop_images/Square_1.png",
+            "content": "<p><strong>15% Chromium</strong><br/>High chromium content provides strong corrosion resistance, keeping the blade stain-free and low-maintenance in daily kitchen use.</p>"
+          }
+        },
+        "icon_NxVM3T": {
+          "type": "icon",
+          "settings": {
+            "image": "shopify://shop_images/Square_2.png",
+            "content": "<p><strong>3-Layer Composite</strong><br/>San-mai construction — a hard 10Cr15CoMoV core clad in tough stainless steel — combines razor sharpness with shock absorption and durability.</p>"
+          }
+        },
+        "block_UJiBwA": {
+          "type": "block",
+          "settings": {
+            "header": "60 HRC",
+            "content": "Pro-Level Hardness",
+            "footer": "Professional-grade hardness for excellent edge retention. Holds a sharp edge through extended prep sessions."
+          }
+        },
+        "block_XD86y8": {
+          "type": "block",
+          "settings": {
+            "header": "10Cr15CoMoV",
+            "content": "VG10-Class Steel",
+            "footer": "The same high-performance core steel used across Xinzuo's Damascus lines — equivalent to Japanese VG10 in cutting ability."
+          }
+        },
+        "block_pXdtFM": {
+          "type": "block",
+          "settings": {
+            "header": "Olive Wood",
+            "content": "Natural Handle",
+            "footer": "Mediterranean olive wood — dense, oil-rich, and naturally moisture-resistant. Each handle displays a unique grain pattern."
+          }
+        }
+      },
+      "block_order": [
+        "icon_7jadN9",
+        "icon_mxe7iw",
+        "icon_NxVM3T",
+        "block_UJiBwA",
+        "block_XD86y8",
+        "block_pXdtFM"
+      ],
+      "name": "Product Info",
+      "settings": {
+        "width": "page",
+        "image": "shopify://shop_images/8-chef-knife-pin-series-x020-4936499.jpg",
+        "header_type": "left",
+        "heading": "<h2>Premium steel, honest construction</h2>",
+        "content": "<p>The Pin Series uses the same 10Cr15CoMoV core steel found in Xinzuo's Damascus lines — equivalent to Japanese VG10 — in a clean 3-layer (san-mai) construction. You get identical cutting performance without the decorative Damascus cladding.</p>",
+        "icon_block_state": true,
+        "first_num": "3",
+        "second_num": "3",
+        "color_scheme": "scheme-5",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    },
+    "product_info2_8biKrj": {
+      "type": "product-info2",
+      "name": "Product Info2",
+      "settings": {
+        "width": "page",
+        "heading_title": "SAME STEEL. CLEAN LINES.",
+        "heading_content": "<h2>The Performance of Damascus Without the Price</h2>",
+        "header_type": "left",
+        "background_type": "none",
+        "block_type": "text",
+        "block_position": "below",
+        "heading_footer": "Every Damascus series in Xinzuo's range uses 10Cr15CoMoV as the cutting core. The Pin Series gives you that same core — same edge, same hardness, same sharpening response — wrapped in a clean 3-layer construction that lets the steel speak for itself.",
+        "image_video": "image",
+        "image_width": 0,
+        "image_height": 440,
+        "image_width_mobile": 0,
+        "color_scheme": "scheme-5",
+        "footer_state": "visible",
+        "footer_type": "first",
+        "footer_left": "<h2>SMART VALUE</h2>",
+        "footer_right": "<p>The Pin Series proves that great performance doesn't require decorative layers. By using 3-layer san-mai instead of 67-layer Damascus, you get the same cutting edge at a more accessible price point. For cooks who value substance over flash.</p>",
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "additional_footer": false,
+        "additional_content1": "",
+        "additional_content2": ""
+      }
+    },
+    "product_info2_eVwTgB": {
+      "type": "product-info2",
+      "name": "Product Info2",
+      "settings": {
+        "width": "full",
+        "heading_title": "Handle Design",
+        "heading_content": "<h2>Mediterranean<br/>Olive Wood</h2>",
+        "header_type": "center",
+        "background_type": "none",
+        "block_type": "text",
+        "block_position": "below",
+        "heading_footer": "Olive wood brings a warm, Mediterranean character to every knife. Each handle showcases unique natural grain patterns — no two are alike. Dense and naturally oil-rich, olive wood resists moisture and develops a beautiful patina with use.",
+        "image_video": "image",
+        "image_width": 0,
+        "image_height": 440,
+        "image_width_mobile": 0,
+        "color_scheme": "scheme-5",
+        "footer_state": "visible",
+        "footer_type": "second",
+        "footer_left": "",
+        "footer_right": "<h2>Warm</h2><p>Olive wood's natural warmth feels comfortable in the hand.</p><h2>Unique</h2><p>Every handle displays a one-of-a-kind grain pattern.</p><h2>Natural</h2><p>Oil-rich and dense — naturally moisture-resistant without coatings.</p>",
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "additional_footer": false,
+        "additional_content1": "",
+        "additional_content2": ""
+      }
+    },
+    "product_info2_GjRq8Y": {
+      "type": "product-info2",
+      "name": "Product Info2",
+      "settings": {
+        "width": "page",
+        "heading_title": "",
+        "heading_content": "<h2>Why Choose the<br/>Pin Series</h2>",
+        "header_type": "center",
+        "background_type": "none",
+        "block_type": "text",
+        "block_position": "below",
+        "heading_footer": "",
+        "image_video": "image",
+        "image_width": 0,
+        "image_height": 440,
+        "image_width_mobile": 0,
+        "color_scheme": "scheme-5",
+        "footer_state": "visible",
+        "footer_type": "third",
+        "footer_left": "<p>With 16 knife types, the Pin Series is one of the most complete ranges Xinzuo offers. Every blade uses the same 10Cr15CoMoV core as the Damascus series — you're not compromising on steel quality. The 3-layer construction is actually tougher than Damascus for heavy-duty tasks.</p>",
+        "footer_right": "<p>The olive wood handle adds natural warmth and character. If you prefer clean aesthetics and smart value — the performance of premium steel without the Damascus markup — the Pin Series is the clear choice.</p>",
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "additional_footer": false,
+        "additional_content1": "",
+        "additional_content2": ""
+      }
+    },
+    "product_info4_nYeXEB": {
+      "type": "product-info4",
+      "name": "Product Info4",
+      "settings": {
+        "width": "page",
+        "heading": "More Knives From the Pin Series",
+        "color_scheme": "scheme-5",
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "footer_state": false,
+        "footer_content1": "",
+        "footer_content2": ""
+      }
+    },
+    "1761703971f48000a9": {
+      "type": "_blocks",
+      "blocks": {
+        "judge_me_reviews_review_widget_cqfCPC": {
+          "type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {
+            "review_data": "real_data",
+            "max_width": 1200,
+            "show_shop_reviews": false,
+            "empty_state": "empty_widget"
+          }
+        }
+      },
+      "block_order": [
+        "judge_me_reviews_review_widget_cqfCPC"
+      ],
+      "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 12,
+        "section_width": "page-width",
+        "section_height": "",
+        "section_height_custom": 50,
+        "color_scheme": "scheme-5",
+        "background_media": "none",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
+    },
+    "related_guides_seo": {
+      "type": "related-guides",
+      "settings": {
+        "heading": "Knife Knowledge",
+        "subtitle": "Guides to help you get the most from your knife"
+      }
+    },
+    "section_dbTzLJ": {
+      "type": "section",
+      "blocks": {
+        "text_bydrCc": {
+          "type": "text",
+          "name": "t:names.heading",
+          "settings": {
+            "text": "<h2>FAQs</h2>",
+            "width": "100%",
+            "max_width": "narrow",
+            "alignment": "center",
+            "type_preset": "rte",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "accordion_7LXzhk": {
+          "type": "accordion",
+          "name": "t:names.accordion",
+          "settings": {
+            "icon": "caret",
+            "dividers": true,
+            "type_preset": "h5",
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "accordion_row_seo0": {
+              "type": "_accordion-row",
+              "name": "t:names.accordion_dash_row",
+              "settings": {
+                "heading": "What steel is in the Retro Series?",
+                "content": "<p>The Retro Series uses 10Cr15CoMoV steel with Damascus cladding. The 10Cr15CoMoV core is a Chinese-developed alloy that matches VG10 in performance, with added cobalt for hardness and molybdenum for corrosion resistance. It's hardened to 60 HRC for excellent edge retention.</p>",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "text_kpwlof": {
+                  "type": "text",
+                  "name": "t:names.text",
+                  "settings": {
+                    "text": "<p>The Retro Series uses 10Cr15CoMoV steel with Damascus cladding. The 10Cr15CoMoV core is a Chinese-developed alloy that matches VG10 in performance, with added cobalt for hardness and molybdenum for corrosion resistance. It's hardened to 60 HRC for excellent edge retention.</p>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_kpwlof"
+              ]
+            },
+            "accordion_row_seo1": {
+              "type": "_accordion-row",
+              "name": "t:names.accordion_dash_row",
+              "settings": {
+                "heading": "Is the Retro Series Damascus pattern genuine?",
+                "content": "<p>Yes. The Damascus pattern on Retro Series knives is created through actual forge-welding of multiple steel layers, not cosmetic etching. Each blade has a unique pattern formed during the forging process. The layering also adds structural benefits, with softer outer layers absorbing impact while the hard core maintains the cutting edge.</p>",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "text_8ia1r5": {
+                  "type": "text",
+                  "name": "t:names.text",
+                  "settings": {
+                    "text": "<p>Yes. The Damascus pattern on Retro Series knives is created through actual forge-welding of multiple steel layers, not cosmetic etching. Each blade has a unique pattern formed during the forging process. The layering also adds structural benefits, with softer outer layers absorbing impact while the hard core maintains the cutting edge.</p>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_8ia1r5"
+              ]
+            },
+            "accordion_row_seo2": {
+              "type": "_accordion-row",
+              "name": "t:names.accordion_dash_row",
+              "settings": {
+                "heading": "How does 10Cr15CoMoV compare to VG10?",
+                "content": "<p>They're very similar in composition and performance. Both achieve 60 HRC hardness, both contain vanadium for wear resistance and cobalt for heat hardness. The main difference is origin: VG10 is made by Takefu Special Steel in Japan, while 10Cr15CoMoV is produced in China. In blind testing, most users cannot distinguish between the two. Read our <a href=\"/blogs/news/vg10-steel-vs-10cr15comov-guide\">VG10 vs 10Cr15CoMoV comparison</a> for the full breakdown.</p>",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "text_ntstoc": {
+                  "type": "text",
+                  "name": "t:names.text",
+                  "settings": {
+                    "text": "<p>They're very similar in composition and performance. Both achieve 60 HRC hardness, both contain vanadium for wear resistance and cobalt for heat hardness. The main difference is origin: VG10 is made by Takefu Special Steel in Japan, while 10Cr15CoMoV is produced in China. In blind testing, most users cannot distinguish between the two. Read our <a href=\"/blogs/news/vg10-steel-vs-10cr15comov-guide\">VG10 vs 10Cr15CoMoV comparison</a> for the full breakdown.</p>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_ntstoc"
+              ]
+            },
+            "accordion_row_seo3": {
+              "type": "_accordion-row",
+              "name": "t:names.accordion_dash_row",
+              "settings": {
+                "heading": "What handle does the Retro Series have?",
+                "content": "<p>The Retro Series features an ebony wood handle with a classic octagonal shape. The natural wood provides excellent grip, even when wet, and develops a beautiful patina over time. The octagonal profile prevents the knife from rolling on the counter and suits the pinch grip favoured by experienced cooks.</p>",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "text_bvw9ma": {
+                  "type": "text",
+                  "name": "t:names.text",
+                  "settings": {
+                    "text": "<p>The Retro Series features an ebony wood handle with a classic octagonal shape. The natural wood provides excellent grip, even when wet, and develops a beautiful patina over time. The octagonal profile prevents the knife from rolling on the counter and suits the pinch grip favoured by experienced cooks.</p>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_bvw9ma"
+              ]
+            },
+            "accordion_row_seo4": {
+              "type": "_accordion-row",
+              "name": "t:names.accordion_dash_row",
+              "settings": {
+                "heading": "How often should I sharpen a Retro Series knife?",
+                "content": "<p>With regular honing, most home cooks can go 4-6 months between whetstone sharpenings. The 60 HRC steel holds an edge well but responds quickly to a 1000/6000 combination stone when it does need attention. See our <a href=\"/blogs/news/how-to-sharpen-knives-whetstone\">whetstone sharpening guide</a> for step-by-step instructions.</p>",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "text_r941yt": {
+                  "type": "text",
+                  "name": "t:names.text",
+                  "settings": {
+                    "text": "<p>With regular honing, most home cooks can go 4-6 months between whetstone sharpenings. The 60 HRC steel holds an edge well but responds quickly to a 1000/6000 combination stone when it does need attention. See our <a href=\"/blogs/news/how-to-sharpen-knives-whetstone\">whetstone sharpening guide</a> for step-by-step instructions.</p>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_r941yt"
+              ]
+            }
+          },
+          "block_order": [
+            "accordion_row_seo0",
+            "accordion_row_seo1",
+            "accordion_row_seo2",
+            "accordion_row_seo3",
+            "accordion_row_seo4"
+          ]
+        },
+        "text_Pq7Ga8": {
+          "type": "text",
+          "name": "t:names.text",
+          "disabled": true,
+          "settings": {
+            "text": "<p>still have any question, <a href=\"/pages/contact\" title=\"Contact\">Contact Us</a></p>",
+            "width": "100%",
+            "max_width": "normal",
+            "alignment": "center",
+            "type_preset": "rte",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "text_bydrCc",
+        "accordion_7LXzhk",
+        "text_Pq7Ga8"
+      ],
+      "name": "t:names.faq_section",
+      "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 32,
+        "section_width": "page-width",
+        "section_height": "",
+        "section_height_custom": 50,
+        "color_scheme": "scheme-5",
+        "background_media": "none",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "padding-block-start": 48,
+        "padding-block-end": 48
+      }
+    },
+    "img_with_text_67m3af": {
+      "type": "img-with-text",
+      "disabled": true,
+      "name": "Img with text",
+      "settings": {
+        "heading": "<p>Experience Precision</p><p>in Every Cut</p>",
+        "content": "<p>The perfect balance of sharpness, comfort, and design.</p>",
+        "button": "Step Into Excellence",
+        "url": "shopify://collections",
+        "img": "shopify://shop_images/Rectangle_267.png",
+        "color_scheme": "scheme-5"
+      }
+    },
+    "1767993614ddad1b3a": {
+      "type": "_blocks",
+      "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 12,
+        "section_width": "page-width",
+        "section_height": "",
+        "section_height_custom": 50,
+        "color_scheme": "",
+        "background_media": "none",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
+    }
+  },
+  "order": [
+    "main",
+    "product_info_mmnV94",
+    "product_info2_8biKrj",
+    "product_info2_eVwTgB",
+    "product_info2_GjRq8Y",
+    "product_info4_nYeXEB",
+    "1761703971f48000a9",
+    "related_guides_seo",
+    "section_dbTzLJ",
+    "img_with_text_67m3af",
+    "1767993614ddad1b3a"
+  ]
+}

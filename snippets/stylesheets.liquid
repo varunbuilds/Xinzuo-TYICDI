@@ -1,0 +1,5 @@
+{%- comment -%}
+  Critical stylesheets - loaded without preload to avoid Early Hints warnings
+  overflow-list.css is loaded on-demand in overflow-list.liquid when the component is used
+{%- endcomment -%}
+{{ 'base.css' | asset_url | stylesheet_tag }}

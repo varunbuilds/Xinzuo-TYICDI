@@ -1,0 +1,230 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "collection_hero_banner": {
+      "type": "collection-hero-banner",
+      "settings": {
+        "color_scheme": "scheme-5"
+      }
+    },
+    "header": {
+      "type": "seo-collection-header",
+      "settings": {
+        "heading_override": "",
+        "subtitle": "Premium Damascus with Proprietary Steel",
+        "intro_content": "<p>The <strong>Xinzuo X08 Ji Series</strong> features a proprietary <strong>12Cr18MoV steel core</strong> clad in 67 layers of Damascus steel, delivering exceptional edge retention, corrosion resistance, and toughness at <strong>59–61 HRC</strong>. Each blade is vacuum heat-treated and paired with a rich <strong>ebony wood handle</strong> that provides both elegance and a confident grip. With 16 knife types available — from a 4-inch paring knife to a 10-inch carving knife, plus a bone chopper, cleaver, and Viking knife — the Ji Series covers virtually every kitchen task. Positioned in the premium tier, the Ji Series bridges the gap between Xinzuo’s mid-range offerings and the ultra-premium lines, making it an outstanding choice for Australian home cooks and enthusiasts who want a distinctive, high-performing blade without stepping into flagship pricing. A copper Damascus variant (X08C) is also available with padauk burl wood handles for those who favour a warmer aesthetic.</p>",
+        "color_scheme": "scheme-5"
+      }
+    },
+    "main": {
+      "type": "main-collection",
+      "blocks": {
+        "filters": {
+          "type": "filters",
+          "static": true,
+          "settings": {
+            "enable_filtering": true,
+            "filter_style": "horizontal",
+            "filter_width": "centered",
+            "text_label_case": "default",
+            "show_swatch_label": false,
+            "show_filter_label": false,
+            "enable_sorting": true,
+            "enable_grid_density": true,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "padding-block-start": 8,
+            "padding-block-end": 8,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0,
+            "facets_margin_bottom": 8,
+            "facets_margin_right": 20
+          },
+          "blocks": {}
+        },
+        "product-card": {
+          "type": "_product-card",
+          "static": true,
+          "settings": {
+            "product_card_gap": 4,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "card-gallery": {
+              "type": "_product-card-gallery",
+              "settings": {
+                "image_ratio": "adapt",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "product_title": {
+              "type": "product-title",
+              "settings": {
+                "width": "100%",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 4,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "price": {
+              "type": "price",
+              "settings": {
+                "show_sale_price_first": true,
+                "show_installments": false,
+                "show_tax_info": false,
+                "type_preset": "h6",
+                "width": "100%",
+                "alignment": "left",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "color": "var(--color-foreground)",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "card-gallery",
+            "product_title",
+            "price"
+          ]
+        }
+      },
+      "settings": {
+        "layout_type": "grid",
+        "product_card_size": "medium",
+        "mobile_product_card_size": "small",
+        "product_grid_width": "centered",
+        "full_width_on_mobile": true,
+        "columns_gap_horizontal": 16,
+        "columns_gap_vertical": 24,
+        "padding-inline-start": 0,
+        "padding-inline-end": 0,
+        "color_scheme": "scheme-5",
+        "padding-block-start": 0,
+        "padding-block-end": 32
+      }
+    },
+    "below_grid": {
+      "type": "seo-below-grid-content",
+      "settings": {
+        "heading": "Understanding the Ji Series Damascus steel",
+        "content": "<p>The Ji Series uses Xinzuo’s proprietary <strong>12Cr18MoV steel</strong>, a composition not found in other knife brands. Learn how Damascus layering enhances blade performance. <a href=\"/blogs/news/damascus-pattern-performance-price-guide\">Damascus pattern guide</a></p><p>Wondering how 67-layer Damascus compares to 73-layer construction? We break down the differences in steel behaviour and visual pattern. <a href=\"/blogs/news/67-layer-vs-73-layer-damascus\">67 vs 73 layer Damascus compared</a></p><p>Keep your Ji Series looking and performing its best with proper care techniques for Damascus blades. <a href=\"/blogs/news/how-to-care-for-damascus-steel-knives\">Damascus knife care guide</a></p><p>Not sure if Damascus is worth the investment? Learn how to spot authentic Damascus construction. <a href=\"/blogs/news/real-damascus-steel-vs-fake\">Real vs fake Damascus steel</a></p><p>Understand how <strong>steel hardness</strong> at 59–61 HRC affects edge retention, sharpening, and everyday use. <a href=\"/blogs/news/knife-steel-hardness-guide\">Steel hardness guide</a></p><p>Looking for a 67-layer Damascus alternative with rosewood handles? The <strong>Yi Series</strong> offers a classic pairing. <a href=\"/collections/b27-yi-series\">Shop the Yi Series</a></p>",
+        "show_border": true,
+        "color_scheme": "scheme-5"
+      }
+    },
+    "related_links": {
+      "type": "seo-related-links",
+      "settings": {
+        "heading": "Related Guides & Collections",
+        "color_scheme": "scheme-5"
+      },
+      "blocks": {
+        "link_1": {
+          "type": "link",
+          "settings": {
+            "link_text": "Full Series Comparison Guide",
+            "link_url": "/blogs/news/xinzuo-knives-series-comparison-guide"
+          }
+        },
+        "link_2": {
+          "type": "link",
+          "settings": {
+            "link_text": "Damascus Steel Pattern Guide",
+            "link_url": "/blogs/news/damascus-pattern-performance-price-guide"
+          }
+        },
+        "link_3": {
+          "type": "link",
+          "settings": {
+            "link_text": "Steel Hardness Guide",
+            "link_url": "/blogs/news/knife-steel-hardness-guide"
+          }
+        },
+        "link_4": {
+          "type": "link",
+          "settings": {
+            "link_text": "Damascus Knife Care Guide",
+            "link_url": "/blogs/news/how-to-care-for-damascus-steel-knives"
+          }
+        },
+        "link_5": {
+          "type": "link",
+          "settings": {
+            "link_text": "Shop the Mo Series (10Cr Damascus)",
+            "link_url": "/collections/xinzuo-mo-series-knives"
+          }
+        },
+        "link_6": {
+          "type": "link",
+          "settings": {
+            "link_text": "Xinzuo Brand Review",
+            "link_url": "/blogs/news/xinzuo-knives-review-brand-guide"
+          }
+        }
+      },
+      "block_order": [
+        "link_1",
+        "link_2",
+        "link_3",
+        "link_4",
+        "link_5",
+        "link_6"
+      ]
+    }
+  },
+  "order": [
+    "collection_hero_banner",
+    "header",
+    "main",
+    "below_grid",
+    "related_links"
+  ]
+}

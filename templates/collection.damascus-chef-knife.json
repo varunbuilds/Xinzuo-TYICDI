@@ -1,0 +1,178 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "collection_hero_banner": {
+      "type": "collection-hero-banner",
+      "settings": {
+        "color_scheme": "scheme-5"
+      }
+    },
+    "header": {
+      "type": "seo-collection-header",
+      "settings": {
+        "heading_override": "",
+        "subtitle": "The Flagship Blade of Any Serious Kitchen",
+        "intro_content": "<p>The <strong>Damascus chef knife</strong> is the centrepiece of any serious kitchen knife collection. XinZuo Damascus chef knives combine a 10Cr15CoMoV high-carbon cutting core with 67 layers of folded steel, creating a blade that is hard enough to hold a keen edge but flexible enough to handle the demands of daily kitchen work. Every blade is forged in Yangjiang by craftsmen who have been making knives for generations, using techniques passed down through decades of blade making. The 8-inch gyuto profile is the most versatile choice in the Damascus chef knife range, handling everything from dicing onions to breaking down a whole chicken with equal precision. Each blade features a unique Damascus wave pattern that develops character over time as you use it. Our <strong>kitchen knives</strong> are available in multiple handle materials including ebony, rosewood, and resin, so you can match your Damascus chef knife to your personal style and grip preference.</p>",
+        "color_scheme": "scheme-5"
+      }
+    },
+    "main": {
+      "type": "main-collection",
+      "blocks": {
+        "filters": {
+          "type": "filters",
+          "static": true,
+          "settings": {
+            "enable_filtering": true,
+            "filter_style": "vertical",
+            "filter_width": "centered",
+            "text_label_case": "default",
+            "show_swatch_label": false,
+            "show_filter_label": true,
+            "enable_sorting": true,
+            "enable_grid_density": true,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "padding-block-start": 8,
+            "padding-block-end": 8,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0,
+            "facets_margin_bottom": 8,
+            "facets_margin_right": 20
+          },
+          "blocks": {}
+        },
+        "product-card": {
+          "type": "_product-card",
+          "static": true,
+          "settings": {
+            "product_card_gap": 4,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "card-gallery": {
+              "type": "_product-card-gallery",
+              "settings": {
+                "image_ratio": "adapt",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "product_title": {
+              "type": "product-title",
+              "settings": {
+                "width": "100%",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 4,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "price": {
+              "type": "price",
+              "settings": {
+                "show_sale_price_first": true,
+                "show_installments": false,
+                "show_tax_info": false,
+                "type_preset": "h6",
+                "width": "100%",
+                "alignment": "left",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "color": "var(--color-foreground)",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "card-gallery",
+            "product_title",
+            "price"
+          ]
+        }
+      },
+      "settings": {
+        "layout_type": "grid",
+        "product_card_size": "medium",
+        "mobile_product_card_size": "small",
+        "product_grid_width": "centered",
+        "full_width_on_mobile": true,
+        "columns_gap_horizontal": 16,
+        "columns_gap_vertical": 24,
+        "padding-inline-start": 0,
+        "padding-inline-end": 0,
+        "color_scheme": "scheme-5",
+        "padding-block-start": 0,
+        "padding-block-end": 32
+      }
+    },
+    "below_grid": {
+      "type": "seo-below-grid-content",
+      "settings": {
+        "heading": "Learn more about Damascus chef knives",
+        "content": "<p>Not sure which <strong>Damascus chef knife</strong> suits your style? Our complete chef knife buying guide from XinZuo walks you through blade length, profile, and handle options. <a href=\"/blogs/news/how-to-choose-a-chef-knife-the-complete-buying-guide\">Chef knife buying guide</a></p><p>Understanding Damascus steel: why the layered construction matters for your <strong>Damascus chef knife's</strong> edge retention and durability. Forged in Yangjiang using traditional techniques. <a href=\"/blogs/news/damascus-pattern-performance-price-guide\">Damascus pattern and performance guide</a></p><p>German vs Japanese chef knives: how XinZuo <strong>Damascus chef knives</strong> blend the best of both traditions into one blade. <a href=\"/blogs/news/german-vs-japanese-kitchen-knives\">German vs Japanese knives</a></p><p>Keep your Damascus chef knife razor-sharp with our whetstone sharpening guide covering angles and technique. <a href=\"/blogs/news/how-to-sharpen-knives-whetstone\">Whetstone sharpening guide</a></p><p>Browse the full Damascus knife collection beyond chef knives for santoku, nakiri, and more. <a href=\"/collections/damascus-knives\">Shop Damascus Knives</a></p><p>The gyuto is the Japanese chef knife profile. See all gyuto options including Damascus and stainless. <a href=\"/collections/gyuto-knives\">Shop Gyuto Knives</a></p>",
+        "show_border": true,
+        "color_scheme": "scheme-5"
+      }
+    },
+    "related_links": {
+      "type": "seo-related-links",
+      "settings": {
+        "heading": "Related Guides & Collections",
+        "color_scheme": "scheme-5"
+      }
+    }
+  },
+  "order": [
+    "collection_hero_banner",
+    "header",
+    "main",
+    "below_grid",
+    "related_links"
+  ]
+}

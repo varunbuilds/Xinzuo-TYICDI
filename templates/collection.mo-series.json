@@ -1,0 +1,239 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "collection_hero_banner": {
+      "type": "collection-hero-banner",
+      "settings": {
+        "color_scheme": "scheme-5"
+      }
+    },
+    "header": {
+      "type": "seo-collection-header",
+      "settings": {
+        "heading_override": "",
+        "subtitle": "Shou Sugi Ban Damascus — The Stunner",
+        "intro_content": "<p>The <strong>Xinzuo Mo Series (X06)</strong> is “The Stunner” — where serious cutting performance meets striking visual design. Each blade features <strong>67-layer Damascus steel</strong> with a 10Cr15CoMoV core at HRC 60, delivering the same edge retention as higher-priced Damascus series. What sets the Mo apart is its handle: burnt oak crafted using the Japanese <strong>Shou Sugi Ban</strong> charring technique, creating a distinctive dark finish that is both beautiful and naturally resistant to moisture. The range includes chef knives, santoku, nakiri, bunka, and specialty blades like the Viking knife and bone chopper. For cooks who want Damascus performance with a blade that looks as good as it cuts, the Mo Series is the standout choice.</p>",
+        "color_scheme": "scheme-5"
+      }
+    },
+    "main": {
+      "type": "main-collection",
+      "blocks": {
+        "filters": {
+          "type": "filters",
+          "static": true,
+          "settings": {
+            "enable_filtering": true,
+            "filter_style": "horizontal",
+            "filter_width": "centered",
+            "text_label_case": "default",
+            "show_swatch_label": false,
+            "show_filter_label": false,
+            "enable_sorting": true,
+            "enable_grid_density": true,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "padding-block-start": 8,
+            "padding-block-end": 8,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0,
+            "facets_margin_bottom": 8,
+            "facets_margin_right": 20
+          },
+          "blocks": {}
+        },
+        "product-card": {
+          "type": "_product-card",
+          "static": true,
+          "settings": {
+            "product_card_gap": 4,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "card-gallery": {
+              "type": "_product-card-gallery",
+              "settings": {
+                "image_ratio": "adapt",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "product_title": {
+              "type": "product-title",
+              "settings": {
+                "width": "100%",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 4,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "price": {
+              "type": "price",
+              "settings": {
+                "show_sale_price_first": true,
+                "show_installments": false,
+                "show_tax_info": false,
+                "type_preset": "h6",
+                "width": "100%",
+                "alignment": "left",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "color": "var(--color-foreground)",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "card-gallery",
+            "product_title",
+            "price"
+          ]
+        }
+      },
+      "settings": {
+        "layout_type": "grid",
+        "product_card_size": "medium",
+        "mobile_product_card_size": "small",
+        "product_grid_width": "centered",
+        "full_width_on_mobile": true,
+        "columns_gap_horizontal": 16,
+        "columns_gap_vertical": 24,
+        "padding-inline-start": 0,
+        "padding-inline-end": 0,
+        "color_scheme": "scheme-5",
+        "padding-block-start": 0,
+        "padding-block-end": 32
+      }
+    },
+    "below_grid": {
+      "type": "seo-below-grid-content",
+      "settings": {
+        "heading": "Learn more about the Mo Series",
+        "content": "<p>Understand <strong>Damascus steel patterns</strong>, how they’re made, and what they mean for cutting performance. <a href=\"/blogs/news/damascus-pattern-performance-price-guide\">Damascus pattern guide</a></p><p>Keep your Mo Series Damascus blades looking sharp with our <strong>Damascus care guide</strong> — cleaning, storage, and patina prevention. <a href=\"/blogs/news/how-to-care-for-damascus-steel-knives\">How to care for Damascus knives</a></p><p>Master the cutting techniques that get the most from your Damascus blade — rock chop, push cut, pull slice, and more. <a href=\"/blogs/news/knife-technique-rock-chop-push-cut-pull-slice\">Essential knife techniques</a></p><p>From bunka to nakiri — explore all the <strong>Japanese knife types</strong> available in the Mo Series range. <a href=\"/blogs/news/japanese-knife-types-explained\">Japanese knife types explained</a></p><p>Looking for even sharper edge retention? The <strong>Lan Series</strong> uses 73-layer powder steel at HRC 62. <a href=\"/collections/xinzuo-lan-series-knives\">Shop the Lan Series</a></p><p>Compare all Xinzuo and Hezhen knife series side by side. <a href=\"/blogs/news/xinzuo-knives-series-comparison-guide\">Full series comparison guide</a></p>",
+        "show_border": true,
+        "color_scheme": "scheme-5"
+      }
+    },
+    "collection_video": {
+      "type": "collection_video",
+      "settings": {
+        "width": "full",
+        "video": "shopify://files/videos/Mo_Preview__RF32.mp4",
+        "color_scheme": "scheme-5"
+      }
+    },
+    "related_links": {
+      "type": "seo-related-links",
+      "settings": {
+        "heading": "Related Guides & Collections",
+        "color_scheme": "scheme-5"
+      },
+      "blocks": {
+        "link_1": {
+          "type": "link",
+          "settings": {
+            "link_text": "Full Series Comparison",
+            "link_url": "/blogs/news/xinzuo-knives-series-comparison-guide"
+          }
+        },
+        "link_2": {
+          "type": "link",
+          "settings": {
+            "link_text": "Damascus Pattern Guide",
+            "link_url": "/blogs/news/damascus-pattern-performance-price-guide"
+          }
+        },
+        "link_3": {
+          "type": "link",
+          "settings": {
+            "link_text": "Japanese Knife Types",
+            "link_url": "/blogs/news/japanese-knife-types-explained"
+          }
+        },
+        "link_4": {
+          "type": "link",
+          "settings": {
+            "link_text": "Shop the Lan Series",
+            "link_url": "/collections/xinzuo-lan-series-knives"
+          }
+        },
+        "link_5": {
+          "type": "link",
+          "settings": {
+            "link_text": "Shop the Retro Series",
+            "link_url": "/collections/hezhen-retro-series-knives"
+          }
+        },
+        "link_6": {
+          "type": "link",
+          "settings": {
+            "link_text": "How to Care for Damascus",
+            "link_url": "/blogs/news/how-to-care-for-damascus-steel-knives"
+          }
+        }
+      },
+      "block_order": [
+        "link_1",
+        "link_2",
+        "link_3",
+        "link_4",
+        "link_5",
+        "link_6"
+      ]
+    }
+  },
+  "order": [
+    "collection_hero_banner",
+    "header",
+    "main",
+    "below_grid",
+    "collection_video",
+    "related_links"
+  ]
+}

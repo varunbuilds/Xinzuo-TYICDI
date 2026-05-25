@@ -1,0 +1,25 @@
+
+{% style %}
+  @media (max-width:500px) {
+    .shipping-faq h2 {
+      line-height: 140%;
+      font-size: 30px;
+    }
+
+    .shipping-faq h4 {
+      line-height: 140%;
+    }
+
+  }
+{% endstyle %}
+
+<rte-formatter>
+  {{ page.content }}
+</rte-formatter>
+
+{% schema %}
+{
+  "name": "t:names.page_content",
+  "class": "rte"
+}
+{% endschema %}

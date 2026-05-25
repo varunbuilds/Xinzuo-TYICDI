@@ -1,0 +1,345 @@
+{% style %}
+    .section-{{ section.id }} .footer-seo-links {
+        background: linear-gradient(180deg, #23242B 0%, #191A21 100%);
+        margin-inline: calc(-1 * var(--page-margin, 16px) * 2);
+        padding: 40px var(--page-margin, 16px) 8px;
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .section-{{ section.id }} .footer-seo-links__grid {
+        display: flex;
+        justify-content: space-between;
+        gap: 40px;
+        max-width: 1440px;
+        margin: 0 auto;
+    }
+
+    .section-{{ section.id }} .footer-seo-links__column h3 {
+        font-family: "Sen", sans-serif;
+        font-weight: 600;
+        font-size: 14px;
+        color: #fff;
+        margin: 0 0 16px;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    .section-{{ section.id }} .footer-seo-links__column ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .section-{{ section.id }} .footer-seo-links__column li {
+        margin-bottom: 10px;
+    }
+
+    .section-{{ section.id }} .footer-seo-links__column a {
+        font-family: "Albert Sans", sans-serif;
+        font-weight: 400;
+        font-size: 14px;
+        color: #9d9da3;
+        text-decoration: none;
+        transition: color 0.2s ease;
+    }
+
+    .section-{{ section.id }} .footer-seo-links__column a:hover {
+        color: #fff;
+    }
+
+    @media screen and (max-width: 750px) {
+        .section-{{ section.id }} .footer-seo-links {
+            padding: 32px var(--page-margin, 16px) 8px;
+        }
+
+        .section-{{ section.id }} .footer-seo-links__grid {
+            grid-template-columns: 1fr;
+            gap: 28px;
+            text-align: center;
+        }
+    }
+{% endstyle %}
+
+<div class="section section-{{ section.id }} color-{{ section.settings.color_scheme }}">
+    <nav class="footer-seo-links" aria-label="Footer collection links">
+        <div class="footer-seo-links__grid">
+            <div class="footer-seo-links__column">
+                <h3>{{ section.settings.col1_heading }}</h3>
+                <ul>
+                    {% if section.settings.col1_link1_label != blank %}
+                        <li><a href="{{ section.settings.col1_link1_url }}">{{ section.settings.col1_link1_label }}</a></li>
+                    {% endif %}
+                    {% if section.settings.col1_link2_label != blank %}
+                        <li><a href="{{ section.settings.col1_link2_url }}">{{ section.settings.col1_link2_label }}</a></li>
+                    {% endif %}
+                    {% if section.settings.col1_link3_label != blank %}
+                        <li><a href="{{ section.settings.col1_link3_url }}">{{ section.settings.col1_link3_label }}</a></li>
+                    {% endif %}
+                    {% if section.settings.col1_link4_label != blank %}
+                        <li><a href="{{ section.settings.col1_link4_url }}">{{ section.settings.col1_link4_label }}</a></li>
+                    {% endif %}
+                    {% if section.settings.col1_link5_label != blank %}
+                        <li><a href="{{ section.settings.col1_link5_url }}">{{ section.settings.col1_link5_label }}</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+            <div class="footer-seo-links__column">
+                <h3>{{ section.settings.col2_heading }}</h3>
+                <ul>
+                    {% if section.settings.col2_link1_label != blank %}
+                        <li><a href="{{ section.settings.col2_link1_url }}">{{ section.settings.col2_link1_label }}</a></li>
+                    {% endif %}
+                    {% if section.settings.col2_link2_label != blank %}
+                        <li><a href="{{ section.settings.col2_link2_url }}">{{ section.settings.col2_link2_label }}</a></li>
+                    {% endif %}
+                    {% if section.settings.col2_link3_label != blank %}
+                        <li><a href="{{ section.settings.col2_link3_url }}">{{ section.settings.col2_link3_label }}</a></li>
+                    {% endif %}
+                    {% if section.settings.col2_link4_label != blank %}
+                        <li><a href="{{ section.settings.col2_link4_url }}">{{ section.settings.col2_link4_label }}</a></li>
+                    {% endif %}
+                    {% if section.settings.col2_link5_label != blank %}
+                        <li><a href="{{ section.settings.col2_link5_url }}">{{ section.settings.col2_link5_label }}</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+            <div class="footer-seo-links__column">
+                <h3>{{ section.settings.col3_heading }}</h3>
+                <ul>
+                    {% if section.settings.col3_link1_label != blank %}
+                        <li><a href="{{ section.settings.col3_link1_url }}">{{ section.settings.col3_link1_label }}</a></li>
+                    {% endif %}
+                    {% if section.settings.col3_link2_label != blank %}
+                        <li><a href="{{ section.settings.col3_link2_url }}">{{ section.settings.col3_link2_label }}</a></li>
+                    {% endif %}
+                    {% if section.settings.col3_link3_label != blank %}
+                        <li><a href="{{ section.settings.col3_link3_url }}">{{ section.settings.col3_link3_label }}</a></li>
+                    {% endif %}
+                    {% if section.settings.col3_link4_label != blank %}
+                        <li><a href="{{ section.settings.col3_link4_url }}">{{ section.settings.col3_link4_label }}</a></li>
+                    {% endif %}
+                    {% if section.settings.col3_link5_label != blank %}
+                        <li><a href="{{ section.settings.col3_link5_url }}">{{ section.settings.col3_link5_label }}</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+
+{% schema %}
+{
+    "name": "Footer SEO Links",
+    "tag": "div",
+    "enabled_on": {
+        "groups": ["footer"]
+    },
+    "settings": [
+        {
+            "type": "color_scheme",
+            "id": "color_scheme",
+            "label": "Colour scheme",
+            "default": "scheme-5"
+        },
+        {
+            "type": "header",
+            "content": "Column 1"
+        },
+        {
+            "type": "text",
+            "id": "col1_heading",
+            "label": "Heading",
+            "default": "Shop Knives"
+        },
+        {
+            "type": "text",
+            "id": "col1_link1_label",
+            "label": "Link 1 label",
+            "default": "Chef Knives"
+        },
+        {
+            "type": "url",
+            "id": "col1_link1_url",
+            "label": "Link 1 URL"
+        },
+        {
+            "type": "text",
+            "id": "col1_link2_label",
+            "label": "Link 2 label",
+            "default": "Santoku Knives"
+        },
+        {
+            "type": "url",
+            "id": "col1_link2_url",
+            "label": "Link 2 URL"
+        },
+        {
+            "type": "text",
+            "id": "col1_link3_label",
+            "label": "Link 3 label",
+            "default": "Knife Sets"
+        },
+        {
+            "type": "url",
+            "id": "col1_link3_url",
+            "label": "Link 3 URL"
+        },
+        {
+            "type": "text",
+            "id": "col1_link4_label",
+            "label": "Link 4 label",
+            "default": "Best Sellers"
+        },
+        {
+            "type": "url",
+            "id": "col1_link4_url",
+            "label": "Link 4 URL"
+        },
+        {
+            "type": "text",
+            "id": "col1_link5_label",
+            "label": "Link 5 label",
+            "default": "Under $100"
+        },
+        {
+            "type": "url",
+            "id": "col1_link5_url",
+            "label": "Link 5 URL"
+        },
+        {
+            "type": "header",
+            "content": "Column 2"
+        },
+        {
+            "type": "text",
+            "id": "col2_heading",
+            "label": "Heading",
+            "default": "Accessories"
+        },
+        {
+            "type": "text",
+            "id": "col2_link1_label",
+            "label": "Link 1 label",
+            "default": "Whetstones"
+        },
+        {
+            "type": "url",
+            "id": "col2_link1_url",
+            "label": "Link 1 URL"
+        },
+        {
+            "type": "text",
+            "id": "col2_link2_label",
+            "label": "Link 2 label",
+            "default": "Magnetic Holders"
+        },
+        {
+            "type": "url",
+            "id": "col2_link2_url",
+            "label": "Link 2 URL"
+        },
+        {
+            "type": "text",
+            "id": "col2_link3_label",
+            "label": "Link 3 label",
+            "default": "Cutting Boards"
+        },
+        {
+            "type": "url",
+            "id": "col2_link3_url",
+            "label": "Link 3 URL"
+        },
+        {
+            "type": "text",
+            "id": "col2_link4_label",
+            "label": "Link 4 label",
+            "default": "Knife Guards"
+        },
+        {
+            "type": "url",
+            "id": "col2_link4_url",
+            "label": "Link 4 URL"
+        },
+        {
+            "type": "text",
+            "id": "col2_link5_label",
+            "label": "Link 5 label"
+        },
+        {
+            "type": "url",
+            "id": "col2_link5_url",
+            "label": "Link 5 URL"
+        },
+        {
+            "type": "header",
+            "content": "Column 3"
+        },
+        {
+            "type": "text",
+            "id": "col3_heading",
+            "label": "Heading",
+            "default": "Resources"
+        },
+        {
+            "type": "text",
+            "id": "col3_link1_label",
+            "label": "Link 1 label",
+            "default": "Knife Guides"
+        },
+        {
+            "type": "url",
+            "id": "col3_link1_url",
+            "label": "Link 1 URL"
+        },
+        {
+            "type": "text",
+            "id": "col3_link2_label",
+            "label": "Link 2 label",
+            "default": "About Us"
+        },
+        {
+            "type": "url",
+            "id": "col3_link2_url",
+            "label": "Link 2 URL"
+        },
+        {
+            "type": "text",
+            "id": "col3_link3_label",
+            "label": "Link 3 label",
+            "default": "FAQs"
+        },
+        {
+            "type": "url",
+            "id": "col3_link3_url",
+            "label": "Link 3 URL"
+        },
+        {
+            "type": "text",
+            "id": "col3_link4_label",
+            "label": "Link 4 label",
+            "default": "Warranty"
+        },
+        {
+            "type": "url",
+            "id": "col3_link4_url",
+            "label": "Link 4 URL"
+        },
+        {
+            "type": "text",
+            "id": "col3_link5_label",
+            "label": "Link 5 label"
+        },
+        {
+            "type": "url",
+            "id": "col3_link5_url",
+            "label": "Link 5 URL"
+        }
+    ],
+    "presets": [
+        {
+            "name": "Footer SEO Links",
+            "category": "Footer"
+        }
+    ]
+}
+{% endschema %}

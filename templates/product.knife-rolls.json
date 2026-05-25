@@ -1,0 +1,1242 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "product-information",
+      "blocks": {
+        "media-gallery": {
+          "type": "_product-media-gallery",
+          "static": true,
+          "settings": {
+            "media_presentation": "carousel",
+            "media_columns": "two",
+            "image_gap": 4,
+            "large_first_image": false,
+            "icons_style": "chevron_large",
+            "slideshow_controls_style": "thumbnails",
+            "slideshow_mobile_controls_style": "dots",
+            "thumbnail_position": "left",
+            "thumbnail_width": 72,
+            "aspect_ratio": "adapt",
+            "constrain_to_viewport": true,
+            "media_fit": "contain",
+            "media_radius": 0,
+            "extend_media": false,
+            "zoom": true,
+            "video_loop": false,
+            "hide_variants": true,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "product-details": {
+          "type": "_product-details",
+          "static": true,
+          "settings": {
+            "width": "fill",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "details_position": "flex-start",
+            "gap": 8,
+            "sticky_details_desktop": true,
+            "inherit_color_scheme": true,
+            "color_scheme": "scheme-1",
+            "background_media": "none",
+            "video_position": "cover",
+            "background_image_position": "cover",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "padding-block-start": 24,
+            "padding-block-end": 24,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "title_custom": {
+              "type": "_product-title-custom",
+              "settings": {
+                "show_breadcrumbs": true,
+                "show_knives_link": false
+              },
+              "blocks": {}
+            },
+            "rating_custom": {
+              "type": "_custom-product-rating",
+              "settings": {
+                "star_size_mobile": 20,
+                "star_size_tablet": 22,
+                "star_size_desktop": 24,
+                "star_color": "#D1AE6B",
+                "star_empty_color": "#ffffff33",
+                "text_size_mobile": 14,
+                "text_size_tablet": 15,
+                "text_size_desktop": 16,
+                "text_color": "#c9c9cc",
+                "text_hover_color": "#ffffff"
+              },
+              "blocks": {}
+            },
+            "detail_content_custom": {
+              "type": "_product-detail-content",
+              "settings": {
+                "detail_content": "<p>Heavy-duty canvas and genuine leather construction. Individual pockets protect every blade during transport — no rattling, no edge damage.</p>"
+              },
+              "blocks": {}
+            },
+            "price_custom": {
+              "type": "_product-price-custom",
+              "settings": {},
+              "blocks": {}
+            },
+            "google_youtube_automated_discounts_price_n6YDeb": {
+              "type": "shopify://apps/google-youtube/blocks/automated_discounts_price/14ec7bd0-ac77-49a9-9417-90752398bdff",
+              "settings": {}
+            },
+            "afterpay_custom": {
+              "type": "_product-afterpay",
+              "settings": {},
+              "blocks": {}
+            },
+            "variant_picker_qYHynj": {
+              "type": "variant-picker",
+              "name": "t:names.product_variant_picker",
+              "settings": {
+                "variant_style": "buttons",
+                "show_swatches": true,
+                "alignment": "left",
+                "padding-block-start": 0,
+                "padding-block-end": 8,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "buy_buttons_eYQEYi": {
+              "type": "buy-buttons",
+              "settings": {
+                "stacking": true,
+                "show_pickup_availability": false,
+                "gift_card_form": true,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {
+                "quantity": {
+                  "type": "quantity",
+                  "disabled": true,
+                  "static": true,
+                  "settings": {},
+                  "blocks": {}
+                },
+                "add-to-cart": {
+                  "type": "add-to-cart",
+                  "static": true,
+                  "settings": {
+                    "style_class": "button"
+                  },
+                  "blocks": {}
+                },
+                "engraving-option": {
+                  "type": "engraving-option",
+                  "disabled": true,
+                  "static": true,
+                  "settings": {
+                    "btn1": "Without engraving",
+                    "btn2": "Engrave text (+$19)",
+                    "engraving_text": "Letters, numbers, and basic punctuation only.",
+                    "engraving_length": 20
+                  },
+                  "blocks": {}
+                },
+                "accelerated-checkout": {
+                  "type": "accelerated-checkout",
+                  "disabled": true,
+                  "static": true,
+                  "settings": {},
+                  "blocks": {}
+                }
+              },
+              "block_order": []
+            },
+            "product_features": {
+              "type": "_product-features",
+              "settings": {
+                "feature_1_text": "30-day returns",
+                "feature_2_text": "Free shipping over $100",
+                "feature_3_text": "12-month warranty",
+                "icon_size": 20,
+                "text_size": 14,
+                "gap": 24,
+                "icon_text_gap": 8,
+                "icon_color": "#c9c9cc",
+                "text_color": "#c9c9cc"
+              },
+              "blocks": {}
+            },
+            "delivery_estimate_block": {
+              "type": "delivery-estimate",
+              "settings": {
+                "cutoff_time": "12:00",
+                "price": 60,
+                "free_delivery_state": true,
+                "free_delivery": "FAST SHIPPING",
+                "in_stock_state": true,
+                "in_stock": "IN STOCK",
+                "delivery_content": "Earliest delivery: Enter suburb or postcode",
+                "enable_public_holidays": true,
+                "show_icon": true,
+                "background_color": "#292a33",
+                "border_color": "#3a3b47",
+                "border_radius": 4,
+                "text_size": 13,
+                "padding-block-start": 16,
+                "padding-block-end": 0
+              },
+              "blocks": {}
+            },
+            "coupon_discount_block": {
+              "type": "coupon-discount",
+              "disabled": true,
+              "settings": {
+                "coupon_code": "BFSALE20",
+                "coupon_text": "Use this code at checkout for 20% off",
+                "text_size": "0.8rem",
+                "coupon_color": "#C81E1E",
+                "border_style": "dotted",
+                "stroke_width": 2,
+                "panel_bg": "#1f1f24",
+                "panel_padding": 8,
+                "radius": 1,
+                "panel_radius": 14
+              },
+              "blocks": {}
+            },
+            "detail_icons_custom": {
+              "type": "_product-detail-icons",
+              "settings": {
+                "show_detail_icons": true,
+                "detail_icon1": "shopify://shop_images/icon-roll.svg",
+                "detail_info1": "<p><strong>Canvas &amp; Leather</strong></p><p>Premium Materials</p>",
+                "detail_icon2": "shopify://shop_images/icon-lock.svg",
+                "detail_info2": "<p><strong>Individual Pockets</strong></p><p>Blade Protection</p>",
+                "detail_icon3": "shopify://shop_images/icon-travel.svg",
+                "detail_info3": "<p><strong>Compact</strong></p><p>Rolls Tight for Travel</p>"
+              },
+              "blocks": {}
+            },
+            "payment_icons_hCKkQw": {
+              "type": "payment-icons",
+              "name": "t:names.payment_icons",
+              "settings": {
+                "horizontal_alignment": "center",
+                "gap": 10,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "group_QVNfmK": {
+              "type": "group",
+              "name": "t:names.group",
+              "settings": {
+                "content_direction": "row",
+                "vertical_on_mobile": false,
+                "horizontal_alignment": "flex-start",
+                "vertical_alignment": "flex-start",
+                "align_baseline": false,
+                "horizontal_alignment_flex_direction_column": "flex-start",
+                "vertical_alignment_flex_direction_column": "center",
+                "gap": 12,
+                "width": "fill",
+                "custom_width": 100,
+                "width_mobile": "fill",
+                "custom_width_mobile": 100,
+                "height": "fit",
+                "custom_height": 100,
+                "inherit_color_scheme": true,
+                "color_scheme": "",
+                "background_media": "none",
+                "video_position": "cover",
+                "background_image_position": "cover",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0,
+                "toggle_overlay": false,
+                "overlay_color": "#00000026",
+                "overlay_style": "solid",
+                "gradient_direction": "to top",
+                "link": "",
+                "open_in_new_tab": false,
+                "placeholder": "",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {
+                "aftersell_by_rokt_pdp_upsells_QJyVAK": {
+                  "type": "shopify://apps/rokt-aftersell/blocks/pdp-upsells/509ec35d-0632-4dfc-a105-fa799cd9d149",
+                  "settings": {}
+                },
+                "icon_MzNmna": {
+                  "type": "icon",
+                  "name": "t:names.icon",
+                  "disabled": true,
+                  "settings": {
+                    "icon": "price_tag",
+                    "image_upload": "shopify://shop_images/Check_3a9c0588-3838-4617-870d-05b2301e1f84.png",
+                    "width": 24,
+                    "link": "",
+                    "open_in_new_tab": false
+                  },
+                  "blocks": {}
+                },
+                "text_DHhbFg": {
+                  "type": "text",
+                  "name": "t:names.text",
+                  "disabled": true,
+                  "settings": {
+                    "text": "<p>Ships fast from our AU warehouse</p>",
+                    "width": "fit-content",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "aftersell_by_rokt_pdp_upsells_QJyVAK",
+                "icon_MzNmna",
+                "text_DHhbFg"
+              ]
+            },
+            "group_pUXHfM": {
+              "type": "group",
+              "name": "t:names.group",
+              "settings": {
+                "content_direction": "row",
+                "vertical_on_mobile": false,
+                "horizontal_alignment": "flex-start",
+                "vertical_alignment": "flex-start",
+                "align_baseline": false,
+                "horizontal_alignment_flex_direction_column": "flex-start",
+                "vertical_alignment_flex_direction_column": "center",
+                "gap": 12,
+                "width": "fill",
+                "custom_width": 100,
+                "width_mobile": "fill",
+                "custom_width_mobile": 100,
+                "height": "fit",
+                "custom_height": 100,
+                "inherit_color_scheme": true,
+                "color_scheme": "",
+                "background_media": "none",
+                "video_position": "cover",
+                "background_image_position": "cover",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0,
+                "toggle_overlay": false,
+                "overlay_color": "#00000026",
+                "overlay_style": "solid",
+                "gradient_direction": "to top",
+                "link": "",
+                "open_in_new_tab": false,
+                "placeholder": "",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {
+                "icon_DXAg9Q": {
+                  "type": "icon",
+                  "name": "t:names.icon",
+                  "disabled": true,
+                  "settings": {
+                    "icon": "price_tag",
+                    "image_upload": "shopify://shop_images/Check_3a9c0588-3838-4617-870d-05b2301e1f84.png",
+                    "width": 24,
+                    "link": "",
+                    "open_in_new_tab": false
+                  },
+                  "blocks": {}
+                },
+                "text_6Ytn7D": {
+                  "type": "text",
+                  "name": "t:names.text",
+                  "disabled": true,
+                  "settings": {
+                    "text": "<p>Aussie Lifetime Warranty</p>",
+                    "width": "fit-content",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "icon_DXAg9Q",
+                "text_6Ytn7D"
+              ]
+            },
+            "accordion_xErnFV": {
+              "type": "accordion",
+              "name": "t:names.accordion",
+              "settings": {
+                "icon": "caret",
+                "dividers": true,
+                "type_preset": "h6",
+                "inherit_color_scheme": true,
+                "color_scheme": "",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {
+                "accordion_row_CUG9xJ": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "heading": "DESCRIPTION",
+                    "content": "",
+                    "open_by_default": true,
+                    "icon": "none",
+                    "width": 20
+                  },
+                  "blocks": {
+                    "text_pyDqAk": {
+                      "type": "text",
+                      "settings": {
+                        "text": "{{ closest.product.description }}",
+                        "width": "100%",
+                        "max_width": "normal",
+                        "alignment": "left",
+                        "type_preset": "rte",
+                        "font": "var(--font-body--family)",
+                        "font_size": "1rem",
+                        "line_height": "normal",
+                        "letter_spacing": "normal",
+                        "case": "none",
+                        "wrap": "pretty",
+                        "color": "var(--color-foreground)",
+                        "background": false,
+                        "background_color": "#00000026",
+                        "corner_radius": 0,
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "text_pyDqAk"
+                  ]
+                },
+                "accordion_row_6HHD9d": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "heading": "WHAT'S IN THE BOX",
+                    "content": "",
+                    "open_by_default": false,
+                    "icon": "none",
+                    "width": 20
+                  },
+                  "blocks": {
+                    "text_EdgYbR": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>Your knife roll arrives ready to use, with adjustable shoulder strap (where included) and all buckles and straps pre-fitted.</p>",
+                        "width": "100%",
+                        "max_width": "normal",
+                        "alignment": "left",
+                        "type_preset": "rte",
+                        "font": "var(--font-body--family)",
+                        "font_size": "0.875rem",
+                        "line_height": "normal",
+                        "letter_spacing": "normal",
+                        "case": "none",
+                        "wrap": "pretty",
+                        "color": "var(--color-foreground)",
+                        "background": false,
+                        "background_color": "#00000026",
+                        "corner_radius": 0,
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "text_EdgYbR"
+                  ]
+                },
+                "accordion_row_UfiwpK": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "heading": "SPECS & DIMENSIONS",
+                    "content": "",
+                    "open_by_default": false,
+                    "icon": "none",
+                    "width": 20
+                  },
+                  "blocks": {
+                    "text_JKdy9F": {
+                      "type": "text",
+                      "settings": {
+                        "text": "{{ closest.product.description }}",
+                        "width": "100%",
+                        "max_width": "normal",
+                        "alignment": "left",
+                        "type_preset": "rte",
+                        "font": "var(--font-body--family)",
+                        "font_size": "1rem",
+                        "line_height": "normal",
+                        "letter_spacing": "normal",
+                        "case": "none",
+                        "wrap": "pretty",
+                        "color": "var(--color-foreground)",
+                        "background": false,
+                        "background_color": "#00000026",
+                        "corner_radius": 0,
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "text_JKdy9F"
+                  ]
+                }
+              },
+              "block_order": [
+                "accordion_row_CUG9xJ",
+                "accordion_row_6HHD9d",
+                "accordion_row_UfiwpK"
+              ]
+            },
+            "text_EUV7Bd": {
+              "type": "text",
+              "name": "t:names.text",
+              "disabled": true,
+              "settings": {
+                "text": "<p><em>Note - All knives tested under rigorous quality control for consistency.</em></p>",
+                "width": "fit-content",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "text_dNwVKF": {
+              "type": "text",
+              "name": "t:names.text",
+              "disabled": true,
+              "settings": {
+                "text": "<h4></h4><h4></h4><h4></h4><h4></h4><h4>Most Asked Questions</h4>",
+                "width": "fit-content",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "accordion_GU3TmD": {
+              "type": "accordion",
+              "name": "t:names.accordion",
+              "disabled": true,
+              "settings": {
+                "icon": "caret",
+                "dividers": true,
+                "type_preset": "h5",
+                "inherit_color_scheme": true,
+                "color_scheme": "",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {
+                "accordion_row_V8VGYp": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "heading": "Why choose the Supreme Series?",
+                    "content": "",
+                    "open_by_default": true,
+                    "icon": "none",
+                    "width": 20
+                  },
+                  "blocks": {
+                    "text_mz9UqL": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>The Supreme Series offers practical functionality for kitchens seeking reliable knives without unnecessary complexity, focusing on simplicity, usability, and straightforward performance.</p><p>Its approachable design allows cooks to develop confidence in handling, sharpening, and cutting techniques, supporting learning while maintaining consistent culinary results.</p>",
+                        "width": "100%",
+                        "max_width": "normal",
+                        "alignment": "left",
+                        "type_preset": "rte",
+                        "font": "var(--font-body--family)",
+                        "font_size": "1rem",
+                        "line_height": "normal",
+                        "letter_spacing": "normal",
+                        "case": "none",
+                        "wrap": "pretty",
+                        "color": "var(--color-foreground)",
+                        "background": false,
+                        "background_color": "#00000026",
+                        "corner_radius": 0,
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "text_mz9UqL"
+                  ]
+                },
+                "accordion_row_Pc4bbF": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "heading": "What makes Supreme Series suitable for beginners?",
+                    "content": "",
+                    "open_by_default": false,
+                    "icon": "none",
+                    "width": 20
+                  },
+                  "blocks": {
+                    "text_KQaBR4": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>The Supreme Series offers practical functionality for kitchens seeking reliable knives without unnecessary complexity, focusing on simplicity, usability, and straightforward performance.</p><p>Its approachable design allows cooks to develop confidence in handling, sharpening, and cutting techniques, supporting learning while maintaining consistent culinary results.</p>",
+                        "width": "100%",
+                        "max_width": "normal",
+                        "alignment": "left",
+                        "type_preset": "rte",
+                        "font": "var(--font-body--family)",
+                        "font_size": "1rem",
+                        "line_height": "normal",
+                        "letter_spacing": "normal",
+                        "case": "none",
+                        "wrap": "pretty",
+                        "color": "var(--color-foreground)",
+                        "background": false,
+                        "background_color": "#00000026",
+                        "corner_radius": 0,
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "text_KQaBR4"
+                  ]
+                },
+                "accordion_row_Fhigtk": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "heading": "How does Supreme Series perform with daily cooking?",
+                    "content": "",
+                    "open_by_default": false,
+                    "icon": "none",
+                    "width": 20
+                  },
+                  "blocks": {
+                    "text_xxNJCn": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>The Supreme Series offers practical functionality for kitchens seeking reliable knives without unnecessary complexity, focusing on simplicity, usability, and straightforward performance.</p><p>Its approachable design allows cooks to develop confidence in handling, sharpening, and cutting techniques, supporting learning while maintaining consistent culinary results.</p>",
+                        "width": "100%",
+                        "max_width": "normal",
+                        "alignment": "left",
+                        "type_preset": "rte",
+                        "font": "var(--font-body--family)",
+                        "font_size": "1rem",
+                        "line_height": "normal",
+                        "letter_spacing": "normal",
+                        "case": "none",
+                        "wrap": "pretty",
+                        "color": "var(--color-foreground)",
+                        "background": false,
+                        "background_color": "#00000026",
+                        "corner_radius": 0,
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "text_xxNJCn"
+                  ]
+                }
+              },
+              "block_order": [
+                "accordion_row_V8VGYp",
+                "accordion_row_Pc4bbF",
+                "accordion_row_Fhigtk"
+              ]
+            },
+            "sticky_add_to_cart_bar": {
+              "type": "sticky-add-to-cart-bar",
+              "settings": {
+                "enabled": true
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "title_custom",
+            "rating_custom",
+            "detail_content_custom",
+            "price_custom",
+            "google_youtube_automated_discounts_price_n6YDeb",
+            "afterpay_custom",
+            "variant_picker_qYHynj",
+            "buy_buttons_eYQEYi",
+            "product_features",
+            "delivery_estimate_block",
+            "coupon_discount_block",
+            "detail_icons_custom",
+            "payment_icons_hCKkQw",
+            "group_QVNfmK",
+            "group_pUXHfM",
+            "accordion_xErnFV",
+            "text_EUV7Bd",
+            "text_dNwVKF",
+            "accordion_GU3TmD",
+            "sticky_add_to_cart_bar"
+          ]
+        }
+      },
+      "settings": {
+        "content_width": "content-center-aligned",
+        "desktop_media_position": "left",
+        "equal_columns": false,
+        "limit_details_width": false,
+        "is_knife": false,
+        "gap": 48,
+        "color_scheme": "scheme-5",
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
+    },
+    "product_info_KR01": {
+      "type": "product-info",
+      "blocks": {
+        "icon_KR01a": {
+          "type": "icon",
+          "settings": {
+            "image": "shopify://shop_images/icon-roll.svg",
+            "content": "<p><strong>Premium Materials</strong><br/>Waxed canvas and genuine full-grain leather that develops a rich patina with every use.</p>"
+          }
+        },
+        "icon_KR01b": {
+          "type": "icon",
+          "settings": {
+            "image": "shopify://shop_images/icon-lock.svg",
+            "content": "<p><strong>Individual Pockets</strong><br/>Each knife sits in its own slot. No blade-on-blade contact, no edge damage during transport.</p>"
+          }
+        },
+        "icon_KR01c": {
+          "type": "icon",
+          "settings": {
+            "image": "shopify://shop_images/icon-travel.svg",
+            "content": "<p><strong>Compact When Rolled</strong><br/>Rolls tight and fits easily in a backpack, messenger bag, or carry-on luggage.</p>"
+          }
+        },
+        "block_KR01a": {
+          "type": "block",
+          "settings": {
+            "header": "For Professionals",
+            "content": "Chef-Grade Protection",
+            "footer": "Used by working chefs who need to transport their knives safely between kitchens every day."
+          }
+        },
+        "block_KR01b": {
+          "type": "block",
+          "settings": {
+            "header": "Beautiful Gift",
+            "content": "Premium Unboxing",
+            "footer": "Arrives in quality packaging, ready to impress. A perfect gift for any serious cook or culinary student."
+          }
+        },
+        "block_KR01c": {
+          "type": "block",
+          "settings": {
+            "header": "Versatile",
+            "content": "Not Just for Knives",
+            "footer": "Also great for BBQ tools, carving sets, art supplies, or any precision instruments that need protection."
+          }
+        }
+      },
+      "block_order": [
+        "icon_KR01a",
+        "icon_KR01b",
+        "icon_KR01c",
+        "block_KR01a",
+        "block_KR01b",
+        "block_KR01c"
+      ],
+      "name": "Product Info",
+      "settings": {
+        "width": "page",
+        "header_type": "left",
+        "heading": "<h2>Built for Chefs on the Move</h2>",
+        "content": "<p>Whether you're commuting to work, heading to a cooking class, or travelling with your collection — a quality knife roll protects your edges, organises your tools, and looks outstanding doing it.</p>",
+        "icon_block_state": true,
+        "first_num": "3",
+        "second_num": "3",
+        "color_scheme": "scheme-5",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    },
+    "product_info2_KR02": {
+      "type": "product-info2",
+      "name": "Product Info2",
+      "settings": {
+        "width": "page",
+        "heading_title": "PROTECT YOUR INVESTMENT",
+        "heading_content": "<h2>Your Knives Deserve Better Than a Tea Towel</h2>",
+        "header_type": "left",
+        "background_type": "none",
+        "block_type": "text",
+        "heading_footer": "",
+        "image_video": "image",
+        "color_scheme": "scheme-5",
+        "footer_state": "visible",
+        "footer_type": "first",
+        "footer_left": "<h2>THE TRANSPORT PROBLEM</h2>",
+        "footer_right": "<p>Throwing knives loose into a bag — even wrapped in a towel — leads to chipped tips, dulled edges, and scratched blades. A proper knife roll holds each knife individually, padded and separated, so they arrive at your destination in the same condition they left.</p>",
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "additional_footer": false,
+        "additional_content1": "",
+        "additional_content2": ""
+      }
+    },
+    "product_info2_KR03": {
+      "type": "product-info2",
+      "name": "Product Info2",
+      "settings": {
+        "width": "page",
+        "heading_title": "",
+        "heading_content": "<h2>Crafted With the Same Standards as Our Knives</h2>",
+        "header_type": "center",
+        "background_type": "none",
+        "block_type": "text",
+        "heading_footer": "",
+        "image_video": "image",
+        "color_scheme": "scheme-5",
+        "footer_state": "visible",
+        "footer_type": "third",
+        "footer_left": "<p>We don't do cheap accessories. The same commitment to premium materials and craftsmanship that goes into every Xinzuo blade goes into every roll, strap, and buckle.</p>",
+        "footer_right": "<p>30-day returns, Australian-owned, and backed by Australian Consumer Law.</p>",
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "additional_footer": false,
+        "additional_content1": "",
+        "additional_content2": ""
+      }
+    },
+    "collection_slider_KR04": {
+      "type": "collection_slider",
+      "name": "Collection Slider",
+      "settings": {
+        "title": "COMPLETE YOUR SETUP",
+        "heading": "<h2>Everything a Chef Needs</h2>",
+        "show_header": true,
+        "products": [
+          "xinzuo-premium-canvas-leather-knife-roll-vintage-brown",
+          "xinzuo-premium-leather-vintage-knife-roll-bag",
+          "xinzuo-professional-chef-apron-canvas-leather-brown",
+          "xinzuo-walnut-magnetic-sheath-cs01-supreme-series",
+          "xinzuo-walnut-magnetic-sheath-cs02-lan-series",
+          "xinzuo-leather-strop-knife-sharpening-paddle",
+          "xinzuo-w-series-whetstone-sharpening-stone"
+        ],
+        "color_scheme": "scheme-5",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    },
+    "reviews_KR05": {
+      "type": "_blocks",
+      "blocks": {
+        "judge_me_reviews_review_widget_cqfCPC": {
+          "type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {
+            "review_data": "real_data",
+            "max_width": 1200,
+            "show_shop_reviews": false,
+            "empty_state": "empty_widget"
+          }
+        }
+      },
+      "block_order": [
+        "judge_me_reviews_review_widget_cqfCPC"
+      ],
+      "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 12,
+        "section_width": "page-width",
+        "section_height": "",
+        "section_height_custom": 50,
+        "color_scheme": "scheme-5",
+        "background_media": "none",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
+    },
+    "related_guides_seo": {
+      "type": "related-guides",
+      "settings": {
+        "heading": "Knife Knowledge",
+        "subtitle": "Guides to help you get the most from your knife"
+      }
+    },
+    "faq_KR06": {
+      "type": "section",
+      "blocks": {
+        "text_KR06heading": {
+          "type": "text",
+          "name": "t:names.heading",
+          "settings": {
+            "text": "<h2>FAQs</h2>",
+            "width": "100%",
+            "max_width": "normal",
+            "alignment": "center",
+            "type_preset": "rte",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "accordion_KR06": {
+          "type": "accordion",
+          "name": "t:names.accordion",
+          "settings": {
+            "icon": "caret",
+            "dividers": true,
+            "type_preset": "h5",
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "accordion_row_seo0": {
+              "type": "_accordion-row",
+              "name": "t:names.accordion_dash_row",
+              "settings": {
+                "heading": "What maintenance does this product need?",
+                "content": "<p>Care depends on the material. Wooden items (cutting boards, knife blocks) should be oiled with food-safe mineral oil every few weeks. Leather products benefit from occasional conditioning. Whetstones should be rinsed and air-dried after use. Check the product description for specific care instructions.</p>",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "text_onakag": {
+                  "type": "text",
+                  "name": "t:names.text",
+                  "settings": {
+                    "text": "<p>Care depends on the material. Wooden items (cutting boards, knife blocks) should be oiled with food-safe mineral oil every few weeks. Leather products benefit from occasional conditioning. Whetstones should be rinsed and air-dried after use. Check the product description for specific care instructions.</p>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_onakag"
+              ]
+            },
+            "accordion_row_seo1": {
+              "type": "_accordion-row",
+              "name": "t:names.accordion_dash_row",
+              "settings": {
+                "heading": "Are your accessories compatible with all knife brands?",
+                "content": "<p>Yes. Our magnetic holders, knife rolls, cutting boards, and sharpening tools work with any kitchen knife, regardless of brand, size, or steel type. We design our accessories to complement quality knives of all types.</p>",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "text_h24qxq": {
+                  "type": "text",
+                  "name": "t:names.text",
+                  "settings": {
+                    "text": "<p>Yes. Our magnetic holders, knife rolls, cutting boards, and sharpening tools work with any kitchen knife, regardless of brand, size, or steel type. We design our accessories to complement quality knives of all types.</p>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_h24qxq"
+              ]
+            },
+            "accordion_row_seo2": {
+              "type": "_accordion-row",
+              "name": "t:names.accordion_dash_row",
+              "settings": {
+                "heading": "Do you offer a warranty on accessories?",
+                "content": "<p>All Xinzuo products, including accessories, are covered by our lifetime warranty against manufacturing defects. If you receive a faulty product, contact us at <a href=\"mailto:support@xinzuo.com.au\">support@xinzuo.com.au</a> for a replacement. See our <a href=\"/pages/warranty\">warranty page</a> for full details.</p>",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "text_fa8muh": {
+                  "type": "text",
+                  "name": "t:names.text",
+                  "settings": {
+                    "text": "<p>All Xinzuo products, including accessories, are covered by our lifetime warranty against manufacturing defects. If you receive a faulty product, contact us at <a href=\"mailto:support@xinzuo.com.au\">support@xinzuo.com.au</a> for a replacement. See our <a href=\"/pages/warranty\">warranty page</a> for full details.</p>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_fa8muh"
+              ]
+            }
+          },
+          "block_order": [
+            "accordion_row_seo0",
+            "accordion_row_seo1",
+            "accordion_row_seo2"
+          ]
+        }
+      },
+      "block_order": [
+        "text_KR06heading",
+        "accordion_KR06"
+      ],
+      "name": "t:names.faq_section",
+      "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 32,
+        "section_width": "page-width",
+        "section_height": "",
+        "section_height_custom": 50,
+        "color_scheme": "scheme-5",
+        "background_media": "none",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "padding-block-start": 48,
+        "padding-block-end": 48
+      }
+    }
+  },
+  "order": [
+    "main",
+    "product_info_KR01",
+    "product_info2_KR02",
+    "product_info2_KR03",
+    "collection_slider_KR04",
+    "reviews_KR05",
+    "related_guides_seo",
+    "faq_KR06"
+  ]
+}

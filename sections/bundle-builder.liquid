@@ -1,0 +1,508 @@
+{% comment %}
+  Bundle Builder Section
+  - Series tab filtering: customers browse by knife series (each a separate collection)
+  - Selectable product cards with persistent selection across tabs
+  - Sticky summary bar with progress, savings, and add-to-cart
+  - Discount tiers configurable via blocks in theme editor
+{% endcomment %}
+
+<script src="{{ 'bundle-builder.js' | asset_url }}" type="module" defer></script>
+<link rel="stylesheet" href="{{ 'bundle-builder.css' | asset_url }}">
+
+{%- liquid
+  assign min_items = section.settings.min_items | default: 3
+  assign max_items = section.settings.max_items | default: 8
+  assign series_blocks = section.blocks | where: "type", "series_collection"
+  assign has_series = false
+  if series_blocks.size > 0
+    assign has_series = true
+  endif
+-%}
+
+{%- comment -%} Build series handles string for product.collections matching {%- endcomment -%}
+{%- assign series_handles = "" -%}
+{%- for block in series_blocks -%}
+  {%- if block.settings.collection != blank -%}
+    {%- if series_handles == "" -%}
+      {%- assign series_handles = block.settings.collection.handle -%}
+    {%- else -%}
+      {%- assign series_handles = series_handles | append: "," | append: block.settings.collection.handle -%}
+    {%- endif -%}
+  {%- endif -%}
+{%- endfor -%}
+
+{%- comment -%} Build discount tiers JSON from blocks {%- endcomment -%}
+{%- capture tiers_json -%}
+[
+  {%- assign tier_index = 0 -%}
+  {%- for block in section.blocks -%}
+    {%- if block.type == 'discount_tier' -%}
+      {%- if tier_index > 0 -%},{%- endif -%}
+      {
+        "minItems": {{ block.settings.min_items }},
+        "discountPercent": {{ block.settings.discount_percent }},
+        "label": {{ block.settings.label | json }},
+        "discountCode": {{ block.settings.discount_code | json }}
+      }
+      {%- assign tier_index = tier_index | plus: 1 -%}
+    {%- endif -%}
+  {%- endfor -%}
+]
+{%- endcapture -%}
+
+{% style %}
+  .section-{{ section.id }} {
+    background-color: #111;
+  }
+{% endstyle %}
+
+<div class="section-background color-{{ section.settings.color_scheme }}"></div>
+
+<section class="section-{{ section.id }} color-{{ section.settings.color_scheme }}">
+  <bundle-builder-component
+    class="bundle-builder"
+    data-section-id="{{ section.id }}"
+    data-min-items="{{ min_items }}"
+    data-max-items="{{ max_items }}"
+    data-tiers='{{ tiers_json | strip_newlines }}'
+    style="
+      --padding-block-start: {{ section.settings.padding_block_start | default: 60 }}px;
+      --padding-block-end: {{ section.settings.padding_block_end | default: 120 }}px;
+      --bundle-columns-desktop: {{ section.settings.columns_desktop | default: 4 }};
+    "
+  >
+    {%- comment -%} Header {%- endcomment -%}
+    <div class="bundle-builder__header">
+      {%- if section.settings.heading != blank -%}
+        <h1 class="bundle-builder__heading">{{ section.settings.heading }}</h1>
+      {%- endif -%}
+      {%- if section.settings.subheading != blank -%}
+        <p class="bundle-builder__subheading">{{ section.settings.subheading }}</p>
+      {%- endif -%}
+      <div class="bundle-builder__progress" ref="progressText">
+        Select at least {{ min_items }} items to unlock your discount (15%)
+      </div>
+    </div>
+
+    {%- comment -%} Series Tabs {%- endcomment -%}
+    {%- if has_series -%}
+      <div class="bundle-tabs-wrapper" ref="tabsWrapper">
+        <div class="bundle-tabs-track">
+          <div class="bundle-tabs" ref="tabsContainer">
+            <button
+              class="bundle-tabs__tab bundle-tabs__tab--active"
+              ref="tabs[]"
+              data-series="all"
+              on:click="/handleTabClick/all"
+              aria-pressed="true"
+            >
+              All
+            </button>
+            {%- for block in series_blocks -%}
+              {%- if block.settings.collection != blank -%}
+                {%- assign series_handle = block.settings.collection.handle -%}
+                {%- assign series_label = block.settings.tab_label | default: block.settings.collection.title -%}
+                <button
+                  class="bundle-tabs__tab"
+                  ref="tabs[]"
+                  data-series="{{ series_handle }}"
+                  on:click="/handleTabClick/{{ series_handle }}"
+                  aria-pressed="false"
+                  {{ block.shopify_attributes }}
+                >
+                  {{ series_label }}
+                  <span class="bundle-tabs__count" data-series-count="{{ series_handle }}"></span>
+                </button>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+          <div class="bundle-tabs__fade bundle-tabs__fade--left" ref="tabFadeLeft"></div>
+          <div class="bundle-tabs__fade bundle-tabs__fade--right" ref="tabFadeRight"></div>
+        </div>
+        <button class="bundle-tabs__arrow bundle-tabs__arrow--left" ref="tabArrowLeft" on:click="/handleTabArrow/left" aria-label="Scroll tabs left">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </button>
+        <button class="bundle-tabs__arrow bundle-tabs__arrow--right" ref="tabArrowRight" on:click="/handleTabArrow/right" aria-label="Scroll tabs right">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
+      </div>
+    {%- endif -%}
+
+    {%- comment -%} Product Grid (multi-collection with deduplication) {%- endcomment -%}
+    {%- if has_series -%}
+      {%- assign seen_product_ids = "," -%}
+      {%- assign has_products = false -%}
+
+      {%- comment -%} Pre-scan to check if any products exist {%- endcomment -%}
+      {%- for block in series_blocks -%}
+        {%- if block.settings.collection != blank and block.settings.collection.products.size > 0 -%}
+          {%- assign has_products = true -%}
+          {%- break -%}
+        {%- endif -%}
+      {%- endfor -%}
+
+      {%- if has_products -%}
+        <div class="bundle-builder__grid" ref="grid">
+          {%- assign global_index = 0 -%}
+          {%- for block in series_blocks -%}
+            {%- assign coll = block.settings.collection -%}
+            {%- if coll != blank -%}
+              {%- for product in coll.products -%}
+                {%- unless product.tags contains 'engraving-fee' -%}
+                  {%- comment -%} Skip sold-out products {%- endcomment -%}
+                  {%- unless product.available -%}
+                    {%- continue -%}
+                  {%- endunless -%}
+
+                  {%- comment -%} Deduplication check {%- endcomment -%}
+                  {%- assign pid_check = "," | append: product.id | append: "," -%}
+                  {%- if seen_product_ids contains pid_check -%}
+                    {%- continue -%}
+                  {%- endif -%}
+
+                  {%- comment -%} Build series membership from product.collections {%- endcomment -%}
+                  {%- assign product_series = "" -%}
+                  {%- for pc in product.collections -%}
+                    {%- assign pc_check = pc.handle | prepend: "," | append: "," -%}
+                    {%- assign handles_check = series_handles | prepend: "," | append: "," -%}
+                    {%- if handles_check contains pc_check -%}
+                      {%- if product_series == "" -%}
+                        {%- assign product_series = pc.handle -%}
+                      {%- else -%}
+                        {%- assign product_series = product_series | append: " " | append: pc.handle -%}
+                      {%- endif -%}
+                    {%- endif -%}
+                  {%- endfor -%}
+
+                  {%- assign variant = product.selected_or_first_available_variant -%}
+                  {%- assign global_index = global_index | plus: 1 -%}
+                  <div
+                    class="bundle-card"
+                    ref="cards[]"
+                    role="button"
+                    tabindex="0"
+                    aria-pressed="false"
+                    data-product-id="{{ product.id }}"
+                    data-variant-id="{{ variant.id }}"
+                    data-price="{{ variant.price }}"
+                    data-compare-price="{{ variant.compare_at_price | default: variant.price }}"
+                    data-available="{{ product.available }}"
+                    data-title="{{ product.title | escape }}"
+                    data-image="{{ product.featured_image | image_url: width: 100 }}"
+                    data-series="{{ product_series }}"
+                    on:click="/handleCardClick"
+                  >
+                    {%- comment -%} Checkbox Overlay {%- endcomment -%}
+                    <div class="bundle-card__checkbox">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                      </svg>
+                    </div>
+
+                    {%- comment -%} Product Image {%- endcomment -%}
+                    <div class="bundle-card__image">
+                      {%- if product.featured_image != blank -%}
+                        {%- liquid
+                          assign img_loading = 'lazy'
+                          assign img_priority = 'auto'
+                          if global_index <= 8
+                            assign img_loading = 'eager'
+                            assign img_priority = 'high'
+                          endif
+                        -%}
+                        <img
+                          srcset="{{ product.featured_image | image_url: width: 300 }} 300w, {{ product.featured_image | image_url: width: 500 }} 500w, {{ product.featured_image | image_url: width: 700 }} 700w"
+                          sizes="(max-width: 500px) 50vw, (max-width: 750px) 50vw, (max-width: 1300px) 33vw, 25vw"
+                          src="{{ product.featured_image | image_url: width: 500 }}"
+                          width="500"
+                          height="500"
+                          alt="{{ product.title | escape }}"
+                          loading="{{ img_loading }}"
+                          fetchpriority="{{ img_priority }}"
+                          decoding="async"
+                        >
+                      {%- endif -%}
+
+                      {%- if product.compare_at_price and product.compare_at_price > product.price -%}
+                        {%- assign discount = product.compare_at_price | minus: product.price -%}
+                        {%- assign percent = discount | times: 100 | divided_by: product.compare_at_price -%}
+                        <span class="bundle-card__badge">{{ percent }}% OFF</span>
+                      {%- endif -%}
+                    </div>
+
+                    {%- comment -%} Product Info {%- endcomment -%}
+                    <div class="bundle-card__info">
+                      <h3 class="bundle-card__title">{{ product.title }}</h3>
+                      <div class="bundle-card__price">
+                        <span class="bundle-card__current-price">{{ variant.price | money }}</span>
+                        {%- if variant.compare_at_price and variant.compare_at_price > variant.price -%}
+                          <span class="bundle-card__compare-price">{{ variant.compare_at_price | money }}</span>
+                        {%- endif -%}
+                      </div>
+                    </div>
+                  </div>
+
+                  {%- comment -%} Mark this product as rendered {%- endcomment -%}
+                  {%- assign seen_product_ids = seen_product_ids | append: product.id | append: "," -%}
+                {%- endunless -%}
+              {%- endfor -%}
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      {%- else -%}
+        <div class="bundle-builder__empty" style="text-align: center; padding: 60px 20px; color: #c9c9cc; font-family: 'Albert Sans', sans-serif; font-size: 18px;">
+          <p>No products found in the selected collections.</p>
+        </div>
+      {%- endif -%}
+    {%- else -%}
+      <div class="bundle-builder__empty" style="text-align: center; padding: 60px 20px; color: #c9c9cc; font-family: 'Albert Sans', sans-serif; font-size: 18px;">
+        <p>Add series collections in the theme editor to display products.</p>
+      </div>
+    {%- endif -%}
+
+    {%- comment -%} Summary Bar (Sticky Bottom) {%- endcomment -%}
+    <div class="bundle-summary" ref="summaryBar">
+      <div class="bundle-summary__inner">
+        <div class="bundle-summary__selected">
+          <div class="bundle-summary__thumbnails" ref="thumbnailStrip"></div>
+          <span class="bundle-summary__count" ref="countText">0 selected</span>
+        </div>
+        <div class="bundle-summary__savings">
+          <span class="bundle-summary__tier-label" ref="tierLabel"></span>
+          <span class="bundle-summary__next-tier" ref="nextTierHint"></span>
+        </div>
+        <div class="bundle-summary__action">
+          <div class="bundle-summary__total">
+            <span class="bundle-summary__total-label">Bundle Total</span>
+            <div class="bundle-summary__price-row">
+              <s class="bundle-summary__original-price" ref="originalPrice" hidden></s>
+              <span class="bundle-summary__total-price" ref="totalPrice">$0.00</span>
+            </div>
+            <span class="bundle-summary__total-savings" ref="totalSavings" hidden></span>
+          </div>
+          <button
+            class="bundle-summary__cta"
+            ref="addToCartBtn"
+            disabled
+            on:click="/handleAddToCart"
+          >
+            {{ section.settings.cta_text | default: 'Add Bundle to Cart' }}
+          </button>
+        </div>
+        <div class="bundle-summary__progress-bar">
+          <div class="bundle-summary__progress-track">
+            <div class="bundle-summary__progress-fill" ref="progressFill" style="width: 0%"></div>
+          </div>
+          {%- comment -%} Tier milestone markers {%- endcomment -%}
+          {%- assign last_tier_min = 0 -%}
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'discount_tier' and block.settings.min_items > last_tier_min -%}
+              {%- assign last_tier_min = block.settings.min_items -%}
+            {%- endif -%}
+          {%- endfor -%}
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'discount_tier' and last_tier_min > 0 and block.settings.min_items != last_tier_min -%}
+              {%- assign marker_pos = block.settings.min_items | times: 100 | divided_by: last_tier_min -%}
+              <div class="bundle-summary__tier-marker" ref="tierMarkers[]" data-tier-min="{{ block.settings.min_items }}" style="left: {{ marker_pos }}%;"></div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </div>
+    </div>
+  </bundle-builder-component>
+</section>
+
+{% schema %}
+{
+  "name": "Bundle Builder",
+  "tag": "section",
+  "enabled_on": {
+    "templates": ["page"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Build Your Knife Bundle"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Select your favourite knives and save!"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "Button Text",
+      "default": "Add Bundle to Cart"
+    },
+    {
+      "type": "header",
+      "content": "Bundle Rules"
+    },
+    {
+      "type": "range",
+      "id": "min_items",
+      "label": "Minimum Items",
+      "min": 1,
+      "max": 20,
+      "step": 1,
+      "default": 3,
+      "info": "Minimum items required to add bundle to cart"
+    },
+    {
+      "type": "range",
+      "id": "max_items",
+      "label": "Maximum Items",
+      "min": 2,
+      "max": 20,
+      "step": 1,
+      "default": 8,
+      "info": "Maximum items allowed in a bundle"
+    },
+    {
+      "type": "header",
+      "content": "Discount Setup (Required)"
+    },
+    {
+      "type": "paragraph",
+      "content": "For discounts to work: 1) Create discount codes in Shopify Admin (Discounts > Create > Amount off order > Discount code). 2) Set the same percentage and minimum quantity as each tier. 3) Enter the code name in each Discount Tier block below."
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "label": "Columns (Desktop)",
+      "min": 2,
+      "max": 6,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color Scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_start",
+      "label": "Top Padding",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_block_end",
+      "label": "Bottom Padding",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 120,
+      "info": "Extra padding recommended to account for sticky summary bar"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "series_collection",
+      "name": "Series / Collection Tab",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "text",
+          "id": "tab_label",
+          "label": "Tab Label",
+          "info": "Display name on the filter tab (e.g. 'MO', 'Supreme', 'Retro')"
+        }
+      ]
+    },
+    {
+      "type": "discount_tier",
+      "name": "Discount Tier",
+      "settings": [
+        {
+          "type": "range",
+          "id": "min_items",
+          "label": "Minimum Items for This Tier",
+          "min": 1,
+          "max": 20,
+          "step": 1,
+          "default": 3
+        },
+        {
+          "type": "range",
+          "id": "discount_percent",
+          "label": "Discount Percentage",
+          "min": 1,
+          "max": 50,
+          "step": 1,
+          "unit": "%",
+          "default": 10,
+          "info": "Must match the discount code configured in Shopify Admin"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Tier Label",
+          "default": "Save 10%",
+          "info": "Displayed to customers when this tier is active"
+        },
+        {
+          "type": "text",
+          "id": "discount_code",
+          "label": "Discount Code",
+          "info": "Create a matching discount code in Shopify Admin (Discounts > Create > Amount off order). The code will be auto-applied when the bundle is added to cart."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Bundle Builder",
+      "blocks": [
+        {
+          "type": "series_collection",
+          "settings": {
+            "tab_label": "MO"
+          }
+        },
+        {
+          "type": "series_collection",
+          "settings": {
+            "tab_label": "Supreme"
+          }
+        },
+        {
+          "type": "discount_tier",
+          "settings": {
+            "min_items": 3,
+            "discount_percent": 10,
+            "label": "Save 10%"
+          }
+        },
+        {
+          "type": "discount_tier",
+          "settings": {
+            "min_items": 5,
+            "discount_percent": 15,
+            "label": "Save 15%"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

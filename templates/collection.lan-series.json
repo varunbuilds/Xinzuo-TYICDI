@@ -1,0 +1,239 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "collection_hero_banner": {
+      "type": "collection-hero-banner",
+      "settings": {
+        "color_scheme": "scheme-5"
+      }
+    },
+    "header": {
+      "type": "seo-collection-header",
+      "settings": {
+        "heading_override": "",
+        "subtitle": "Award-Winning Powder Steel — The Pro",
+        "intro_content": "<p>The <strong>Xinzuo Lan Series (B37)</strong> is “The Pro” — the pinnacle of the Xinzuo range. Forged with a proprietary <strong>14Cr14MoVNb powder steel</strong> core wrapped in 73 layers of Damascus steel, the Lan delivers exceptional edge retention at HRC 62. This is the same construction that earned a Silver Award at the 2023 Commercial Kitchen Innovation Challenge. Olive wood handles add warmth and character to each blade. The powder steel core holds its edge significantly longer than standard 10Cr15CoMoV, making it the top choice for professional chefs and serious home cooks who demand the absolute best. If you want one series that represents the peak of Xinzuo’s craft, this is it.</p>",
+        "color_scheme": "scheme-5"
+      }
+    },
+    "main": {
+      "type": "main-collection",
+      "blocks": {
+        "filters": {
+          "type": "filters",
+          "static": true,
+          "settings": {
+            "enable_filtering": true,
+            "filter_style": "horizontal",
+            "filter_width": "centered",
+            "text_label_case": "default",
+            "show_swatch_label": false,
+            "show_filter_label": false,
+            "enable_sorting": true,
+            "enable_grid_density": true,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "padding-block-start": 8,
+            "padding-block-end": 8,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0,
+            "facets_margin_bottom": 8,
+            "facets_margin_right": 20
+          },
+          "blocks": {}
+        },
+        "product-card": {
+          "type": "_product-card",
+          "static": true,
+          "settings": {
+            "product_card_gap": 4,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "card-gallery": {
+              "type": "_product-card-gallery",
+              "settings": {
+                "image_ratio": "adapt",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "product_title": {
+              "type": "product-title",
+              "settings": {
+                "width": "100%",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 4,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "price": {
+              "type": "price",
+              "settings": {
+                "show_sale_price_first": true,
+                "show_installments": false,
+                "show_tax_info": false,
+                "type_preset": "h6",
+                "width": "100%",
+                "alignment": "left",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "color": "var(--color-foreground)",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "card-gallery",
+            "product_title",
+            "price"
+          ]
+        }
+      },
+      "settings": {
+        "layout_type": "grid",
+        "product_card_size": "medium",
+        "mobile_product_card_size": "small",
+        "product_grid_width": "centered",
+        "full_width_on_mobile": true,
+        "columns_gap_horizontal": 16,
+        "columns_gap_vertical": 24,
+        "padding-inline-start": 0,
+        "padding-inline-end": 0,
+        "color_scheme": "scheme-5",
+        "padding-block-start": 0,
+        "padding-block-end": 32
+      }
+    },
+    "below_grid": {
+      "type": "seo-below-grid-content",
+      "settings": {
+        "heading": "Learn more about the Lan Series",
+        "content": "<p>Learn about <strong>14Cr14MoVNb powder steel</strong> — Xinzuo’s proprietary core steel and why it outperforms conventional blade steels. <a href=\"/blogs/news/powder-steel-knife-guide-14cr14movnb\">Powder steel guide</a></p><p>What’s the difference between <strong>67-layer and 73-layer Damascus</strong>? Understand how layer count affects steel performance. <a href=\"/blogs/news/67-layer-vs-73-layer-damascus\">67 vs 73 layer Damascus</a></p><p>At HRC 62, the Lan Series sits in the sweet spot — learn how <strong>Rockwell hardness</strong> translates to real kitchen performance. <a href=\"/blogs/news/knife-steel-hardness-guide\">Steel hardness guide</a></p><p>Protect your investment with proper <strong>Damascus care</strong> — simple steps for cleaning, drying, and storing your Lan Series blades. <a href=\"/blogs/news/how-to-care-for-damascus-steel-knives\">How to care for Damascus knives</a></p><p>Want the ultimate edge? The <strong>X05Z Zhen Series</strong> uses Japanese ZDP189 at HRC 65–67 for the sharpest edge in the range. <a href=\"/collections/zhen-x05z-series\">Shop the X05Z Zhen Series</a></p><p>Compare all series side by side. <a href=\"/blogs/news/xinzuo-knives-series-comparison-guide\">Full series comparison guide</a></p>",
+        "show_border": true,
+        "color_scheme": "scheme-5"
+      }
+    },
+    "collection_video": {
+      "type": "collection_video",
+      "settings": {
+        "width": "full",
+        "video": "shopify://files/videos/b37-001.mp4",
+        "color_scheme": "scheme-5"
+      }
+    },
+    "related_links": {
+      "type": "seo-related-links",
+      "settings": {
+        "heading": "Related Guides & Collections",
+        "color_scheme": "scheme-5"
+      },
+      "blocks": {
+        "link_1": {
+          "type": "link",
+          "settings": {
+            "link_text": "Full Series Comparison",
+            "link_url": "/blogs/news/xinzuo-knives-series-comparison-guide"
+          }
+        },
+        "link_2": {
+          "type": "link",
+          "settings": {
+            "link_text": "Powder Steel Guide",
+            "link_url": "/blogs/news/powder-steel-knife-guide-14cr14movnb"
+          }
+        },
+        "link_3": {
+          "type": "link",
+          "settings": {
+            "link_text": "67 vs 73 Layer Damascus",
+            "link_url": "/blogs/news/67-layer-vs-73-layer-damascus"
+          }
+        },
+        "link_4": {
+          "type": "link",
+          "settings": {
+            "link_text": "Shop X05Z Zhen (Flagship)",
+            "link_url": "/collections/zhen-x05z-series"
+          }
+        },
+        "link_5": {
+          "type": "link",
+          "settings": {
+            "link_text": "Shop Mo Series (Damascus)",
+            "link_url": "/collections/xinzuo-mo-series-knives"
+          }
+        },
+        "link_6": {
+          "type": "link",
+          "settings": {
+            "link_text": "Steel Hardness Guide",
+            "link_url": "/blogs/news/knife-steel-hardness-guide"
+          }
+        }
+      },
+      "block_order": [
+        "link_1",
+        "link_2",
+        "link_3",
+        "link_4",
+        "link_5",
+        "link_6"
+      ]
+    }
+  },
+  "order": [
+    "collection_hero_banner",
+    "header",
+    "main",
+    "below_grid",
+    "collection_video",
+    "related_links"
+  ]
+}

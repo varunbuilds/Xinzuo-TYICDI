@@ -1,0 +1,219 @@
+
+
+<div class="blog-post-content rte">
+  <rte-formatter>
+    {{ article.content }}
+  </rte-formatter>
+</div>
+
+{% stylesheet %}
+  .blog-post-content {
+    --blog-content-width: var(--normal-content-width);
+    max-width: var(--blog-content-width);
+    margin: 0 auto;
+  }
+
+  /* Enhanced Typography */
+  .blog-post-content.rte {
+    font-size: 17px;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.85);
+  }
+
+  .blog-post-content.rte p {
+    margin-bottom: 1.5em;
+  }
+
+  .blog-post-content.rte p:last-child {
+    margin-bottom: 0;
+  }
+
+  /* Heading Enhancements */
+  .blog-post-content.rte h2 {
+    margin-top: 50px;
+    line-height: 150%;
+    font-size: 30px;
+    margin-bottom: 1em;
+    padding-bottom: 0.5em;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.15);
+    color: #FFFFFF;
+  }
+
+  .blog-post-content.rte h3 {
+    line-height: 150%;
+    margin-top: 2em;
+    margin-bottom: 0.75em;
+    letter-spacing: 0.02em;
+    color: #FFFFFF;
+  }
+
+  .blog-post-content.rte h4,
+  .blog-post-content.rte h5,
+  .blog-post-content.rte h6 {
+    margin-top: 1.75em;
+    margin-bottom: 0.75em;
+    color: #FFFFFF;
+  }
+
+  /* Enhanced Link Styling */
+  .blog-post-content.rte a {
+    color: #C9A86A;
+    text-decoration: underline;
+    text-decoration-color: rgba(201, 168, 106, 0.3);
+    text-underline-offset: 0.2em;
+    transition: all 0.2s ease;
+  }
+
+  .blog-post-content.rte a:hover {
+    color: #D4B87A;
+    text-decoration-color: #D4B87A;
+  }
+
+  /* Strong/Bold Enhancement */
+  .blog-post-content.rte strong {
+    font-weight: 600;
+    color: #FFFFFF;
+  }
+
+  /* Image Styling */
+  .blog-post-content.rte img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 2.5rem auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+  }
+
+  .blog-post-content.rte img:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+    transform: translateY(-2px);
+  }
+
+  /* Figure and Figcaption Support */
+  .blog-post-content.rte figure {
+    margin: 2.5rem 0;
+  }
+
+  .blog-post-content.rte figcaption {
+    margin-top: 0.75rem;
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.6);
+    text-align: center;
+    font-style: italic;
+  }
+
+  /* Enhanced Blockquote Styling */
+  .blog-post-content.rte blockquote {
+    margin: 2.5em 0;
+    padding: 1.5em 1.5em 1.5em 2em;
+    border-left: 4px solid #C9A86A;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 0 8px 8px 0;
+    font-size: 1.1em;
+    font-style: italic;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  .blog-post-content.rte blockquote p {
+    margin-bottom: 0;
+  }
+
+  /* List Improvements */
+  .blog-post-content.rte ul,
+  .blog-post-content.rte ol {
+    margin-bottom: 1.5em;
+    padding-left: 1.75em;
+  }
+
+  .blog-post-content.rte li {
+    margin-bottom: 0.75em;
+  }
+
+  .blog-post-content.rte li:last-child {
+    margin-bottom: 0;
+  }
+
+  .blog-post-content.rte ul > li::marker {
+    color: #C9A86A;
+  }
+
+  /* Callout Box Styling */
+  .blog-post-content.rte > p:has(strong:first-child) {
+    padding: 1.25em 1.5em;
+    background: rgba(255, 255, 255, 0.05);
+    border-left: 4px solid #C9A86A;
+    border-radius: 8px;
+    margin-block: 2em;
+  }
+
+  /* Code Blocks */
+  .blog-post-content.rte code {
+    padding: 0.2em 0.4em;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    font-size: 0.9em;
+    font-family: monospace;
+    color: #C9A86A;
+  }
+
+  .blog-post-content.rte pre {
+    margin: 2em 0;
+    padding: 1.5em;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    overflow-x: auto;
+  }
+
+  .blog-post-content.rte pre code {
+    padding: 0;
+    background: none;
+  }
+
+  /* Horizontal Rule */
+  .blog-post-content.rte hr {
+    margin: 3em 0;
+    border: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+  }
+
+  /* Responsive Adjustments */
+  @media screen and (max-width: 749px) {
+    .blog-post-content.rte {
+      font-size: 16px;
+    }
+
+    .blog-post-content.rte img {
+      margin: 2rem auto;
+      border-radius: 6px;
+    }
+
+    .blog-post-content.rte blockquote {
+      margin: 2em 0;
+      padding: 1.25em 1.25em 1.25em 1.5em;
+      font-size: 1.05em;
+    }
+
+    .blog-post-content.rte h2 {
+      margin-top: 2em;
+    }
+
+    .blog-post-content.rte h3 {
+      margin-top: 1.75em;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.content",
+  "settings": [],
+  "presets": [
+    {
+      "name": "t:names.content"
+    }
+  ]
+}
+{% endschema %}

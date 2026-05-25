@@ -1,0 +1,239 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "collection_hero_banner": {
+      "type": "collection-hero-banner",
+      "settings": {
+        "color_scheme": "scheme-5"
+      }
+    },
+    "header": {
+      "type": "seo-collection-header",
+      "settings": {
+        "heading_override": "",
+        "subtitle": "Japanese-Style Octagonal Handles, Upgraded Steel",
+        "intro_content": "<p>The <strong>Hezhen Retro Series (PM8S)</strong> is “The Upgrade” — a significant step up from entry-level knives. Built with <strong>3-layer 10Cr15CoMoV composite steel</strong> at HRC 60, these blades stay sharper for longer than German steel alternatives. The standout feature is the traditional Japanese octagonal handle in red wood with black buffalo horn accents, designed for ergonomic comfort and ambidextrous use. With 13 knife types including a sakimaru, honesuki, and a 10-inch bunka, the Retro Series offers one of the widest selections in the Hezhen range. This is the ideal series for home cooks who want Japanese-style craftsmanship and measurably better edge retention without the premium of full Damascus construction.</p>",
+        "color_scheme": "scheme-5"
+      }
+    },
+    "main": {
+      "type": "main-collection",
+      "blocks": {
+        "filters": {
+          "type": "filters",
+          "static": true,
+          "settings": {
+            "enable_filtering": true,
+            "filter_style": "horizontal",
+            "filter_width": "centered",
+            "text_label_case": "default",
+            "show_swatch_label": false,
+            "show_filter_label": false,
+            "enable_sorting": true,
+            "enable_grid_density": true,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "padding-block-start": 8,
+            "padding-block-end": 8,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0,
+            "facets_margin_bottom": 8,
+            "facets_margin_right": 20
+          },
+          "blocks": {}
+        },
+        "product-card": {
+          "type": "_product-card",
+          "static": true,
+          "settings": {
+            "product_card_gap": 4,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "card-gallery": {
+              "type": "_product-card-gallery",
+              "settings": {
+                "image_ratio": "adapt",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "product_title": {
+              "type": "product-title",
+              "settings": {
+                "width": "100%",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 4,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "price": {
+              "type": "price",
+              "settings": {
+                "show_sale_price_first": true,
+                "show_installments": false,
+                "show_tax_info": false,
+                "type_preset": "h6",
+                "width": "100%",
+                "alignment": "left",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "color": "var(--color-foreground)",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "card-gallery",
+            "product_title",
+            "price"
+          ]
+        }
+      },
+      "settings": {
+        "layout_type": "grid",
+        "product_card_size": "medium",
+        "mobile_product_card_size": "small",
+        "product_grid_width": "centered",
+        "full_width_on_mobile": true,
+        "columns_gap_horizontal": 16,
+        "columns_gap_vertical": 24,
+        "padding-inline-start": 0,
+        "padding-inline-end": 0,
+        "color_scheme": "scheme-5",
+        "padding-block-start": 0,
+        "padding-block-end": 32
+      }
+    },
+    "below_grid": {
+      "type": "seo-below-grid-content",
+      "settings": {
+        "heading": "Learn more about the Retro Series",
+        "content": "<p>Understand <strong>3-layer composite steel</strong> construction and why it delivers the best of both worlds — a hard cutting core wrapped in tough, corrosion-resistant cladding. <a href=\"/blogs/news/san-mai-construction-guide\">San Mai construction guide</a></p><p>How does <strong>10Cr15CoMoV steel</strong> compare to VG10? Our detailed analysis covers edge retention, toughness, and real-world performance. <a href=\"/blogs/news/vg10-steel-vs-10cr15comov-guide\">VG10 vs 10Cr15CoMoV comparison</a></p><p>What does <strong>HRC 60 hardness</strong> actually mean for your kitchen? Learn how Rockwell hardness affects sharpness, durability, and maintenance. <a href=\"/blogs/news/knife-steel-hardness-guide\">Steel hardness guide</a></p><p>Simple daily habits that keep your Retro Series knives performing at their best — from proper cutting boards to storage tips. <a href=\"/blogs/news/knife-care-daily-maintenance-guide\">Daily knife care guide</a></p><p>New to quality knives? The <strong>Supreme Series</strong> offers a durable German steel entry point at a lower price. <a href=\"/collections/hezhen-supreme-series-knives\">Shop the Supreme Series</a></p><p>Compare all Xinzuo and Hezhen knife series side by side — steel, hardness, handles, and pricing. <a href=\"/blogs/news/xinzuo-knives-series-comparison-guide\">Full series comparison guide</a></p>",
+        "show_border": true,
+        "color_scheme": "scheme-5"
+      }
+    },
+    "collection_video": {
+      "type": "collection_video",
+      "settings": {
+        "width": "full",
+        "video": "shopify://files/videos/pm8s-001.mp4",
+        "color_scheme": "scheme-5"
+      }
+    },
+    "related_links": {
+      "type": "seo-related-links",
+      "settings": {
+        "heading": "Related Guides & Collections",
+        "color_scheme": "scheme-5"
+      },
+      "blocks": {
+        "link_1": {
+          "type": "link",
+          "settings": {
+            "link_text": "Full Series Comparison",
+            "link_url": "/blogs/news/xinzuo-knives-series-comparison-guide"
+          }
+        },
+        "link_2": {
+          "type": "link",
+          "settings": {
+            "link_text": "San Mai Construction Guide",
+            "link_url": "/blogs/news/san-mai-construction-guide"
+          }
+        },
+        "link_3": {
+          "type": "link",
+          "settings": {
+            "link_text": "Steel Hardness Guide",
+            "link_url": "/blogs/news/knife-steel-hardness-guide"
+          }
+        },
+        "link_4": {
+          "type": "link",
+          "settings": {
+            "link_text": "Shop the Supreme Series",
+            "link_url": "/collections/hezhen-supreme-series-knives"
+          }
+        },
+        "link_5": {
+          "type": "link",
+          "settings": {
+            "link_text": "Shop the Mo Series (Damascus)",
+            "link_url": "/collections/xinzuo-mo-series-knives"
+          }
+        },
+        "link_6": {
+          "type": "link",
+          "settings": {
+            "link_text": "Xinzuo Brand Review",
+            "link_url": "/blogs/news/xinzuo-knives-review-brand-guide"
+          }
+        }
+      },
+      "block_order": [
+        "link_1",
+        "link_2",
+        "link_3",
+        "link_4",
+        "link_5",
+        "link_6"
+      ]
+    }
+  },
+  "order": [
+    "collection_hero_banner",
+    "header",
+    "main",
+    "below_grid",
+    "collection_video",
+    "related_links"
+  ]
+}

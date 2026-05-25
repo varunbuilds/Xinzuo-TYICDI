@@ -1,0 +1,158 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "bundle-builder",
+      "blocks": {
+        "series_mo": {
+          "type": "series_collection",
+          "settings": {
+            "collection": "xinzuo-mo-series-knives",
+            "tab_label": "MO"
+          }
+        },
+        "series_lan": {
+          "type": "series_collection",
+          "settings": {
+            "collection": "xinzuo-lan-series-knives",
+            "tab_label": "LAN"
+          }
+        },
+        "series_supreme": {
+          "type": "series_collection",
+          "settings": {
+            "collection": "hezhen-supreme-series-knives",
+            "tab_label": "Supreme"
+          }
+        },
+        "series_retro": {
+          "type": "series_collection",
+          "settings": {
+            "collection": "hezhen-retro-series-knives",
+            "tab_label": "Retro"
+          }
+        },
+        "series_zhen_x05z": {
+          "type": "series_collection",
+          "settings": {
+            "collection": "zhen-x05z-series",
+            "tab_label": "X05Z Zhen"
+          }
+        },
+        "series_zhen_pm8m": {
+          "type": "series_collection",
+          "settings": {
+            "collection": "pm8m-zhen-series",
+            "tab_label": "PM8M Zhen"
+          }
+        },
+        "series_zhen_pm8o": {
+          "type": "series_collection",
+          "settings": {
+            "collection": "pm8o-zhen-series",
+            "tab_label": "PM8O Zhen"
+          }
+        },
+        "series_elegant": {
+          "type": "series_collection",
+          "settings": {
+            "collection": "b38l-elegant-series",
+            "tab_label": "B38L Elegant"
+          }
+        },
+        "series_yu": {
+          "type": "series_collection",
+          "settings": {
+            "collection": "b13r-yu-series",
+            "tab_label": "B13R Yu"
+          }
+        },
+        "series_yi": {
+          "type": "series_collection",
+          "settings": {
+            "collection": "b27-yi-series",
+            "tab_label": "B27 Yi"
+          }
+        },
+        "series_master": {
+          "type": "series_collection",
+          "settings": {
+            "collection": "b30-master-series",
+            "tab_label": "B30 Master"
+          }
+        },
+        "series_ji": {
+          "type": "series_collection",
+          "settings": {
+            "collection": "x08-ji-series",
+            "tab_label": "X08 Ji"
+          }
+        },
+        "series_pin": {
+          "type": "series_collection",
+          "settings": {
+            "collection": "x020-pin-series",
+            "tab_label": "X020 Pin"
+          }
+        },
+        "tier_1": {
+          "type": "discount_tier",
+          "settings": {
+            "min_items": 3,
+            "discount_percent": 10,
+            "label": "Save 10%",
+            "discount_code": "BUNDLE-10"
+          }
+        },
+        "tier_2": {
+          "type": "discount_tier",
+          "settings": {
+            "min_items": 5,
+            "discount_percent": 15,
+            "label": "Save 15%",
+            "discount_code": "BUNDLE-15"
+          }
+        }
+      },
+      "block_order": [
+        "series_mo",
+        "series_lan",
+        "series_supreme",
+        "series_retro",
+        "series_zhen_x05z",
+        "series_zhen_pm8m",
+        "series_zhen_pm8o",
+        "series_elegant",
+        "series_yu",
+        "series_yi",
+        "series_master",
+        "series_ji",
+        "series_pin",
+        "tier_1",
+        "tier_2"
+      ],
+      "settings": {
+        "heading": "Build Your Knife Bundle",
+        "subheading": "Select your favourite knives and save!",
+        "cta_text": "Add Bundle to Cart",
+        "min_items": 3,
+        "max_items": 8,
+        "columns_desktop": 4,
+        "color_scheme": "scheme-1",
+        "padding_block_start": 60,
+        "padding_block_end": 120
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

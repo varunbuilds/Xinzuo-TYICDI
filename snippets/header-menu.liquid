@@ -1,0 +1,727 @@
+{% liquid
+  assign block_settings = block.settings
+  assign menu_content_type = block_settings.menu_style | default: 'text'
+  assign image_border_radius = block_settings.image_border_radius
+  assign color_scheme_classes = ''
+  assign color_scheme_setting_id = 'color_scheme_' | append: section.settings.menu_row
+  assign current_color_scheme = block_settings.color_scheme
+  assign parent_color_scheme = section.settings[color_scheme_setting_id]
+
+  if parent_color_scheme.id != current_color_scheme.id
+    assign color_scheme_classes = ' color-' | append: current_color_scheme
+  endif
+
+  # Check if header and menu colors match. This is used to apply different padding styles in css
+  if parent_color_scheme.settings.background.rgb == current_color_scheme.settings.background.rgb
+    assign color_scheme_classes = color_scheme_classes | append: ' color-scheme-matches-parent'
+  endif
+
+  if block_settings.menu_style == 'featured_collections'
+    assign ratio = block_settings.featured_collections_aspect_ratio
+  elsif block_settings.menu_style == 'featured_products'
+    assign ratio = block_settings.featured_products_aspect_ratio
+  endif
+%}
+
+{% capture children %}
+  {% for link in block_settings.menu.links %}
+    {% assign nav_display_title = link.title %}
+    {% if link.title == "Sets" %}
+      {% assign nav_display_title = "Knife Sets" %}
+    {% endif %}
+    <li
+      role="presentation"
+      class="menu-list__list-item"
+      on:focus="/activate"
+      on:blur="/deactivate"
+      on:pointerenter="/activate"
+      on:pointerleave="/deactivate"
+    >
+      <a
+        href="{{ link.url }}"
+        data-skip-node-update="true"
+        class="menu-list__link{% if link.active %} menu-list__link--active{% endif %}"
+        {%- if link.links != blank -%}
+          aria-controls="submenu-{{ forloop.index }}"
+          aria-haspopup="true"
+        {%- endif -%}
+        ref="menuitem"
+      >
+        <span class="menu-list__link-title">{{- nav_display_title -}}</span>
+      </a>
+      {%- if link.links != blank -%}
+        <div class="menu-list__submenu{{ color_scheme_classes }}" ref="submenu[]">
+          <div
+            id="submenu-{{ forloop.index }}"
+            class="menu-list__submenu-inner"
+            style="{% render 'submenu-font-styles', settings: block_settings %}"
+          >
+            {% assign list_id = 'MegaMenuList-' | append: forloop.index %}
+            {% render 'mega-menu',
+              section: section,
+              parent_link: link,
+              id: list_id,
+              menu_content_type: menu_content_type,
+              content_aspect_ratio: ratio,
+              image_border_radius: image_border_radius
+            %}
+          </div>
+        </div>
+      {%- endif -%}
+    </li>
+  {% endfor %}
+  <li
+    class="menu-list__list-item"
+    role="presentation"
+    slot="more"
+    on:focus="/activate"
+    on:blur="/deactivate"
+    on:pointerenter="/activate"
+    on:pointerleave="/deactivate"
+  >
+    <button role="menuitem" class="button menu-list__link button-unstyled">
+      <span class="menu-list__link-title">{{ 'actions.more' | t }}</span>
+    </button>
+  </li>
+{% endcapture %}
+
+<nav header-menu>
+  <div
+    class="menu-list"
+    style="{% render 'menu-font-styles', settings: block_settings %}"
+  >
+    <ul class="home-menu-ul">
+      {% for link in block_settings.menu.links %}
+        {% assign nav_display_title = link.title %}
+        {% if link.title == "Sets" %}
+          {% assign nav_display_title = "Knife Sets" %}
+        {% endif %}
+        {% if link.title != "BEST SELLERS" and link.title != "REVIEWS" and link.title != "BUNDLES" and link.title != "Build a Bundle" %}
+          <li class="menu-list__list-item">
+            {% if link.title != 'Logo' %}
+              {% if link.links == blank %}
+                <a
+                  {% if link.title == "FAQS" %}
+                    href="/pages/faqs"
+                  {% else %}
+                    href="{{ link.url }}"
+                  {% endif %}
+                  data-skip-node-update="true"
+                  class="menu-list__link{% if link.active %} menu-list__link--active{% endif %}"
+                  ref="menuitem"
+                >
+              {% else %}
+                <span
+                  onclick="openMenu({{ forloop.index }})"
+                  data-skip-node-update="true"
+                  class="menu-list__link{% if link.active %} menu-list__link--active{% endif %}"
+                  aria-controls="submenu-{{ forloop.index }}"
+                  aria-haspopup="true"
+                  ref="menuitem"
+                >
+              {% endif %}
+                <span class="menu-list__link-title">{{- nav_display_title -}}</span>
+                {%- if link.links != blank -%}
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <g clip-path="url(#clip0_4592_27158)">
+                      <path d="M13 6L8 11L3 6" stroke="white" stroke-opacity="0.9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </g>
+                    <defs>
+                      <clipPath id="clip0_4592_27158">
+                        <rect width="16" height="16" fill="white"/>
+                      </clipPath>
+                    </defs>
+                  </svg>
+                {%- endif -%}
+              {% if link.links == blank %}
+                </a>
+              {% else %}
+                </span>
+              {% endif %}
+            {% else %}
+              <a href="{{ link.url }}" aria-label="logo">
+                <span class="menu-list__link-title">
+                  <div class="logo-block__image-wrapper">
+                    {% comment %}
+                      Same red xz-logo.webp as the main header block + the
+                      dropdown header below, so all three render the
+                      identical seal. Sized 33x45 to match the prior inline
+                      SVG dimensions — visual size unchanged.
+                    {% endcomment %}
+                    <img
+                      src="{{ 'xz-logo.webp' | asset_url }}"
+                      alt="{{ shop.name }}"
+                      width="33"
+                      height="45"
+                      loading="eager"
+                      decoding="async"
+                    >
+                  </div>
+                </span>
+              </a>
+            {% endif %}
+            {%- if link.links != blank -%}
+              <div
+                id="header-dropdown-back-{{ forloop.index }}"
+                class="header-dropdown-back"
+                onclick="closeMenu({{ forloop.index }})"
+              >
+              </div>
+              <div id="submenu-{{ forloop.index }}" class="header-dropdown">
+                <div class="dropdown-header">
+                  <div class="dropdown-header-left" onclick="closeMenu({{ forloop.index }})">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                      <g clip-path="url(#clip0_4030_59197)">
+                        <path d="M15.625 4.375L4.375 15.625" stroke="#F9F9F7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M15.625 15.625L4.375 4.375" stroke="#F9F9F7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                      </g>
+                      <defs>
+                        <clipPath id="clip0_4030_59197">
+                          <rect width="20" height="20" fill="white"/>
+                        </clipPath>
+                      </defs>
+                    </svg>
+                    <span>CLOSE</span>
+                  </div>
+                  <div class="dropdown-header-center">
+                    <a href="/" aria-label="Xinzuo home">
+                      <img
+                        src="{{ 'xz-logo.webp' | asset_url }}"
+                        alt="Xinzuo"
+                        width="56"
+                        height="56"
+                        loading="lazy"
+                      >
+                    </a>
+                  </div>
+                  <div class="dropdown-header-right">
+                    {% comment %} {% render 'cart-drawer' %} {% endcomment %}
+                    {% render 'search', style: 'default', class: 'custom-class' %}
+                  </div>
+                </div>
+                {%- assign is_series_menu = false -%}
+                {%- if link.title == 'Shop by Series' or link.title == 'SHOP BY SERIES' -%}
+                  {%- assign is_series_menu = true -%}
+                {%- endif -%}
+                {%- assign is_accessories_menu = false -%}
+                {%- if link.title == 'Accessories' or link.title == 'ACCESSORIES' or link.title == 'accessories' -%}
+                  {%- assign is_accessories_menu = true -%}
+                {%- endif -%}
+                {%- assign is_top_picks_menu = false -%}
+                {%- if link.title == 'Top Picks' or link.title == 'TOP PICKS' or link.title == 'top picks' -%}
+                  {%- assign is_top_picks_menu = true -%}
+                {%- endif -%}
+                {%- assign is_type_menu = false -%}
+                {%- if link.title == 'KNIVES' or link.title == 'Knives' or link.title == 'Shop by Type' or link.title == 'SHOP BY TYPE' -%}
+                  {%- assign is_type_menu = true -%}
+                {%- endif -%}
+                <ul{% if is_series_menu %} class="xz-mega-series-list"{% elsif is_accessories_menu %} class="xz-mega-series-list xz-mega-series-list--accessories"{% elsif is_top_picks_menu %} class="xz-mega-series-list xz-mega-series-list--top-picks"{% elsif is_type_menu %} class="xz-mega-type-list"{% endif %}>
+                  {% for sublink in link.links %}
+                    {% comment %} Title overrides for navigation links {% endcomment %}
+                    {% assign display_title = sublink.title %}
+                    {% if sublink.title == "Wood Chopping" %}
+                      {% assign display_title = "Chopping Boards" %}
+                    {% endif %}
+                    {%- if is_series_menu -%}
+                      {%- liquid
+                        assign series_handle = sublink.url | split: '/' | last
+                        assign series_collection = collections[series_handle]
+                        # Custom override: collection.metafields.custom.main_image wins
+                        assign series_image = series_collection.metafields.custom.main_image
+                        if series_image == blank
+                          assign series_image = series_collection.featured_image
+                        endif
+                        if series_image.image
+                          assign series_image = series_image.image
+                        endif
+                      -%}
+                      <li class="menu-dropdown-list menu-dropdown-list--series">
+                        {% render 'xz-series-tile',
+                           url: sublink.url,
+                           image: series_image,
+                           label: display_title %}
+                      </li>
+                    {%- elsif is_accessories_menu or is_top_picks_menu -%}
+                      {%- liquid
+                        assign simple_handle = sublink.url | split: '/' | last
+                        assign simple_collection = collections[simple_handle]
+                        assign simple_image = simple_collection.metafields.custom.main_image
+                        if simple_image == blank
+                          assign simple_image = simple_collection.featured_image
+                        endif
+                        if simple_image.image
+                          assign simple_image = simple_image.image
+                        endif
+                      -%}
+                      <li class="menu-dropdown-list menu-dropdown-list--series">
+                        {% render 'xz-series-tile',
+                           url: sublink.url,
+                           image: simple_image,
+                           title: display_title %}
+                      </li>
+                    {%- elsif is_type_menu -%}
+                      {%- liquid
+                        assign type_handle = sublink.url | split: '/' | last
+                        assign type_collection = collections[type_handle]
+                        assign type_promo = blank
+                        assign best_pct = 0
+                        for product in type_collection.products
+                          if product.compare_at_price and product.compare_at_price > product.price
+                            assign discount = product.compare_at_price | minus: product.price
+                            assign pct = discount | times: 100 | divided_by: product.compare_at_price
+                            if best_pct < pct
+                              assign best_pct = pct
+                            endif
+                          endif
+                        endfor
+                        if best_pct > 0
+                          assign type_promo = best_pct | append: '% OFF'
+                        endif
+                      -%}
+                      <li class="menu-dropdown-list menu-dropdown-list--type">
+                        {% render 'xz-type-tile',
+                           collection: type_collection,
+                           type_label: display_title,
+                           url: sublink.url,
+                           promo_text: type_promo %}
+                      </li>
+                    {%- else -%}
+                    <li class="menu-dropdown-list">
+                      <a href="{{ sublink.url }}" class="mega-dropdown">
+                        <span class="mega-dropdown-title">
+                          {{ display_title }}
+                        </span>
+                      </a>
+                      {% if sublink.links != blank %}
+                        <ul
+                          class="list-unstyled"
+                          {% if should_break_columns %}
+                            style="column-count: {{ column_span }};"
+                          {% endif %}
+                        >
+                          {% for childLink in sublink.links limit: 5 %}
+                            {% assign break_after_modulo = forloop.index | modulo: 10 %}
+                            <li
+                              {% if break_after_modulo == 0 and should_break_columns %}
+                                style="break-after: column;"
+                              {% endif %}
+                            >
+                              <a href="{{ childLink.url }}">
+                                <span class="mega-menu__link-title wrap-text">{{- childLink.title -}}</span>
+                              </a>
+                            </li>
+                          {% endfor %}
+                          {% if sublink.links.size > 5 %}
+                            <li><a href="{{ sublink.url }}">view all</a></li>
+                          {% endif %}
+                        </ul>
+                      {% endif %}
+                      {% assign product_handle = sublink.url | split: '/' | last %}
+                      {% assign product = all_products[product_handle] %}
+                      {% if product != blank %}
+                        <ul
+                          class="list-unstyled"
+                          {% if should_break_columns %}
+                            style="column-count: {{ column_span }};"
+                          {% endif %}
+                        >
+                          {% for variant in product.variants limit: 5 %}
+                            {% assign break_after_modulo = forloop.index | modulo: 10 %}
+                            <li
+                              {% if break_after_modulo == 0 and should_break_columns %}
+                                style="break-after: column;"
+                              {% endif %}
+                            >
+                              <a href="{{ variant.url }}">
+                                <span class="mega-menu__link-title wrap-text">{{- variant.title -}}</span>
+                              </a>
+                            </li>
+                          {% endfor %}
+                          {% if product.variants.size > 5 %}
+                            <li><a href="{{ product.url }}">view all</a></li>
+                          {% endif %}
+                        </ul>
+                        {%- liquid
+                          # Custom override: product.metafields.custom.main_image
+                          # wins over the product's featured_image.
+                          assign nav_product_img = product.metafields.custom.main_image
+                          if nav_product_img == blank
+                            assign nav_product_img = product.featured_image
+                          endif
+                          if nav_product_img.image
+                            assign nav_product_img = nav_product_img.image
+                          endif
+                        -%}
+                        {% if nav_product_img != blank %}
+                          <img
+                            src="{{ nav_product_img | image_url: width: 400 }}"
+                            width="100%"
+                            height="100%"
+                            loading="lazy"
+                            alt="{{ product.title | escape }}"
+                          >
+                        {% else %}
+                          {% assign firstimage = product.products.first %}
+                          <img
+                            src="{{ firstimage.featured_image | image_url: width: 400 }}"
+                            width="100%"
+                            height="100%"
+                            loading="lazy"
+                            alt="{{ firstimage.title | escape }}"
+                          >
+                        {% endif %}
+                      {% endif %}
+                      {% assign collection_handle = sublink.url | split: '/' | last %}
+                      {% assign collection = collections[collection_handle] %}
+                      {% if collection != blank %}
+                        {% comment %} <ul
+                          class="list-unstyled"
+                          {% if should_break_columns %}
+                            style="column-count: {{ column_span }};"
+                          {% endif %}
+                        >
+                          {% for product in collection.products limit: 5 %}
+                            {% assign break_after_modulo = forloop.index | modulo: 10 %}
+                            <li
+                              {% if break_after_modulo == 0 and should_break_columns %}
+                                style="break-after: column;"
+                              {% endif %}
+                            >
+                              <a href="{{ product.url }}">
+                                <span class="mega-menu__link-title wrap-text">{{- product.title | split: " - " | last | strip_html | truncate: 25, "..." -}}</span>
+                              </a>
+                            </li>
+                          {% endfor %}
+                          {% if collection.products.size > 5 %}
+                            <li><a href="{{ collection.url }}">view all</a></li>
+                          {% endif %}
+                        </ul> {% endcomment %}
+                        {%- liquid
+                          # Custom override: collection.metafields.custom.main_image
+                          # wins over the standard featured_image.
+                          assign menu_img = collection.metafields.custom.main_image
+                          if menu_img == blank
+                            assign menu_img = collection.featured_image
+                          endif
+                          if menu_img.image
+                            assign menu_img = menu_img.image
+                          endif
+                        -%}
+                        <a class="menu-img" href="{{ sublink.url }}">
+                          {% if menu_img != blank %}
+                            <img
+                              src="{{ menu_img | image_url: width: 400 }}"
+                              width="100%"
+                              height="100%"
+                              loading="lazy"
+                              alt="{{ collection.title | escape }}"
+                            >
+                          {% else %}
+                            {% assign firstimage = collection.collections.first %}
+                            <img
+                              src="{{ firstimage.featured_image | image_url: width: 400 }}"
+                              width="100%"
+                              height="100%"
+                              loading="lazy"
+                              alt="{{ firstimage.title | escape }}"
+                            >
+                          {% endif %}
+                          {% assign sum = 0 %}
+                          {% for product in collection.products %}
+                            {% if product.compare_at_price and product.compare_at_price > product.price %}
+                              {% assign discount = product.compare_at_price | minus: product.price %}
+                              {% assign percent = discount | times: 100 | divided_by: product.compare_at_price %}
+                              {% if sum < percent %}
+                                {% assign sum = percent %}
+                              {% endif %}
+                            {% endif %}
+                          {% endfor %}
+                          {% if sum != 0 %}
+                            <span class="price-off">{{ sum }}% OFF</span>
+                          {% endif %}
+                        </a>
+                      {% endif %}
+                    </li>
+                    {%- endif -%}
+                  {% endfor %}
+                </ul>
+              </div>
+            {%- endif -%}
+          </li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+  </div>
+</nav>
+
+{% style %}
+  .header-dropdown-back {
+    backdrop-filter: blur(5px);
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    left: 0;
+    top: 0;
+    z-index: 1;
+    display: none;
+  }
+
+  .header-dropdown {
+    width: 100%;
+    background-color: #111111;
+    padding: 0 32px;
+    position: fixed;
+    top: 0;
+    z-index: 5;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    left: 50%;
+    transform: translate(-50%, 0);
+  }
+
+  .dropdown-header {
+    width: 100%;
+    height: 100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .dropdown-header-left {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    font-family: "Sen";
+    font-weight: 400;
+    font-size: 16px;
+    color: #f9f9f7;
+    cursor: pointer;
+  }
+
+  .dropdown-header-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .dropdown-header-center a {
+    display: inline-flex;
+    line-height: 0;
+  }
+
+  .dropdown-header-center img {
+    width: 56px;
+    height: 56px;
+    display: block;
+  }
+
+  @media screen and (max-width: 749px) {
+    .dropdown-header-center img {
+      width: 44px;
+      height: 44px;
+    }
+  }
+
+  .dropdown-header-right {
+    display: flex;
+  }
+
+  .dropdown-header-right search-button {
+    margin: 0 !important;
+  }
+
+  .header-dropdown > ul {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 10px 0 48px;
+    list-style: none;
+    margin: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .header-dropdown > ul {
+    gap: 12px;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .header-dropdown > ul > li {
+    width: calc(20% - 10px);
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    border-radius: 6px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  .header-dropdown > ul > li:first-child {
+    border: none;
+  }
+
+  .header-dropdown > ul > li a.mega-dropdown {
+    display: block;
+    font-family: "Sen", sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    text-align: center;
+    margin-bottom: 0;
+    padding: 10px 6px;
+    background: none;
+    border-radius: 0;
+    text-decoration: none;
+  }
+
+  .header-dropdown > ul > li a {
+    display: block;
+    font-family: "Sen", sans-serif;
+    font-weight: 600;
+    font-size: 20px;
+    color: #fff;
+    margin-bottom: 24px;
+  }
+
+  .header-dropdown > ul > li ul li a {
+    font-family: "Sen";
+    font-weight: 400;
+    font-size: 16px;
+    color: #fff;
+    margin-bottom: 17px;
+    width: fit-content;
+    position: relative;
+    transition: all 0.3s ease;
+  }
+
+  .header-dropdown > ul > li ul li a::after {
+    content: '→';
+    position: absolute;
+    left: -20px;
+    opacity: 0;
+    transform: translateX(-5px);
+    transition: all 0.3s ease;
+  }
+
+  .header-dropdown > ul > li ul li a:hover {
+    border-bottom: 1px solid grey;
+    left: 20px;
+  }
+
+  .header-dropdown > ul > li ul li a:hover::after {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .header-dropdown > ul > li img {
+    width: 100%;
+    margin-top: auto;
+    object-fit: cover;
+    aspect-ratio: 1 / 1;
+    border-radius: 0;
+  }
+
+  .header-dropdown > ul > li .menu-img {
+    margin-bottom: 0;
+  }
+
+  .menu-list__list-item ul {
+    max-height: calc(100vh - 100px);
+    overflow-y: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .menu-list__list-item ul::-webkit-scrollbar {
+  display: none;
+}
+
+  .home-menu-ul {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    align-items: center;
+    gap: var(--nav-gap, 0);
+  }
+
+  /* Squeeze rule removed — at <=1280px we now switch straight to the hamburger
+     so nav links and chevrons never shrink below their normal size. */
+
+  .menu-img {
+    position: relative;
+    margin-top: auto;
+  }
+
+  .menu-img .price-off {
+    position: absolute;
+    background-color: var(--xinzuo-red, #C81E1E);
+    padding: 5px 10px;
+    border-radius: 20px;
+    top: 10px;
+    left: 15px;
+    font-family: "Sen", sans-serif;
+    font-weight: 600;
+    font-size: 12px;
+    color: white;
+  }
+
+  /* Shop By Series / Shop By Type mega-menu — override generic dropdown LI
+     chrome so the xz-*-tile owns the card look (bg #000, 4px radius,
+     hover #292a33). Grid (not flex) guarantees 5 cols regardless of
+     sub-pixel flex math. */
+  .header-dropdown > ul.xz-mega-series-list,
+  .header-dropdown > ul.xz-mega-type-list {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+    flex-wrap: nowrap;
+  }
+  .header-dropdown > ul.xz-mega-series-list > li.menu-dropdown-list--series,
+  .header-dropdown > ul.xz-mega-type-list > li.menu-dropdown-list--type {
+    width: auto;                 /* grid column owns the width */
+    background: transparent;
+    border-radius: 0;
+    overflow: visible;
+    padding: 0;
+    margin-bottom: 0;
+  }
+  .header-dropdown > ul.xz-mega-series-list > li.menu-dropdown-list--series .xz-series-tile,
+  .header-dropdown > ul.xz-mega-type-list > li.menu-dropdown-list--type .xz-type-tile {
+    width: 100%;
+    height: 100%;
+  }
+  /* Neutralise the generic ".header-dropdown > ul > li img" rule
+     (margin-top:auto pushes the img to the bottom of its container). */
+  .header-dropdown > ul.xz-mega-series-list > li.menu-dropdown-list--series img,
+  .header-dropdown > ul.xz-mega-type-list > li.menu-dropdown-list--type img {
+    margin-top: 0;
+  }
+
+  /* Switch to hamburger at <=1280px so nav links/chevrons never shrink.
+     Paired with the matching breakpoint in snippets/header-drawer.liquid. */
+  @media screen and (max-width: 1280px) {
+    nav[header-menu] {
+      display: none !important;
+    }
+  }
+{% endstyle %}
+
+<script>
+  const openMenu = (num) => {
+    const menu = document.querySelector(`#submenu-${num}`);
+    const back = document.querySelector(`#header-dropdown-back-${num}`);
+    menu.style.maxHeight = menu.scrollHeight + 'px';
+    back.style.display = 'block';
+    document.body.style.overflow = "hidden";
+  };
+  const closeMenu = (num) => {
+    const menu = document.querySelector(`#submenu-${num}`);
+    const back = document.querySelector(`#header-dropdown-back-${num}`);
+    menu.style.maxHeight = 0;
+    back.style.display = 'none';
+    document.body.style.overflow = ""
+  };
+</script>

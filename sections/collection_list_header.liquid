@@ -1,0 +1,262 @@
+{% style %}
+    .section-{{ section.id }} .collection-list-header {
+        padding: 70px 0 0 0;
+        display: flex;
+        flex-direction: column;
+        gap: 32px;
+    }
+
+    .section-{{ section.id }} .collection-list-title {
+        padding: 0 32px;
+        width: 100%;
+        max-width: 1440px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: auto;
+    }
+
+    .section-{{ section.id }} .collection-list-title h1 {
+        font-family: "Sen";
+        font-weight: 600;
+        font-size: 40px;
+        text-align: center;
+        color: #fff;
+        margin: 0;
+        text-transform: uppercase;
+    }
+
+    .section-{{ section.id }} .collection-list-title p {
+        font-family: "Sen";
+        font-weight: 600;
+        font-size: 22px;
+        color: #fff;
+        margin: 0;
+    }
+
+    .section-{{ section.id }} .collection-seo-intro {
+        display:none;
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 0 32px;
+        text-align: center;
+    }
+
+    .section-{{ section.id }} .collection-seo-intro p,
+    .section-{{ section.id }} .collection-seo-intro div {
+        font-family: "Inter", sans-serif;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 1.6;
+        color: #c9c9cc;
+        margin: 0;
+    }
+
+    {% if section.settings.width == "full" %}
+        .section-{{ section.id }} {
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+        }
+    {% endif %}
+
+    @media screen and (max-width: 1025px) {
+        .section-{{ section.id }} .collection-list-title h1 {
+            font-size: 30px;
+        }
+
+        .section-{{ section.id }} .collection-list-title p {
+            font-size: 18px;
+        }
+    }
+
+    @media screen and (max-width: 750px) {
+        .section-{{ section.id }} .collection-list-title h1 {
+            font-size: 32px;
+        }
+
+        .section-{{ section.id }} {
+            grid-template-columns: 0 1fr 0;
+        }
+
+        .section-{{ section.id }} .collection-list-header {
+            padding: 0 0 12px 0;
+        }
+
+        .section-{{ section.id }} .collection-list-title {
+            justify-content: flex-start;
+            padding: 0;
+        }
+
+        .section-{{ section.id }} .collection-list-title p {
+            font-size: 16px;
+        }
+    }
+
+    @media screen and (max-width: 550px) {
+        .section-{{ section.id }} .collection-list-title h1 {
+            font-size: 24px;
+            padding: 15px;
+        }
+
+        .section-{{ section.id }} .collection-list-title p {
+            font-size: 16px;
+        }
+    }
+{% endstyle %}
+
+<div class="section-background color-{{ section.settings.color_scheme }}"></div>
+<section class="section-{{ section.id }} section color-{{ section.settings.color_scheme }}" itemscope itemtype="https://schema.org/CollectionPage">
+    <div class="collection-list-header">
+        <div class="collection-list-title">
+            {% comment %} Use collection.title on collection pages, fall back to section heading on list-collections page {% endcomment %}
+            {% assign display_heading = collection.title | default: section.settings.heading | default: 'All Collections' %}
+            
+            {%- comment -%} SEO: Determine collection category keywords {%- endcomment -%}
+            {%- liquid
+              assign collection_seo_desc = 'Premium kitchen products'
+              case collection.handle
+                when 'chopping-boards'
+                  assign display_heading = 'CHOPPING BOARDS'
+                  assign collection_seo_desc = 'Premium wooden chopping boards and cutting boards for professional kitchens'
+                when 'knife-holders'
+                  assign display_heading = 'KNIFE HOLDERS'
+                  assign collection_seo_desc = 'Magnetic knife holders and knife blocks for safe knife storage'
+                when 'knife-sharpening-tools'
+                  assign display_heading = 'SHARPENING TOOLS'
+                  assign collection_seo_desc = 'Professional knife sharpening whetstones and sharpening tools'
+                when 'kitchen-scissors'
+                  assign display_heading = 'KITCHEN SCISSORS'
+                  assign collection_seo_desc = 'High-quality kitchen scissors and shears for culinary use'
+                when 'chef-knife-roll-bags'
+                  assign display_heading = 'KNIFE ROLL BAGS'
+                  assign collection_seo_desc = 'Professional chef knife roll bags for knife transport and storage'
+                when 'wood-knife-sheaths'
+                  assign display_heading = 'KNIFE SHEATHS'
+                  assign collection_seo_desc = 'Wooden knife sheaths for blade protection and safe storage'
+                when 'chef-aprons'
+                  assign display_heading = 'CHEF APRONS'
+                  assign collection_seo_desc = 'Professional chef aprons for kitchen use'
+                when 'all-products'
+                  assign display_heading = 'ALL KITCHEN KNIVES & ACCESSORIES'
+                  assign collection_seo_desc = 'Premium kitchen knives and accessories from Xinzuo Australia'
+                when 'knives'
+                  assign display_heading = 'PREMIUM KITCHEN KNIVES'
+                  assign collection_seo_desc = 'Professional kitchen knives including chef knives, santoku, and Damascus steel blades'
+                when 'accessories'
+                  assign display_heading = 'KITCHEN KNIFE ACCESSORIES'
+                  assign collection_seo_desc = 'Premium kitchen knife accessories including sheaths, roll bags, cutting boards, and sharpening tools'
+                when 'accessory'
+                  assign display_heading = 'KITCHEN KNIFE ACCESSORIES'
+                  assign collection_seo_desc = 'Premium kitchen knife accessories including sheaths, roll bags, cutting boards, and sharpening tools'
+              endcase
+              
+              # Check for series collections
+              if collection.handle contains '-series'
+                assign series_name = collection.title | remove: 'Xinzuo ' | remove: ' Knives'
+                assign collection_seo_desc = series_name | append: ' Damascus kitchen knives - premium Japanese style blades'
+              endif
+            -%}
+            
+            {%- comment -%} SEO: Hidden semantic content for search engines {%- endcomment -%}
+            <meta itemprop="name" content="{{ collection.title }}">
+            <meta itemprop="description" content="{{ collection_seo_desc }}">
+            <meta itemprop="url" content="{{ collection.url | prepend: shop.url }}">
+            {%- if collection.image -%}
+              <meta itemprop="image" content="{{ collection.image | image_url: width: 1200 | prepend: 'https:' }}">
+            {%- endif -%}
+            
+            <h1 itemprop="headline">{{ display_heading }}</h1>
+            {% if section.settings.title != blank %}
+              <span itemprop="alternativeHeadline">{{ section.settings.title }}</span>
+            {% endif %}
+        </div>
+        
+        {%- comment -%} SEO: Visible keyword-rich intro paragraph {%- endcomment -%}
+        {%- if collection.description != blank or section.settings.seo_description != blank -%}
+          <div class="collection-seo-intro">
+            {%- if section.settings.seo_description != blank -%}
+              <p>{{ section.settings.seo_description }}</p>
+            {%- elsif collection.description != blank -%}
+              <div>{{ collection.description }}</div>
+            {%- endif -%}
+          </div>
+        {%- else -%}
+          {%- comment -%} Auto-generate SEO intro if no description exists {%- endcomment -%}
+          <div class="collection-seo-intro">
+            <p>
+              {%- case collection.handle -%}
+                {%- when 'all-products' -%}
+                  Shop our complete range of premium kitchen knives and accessories. Hand-forged Damascus steel blades with lifetime warranty. Free Australian shipping on orders over $100.
+                {%- when 'knives' -%}
+                  Discover professional-grade kitchen knives crafted from premium Damascus steel. Each blade is hand-forged for exceptional sharpness and edge retention. Perfect for home cooks and professional chefs alike.
+                {%- when 'chopping-boards' -%}
+                  Premium wooden chopping boards designed for professional kitchens. Durable, knife-friendly surfaces that protect your blades while looking beautiful in any kitchen.
+                {%- when 'knife-holders' -%}
+                  Keep your knives safely stored and within reach with our magnetic knife holders and blocks. Designed to protect blade edges while showcasing your collection.
+                {%- when 'knife-sharpening-tools' -%}
+                  Professional knife sharpening whetstones and tools to maintain razor-sharp edges. From Japanese whetstones to honing steels, find the right tool for your knives.
+                {%- when 'accessories' -%}
+                  Complete your kitchen with premium knife accessories including sheaths, roll bags, cutting boards, and sharpening tools. Quality accessories for serious cooks.
+                {%- else -%}
+                  {%- if collection.handle contains '-series' -%}
+                    Explore the {{ collection.title }} - premium Damascus steel kitchen knives with exceptional craftsmanship. Each knife features a hand-forged blade for superior performance and edge retention.
+                  {%- else -%}
+                    Shop {{ collection.title }} from Xinzuo Australia. Premium quality with free shipping over $100 and lifetime warranty on all products.
+                  {%- endif -%}
+              {%- endcase -%}
+            </p>
+          </div>
+        {%- endif -%}
+    </div>
+</section>
+
+{% schema %}
+{
+    "name": "Collection List Header",
+    "settings": [
+        {
+            "type": "select",
+            "id": "width",
+            "label": "Width",
+            "options": [
+                {
+                    "label": "Page",
+                    "value": "page"
+                },
+                {
+                    "label": "Full",
+                    "value": "full"
+                }
+            ],
+            "default": "page"
+        },
+        {
+            "type": "text",
+            "id": "heading",
+            "label": "Header Title"
+        },
+        {
+            "type": "richtext",
+            "id": "title",
+            "label": "Header content"
+        },
+        {
+            "type": "textarea",
+            "id": "seo_description",
+            "label": "SEO Description",
+            "info": "Keyword-rich paragraph shown below the title. Leave blank to use collection description or auto-generated text."
+        },
+        {
+            "type": "color_scheme",
+            "id": "color_scheme",
+            "label": "t:settings.color_scheme",
+            "default": "scheme-1"
+        }
+    ],
+    "presets": [
+        {
+            "name": "Collection List Header"
+        }
+    ]
+}
+{% endschema %}

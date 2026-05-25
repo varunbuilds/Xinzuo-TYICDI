@@ -1,0 +1,178 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "collection_hero_banner": {
+      "type": "collection-hero-banner",
+      "settings": {
+        "color_scheme": "scheme-5"
+      }
+    },
+    "header": {
+      "type": "seo-collection-header",
+      "settings": {
+        "heading_override": "",
+        "subtitle": "Thinner, Sharper, Harder Steel",
+        "intro_content": "<p><strong>Japanese knives</strong> are ground thinner, sharpened to a steeper angle, and forged from harder steel than their Western counterparts. The result is a lighter blade that cuts with less effort and holds its edge significantly longer between sharpenings. XinZuo Japanese knives are forged in Yangjiang using traditional Japanese blade profiles including gyuto, santoku, nakiri, bunka, and specialty blades for specific tasks. Each blade uses a 10Cr15CoMoV steel core hardened to 60+ HRC, giving you the sharpness and edge retention that Japanese knives are famous for worldwide. The thinner geometry means less resistance through ingredients, so your cuts are cleaner and your prep is faster. Whether you are a home cook upgrading from supermarket knives or a professional chef building a serious kit, <strong>Japanese kitchen knives</strong> transform the way you work. Our collection covers every profile from the versatile gyuto to the vegetable-focused nakiri, all built to deliver genuine Japanese cutting performance.</p>",
+        "color_scheme": "scheme-5"
+      }
+    },
+    "main": {
+      "type": "main-collection",
+      "blocks": {
+        "filters": {
+          "type": "filters",
+          "static": true,
+          "settings": {
+            "enable_filtering": true,
+            "filter_style": "vertical",
+            "filter_width": "centered",
+            "text_label_case": "default",
+            "show_swatch_label": false,
+            "show_filter_label": true,
+            "enable_sorting": true,
+            "enable_grid_density": true,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "padding-block-start": 8,
+            "padding-block-end": 8,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0,
+            "facets_margin_bottom": 8,
+            "facets_margin_right": 20
+          },
+          "blocks": {}
+        },
+        "product-card": {
+          "type": "_product-card",
+          "static": true,
+          "settings": {
+            "product_card_gap": 4,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "card-gallery": {
+              "type": "_product-card-gallery",
+              "settings": {
+                "image_ratio": "adapt",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "product_title": {
+              "type": "product-title",
+              "settings": {
+                "width": "100%",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 4,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "price": {
+              "type": "price",
+              "settings": {
+                "show_sale_price_first": true,
+                "show_installments": false,
+                "show_tax_info": false,
+                "type_preset": "h6",
+                "width": "100%",
+                "alignment": "left",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "color": "var(--color-foreground)",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "card-gallery",
+            "product_title",
+            "price"
+          ]
+        }
+      },
+      "settings": {
+        "layout_type": "grid",
+        "product_card_size": "medium",
+        "mobile_product_card_size": "small",
+        "product_grid_width": "centered",
+        "full_width_on_mobile": true,
+        "columns_gap_horizontal": 16,
+        "columns_gap_vertical": 24,
+        "padding-inline-start": 0,
+        "padding-inline-end": 0,
+        "color_scheme": "scheme-5",
+        "padding-block-start": 0,
+        "padding-block-end": 32
+      }
+    },
+    "below_grid": {
+      "type": "seo-below-grid-content",
+      "settings": {
+        "heading": "Learn more about Japanese knives",
+        "content": "<p>Gyuto, santoku, nakiri, bunka: our complete guide to <strong>Japanese knife</strong> types from XinZuo explains what each blade does best and which suits your cooking style. <a href=\"/blogs/news/japanese-knife-types-explained\">Japanese knife types explained</a></p><p>German vs <strong>Japanese kitchen knives</strong>: steel, geometry, and which tradition suits your cooking. Forged in Yangjiang using Japanese profiles. <a href=\"/blogs/news/german-vs-japanese-kitchen-knives\">German vs Japanese knives</a></p><p>Single bevel vs double bevel: understanding the edge geometry that makes <strong>Japanese knives</strong> so exceptionally sharp. <a href=\"/blogs/news/knife-edge-types-guide\">Knife edge types guide</a></p><p>The gyuto is the Japanese chef knife and the most versatile blade in the collection. See the full range. <a href=\"/collections/gyuto-knives\">Shop Gyuto Knives</a></p><p>The santoku is Japan's most popular kitchen knife for home cooks who want one blade that does it all. <a href=\"/collections/santoku-knives\">Shop Santoku Knives</a></p><p>Get started with a curated Japanese knife set that covers all your essential cuts. <a href=\"/collections/japanese-knife-sets\">Shop Japanese Knife Sets</a></p>",
+        "show_border": true,
+        "color_scheme": "scheme-5"
+      }
+    },
+    "related_links": {
+      "type": "seo-related-links",
+      "settings": {
+        "heading": "Related Guides & Collections",
+        "color_scheme": "scheme-5"
+      }
+    }
+  },
+  "order": [
+    "collection_hero_banner",
+    "header",
+    "main",
+    "below_grid",
+    "related_links"
+  ]
+}

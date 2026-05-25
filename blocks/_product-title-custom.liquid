@@ -1,0 +1,160 @@
+{%- liquid
+  assign product = closest.product
+  assign block_settings = block.settings
+  
+  # Always find the knife series collection
+  # Look for collections with "-series" in handle (e.g., "xinzuo-supreme-series-knives")
+  # This ensures we show the correct series, not "Best Sellers" or other collections
+  assign series_collection = null
+  for coll in product.collections
+    # Check if handle contains "-series" (e.g., "xinzuo-supreme-series-knives")
+    # Use "-series" to avoid matching "best-sellers" which contains "series"
+    if coll.handle contains '-series'
+      assign series_collection = coll
+      break
+    endif
+  endfor
+  
+  # If no series found, look for collections with "Series" in title
+  if series_collection == null
+    for coll in product.collections
+      if coll.title contains "Series"
+        assign series_collection = coll
+        break
+      endif
+    endfor
+  endif
+  
+  # Fallback to non-generic collection if no series found
+  if series_collection == null
+    for coll in product.collections
+      unless coll.handle contains 'all' or coll.handle == 'knives' or coll.handle contains 'best-sellers'
+        assign series_collection = coll
+        break
+      endunless
+    endfor
+  endif
+  
+  # Final fallback
+  if series_collection == null
+    assign series_collection = product.collections.first
+  endif
+
+  # SEO: Determine product category for semantic context
+  assign product_category = 'Kitchen Knife'
+  if product.type != blank
+    assign product_category = product.type
+  elsif product.tags contains 'chef'
+    assign product_category = 'Chef Knife'
+  elsif product.tags contains 'santoku'
+    assign product_category = 'Santoku Knife'
+  elsif product.tags contains 'cleaver'
+    assign product_category = 'Cleaver'
+  elsif product.tags contains 'accessory' or product.tags contains 'accessories'
+    assign product_category = 'Kitchen Accessory'
+  elsif product.tags contains 'cutting-board' or product.tags contains 'chopping'
+    assign product_category = 'Cutting Board'
+  elsif product.tags contains 'sharpening'
+    assign product_category = 'Sharpening Tool'
+  endif
+-%}
+
+<div class="product-title-custom" {{ block.shopify_attributes }}>
+  {% if block_settings.show_breadcrumbs %}
+    {%- comment -%} SEO: Semantic breadcrumb navigation with microdata {%- endcomment -%}
+    <nav class="product-details-links" aria-label="Breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+      <span>
+        <span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="{{ routes.root_url }}" itemprop="item"><span itemprop="name">Home</span></a>
+          <meta itemprop="position" content="1">
+        </span>
+        <span aria-hidden="true">&gt;</span>
+        <span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          {% if product.metafields.custom.isknife == true %}
+            <a href="{{ routes.collections_url }}/knives" itemprop="item"><span itemprop="name">KNIVES</span></a>
+          {% else %}
+            <a href="{{ routes.collections_url }}/accessories" itemprop="item"><span itemprop="name">ACCESSORIES</span></a>
+          {% endif %}
+          <meta itemprop="position" content="2">
+        </span>
+        {% comment %} Only show the series collection in breadcrumbs {% endcomment %}
+        {% if series_collection and series_collection.handle contains '-series' %}
+          <span aria-hidden="true">&gt;</span>
+          <span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+            <a href="{{ series_collection.url }}" itemprop="item"><span itemprop="name">{{ series_collection.title }}</span></a>
+            <meta itemprop="position" content="3">
+          </span>
+        {% endif %}
+      </span>
+    </nav>
+  {% endif %}
+  
+  {%- comment -%} SEO: H1 with product title - primary keyword target {%- endcomment -%}
+  <h1 id="product-variant-title" class="product-title">{{ product.title }}</h1>
+</div>
+
+{% stylesheet %}
+  .product-title-custom {
+    width: 100%;
+  }
+
+  .product-details-links {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+
+  .product-details-links > span {
+    display: flex;
+    gap: 6px;
+  }
+
+  .product-details-links span {
+    font-family: "Sen";
+    font-weight: 400;
+    font-size: 14px;
+    color: #c9c9cc;
+  }
+
+  .product-details-links a {
+    color: #c9c9cc;
+  }
+
+  .product-title {
+    font-family: "Sen";
+    font-weight: 600;
+    font-size: 36px;
+    line-height: 135%;
+    color: #fff;
+    margin: 0;
+  }
+
+  @media screen and (max-width: 750px) {
+    .product-title {
+      font-size: 22px;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Product Title",
+  "tag": null,
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_breadcrumbs",
+      "label": "Show Breadcrumbs",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_knives_link",
+      "label": "Show 'KNIVES' in Breadcrumbs",
+      "default": true,
+      "info": "Adds 'KNIVES' link between Home and Collection"
+    }
+  ]
+}
+{% endschema %}

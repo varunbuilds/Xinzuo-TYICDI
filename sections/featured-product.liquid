@@ -1,0 +1,283 @@
+
+
+{%- if section.settings.product -%}
+  {%- assign fp = section.settings.product -%}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "@id": {{ fp.url | prepend: shop.url | append: "#product" | json }},
+    "name": {{ fp.title | json }},
+    "url": {{ fp.url | prepend: shop.url | json }},
+    "description": {{ fp.description | strip_html | strip_newlines | truncate: 5000 | json }},
+    "brand": {
+      "@type": "Brand",
+      "name": {{ fp.vendor | default: shop.name | json }}
+    },
+    {%- if fp.featured_image -%}
+      "image": [
+        {%- for image in fp.images limit: 10 -%}
+          {{ image | image_url: width: 1200 | prepend: "https:" | json }}{% unless forloop.last %},{% endunless %}
+        {%- endfor -%}
+      ],
+    {%- endif -%}
+    {%- if fp.selected_or_first_available_variant.sku != blank -%}
+      "sku": {{ fp.selected_or_first_available_variant.sku | json }},
+      "mpn": {{ fp.selected_or_first_available_variant.sku | json }},
+    {%- endif -%}
+    {%- if fp.selected_or_first_available_variant.barcode != blank -%}
+      {%- assign fp_bc = fp.selected_or_first_available_variant.barcode -%}
+      {%- if fp_bc.size == 12 -%}"gtin12": {{ fp_bc | json }},{%- endif -%}
+      {%- if fp_bc.size == 13 -%}"gtin13": {{ fp_bc | json }},{%- endif -%}
+      {%- if fp_bc.size == 14 -%}"gtin14": {{ fp_bc | json }},{%- endif -%}
+    {%- endif -%}
+    {%- assign fp_review_rating = fp.metafields.reviews.rating.value.rating -%}
+    {%- assign fp_review_count = fp.metafields.reviews.rating_count -%}
+    {%- if fp_review_rating != blank and fp_review_count != blank and fp_review_count > 0 -%}
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": {{ fp_review_rating | json }},
+        "bestRating": 5,
+        "worstRating": 1,
+        "ratingCount": {{ fp_review_count | json }},
+        "reviewCount": {{ fp_review_count | json }}
+      },
+    {%- endif -%}
+    "offers": {
+      "@type": "Offer",
+      "priceCurrency": {{ cart.currency.iso_code | default: shop.currency | json }},
+      "price": {{ fp.price | divided_by: 100.0 }},
+      {%- if fp.compare_at_price and fp.compare_at_price > fp.price -%}
+        {%- assign fp_next_year = 'now' | date: '%Y' | plus: 1 -%}
+        "priceValidUntil": "{{ fp_next_year }}-12-31",
+      {%- endif -%}
+      "availability": "https://schema.org/{% if fp.available %}InStock{% else %}OutOfStock{% endif %}",
+      "itemCondition": "https://schema.org/NewCondition",
+      "url": {{ fp.url | prepend: shop.url | json }},
+      "shippingDetails": {
+        "@type": "OfferShippingDetails",
+        "shippingDestination": {
+          "@type": "DefinedRegion",
+          "addressCountry": "AU"
+        },
+        "shippingRate": {
+          "@type": "MonetaryAmount",
+          "value": {% if fp.price >= 10000 %}0{% else %}9.95{% endif %},
+          "currency": "AUD"
+        },
+        "deliveryTime": {
+          "@type": "ShippingDeliveryTime",
+          "handlingTime": {
+            "@type": "QuantitativeValue",
+            "minValue": 1,
+            "maxValue": 2,
+            "unitCode": "DAY"
+          },
+          "transitTime": {
+            "@type": "QuantitativeValue",
+            "minValue": 2,
+            "maxValue": 7,
+            "unitCode": "DAY"
+          }
+        }
+      },
+      "hasMerchantReturnPolicy": {
+        "@type": "MerchantReturnPolicy",
+        "applicableCountry": "AU",
+        "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
+        "merchantReturnDays": 30,
+        "returnMethod": "https://schema.org/ReturnByMail",
+        "returnFees": "https://schema.org/FreeReturn"
+      }
+    }
+  }
+  </script>
+{%- endif -%}
+
+<div class="section-background color-{{ section.settings.color_scheme }}"></div>
+<div
+  class="
+    featured-product-section
+    section
+    section--full-width
+    color-{{ section.settings.color_scheme }}
+  "
+>
+  <div
+    class="section-content-wrapper spacing-style size-style border-style"
+    style="
+      {% render 'spacing-style', settings: section.settings %}
+      --media-height: 100%;
+      {% if request.visual_preview_mode %}
+        --visual-preview--height: 100%;
+      {% endif %}
+    "
+  >
+    {% capture featured_product_media %}
+      {% content_for 'block', type: '_media-without-appearance', id: 'media', closest.product: section.settings.product %}
+    {% endcapture %}
+
+    {% capture featured_product_content %}
+      {% content_for 'block', type: '_featured-product', id: 'featured-product', closest.product: section.settings.product %}
+    {% endcapture %}
+
+    {% if section.settings.layout == 'media-left' %}
+      {{ featured_product_media }}
+      {{ featured_product_content }}
+    {% else %}
+      {{ featured_product_content }}
+      {{ featured_product_media }}
+    {% endif %}
+  </div>
+</div>
+
+{% stylesheet %}
+  .featured-product-section .section-content-wrapper {
+    grid-template-columns: 1fr;
+    display: grid;
+    overflow: hidden;
+
+    @media (min-width: 750px) {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  /* Here I should maybe set the width to auto when the ratio is set to adapt */
+  .featured-product-section .product-media-container.constrain-height {
+    /* arbitrary offset value based on average theme spacing and header height */
+    --viewport-offset: 400px;
+    --constrained-min-height: var(--visual-preview--height, 80dvh);
+
+    @media screen and (min-width: 750px) {
+      --viewport-offset: 300px;
+    }
+  }
+
+  .featured-product-section .product-grid__card {
+    --padding-block: 20px;
+    --padding-inline: 20px;
+
+    @media screen and (min-width: 750px) {
+      --padding-block: 40px;
+      --padding-inline: 40px;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .featured-product-section .media-block {
+      order: -1;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.featured_product",
+  "disabled_on": {
+    "groups": ["header"]
+  },
+  "settings": [
+    {
+      "type": "product",
+      "id": "product",
+      "label": "t:settings.product"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "t:settings.media_position",
+      "options": [
+        {
+          "value": "media-left",
+          "label": "t:options.left"
+        },
+        {
+          "value": "media-right",
+          "label": "t:options.right"
+        }
+      ],
+      "default": "media-left"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.featured_product",
+      "category": "t:categories.products",
+      "settings": {
+        "color_scheme": "scheme-3"
+      },
+      "blocks": {
+        "media": {
+          "type": "_media-without-appearance",
+          "static": true,
+          "name": "t:names.product_media"
+        },
+        "featured-product": {
+          "type": "_featured-product",
+          "static": true,
+          "name": "t:names.product",
+          "blocks": {
+            "featured-product-title": {
+              "type": "product-title",
+              "name": "t:names.title",
+              "static": true,
+              "settings": {
+                "type_preset": "h5",
+                "width": "100%"
+              }
+            },
+            "featured-product-price": {
+              "type": "_featured-product-price",
+              "name": "t:names.price",
+              "static": true
+            },
+            "featured-product-gallery": {
+              "type": "_featured-product-gallery",
+              "name": "t:names.image",
+              "static": true
+            },
+            "featured-product-swatches": {
+              "type": "swatches",
+              "name": "t:names.swatches",
+              "static": true,
+              "settings": {
+                "hide_padding": true
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}
+{% endschema %}

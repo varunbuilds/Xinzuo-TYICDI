@@ -1,0 +1,723 @@
+/* ==========================================================================
+   Judge.me review widget styles — xinzuo.com.au
+   Only loaded on pages that display reviews (product, collection, index, etc.)
+
+   Fonts: Sen for headings/buttons/badges, Albert Sans for body/secondary text
+   Colors: Gold #D1AE6B for stars, Yellow #FFD380 for CTAs (black text), Red #C81E1E for verified badges
+   ========================================================================== */
+
+/* ==========================================================================
+   Stars — Xinzuo Gold
+   #D1AE6B is decorative (stars) so contrast ratio N/A for WCAG
+   ========================================================================== */
+
+.jdgm-star.jdgm--on,
+.jdgm-star.jdgm--half {
+    color: #D1AE6B !important;
+}
+
+.jdgm-star.jdgm--off {
+    color: #555 !important;
+}
+
+/* ==========================================================================
+   Widget title (product page review section heading)
+   ========================================================================== */
+
+.jdgm-rev-widg__title {
+    text-align: start;
+    font-family: "Sen", sans-serif;
+    font-size: 64px !important;
+    font-weight: 600;
+    color: #fff;
+}
+
+/* ==========================================================================
+   Star row alignment
+   ========================================================================== */
+
+.jdgm-row-stars > div {
+    align-items: flex-start !important;
+}
+
+/* ==========================================================================
+   Widget actions wrapper
+   ========================================================================== */
+
+.jdgm-widget-actions-wrapper {
+    border: none;
+}
+
+/* ==========================================================================
+   "Write a Review" button — Sen font, Xinzuo yellow accent (black text)
+   ========================================================================== */
+
+.jdgm-write-rev-link {
+    margin: 0 !important;
+    color: var(--xinzuo-accent-text, #1A1A1E) !important;
+    font-family: "Sen", sans-serif !important;
+    font-size: 16px;
+    font-weight: 600;
+    background-color: var(--xinzuo-accent, #FFD380) !important;
+    border-color: var(--xinzuo-accent, #FFD380) !important;
+    border: 1px solid var(--xinzuo-accent, #FFD380) !important;
+}
+
+.jdgm-write-rev-link:hover {
+    background-color: var(--xinzuo-accent-hover, #FFDC99) !important;
+    border-color: var(--xinzuo-accent-hover, #FFDC99) !important;
+    color: var(--xinzuo-accent-text, #1A1A1E) !important;
+}
+
+/* ==========================================================================
+   Sort dropdown — Albert Sans body font
+   ========================================================================== */
+
+.jdgm-sort-dropdown {
+    font-family: "Albert Sans", sans-serif !important;
+    color: #c9c9cc !important;
+}
+
+.jdgm-sort-dropdown-arrow {
+    color: #c9c9cc !important;
+}
+
+/* ==========================================================================
+   Hide default review icon
+   ========================================================================== */
+
+.jdgm-rev__icon {
+    display: none !important;
+}
+
+/* ==========================================================================
+   Summary section ordering
+   ========================================================================== */
+
+.jdgm-rev-widg__summary {
+    border: none;
+    order: 1;
+}
+
+.jdgm-histogram.jdgm-temp-hidden {
+    border: none;
+    order: 2;
+}
+
+/* ==========================================================================
+   Summary text — Albert Sans body font
+   ========================================================================== */
+
+.jdgm-rev-widg__summary-stars span,
+.jdgm-rev-widg__summary-text {
+    font-family: "Albert Sans", sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    color: #c9c9cc;
+}
+
+/* ==========================================================================
+   Histogram (star breakdown bars)
+   ========================================================================== */
+
+.jdgm-histogram__row {
+    width: 100%;
+}
+
+.jdgm-histogram__bar {
+    width: calc(100% - 160px) !important;
+    height: 6px !important;
+}
+
+.jdgm-histogram__frequency {
+    font-family: "Albert Sans", sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    color: #c9c9cc !important;
+}
+
+/* ==========================================================================
+   Review card layout — styled cards matching best-reviews.liquid design
+   ========================================================================== */
+
+/* Card container */
+.jdgm-rev {
+    background: #292a33 !important;
+    border-radius: 16px !important;
+    padding: 24px 28px !important;
+    margin-bottom: 16px !important;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(255, 255, 255, 0.06) !important;
+}
+
+/* Remove default divider */
+.jdgm-rev.jdgm-divider-top {
+    border-top: none !important;
+}
+
+/* Grid layout when product thumbnail is injected */
+.jdgm-rev.has-product-thumb {
+    display: flex !important;
+    flex-wrap: wrap;
+    grid-template-columns: 80px 1fr;
+    gap: 0 20px;
+}
+
+.jdgm-rev.has-product-thumb > .jdgm-rev__header,
+.jdgm-rev.has-product-thumb > .jdgm-rev__content,
+.jdgm-rev.has-product-thumb > .jdgm-rev__actions {
+    grid-column: 2;
+}
+
+/* Product thumbnail (injected by JS) */
+.jdgm-rev__product-thumb {
+    width: 80px;
+    height: 80px;
+    border-radius: 8px;
+    object-fit: cover;
+    grid-row: 1 / -1;
+    grid-column: 1;
+    align-self: start;
+}
+
+/* Product name — gold, Sen font, hide "about" prefix */
+.jdgm-rev__prod-info-wrapper {
+    font-size: 0 !important;
+}
+
+a.jdgm-rev__prod-link {
+    font-family: "Sen", sans-serif !important;
+    font-weight: 600;
+    font-size: 16px !important;
+    color: #D1AE6B !important;
+    text-decoration: none !important;
+}
+
+a.jdgm-rev__prod-link:hover {
+    color: #E0C28A !important;
+}
+
+/* Hide "about" prefix span */
+.jdgm-rev__prod-link-prefix {
+    display: none !important;
+}
+
+/* Author area — clean footer with separator */
+.jdgm-row-profile {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding-top: 16px;
+    margin-top: 16px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.jdgm-rev__author {
+    color: #c9c9cc !important;
+    font-family: "Albert Sans", sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+}
+
+.jdgm-rev__icon:not(.jdgm-rev__avatar):before {
+    color: #fff;
+}
+
+/* Review body */
+.jdgm-rev__body {
+    font-family: "Albert Sans", sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.6;
+    color: #c9c9cc;
+}
+
+.jdgm-rev__body p {
+    margin: 0;
+}
+
+/* Hide clutter */
+.jdgm-rev__br,
+.jdgm-rev__custom-form,
+.jdgm-rev__transparency-badge-wrapper,
+.jdgm-rev__social,
+.jdgm-rev__votes {
+    display: none !important;
+}
+
+/* Customer-uploaded photos */
+.jdgm-rev__pics {
+    margin-top: 12px;
+}
+
+.jdgm-rev__pic-img {
+    border-radius: 8px;
+    max-width: 120px;
+    height: auto;
+}
+
+/* Timestamp */
+.jdgm-rev__timestamp {
+    font-family: "Albert Sans", sans-serif;
+    font-weight: 500;
+    font-size: 13px !important;
+    color: #9e9e9e !important;
+}
+
+/* ==========================================================================
+   All Reviews page — max-width containment + H1 alignment
+   Outer v2025 wrapper handles centering. Inner article has no extra padding
+   to avoid double-padding. H1 text-block gets matching containment via :has().
+   ========================================================================== */
+
+.jdgm-all-reviews-widget-v2025 {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 30px;
+    box-sizing: border-box;
+}
+
+.jdgm-all-reviews-widget {
+    padding: 0 !important;
+}
+
+/* Align the H1 text-block with the widget container */
+.layout-panel-flex:has(.jdgm-horizon-widget) > .text-block {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 30px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* ==========================================================================
+   Review card content alignment — left-align stars/body with product name
+   ========================================================================== */
+
+.jdgm-rev__header,
+.jdgm-rev__content,
+.jdgm-rev__actions {
+    text-align: left !important;
+    margin-left: 0 !important;
+    width: 100% !important;
+}
+
+.jdgm-row-rating {
+    text-align: left !important;
+}
+
+/* Compact author row when inside thumbnail cards */
+.jdgm-rev.has-product-thumb .jdgm-row-profile {
+    padding-top: 4px;
+    margin-top: 4px;
+    border-top: none;
+}
+
+/* ==========================================================================
+   "Write a Review" form — compact, left-aligned, dark theme
+   ========================================================================== */
+
+/* Form container — left-aligned, compact spacing */
+.jdgm-form {
+    text-align: left !important;
+    max-width: 600px !important;
+}
+
+/* Form title */
+.jdgm-form__title {
+    font-family: "Sen", sans-serif !important;
+    font-weight: 600;
+    font-size: 22px !important;
+    color: #fff !important;
+    text-align: left !important;
+    margin-bottom: 16px !important;
+}
+
+/* Fieldsets — tighter spacing */
+.jdgm-form__fieldset {
+    margin-bottom: 12px !important;
+    padding: 0 !important;
+    text-align: left !important;
+}
+
+/* Form labels */
+.jdgm-form label,
+.jdgm-form .jdgm-form__inline-label {
+    font-family: "Albert Sans", sans-serif !important;
+    color: #c9c9cc !important;
+    font-size: 14px !important;
+    text-align: left !important;
+    margin-bottom: 4px !important;
+}
+
+/* Text inputs, email, textarea */
+.jdgm-form input[type="text"],
+.jdgm-form input[type="email"],
+.jdgm-form textarea {
+    color: #fff !important;
+    background-color: #1e1e22 !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    border-radius: 8px !important;
+    font-family: "Albert Sans", sans-serif !important;
+    font-size: 15px !important;
+    padding: 10px 14px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+.jdgm-form textarea {
+    min-height: 80px !important;
+    resize: vertical !important;
+}
+
+.jdgm-form input::placeholder,
+.jdgm-form textarea::placeholder {
+    color: #777 !important;
+}
+
+/* Focus state — gold accent */
+.jdgm-form input[type="text"]:focus,
+.jdgm-form input[type="email"]:focus,
+.jdgm-form textarea:focus {
+    border-color: #D1AE6B !important;
+    outline: none !important;
+    box-shadow: 0 0 0 1px rgba(209, 174, 107, 0.3) !important;
+}
+
+/* Hide name format dropdown + "displayed publicly like" text */
+.jdgm-form__reviewer-name-format-container {
+    display: none !important;
+}
+
+/* Hide privacy/data usage text */
+.jdgm-form__privacy {
+    display: none !important;
+}
+
+/* Stars — left-align */
+.jdgm-form__rating {
+    display: block !important;
+    text-align: left !important;
+}
+
+/* File upload box — compact */
+.jdgm-picture-fieldset__box {
+    border: 1px dashed rgba(255, 255, 255, 0.2) !important;
+    border-radius: 8px !important;
+    background-color: #1e1e22 !important;
+    width: 80px !important;
+    height: 80px !important;
+}
+
+.jdgm-picture-fieldset__box:hover {
+    border-color: rgba(255, 255, 255, 0.35) !important;
+}
+
+.jdgm-media-fieldset__icon {
+    color: #777 !important;
+}
+
+/* Buttons row — side by side, Cancel left, Submit right */
+.jdgm-form__fieldset-actions {
+    display: flex !important;
+    gap: 12px !important;
+    justify-content: flex-start !important;
+    margin-top: 16px !important;
+}
+
+/* Cancel button — ghost style */
+.jdgm-cancel-rev {
+    background-color: transparent !important;
+    color: #c9c9cc !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    border-radius: 25px !important;
+    font-family: "Sen", sans-serif !important;
+    font-weight: 600;
+    font-size: 14px !important;
+    padding: 8px 24px !important;
+    order: 1 !important;
+    text-align: center !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.jdgm-cancel-rev:hover {
+    color: #fff !important;
+    border-color: rgba(255, 255, 255, 0.4) !important;
+    background-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+/* Submit button — sizing to match Cancel */
+.jdgm-submit-rev {
+    font-size: 14px !important;
+    padding: 8px 24px !important;
+    border-radius: 25px !important;
+    order: 2 !important;
+}
+
+/* Character countdown */
+.jdgm-countdown {
+    font-family: "Albert Sans", sans-serif !important;
+    color: #777 !important;
+    font-size: 12px !important;
+}
+
+/* ==========================================================================
+   Xinzuo accent — replaces Judge.me teal (#108474)
+   Buttons use yellow #FFD380 with black text. Verified badges stay red #C81E1E.
+   ========================================================================== */
+
+/* Solid buttons: Submit Review, Load More — Sen font, yellow accent */
+.jdgm-btn--solid,
+.jdgm-all-reviews-page__load-more {
+    background-color: var(--xinzuo-accent, #FFD380) !important;
+    border-color: var(--xinzuo-accent, #FFD380) !important;
+    color: var(--xinzuo-accent-text, #1A1A1E) !important;
+    font-family: "Sen", sans-serif !important;
+    font-weight: 600;
+}
+
+.jdgm-btn--solid:hover,
+.jdgm-all-reviews-page__load-more:hover {
+    background-color: var(--xinzuo-accent-hover, #FFDC99) !important;
+    border-color: var(--xinzuo-accent-hover, #FFDC99) !important;
+    color: var(--xinzuo-accent-text, #1A1A1E) !important;
+}
+
+/* Tab container */
+.jdgm-subtab {
+    display: flex !important;
+    align-items: stretch !important;
+    gap: 0 !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Tab text: "Product Reviews (390)", "Shop Reviews (37)" */
+.jdgm-subtab__name,
+.jdgm-subtab__count {
+    font-family: "Albert Sans", sans-serif !important;
+    font-size: 15px !important;
+    font-weight: 500 !important;
+    background: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+    text-decoration: none !important;
+    cursor: pointer !important;
+}
+
+/* Inactive tab */
+.jdgm-subtab__name {
+    color: #888 !important;
+    padding: 10px 16px !important;
+    border-bottom: 2px solid transparent !important;
+    transition: color 0.2s ease !important;
+}
+
+.jdgm-subtab__name:hover {
+    color: #c9c9cc !important;
+}
+
+/* Active tab — white text with gold underline */
+.jdgm-subtab__name.jdgm--active {
+    color: #fff !important;
+    background: none !important;
+    border: none !important;
+    border-bottom: 2px solid #D1AE6B !important;
+    border-radius: 0 !important;
+    padding: 10px 16px !important;
+}
+
+/* Verified buyer badge — Sen font, white on red (kept red as a tag/badge) */
+.jdgm-rev__buyer-badge,
+.jdgm-rev__verified-badge {
+    background-color: var(--xinzuo-red, #C81E1E) !important;
+    color: #fff !important;
+    font-family: "Sen", sans-serif !important;
+    font-weight: 600;
+}
+
+/* Histogram filled bars (rating breakdown) — yellow accent */
+.jdgm-histogram__bar-content {
+    background-color: var(--xinzuo-accent, #FFD380) !important;
+}
+
+/* "Verified" link text — kept red as a verification mark */
+a.jdgm-medals-wrapper__verified-link {
+    color: var(--xinzuo-red, #C81E1E) !important;
+    font-family: "Albert Sans", sans-serif !important;
+}
+
+/* Sort label */
+.jdgm-rev-widg__sort-label {
+    font-family: "Albert Sans", sans-serif !important;
+}
+
+/* Sort dropdown — dark theme with inline SVG chevron */
+.jdgm-sort-dropdown {
+    color-scheme: dark !important;
+    background-color: #1e1e22 !important;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1.5l5 5 5-5' stroke='%23c9c9cc' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
+    background-repeat: no-repeat !important;
+    background-position: right 12px center !important;
+    background-size: 12px 8px !important;
+    color: #c9c9cc !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    border-radius: 8px !important;
+    font-family: "Albert Sans", sans-serif !important;
+    font-size: 14px !important;
+    padding: 8px 32px 8px 12px !important;
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    cursor: pointer !important;
+    transition: none !important;
+}
+
+.jdgm-sort-dropdown:focus {
+    border-color: #D1AE6B !important;
+    outline: none !important;
+    box-shadow: 0 0 0 1px rgba(209, 174, 107, 0.3) !important;
+}
+
+.jdgm-sort-dropdown option {
+    background-color: #1e1e22 !important;
+    color: #c9c9cc !important;
+    padding: 8px 12px !important;
+}
+
+.jdgm-sort-dropdown option:checked,
+.jdgm-sort-dropdown option:hover {
+    background-color: #292a33 !important;
+    color: #fff !important;
+}
+
+/* Sort dropdown wrapper — kill transitions that cause flicker */
+.jdgm-sort-dropdown-wrapper {
+    position: relative !important;
+    display: inline-block !important;
+    transition: none !important;
+}
+
+/* Remove wrapper pseudo-element arrows */
+.jdgm-sort-dropdown-wrapper::after,
+.jdgm-sort-dropdown-wrapper::before {
+    content: none !important;
+    display: none !important;
+}
+
+/* Hide Judge.me's arrow span entirely — chevron is on the select itself */
+.jdgm-sort-dropdown-arrow {
+    display: none !important;
+}
+
+/* Pagination */
+.jdgm-paginate a {
+    font-family: "Albert Sans", sans-serif !important;
+}
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+
+@media screen and (max-width: 1025px) {
+    .jdgm-rev-widg__title {
+        font-size: 36px !important;
+    }
+
+    .jdgm-rev__body {
+        font-size: 16px;
+    }
+}
+
+@media screen and (max-width: 750px) {
+    .jdgm-all-reviews-widget-v2025 {
+        padding: 0 16px;
+    }
+
+    [data-template="page.reviews"] .layout-panel-flex > .text-block {
+        padding: 0 16px;
+    }
+
+    /* Reduce blank space above H1 on mobile */
+    [data-template="page.reviews"] .layout-panel-flex {
+        padding-top: 16px !important;
+        padding-bottom: 16px !important;
+    }
+
+    /* Center the "All Reviews" H1 on mobile — force full width inside flex parent */
+    [data-template="page.reviews"] .layout-panel-flex > .text-block {
+        width: 100% !important;
+    }
+
+    [data-template="page.reviews"] .layout-panel-flex > .text-block .rte {
+        width: 100% !important;
+        padding-top: 0 !important;
+        margin-top: 0 !important;
+    }
+
+    [data-template="page.reviews"] .layout-panel-flex > .text-block h1,
+    [data-template="page.reviews"] .layout-panel-flex > .text-block h2 {
+        text-align: center !important;
+        padding-top: 0 !important;
+        margin-top: 0 !important;
+    }
+
+    /* Tabs — side by side on mobile */
+    .jdgm-subtab {
+        flex-wrap: nowrap !important;
+    }
+
+    .jdgm-subtab__name,
+    .jdgm-subtab__name.jdgm--active {
+        font-size: 14px !important;
+        padding: 8px 12px !important;
+        white-space: nowrap !important;
+    }
+
+    .jdgm-subtab__count {
+        font-size: 14px !important;
+    }
+
+    /* Mobile card adjustments */
+    .jdgm-rev {
+        padding: 20px;
+        border-radius: 12px;
+    }
+
+    .jdgm-rev.has-product-thumb {
+        grid-template-columns: 60px 1fr;
+        gap: 0 14px;
+    }
+
+    .jdgm-rev__product-thumb {
+        width: 60px;
+        height: 60px;
+    }
+
+    /* Mobile form — full width, compact */
+    .jdgm-form {
+        max-width: 100% !important;
+        padding: 0 !important;
+    }
+
+    .jdgm-form__title {
+        font-size: 20px !important;
+    }
+
+    /* Mobile buttons — side by side, cancel left */
+    .jdgm-form__fieldset-actions {
+        display: flex !important;
+        gap: 10px !important;
+        justify-content: flex-start !important;
+    }
+
+    .jdgm-cancel-rev,
+    .jdgm-submit-rev {
+        flex: 1 !important;
+        max-width: 160px !important;
+        font-size: 13px !important;
+        padding: 10px 16px !important;
+    }
+}

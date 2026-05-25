@@ -1,0 +1,422 @@
+{% style %}
+   .section-{{ section.id }} {
+       background-color: var(--xz-section-bg, #1A1A1E);
+   }
+
+   .section-{{ section.id }} .hero-banner {
+       /* background: radial-gradient(59.22% 45.55% at 100% 107.77%, #151515 0%, rgba(21, 21, 21, 0.00) 100%), linear-gradient(114deg, #252525 0.16%, rgba(37, 37, 37, 0.00) 26.55%, rgba(32, 32, 32, 0.00) 79.33%, #171717 105.71%), linear-gradient(250deg, #1E1E1E 0.63%, #222428 14.81%, #252527 36.15%, #252527 99.37%); */
+       display: flex;
+       justify-content: center;
+       background: #232325;
+       height: calc(100vh - 77px);
+       margin: auto;
+       position: relative;
+   }
+
+   .section-{{ section.id }} .hero-banner-content {
+       display: flex;
+       flex-direction: column;
+       justify-content: center;
+       width: 500px;
+       position: absolute;
+       top: 0;
+       right: 54%;
+       height: 100%;
+       z-index: 1;
+   }
+
+   .section-{{ section.id }} .hero-banner-content > span {
+       width: 450px;
+   }
+
+   .section-{{ section.id }} .hero-banner-content h1 {
+       color: #fff;
+       font-size: 56px;
+       margin: 0;
+       line-height: 140%;
+   }
+
+   .section-{{ section.id }} .hero-banner-content h2 {
+       color: #c9c9cc;
+       font-family: "Inter", Helvetica, Arial, sans-serif;
+       font-size: 16px;
+       font-weight: 400;
+       line-height: 1.5;
+       margin: 0;
+       padding: 10px 0;
+   }
+
+   .section-{{ section.id }} .mobile h1 {
+       color: #fff;
+       font-family: "Sen";
+       font-size: 56px;
+       font-weight: 600;
+       line-height: 120%;
+       margin: 0;
+   }
+
+   .section-{{ section.id }} .mobile h2 {
+       color: #c9c9cc;
+       font-family: "Inter", Helvetica, Arial, sans-serif;
+       font-size: 16px;
+       font-weight: 400;
+       line-height: 1.5;
+       margin: 0;
+       padding: 10px 0;
+   }
+
+   .section-{{ section.id }} .hero-banner-content > span {
+       font-size: 18px;
+       font-weight: 400;
+       color: #c9c9cc;
+   }
+
+   .section-{{ section.id }} .hero-banner-content p {
+       padding: 10px 0;
+   }
+
+   .section-{{ section.id }} .hero-cta-button {
+       display: inline-flex;
+       align-items: center;
+       gap: 8px;
+       padding: 14px 36px;
+       background-color: var(--xinzuo-accent, #FFD380);
+       border: none;
+       border-radius: 4px;
+       font-weight: 600;
+       font-size: 15px;
+       letter-spacing: 0.5px;
+       color: var(--xinzuo-accent-text, #1A1A1E) !important;
+       text-decoration: none;
+       transition: all 0.3s ease;
+       margin-top: 16px;
+       width: auto;
+       max-width: fit-content;
+   }
+
+   .section-{{ section.id }} .hero-cta-button span {
+       color: var(--xinzuo-accent-text, #1A1A1E) !important;
+       width: auto !important;
+   }
+
+   .section-{{ section.id }} .hero-cta-button svg {
+       width: 18px;
+       height: 18px;
+       color: var(--xinzuo-accent-text, #1A1A1E) !important;
+   }
+
+   .section-{{ section.id }} .hero-cta-button:hover {
+       background-color: var(--xinzuo-accent-hover, #FFDC99);
+       color: var(--xinzuo-accent-text, #1A1A1E) !important;
+       transform: translateY(-2px);
+   }
+
+   .section-{{ section.id }} .hero-cta-button:active {
+       background-color: var(--xinzuo-accent-active, #E5BC73);
+       color: var(--xinzuo-accent-text, #1A1A1E) !important;
+       transform: translateY(0);
+   }
+
+   .section-{{ section.id }} .hero-banner-img {
+       display: flex;
+       align-items: center;
+       justify-content: center;
+   }
+
+   .section-{{ section.id }} .hero-banner-img picture {
+       display: contents;
+   }
+
+   .section-{{ section.id }} .hero-banner-img img {
+       height: 100%;
+       width: 100%;
+       object-fit: cover;
+   }
+
+   .section-{{ section.id }} .header-title {
+       text-align: center;
+       color: {{ section.settings.header_color }};
+       margin: 0;
+       padding: 5px 0;
+       font-family: "Sen";
+       font-size: {{ section.settings.header_size }}px;
+       margin: auto;
+       background-color: {{ section.settings.header_background }};
+   }
+
+   @media screen and (max-width:1440px) {
+       .section-{{ section.id }} .hero-banner {
+           height: auto;
+       }
+   }
+
+   @media screen and (max-width: 1150px) {
+       .section-{{ section.id }} .hero-banner-content {
+           width: 400px;
+           right: unset;
+           left: 50px;
+       }
+
+       .section-{{ section.id }} .hero-banner-content h1 {
+           font-size: 36px;
+           line-height: 140%;
+       }
+
+       .section-{{ section.id }} .hero-banner-content h2 {
+           font-size: 15px;
+       }
+
+       .section-{{ section.id }} .hero-banner-content > span {
+           font-size: 16px;
+           width: 250px;
+       }
+
+       .section-{{ section.id }} .hero-cta-button {
+           font-size: 13px;
+           padding: 10px 18px;
+       }
+
+       .section-{{ section.id }} .hero-cta-button svg {
+           width: 16px;
+           height: 16px;
+       }
+   }
+
+   @media screen and (max-width: 1000px) {
+       .section-{{ section.id }} .hero-banner-content {
+           justify-content: flex-end;
+           width: calc(100% - 100px);
+       }
+
+       .section-{{ section.id }} .hero-cta-button {
+           margin-bottom: 60px;
+           width: fit-content;
+           max-width: max-content;
+       }
+   }
+
+    @media screen and (max-width: 850px) {
+       .section-{{ section.id }} .hero-banner {
+           justify-content: flex-end;
+           height: 65vh;
+       }
+    }
+
+   @media screen and (max-width: 760px) {
+
+       .section-{{ section.id }} .hero-banner-content {
+           left: 25px;
+       }
+
+       .section-{{ section.id }} .hero-cta-button {
+           width: fit-content;
+           max-width: fit-content;
+       }
+
+       .section-{{ section.id }} .header-title {
+           font-size: {{ section.settings.header_mobile_size }}px;
+       }
+   }
+
+   @media screen and (max-width: 600px) {
+    .section-{{ section.id }} .hero-banner {
+         height: 55vh;
+       }
+   }
+
+   @media screen and (max-width: 480px) {
+      .section-{{ section.id }} .hero-banner {
+        height: auto;
+      }
+
+      .section-{{ section.id }} .hero-banner-img img {
+          object-fit: contain;
+      }
+   }
+{% endstyle %}
+
+{%- comment -%}
+  Performance: Preload LCP hero image - smallest possible for mobile
+{%- endcomment -%}
+{%- if section.settings.mobile_img -%}
+  <link
+    rel="preload"
+    as="image"
+    href="{{ section.settings.mobile_img | image_url: width: 750 }}"
+    imagesrcset="{{ section.settings.mobile_img | image_url: width: 480 }} 480w, {{ section.settings.mobile_img | image_url: width: 640 }} 640w, {{ section.settings.mobile_img | image_url: width: 750 }} 750w"
+    imagesizes="100vw"
+    media="(max-width: 480px)"
+    fetchpriority="high"
+  >
+{%- endif -%}
+{%- if section.settings.middle_desktop_img -%}
+  <link
+    rel="preload"
+    as="image"
+    href="{{ section.settings.middle_desktop_img | image_url: width: 1200 }}"
+    imagesrcset="{{ section.settings.middle_desktop_img | image_url: width: 800 }} 800w, {{ section.settings.middle_desktop_img | image_url: width: 1000 }} 1000w, {{ section.settings.middle_desktop_img | image_url: width: 1200 }} 1200w"
+    imagesizes="100vw"
+    media="(min-width: 481px) and (max-width: 850px)"
+    fetchpriority="high"
+  >
+{%- endif -%}
+{%- if section.settings.desktop_img -%}
+  <link
+    rel="preload"
+    as="image"
+    href="{{ section.settings.desktop_img | image_url: width: 1920 }}"
+    imagesrcset="{{ section.settings.desktop_img | image_url: width: 1200 }} 1200w, {{ section.settings.desktop_img | image_url: width: 1600 }} 1600w, {{ section.settings.desktop_img | image_url: width: 1920 }} 1920w, {{ section.settings.desktop_img | image_url: width: 2560 }} 2560w"
+    imagesizes="100vw"
+    media="(min-width: 851px)"
+    fetchpriority="high"
+  >
+{%- endif -%}
+
+<section class="section-{{ section.id }}">
+  <div>
+    {% if section.settings.header_title != blank %}
+      <p class="header-title">{{ section.settings.header_title }}</p>
+    {% endif %}
+    <div class="hero-banner">
+      <div class="hero-banner-content">
+        <span class="desktop">{{ section.settings.heading_desktop }}</span>
+        <span class="mobile">{{ section.settings.heading_mobile }}</span>
+        <span class="desktop">{{ section.settings.content_desktop }}</span>
+        <span class="mobile">{{ section.settings.content_mobile }}</span>
+        <a href="/collections/all-products" class="hero-cta-button">
+          <span>SHOP ALL</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <g clip-path="url(#clip0_hero_cta)">
+                <path d="M5 15L15 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M6.875 5H15V13.125" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </g>
+            <defs>
+                <clipPath id="clip0_hero_cta">
+                    <rect width="20" height="20" fill="white"/>
+                </clipPath>
+            </defs>
+          </svg>
+        </a>
+      </div>
+      <div class="hero-banner-img">
+        {%- comment -%} Performance: Use picture element to load only the needed image per device {%- endcomment -%}
+        <picture>
+          {%- comment -%} Mobile: High quality for retina screens {%- endcomment -%}
+          <source
+            media="(max-width: 480px)"
+            srcset="{{ section.settings.mobile_img | image_url: width: 480 }} 480w, {{ section.settings.mobile_img | image_url: width: 640 }} 640w, {{ section.settings.mobile_img | image_url: width: 750 }} 750w"
+            sizes="100vw"
+          >
+          {%- comment -%} Tablet: Medium screens {%- endcomment -%}
+          <source
+            media="(max-width: 850px)"
+            srcset="{{ section.settings.middle_desktop_img | image_url: width: 800 }} 800w, {{ section.settings.middle_desktop_img | image_url: width: 1000 }} 1000w, {{ section.settings.middle_desktop_img | image_url: width: 1200 }} 1200w"
+            sizes="100vw"
+          >
+          {%- comment -%} Desktop: High quality for large screens {%- endcomment -%}
+          <img
+            srcset="{{ section.settings.desktop_img | image_url: width: 1200 }} 1200w, {{ section.settings.desktop_img | image_url: width: 1600 }} 1600w, {{ section.settings.desktop_img | image_url: width: 1920 }} 1920w, {{ section.settings.desktop_img | image_url: width: 2560 }} 2560w"
+            sizes="100vw"
+            src="{{ section.settings.desktop_img | image_url: width: 1920 }}"
+            alt="XINZUO Premium Kitchen Knives - Japanese & Damascus Steel"
+            width="1920"
+            height="1080"
+            fetchpriority="high"
+            decoding="sync"
+            style="width:100%;height:100%"
+          >
+        </picture>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "CW Hero",
+  "settings": [
+    {
+      "type": "text",
+      "id": "header_title",
+      "label": "Header Title"
+    },
+    {
+      "type": "range",
+      "id": "header_size",
+      "label": "Header Font Size",
+      "min": 14,
+      "max": 24,
+      "unit": "px",
+      "step": 1,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "header_mobile_size",
+      "label": "Header Font Size(mobile)",
+      "min": 12,
+      "max": 20,
+      "unit": "px",
+      "step": 1,
+      "default": 14
+    },
+    {
+      "type": "color",
+      "id": "header_color",
+      "label": "Header Font Color",
+      "default": "#FFD380"
+    },
+    {
+      "type": "color",
+      "id": "header_background",
+      "label": "Header Background",
+      "default": "#000000"
+    },
+    {
+      "type": "richtext",
+      "id": "heading_desktop",
+      "label": "Desktop Header"
+    },
+    {
+      "type": "richtext",
+      "id": "content_desktop",
+      "label": "Desktop Content"
+    },
+    {
+      "type": "richtext",
+      "id": "heading_mobile",
+      "label": "Mobile Header"
+    },
+    {
+      "type": "richtext",
+      "id": "content_mobile",
+      "label": "Mobile Content"
+    },
+    {
+      "type": "text",
+      "id": "link_text",
+      "label": "Link Text"
+    },
+    {
+      "type": "image_picker",
+      "id": "desktop_img",
+      "label": "Desktop Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "middle_desktop_img",
+      "label": "Middle Desktop Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_img",
+      "label": "Mobile Image"
+    }
+  ],
+  "presets": [
+    {
+      "name": "CW Hero"
+    }
+  ]
+}
+{% endschema %}

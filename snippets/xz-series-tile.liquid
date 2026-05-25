@@ -1,0 +1,105 @@
+{%- doc -%}
+  Xinzuo Style Guide v1.1 "Shop by Series" tile.
+
+  Layout (per xinzuo-collections-updates.webflow.io):
+    - Square 1:1 lifestyle image on top
+    - Black info area BELOW the image (not overlay) with:
+        Row 1: SERIES NAME (Sen Bold) + ↗ arrow icon
+        Row 2: SERIES CODE  (Sen Regular @ 80% opacity)
+    - Card bg #000 → #292a33 on hover (desktop only)
+    - 4px radius, overflow hidden
+
+  Inputs: pass either a parsed `title`/`subtitle` pair, OR a raw `label`
+  shaped like "<CODE> <NAMES> Series" (e.g. "B37 Lan Series") and the
+  snippet will split it into "LAN SERIES" + "B37" automatically.
+
+  Usage:
+    {% render 'xz-series-tile',
+       url: '/collections/lan-series',
+       image: collection.featured_image,
+       label: 'B37 Lan Series' %}
+
+    {% render 'xz-series-tile',
+       url: '/collections/lan-series',
+       image: collection.featured_image,
+       title: 'LAN SERIES',
+       subtitle: 'B37' %}
+
+  @param {string} url - Where the tile links to
+  @param {object} image - Shopify image object (or raw image_url string fallback)
+  @param {string} [label] - Raw label like "B37 Lan Series" (auto-split)
+  @param {string} [title] - Pre-parsed name (overrides label parsing)
+  @param {string} [subtitle] - Pre-parsed code (overrides label parsing)
+{%- enddoc -%}
+
+{%- liquid
+  # Normalise the incoming image: it could be an Image (collection.featured_image,
+  # product.featured_image), a MediaImage (file_reference metafield uploaded as
+  # an image), or a raw URL string. Image_url filter handles Image objects only,
+  # so we pull .image off MediaImage to get the inner Image first.
+  assign image_obj = image
+  if image_obj.image
+    assign image_obj = image_obj.image
+  endif
+
+  # If title/subtitle weren't passed, try to split a "<CODE> <NAME...> Series"
+  # label into uppercase name + code. Falls back to the raw label as title.
+  assign _name = title
+  assign _code = subtitle
+  if _name == blank or _name == nil
+    assign _src = label | default: ''
+    assign _words = _src | split: ' '
+    assign _last  = _words | last
+    if _words.size >= 3 and _last == 'Series'
+      assign _code = _words | first
+      assign _middle = ''
+      for _w in _words
+        unless forloop.first or forloop.last
+          if _middle != ''
+            assign _middle = _middle | append: ' '
+          endif
+          assign _middle = _middle | append: _w
+        endunless
+      endfor
+      if _middle != ''
+        assign _name = _middle | append: ' SERIES'
+      else
+        assign _name = _src
+      endif
+    else
+      assign _name = _src
+    endif
+  endif
+  assign _name = _name | upcase
+  assign _code = _code | upcase
+  assign _aria = _name
+  if _code != blank
+    assign _aria = _aria | append: ' ' | append: _code
+  endif
+-%}
+
+<a class="xz-series-tile" href="{{ url }}" aria-label="{{ _aria | escape }}">
+  <div class="xz-series-tile__img-wrap">
+    {%- if image_obj != blank -%}
+      <img class="xz-series-tile__img"
+           src="{{ image_obj | image_url: width: 800 }}"
+           srcset="{{ image_obj | image_url: width: 400 }} 400w, {{ image_obj | image_url: width: 600 }} 600w, {{ image_obj | image_url: width: 800 }} 800w, {{ image_obj | image_url: width: 1200 }} 1200w"
+           sizes="(max-width: 749px) 50vw, (max-width: 1199px) 25vw, 20vw"
+           alt="{{ _name | escape }}"
+           loading="lazy"
+           width="800" height="800">
+    {%- endif -%}
+  </div>
+  <div class="xz-series-tile__info">
+    <div class="xz-series-tile__title-row">
+      <span class="xz-series-tile__title">{{ _name }}</span>
+      <svg class="xz-series-tile__arrow" width="10" height="10" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+        <path d="M3.5 10.5L10.5 3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M5 3.5h5.5V9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    {%- if _code != blank -%}
+      <span class="xz-series-tile__code">{{ _code }}</span>
+    {%- endif -%}
+  </div>
+</a>

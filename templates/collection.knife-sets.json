@@ -1,0 +1,158 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "collection_hero_banner": {
+      "type": "collection-hero-banner",
+      "settings": {
+        "default_image": "shopify://shop_images/5-piece-knife-set-master-series-b30-7674139.webp",
+        "heading": "",
+        "seo_description": "",
+        "color_scheme": "scheme-5"
+      }
+    },
+    "header": {
+      "type": "seo-collection-header",
+      "settings": {
+        "heading_override": "",
+        "subtitle": "Everything You Need in One Box",
+        "intro_content": "<p>A curated <strong>knife set</strong> gives you everything you need to handle any kitchen task, with better value than buying individual knives separately. XinZuo knife sets are assembled in Yangjiang to include the essential blade profiles that professional and home cooks actually use: chef knife, santoku, utility, paring, and specialty blades depending on the set. Our Damascus steel sets feature the same 67-layer construction and VG10 cores as our individual kitchen knives, while stainless options deliver excellent performance at accessible prices. Whether you are starting fresh, upgrading your collection, or buying a gift that makes an impression, a complete knife set is the smartest way to build a serious kitchen toolkit.</p>",
+        "color_scheme": "scheme-5"
+      }
+    },
+    "main": {
+      "type": "main-collection",
+      "blocks": {
+        "product-card": {
+          "type": "_product-card",
+          "static": true,
+          "settings": {
+            "product_card_gap": 4,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "card-gallery": {
+              "type": "_product-card-gallery",
+              "settings": {
+                "image_ratio": "adapt",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "product_title": {
+              "type": "product-title",
+              "settings": {
+                "width": "100%",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 4,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "price": {
+              "type": "price",
+              "settings": {
+                "show_sale_price_first": true,
+                "show_installments": false,
+                "show_tax_info": false,
+                "type_preset": "h6",
+                "width": "100%",
+                "alignment": "left",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "color": "var(--color-foreground)",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "card-gallery",
+            "product_title",
+            "price"
+          ]
+        }
+      },
+      "settings": {
+        "layout_type": "grid",
+        "product_card_size": "medium",
+        "mobile_product_card_size": "small",
+        "product_grid_width": "centered",
+        "full_width_on_mobile": true,
+        "columns_gap_horizontal": 16,
+        "columns_gap_vertical": 24,
+        "padding-inline-start": 0,
+        "padding-inline-end": 0,
+        "color_scheme": "scheme-5",
+        "padding-block-start": 0,
+        "padding-block-end": 32
+      }
+    },
+    "below_grid": {
+      "type": "seo-below-grid-content",
+      "settings": {
+        "heading": "Learn more about knife sets",
+        "content": "<p><strong>Knife set</strong> vs individual knives: which approach gives you better value and the right blades for your kitchen? <a href=\"/blogs/news/kitchen-knife-sets-vs-individual-knives\">Sets vs individual knives guide</a></p><p>Not sure which set suits you? Our beginner's guide explains which knives you actually need for everyday cooking. <a href=\"/blogs/news/beginner-kitchen-knife-buying-guide\">Beginner's knife guide</a></p><p>Understanding Damascus steel: why our Damascus <strong>knife sets</strong> deliver both beauty and performance. <a href=\"/blogs/news/damascus-knife-buying-guide\">Damascus knife buying guide</a></p><p>Want Damascus specifically? Browse our Damascus steel knife sets for the ultimate collection. <a href=\"/collections/damascus-knife-sets\">Shop Damascus Knife Sets</a></p><p>Prefer Japanese profiles? See our Japanese-style knife sets with gyuto, santoku, and nakiri options. <a href=\"/collections/japanese-knife-sets\">Shop Japanese Knife Sets</a></p><p>Looking for a single standout knife instead? Start with a chef knife and build from there. <a href=\"/collections/chef-knives\">Shop Chef Knives</a></p>",
+        "show_border": true,
+        "color_scheme": "scheme-5"
+      }
+    },
+    "related_links": {
+      "type": "seo-related-links",
+      "settings": {
+        "heading": "Related Guides & Collections",
+        "color_scheme": "scheme-5"
+      }
+    }
+  },
+  "order": [
+    "collection_hero_banner",
+    "header",
+    "main",
+    "below_grid",
+    "related_links"
+  ]
+}

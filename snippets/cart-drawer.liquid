@@ -1,0 +1,1052 @@
+{%- doc -%}
+  Renders the cart drawer, a slide-out panel that displays the contents of the cart. It includes the cart icon that acts as a trigger.
+
+  @param {object} [settings] - An object containing theme settings.
+
+  @param {boolean} [settings.auto_open_cart_drawer] - If `true`, the cart drawer opens automatically after an item is
+  added.
+  @param {string} [settings.drawer_color_scheme] - The color scheme for the drawer.
+{%- enddoc -%}
+
+<script
+  src="{{ 'cart-drawer.js' | asset_url }}"
+  type="module"
+  fetchpriority="low"
+></script>
+
+{%- comment -%}
+  Cart Recommended Products Slider - Global initialization
+  IMPORTANT: This script MUST be here (outside cart empty/non-empty conditionals)
+  so it runs on page load and can detect dynamically added sliders via MutationObserver.
+  This fixes the bug where Swiper doesn't work on first cart drawer open.
+{%- endcomment -%}
+<script>
+  (function() {
+    // Prevent multiple initializations
+    if (window.CartRecommendedSliderLoaded) return;
+    window.CartRecommendedSliderLoaded = true;
+    
+    // Create global namespace for cart recommended slider
+    window.CartRecommendedSlider = {
+      swiperInstances: new WeakMap(),
+      observerSetup: false,
+      
+      // Destroy a single slider's Swiper instance
+      destroySlider: function(sliderContainer) {
+        if (!sliderContainer) return;
+        
+        const swiperEl = sliderContainer.querySelector('.swiper');
+        if (!swiperEl) return;
+        
+        // Destroy existing Swiper instance
+        if (swiperEl.swiper) {
+          try {
+            swiperEl.swiper.destroy(true, true);
+          } catch (e) {
+            // Ignore errors during destroy
+          }
+        }
+        
+        // Remove from WeakMap
+        if (this.swiperInstances.has(swiperEl)) {
+          this.swiperInstances.delete(swiperEl);
+        }
+      },
+      
+      // Initialize a single slider container
+      initSlider: function(sliderContainer, forceReinit = false) {
+        if (!sliderContainer) return;
+        
+        const swiperEl = sliderContainer.querySelector('.swiper');
+        if (!swiperEl) return;
+        
+        // If force reinit, destroy existing instance first
+        if (forceReinit) {
+          this.destroySlider(sliderContainer);
+        }
+        
+        // Check if already initialized and still valid
+        if (swiperEl.swiper && !forceReinit) {
+          // Verify the swiper is still working by checking if slides exist
+          if (swiperEl.swiper.slides && swiperEl.swiper.slides.length > 0) {
+            this.swiperInstances.set(swiperEl, swiperEl.swiper);
+            return;
+          } else {
+            // Swiper is broken, destroy it
+            this.destroySlider(sliderContainer);
+          }
+        }
+        
+        const isDrawer = sliderContainer.classList.contains('cart-recommended-products--drawer');
+        const counterCurrent = sliderContainer.querySelector('.cart-recommended-products__counter-current');
+        
+        const updateCounter = (index) => {
+          if (counterCurrent) counterCurrent.textContent = index + 1;
+        };
+        
+        const swiper = new Swiper(swiperEl, {
+          slidesPerView: 1,
+          spaceBetween: 20,
+          freeMode: false,
+          watchOverflow: true,
+          resistance: true,
+          resistanceRatio: 0.5,
+          preventClicks: false,
+          preventClicksPropagation: false,
+          touchEventsTarget: 'container',
+          touchRatio: 1,
+          touchAngle: 45,
+          simulateTouch: true,
+          allowTouchMove: true,
+          grabCursor: false,
+          threshold: 5,
+          longSwipes: true,
+          longSwipesRatio: 0.5,
+          longSwipesMs: 300,
+          followFinger: true,
+          observer: true,           // Enable Swiper's built-in observer
+          observeParents: true,     // Observe parent elements too
+          observeSlideChildren: true, // Observe slide children
+          navigation: {
+            nextEl: sliderContainer.querySelector('.cart-recommended-products__button--next'),
+            prevEl: sliderContainer.querySelector('.cart-recommended-products__button--prev'),
+            disabledClass: 'cart-recommended-products__button--disabled',
+          },
+          breakpoints: {
+            0: { slidesPerView: isDrawer ? 1 : 2, spaceBetween: 10 },
+            768: { slidesPerView: isDrawer ? 1 : 2, spaceBetween: 16 },
+            1024: { slidesPerView: isDrawer ? 1 : 2, spaceBetween: 20 },
+          },
+          on: {
+            init: function() {
+              updateCounter(this.activeIndex);
+              const prevBtn = sliderContainer.querySelector('.cart-recommended-products__button--prev');
+              if (prevBtn) {
+                prevBtn.setAttribute('aria-disabled', 'true');
+                prevBtn.disabled = true;
+              }
+            },
+            slideChange: function() {
+              updateCounter(this.activeIndex);
+              const nextBtn = sliderContainer.querySelector('.cart-recommended-products__button--next');
+              const prevBtn = sliderContainer.querySelector('.cart-recommended-products__button--prev');
+              if (nextBtn) {
+                nextBtn.setAttribute('aria-disabled', this.isEnd ? 'true' : 'false');
+                nextBtn.disabled = this.isEnd;
+              }
+              if (prevBtn) {
+                prevBtn.setAttribute('aria-disabled', this.isBeginning ? 'true' : 'false');
+                prevBtn.disabled = this.isBeginning;
+              }
+            }
+          }
+        });
+        
+        this.swiperInstances.set(swiperEl, swiper);
+        this.initAddToCartButtons(sliderContainer);
+      },
+      
+      // Initialize Add to Cart buttons
+      initAddToCartButtons: function(sliderContainer) {
+        const addButtons = sliderContainer.querySelectorAll('.cart-recommended-product__add-btn');
+        
+        addButtons.forEach(button => {
+          if (button.dataset.initialized === 'true') return;
+          button.dataset.initialized = 'true';
+          
+          button.addEventListener('click', async (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            if (button.disabled) return;
+            
+            const variantId = button.dataset.variantId;
+            const originalText = button.querySelector('.cart-recommended-product__add-btn-text').textContent;
+            button.disabled = true;
+            button.querySelector('.cart-recommended-product__add-btn-text').textContent = 'Adding...';
+            button.classList.add('cart-recommended-product__add-btn--adding');
+            
+            try {
+              const response = await fetch('/cart/add.js', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ items: [{ id: parseInt(variantId), quantity: 1 }] })
+              });
+              
+              if (!response.ok) throw new Error('Failed to add to cart');
+              
+              button.querySelector('.cart-recommended-product__add-btn-text').textContent = 'Added ✓';
+              button.classList.remove('cart-recommended-product__add-btn--adding');
+              button.classList.add('cart-recommended-product__add-btn--added');
+              
+              const cartResponse = await fetch('/cart.js');
+              const cart = await cartResponse.json();
+              
+              document.dispatchEvent(new CustomEvent('cart:update', {
+                bubbles: true,
+                detail: { data: { itemCount: cart.item_count, source: 'cart-recommended-products' } }
+              }));
+              
+              if (typeof CartAddEvent !== 'undefined') {
+                document.dispatchEvent(new CartAddEvent({}, variantId, {
+                  source: 'cart-recommended-products',
+                  itemCount: cart.item_count,
+                  productId: parseInt(button.dataset.productId),
+                  sections: [],
+                }));
+              }
+              
+              setTimeout(() => {
+                button.querySelector('.cart-recommended-product__add-btn-text').textContent = originalText;
+                button.classList.remove('cart-recommended-product__add-btn--added');
+                button.disabled = false;
+              }, 2000);
+              
+            } catch (error) {
+              console.error('Error adding product to cart:', error);
+              button.querySelector('.cart-recommended-product__add-btn-text').textContent = 'Error';
+              button.classList.remove('cart-recommended-product__add-btn--adding');
+              setTimeout(() => {
+                button.querySelector('.cart-recommended-product__add-btn-text').textContent = originalText;
+                button.disabled = false;
+              }, 2000);
+            }
+          });
+        });
+      },
+      
+      // Initialize all sliders (normal init, skips if already initialized)
+      initAll: function() {
+        if (typeof Swiper === 'undefined') {
+          setTimeout(() => this.initAll(), 100);
+          return;
+        }
+        document.querySelectorAll('[data-cart-recommended-slider]').forEach(c => this.initSlider(c, false));
+      },
+      
+      // Reinitialize all sliders (destroys and recreates)
+      reinitAll: function() {
+        if (typeof Swiper === 'undefined') {
+          setTimeout(() => this.reinitAll(), 100);
+          return;
+        }
+        document.querySelectorAll('[data-cart-recommended-slider]').forEach(c => this.initSlider(c, true));
+      },
+      
+      // Setup MutationObserver
+      setupObserver: function() {
+        if (this.observerSetup) return;
+        this.observerSetup = true;
+        
+        const self = this;
+        
+        const observer = new MutationObserver((mutations) => {
+          let shouldInit = false;
+          let shouldReinit = false;
+          
+          for (const mutation of mutations) {
+            // Check for added nodes containing sliders
+            for (const node of mutation.addedNodes) {
+              if (node.nodeType === Node.ELEMENT_NODE) {
+                if ((node.matches && node.matches('[data-cart-recommended-slider]')) ||
+                    (node.querySelector && node.querySelector('[data-cart-recommended-slider]'))) {
+                  shouldInit = true;
+                  break;
+                }
+              }
+            }
+            if (shouldInit) break;
+            
+            // Check cart drawer content changes - these require reinit
+            if (mutation.type === 'childList' && mutation.target && mutation.target.closest) {
+              if (mutation.target.closest('.cart-drawer') || mutation.target.closest('cart-drawer-component') || mutation.target.closest('cart-items-component')) {
+                const slider = mutation.target.querySelector ? mutation.target.querySelector('[data-cart-recommended-slider]') : null;
+                if (slider) {
+                  shouldReinit = true;
+                  break;
+                }
+              }
+            }
+          }
+          
+          if (shouldReinit) {
+            // Content was morphed, need to reinitialize
+            requestAnimationFrame(() => self.reinitAll());
+            setTimeout(() => self.reinitAll(), 50);
+            setTimeout(() => self.reinitAll(), 150);
+          } else if (shouldInit) {
+            // New slider added, normal init
+            requestAnimationFrame(() => self.initAll());
+            setTimeout(() => self.initAll(), 50);
+            setTimeout(() => self.initAll(), 150);
+          }
+        });
+        
+        observer.observe(document.body, { childList: true, subtree: true });
+        
+        // Listen for cart:update events - always reinitialize
+        document.addEventListener('cart:update', () => {
+          // Use reinitAll to properly destroy and recreate Swiper instances
+          setTimeout(() => self.reinitAll(), 50);
+          setTimeout(() => self.reinitAll(), 150);
+          setTimeout(() => self.reinitAll(), 300);
+        });
+      },
+      
+      // Main init
+      init: function() {
+        const self = this;
+        if (document.body) {
+          this.setupObserver();
+        } else {
+          document.addEventListener('DOMContentLoaded', () => self.setupObserver());
+        }
+        
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', () => self.initAll());
+        } else {
+          this.initAll();
+        }
+      }
+    };
+    
+    window.CartRecommendedSlider.init();
+  })();
+</script>
+
+{% style %}
+  .cart-drawer-footer {
+    padding: 8px 24px;
+    box-shadow: 0 8px 24px 0 #000;
+    backdrop-filter: blur(4px);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .cart-drawer-total {
+    align-items: center;
+    justify-content: space-between;
+    /* padding-top: 16px; */
+  }
+
+  .cart-drawer-total div {
+    display: flex;
+    justify-content: space-between;
+  }
+   
+  .calculated {
+    font-size: 14px !important;
+  }
+
+  .cart-drawer-total p {
+    font-family: "Sen";
+    font-weight: 400;
+    font-size: 16px;
+    color: #c9c9cc;
+    margin: 0;
+  }
+
+  .cart-total-price span {
+    color: white !important;  
+  }
+
+  .cart-drawer-total span {
+    display: flex;
+    align-items: center;
+    font-family: "Sen";
+    font-weight: 600;
+    font-size: 16px;
+    color: #c9c9cc;
+  }
+
+  .cart-total-price p {
+    font-size: 18px;
+    font-weight: 600;
+    color: white;
+  }
+
+  .cart-total-price span {
+    font-size: 18px;
+  }
+
+  .cart-drawer-footer .cart__checkout-button {
+    background-color: var(--xinzuo-accent, #FFD380);
+    color: var(--xinzuo-accent-text, #1A1A1E);
+    height: 45px;
+    font-family: "Sen";
+  }
+  
+  .cart-drawer-cart a {
+    display: block;
+    width: 100%;
+    font-family: "Sen";
+    font-weight: 600;
+    font-size: 14px;
+    text-align: center;
+    color: #fff;
+    background: transparent;
+    border: 1px solid #fff;
+    padding: 12px;
+  }
+
+  .cart-drawer-cart div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px;
+    font-family: "Inter";
+    font-weight: 400;
+    font-size: 16px;
+    color: #c9c9cc;
+  }
+{% endstyle %}
+
+<cart-drawer-component
+  class="cart-drawer"
+  {{ block.shopify_attributes }}
+  {% if settings.auto_open_cart_drawer %}
+    auto-open
+  {% endif %}
+>
+  <button
+    class="button header-actions__action button-unstyled"
+    on:click="/open"
+    aria-label="{{ 'accessibility.open_cart_drawer' | t }} {{ 'accessibility.cart_count' | t}}: {{ cart.item_count }}"
+  >
+    {% render 'cart-icon-component' %}
+  </button>
+
+  <dialog
+    ref="dialog"
+    class="cart-drawer__dialog dialog-modal dialog-drawer color-{{ settings.drawer_color_scheme }}{% if cart.empty? %} cart-drawer--empty{%endif%}"
+    scroll-lock
+  >
+    <div class="cart-drawer__inner">
+      <cart-items-component
+        class="cart-items-component"
+        data-section-id="{{ section.id }}"
+      >
+        {%- if cart.empty? -%}
+          <div class="cart-drawer__header">
+            <button
+              ref="closeButton"
+              on:click="cart-drawer-component/close"
+              class="button close-button cart-drawer__close-button button-unstyled"
+              aria-label="{{ 'actions.close_dialog' | t }}"
+            >
+              <span class="svg-wrapper">
+                {{- 'icon-close.svg' | inline_asset_content -}}
+              </span>
+            </button>
+          </div>
+
+          <div
+            class="cart-drawer__content motion-reduce"
+            aria-label="{{ 'accessibility.cart' | t }}"
+          >
+            <span class="cart-drawer__heading h3 cart-drawer__heading--empty">
+              {{ 'content.your_cart_is_empty' | t }}
+            </span>
+
+            <div class="cart-drawer__items">
+              {% render 'cart-products' %}
+            </div>
+          </div>
+        {%- else -%}
+          <div
+            class="cart-drawer__header"
+            id="cart-drawer-header"
+          >
+            <div style="display: flex; align-items: center; justify-content: space-between;">
+              <span class="cart-drawer__heading h3">
+                Your Cart
+                {% render 'cart-bubble' %}
+              </span>
+
+              <button
+                ref="closeButton"
+                on:click="cart-drawer-component/close"
+                class="button close-button cart-drawer__close-button button-unstyled"
+                aria-label="{{ 'actions.close_dialog' | t }}" 
+                style="position: static;"
+              >
+                <span class="svg-wrapper">
+                  {{- 'icon-close.svg' | inline_asset_content -}}
+                </span>
+              </button>
+            </div>
+            {%- liquid 
+              assign total_price = cart.total_price | divided_by: 100.00
+              assign shipping_value = settings.shipping_value
+              assign express_value = settings.express_value
+              assign enable_express = settings.enable_express_tier | default: true
+              assign message2 = ""
+              
+              # Calculate progress based on current stage
+              if total_price < shipping_value
+                # Stage 1: Working toward free shipping
+                assign balance = settings.shipping_value | minus: total_price
+                assign balance_txt = balance | times: 100.00 | money
+                assign message = settings.shipping_message | replace: '{PRICE}', balance_txt
+                # Progress bar fills from 0-100% as cart goes from $0 to shipping_value
+                assign state_value = total_price | times: 100 | divided_by: shipping_value
+                assign progress_value = 100
+              elsif total_price < express_value and enable_express
+                # Stage 2: Working toward express shipping (only if enabled)
+                assign balance = settings.express_value | minus: total_price
+                assign balance_txt = balance | times: 100.00 | money
+                assign message = settings.express_message
+                assign message2 = settings.express_secondary_message | default: "Add {PRICE} more to unlock Free Express Shipping." | replace: '{PRICE}', balance_txt
+                # Progress bar fills from 0-100% as cart goes from shipping_value to express_value
+                assign remaining_range = express_value | minus: shipping_value
+                assign progress_in_range = total_price | minus: shipping_value
+                assign state_value = progress_in_range | times: 100 | divided_by: remaining_range
+                assign progress_value = 100
+              else
+                # Stage 3: Express shipping unlocked OR express disabled and free shipping reached
+                if enable_express and total_price >= express_value
+                  assign message = settings.complete_message
+                else
+                  assign message = settings.express_message
+                endif
+                assign state_value = 100
+                assign progress_value = 100
+              endif
+            -%}
+            
+            {% if settings.holiday_mode %}
+            <div class="holiday-mode-notice" style="padding: 12px 16px; background-color: #292a33; border: 2px solid #C81E1E; border-radius: 8px; text-align: center; font-family: 'Albert Sans', sans-serif;">
+              <p style="margin: 0; color: #ffffff; font-size: 13px; line-height: 1.4;">
+                <strong>📦 {{ settings.holiday_cart_message }}</strong>
+              </p>
+            </div>
+            {% else %}
+            <p id="native-free-shipping-cta">{{ message }}</p>
+            <span class="progress-bar-cart" style="position: relative">
+              <div class="progress_bar" data-stage="{% if total_price < shipping_value %}1{% elsif total_price < express_value %}2{% else %}3{% endif %}">
+                <div class="progress_state_base" style="width: {% if total_price >= shipping_value %}100{% else %}{{ state_value }}{% endif %}%;"></div>
+                {% if total_price >= shipping_value and enable_express %}
+                  <div class="progress_state_express" style="width: {{ state_value }}%;"></div>
+                {% endif %}
+              </div>
+              {% comment %} <progress class="progress-cart" value="{{ total_price }}" max="{{ settings.express_value }}"></progress> {% endcomment %}
+              <div class="shipping-value" style="left: {{ progress_value }}%;"></div>
+            </span>
+            {% if message2 != blank %}
+              <p>{{ message2 }}</p>
+            {% endif %}
+            {% endif %}
+          </div>
+          
+          <div
+            class="cart-drawer__content motion-reduce"
+            aria-label="{{ 'accessibility.cart' | t }}"
+            style="--header-height: 60px;"
+          >
+            <!-- Scrollable cart items section -->
+            <scroll-hint
+              class="cart-drawer__items cart-drawer__items--scrollable"
+            >
+              {% render 'cart-products' type: "drawer" %}
+            </scroll-hint>
+
+            <!-- Container for third-party app blocks (Essential Upsell, etc.) -->
+            <!-- data-skip-subtree-update prevents morph.js from removing app-injected content -->
+            <div class="cart-drawer-app-blocks" data-skip-subtree-update data-skip-node-update></div>
+
+            <!-- Fixed recommended products section (above footer) -->
+            <!-- Smart recommendations based on cart contents -->
+            <div class="cart-drawer__recommended-fixed">
+              {% render 'cart-smart-recommendations', context: 'drawer' %}
+            </div>
+
+            <!-- Fixed footer with subtotal and checkout -->
+            <div class="cart-drawer-footer cart-drawer-footer--fixed">
+              <div class="cart-drawer-total">
+                {% assign fee_price = 0 %}
+                {% for item in cart.items %}
+                  {% if item.variant_id == 43781283217459 or item.variant_id == 43781283250227 %}
+                    {% assign fee_price = fee_price | plus: item.original_line_price %}
+                  {% endif %}
+                {% endfor %}
+                <div>
+                  <p>Subtotal Amount</p>
+                  <span>
+                    {{ cart.original_total_price | minus: fee_price | money }}
+                  </span>
+                </div>
+                {% if fee_price != 0 %}
+                  <div>
+                    <p>Engraving Fee:</p>
+                    <span>{{ fee_price | money }}</span>
+                  </div>
+                {% endif %}
+                {%- comment -%} Calculate bundle discount from item properties {%- endcomment -%}
+                {%- assign bundle_discount_amount = 0 -%}
+                {%- assign bundle_discount_percent = 0 -%}
+                {%- assign bundle_discount_code = '' -%}
+                {%- for item in cart.items -%}
+                  {%- assign is_bundle = false -%}
+                  {%- assign item_discount_pct = 0 -%}
+                  {%- for prop in item.properties -%}
+                    {%- if prop.first == '_bundle_source' and prop.last == 'bundle-builder' -%}
+                      {%- assign is_bundle = true -%}
+                    {%- endif -%}
+                    {%- if prop.first == '_bundle_discount_percent' -%}
+                      {%- assign item_discount_pct = prop.last | plus: 0 -%}
+                    {%- endif -%}
+                    {%- if prop.first == '_bundle_discount_code' and prop.last != blank -%}
+                      {%- assign bundle_discount_code = prop.last -%}
+                    {%- endif -%}
+                  {%- endfor -%}
+                  {%- if is_bundle and item_discount_pct > 0 -%}
+                    {%- assign item_saving = item.original_line_price | times: item_discount_pct | divided_by: 100 -%}
+                    {%- assign bundle_discount_amount = bundle_discount_amount | plus: item_saving -%}
+                    {%- if item_discount_pct > bundle_discount_percent -%}
+                      {%- assign bundle_discount_percent = item_discount_pct -%}
+                    {%- endif -%}
+                  {%- endif -%}
+                {%- endfor -%}
+
+                {% if cart.total_discount > 0 %}
+                  {% for discount_app in cart.cart_level_discount_applications %}
+                    <div>
+                      <p>{{ discount_app.title | escape }}</p>
+                      <span style="color: var(--xz-green, #22C55E);">-{{ discount_app.total_allocated_amount | money }}</span>
+                    </div>
+                  {% endfor %}
+                  {% if cart.cart_level_discount_applications.size == 0 %}
+                    <div>
+                      <p>Discount</p>
+                      <span style="color: var(--xz-green, #22C55E);">-{{ cart.total_discount | money }}</span>
+                    </div>
+                  {% endif %}
+                {% endif %}
+                {% if bundle_discount_amount > 0 and cart.total_discount == 0 %}
+                  <div>
+                    <p>Bundle Discount ({{ bundle_discount_percent }}%)</p>
+                    <span style="color: var(--xz-green, #22C55E);">-{{ bundle_discount_amount | money }}</span>
+                  </div>
+                {% endif %}
+                <div>
+                  <p>Delivery Charges</p>
+                  {%- assign display_total = cart.total_price | minus: bundle_discount_amount -%}
+                  {%- if cart.total_discount > 0 -%}
+                    {%- assign display_total = cart.total_price -%}
+                  {%- endif -%}
+                  {% assign total_price_for_shipping = display_total | divided_by: 100.00 %}
+                  {% if total_price_for_shipping > settings.shipping_value and total_price_for_shipping < settings.express_value %}
+                    <span>Free</span>
+                  {% elsif total_price_for_shipping > settings.express_value %}
+                    <span>Free Express</span>
+                  {% else %}
+                    <span class="calculated">Calculated at checkout</span>
+                  {% endif %}
+                </div>
+                <div class="cart-total-price">
+                  <p>Total Amount</p>
+                  <span>{{ display_total | money }}</span>
+                </div>
+              </div>
+              <div class="cart__ctas">
+                {% if bundle_discount_code != blank and cart.total_discount == 0 %}
+                  <a
+                    href="/discount/{{ bundle_discount_code }}?redirect=/checkout"
+                    class="cart__checkout-button button"
+                    id="checkout"
+                    style="text-decoration: none;"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="21" height="20" viewBox="0 0 21 20" fill="none">
+                      <g clip-path="url(#clip0_4235_58871)">
+                        <path d="M16.75 6.875H4.25C3.90482 6.875 3.625 7.15482 3.625 7.5V16.25C3.625 16.5952 3.90482 16.875 4.25 16.875H16.75C17.0952 16.875 17.375 16.5952 17.375 16.25V7.5C17.375 7.15482 17.0952 6.875 16.75 6.875Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M10.5 12.8125C11.0178 12.8125 11.4375 12.3928 11.4375 11.875C11.4375 11.3572 11.0178 10.9375 10.5 10.9375C9.98223 10.9375 9.5625 11.3572 9.5625 11.875C9.5625 12.3928 9.98223 12.8125 10.5 12.8125Z" fill="currentColor"/>
+                        <path d="M7.375 6.875V4.375C7.375 3.5462 7.70424 2.75134 8.29029 2.16529C8.87634 1.57924 9.6712 1.25 10.5 1.25C11.3288 1.25 12.1237 1.57924 12.7097 2.16529C13.2958 2.75134 13.625 3.5462 13.625 4.375V6.875" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                      </g>
+                      <defs>
+                        <clipPath id="clip0_4235_58871">
+                          <rect width="20" height="20" fill="white" transform="translate(0.5)"/>
+                        </clipPath>
+                      </defs>
+                    </svg>
+                    SECURE CHECKOUT
+                  </a>
+                {% else %}
+                  <button
+                    type="submit"
+                    id="checkout"
+                    class="cart__checkout-button button"
+                    name="checkout"
+                    {% if cart == empty %}
+                      disabled
+                    {% endif %}
+                    form="cart-form"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="21" height="20" viewBox="0 0 21 20" fill="none">
+                      <g clip-path="url(#clip0_4235_58871)">
+                        <path d="M16.75 6.875H4.25C3.90482 6.875 3.625 7.15482 3.625 7.5V16.25C3.625 16.5952 3.90482 16.875 4.25 16.875H16.75C17.0952 16.875 17.375 16.5952 17.375 16.25V7.5C17.375 7.15482 17.0952 6.875 16.75 6.875Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M10.5 12.8125C11.0178 12.8125 11.4375 12.3928 11.4375 11.875C11.4375 11.3572 11.0178 10.9375 10.5 10.9375C9.98223 10.9375 9.5625 11.3572 9.5625 11.875C9.5625 12.3928 9.98223 12.8125 10.5 12.8125Z" fill="currentColor"/>
+                        <path d="M7.375 6.875V4.375C7.375 3.5462 7.70424 2.75134 8.29029 2.16529C8.87634 1.57924 9.6712 1.25 10.5 1.25C11.3288 1.25 12.1237 1.57924 12.7097 2.16529C13.2958 2.75134 13.625 3.5462 13.625 4.375V6.875" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                      </g>
+                      <defs>
+                        <clipPath id="clip0_4235_58871">
+                          <rect width="20" height="20" fill="white" transform="translate(0.5)"/>
+                        </clipPath>
+                      </defs>
+                    </svg>
+                    SECURE CHECKOUT
+                  </button>
+                {% endif %}
+              </div>
+              <div class="cart-drawer-cart mobile:hidden">
+                <a href="/cart">GO TO CART</a>
+                {% comment %} <button on:click="cart-drawer-component/close" class="desktop:hidden" style="width: 100%; padding: 10px 0; font-family: 'Sen'">KEEP SHOPPING</button> {% endcomment %}
+                <div>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="21" height="20" viewBox="0 0 21 20" fill="none">
+                    <g clip-path="url(#clip0_4235_58871)">
+                      <path d="M16.75 6.875H4.25C3.90482 6.875 3.625 7.15482 3.625 7.5V16.25C3.625 16.5952 3.90482 16.875 4.25 16.875H16.75C17.0952 16.875 17.375 16.5952 17.375 16.25V7.5C17.375 7.15482 17.0952 6.875 16.75 6.875Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                      <path d="M10.5 12.8125C11.0178 12.8125 11.4375 12.3928 11.4375 11.875C11.4375 11.3572 11.0178 10.9375 10.5 10.9375C9.98223 10.9375 9.5625 11.3572 9.5625 11.875C9.5625 12.3928 9.98223 12.8125 10.5 12.8125Z" fill="currentColor"/>
+                      <path d="M7.375 6.875V4.375C7.375 3.5462 7.70424 2.75134 8.29029 2.16529C8.87634 1.57924 9.6712 1.25 10.5 1.25C11.3288 1.25 12.1237 1.57924 12.7097 2.16529C13.2958 2.75134 13.625 3.5462 13.625 4.375V6.875" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </g>
+                    <defs>
+                      <clipPath id="clip0_4235_58871">
+                        <rect width="20" height="20" fill="white" transform="translate(0.5)"/>
+                      </clipPath>
+                    </defs>
+                  </svg>
+                  <span>Secure checkout powered by Shopify</span>
+                </div>
+              </div>
+            </div>
+            {% comment %} <div
+              class="cart-drawer__summary"
+            >
+              {% render 'cart-summary' %}
+            </div> {% endcomment %}
+          </div>
+        {%- endif -%}
+      </cart-items-component>
+    </div>
+  </dialog>
+</cart-drawer-component>
+
+{% style %}
+  .progress_bar {
+    width: 100%;
+    height: 12px;
+    border-radius: 12px;
+    margin: 5px 0;
+    position: relative;
+    overflow: hidden;
+    /* Smooth rendering */
+    -webkit-font-smoothing: antialiased;
+    transform: translateZ(0);
+  }
+
+  /* Stage 1: Gray background with animated stripes */
+  .progress_bar[data-stage="1"] {
+    background: repeating-linear-gradient(
+      45deg,
+      rgba(255, 255, 255, 0.05),
+      rgba(255, 255, 255, 0.05) 10px,
+      rgba(255, 255, 255, 0.1) 10px,
+      rgba(255, 255, 255, 0.1) 20px
+    );
+    background-color: rgba(255, 255, 255, 0.08);
+    background-size: 28px 28px;
+    animation: progress-stripes 1s linear infinite;
+  }
+
+  /* Stage 2: Red stays solid, no stripes (will animate via base layer) */
+  .progress_bar[data-stage="2"],
+  .progress_bar[data-stage="3"] {
+    background-color: rgba(255, 255, 255, 0.08);
+  }
+
+  @keyframes progress-stripes {
+    0% { background-position: 0 0; }
+    100% { background-position: 28px 0; }
+  }
+
+  /* Base layer (red - free shipping tier) */
+  .progress_state_base {
+    background: {{ settings.progress_color | default: 'var(--xinzuo-accent, #FFD380)' }};
+    height: 100%;
+    border-radius: 12px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    max-width: 100%;
+    transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Add stripes to red when it's full and working toward express (Stage 2) */
+  .progress_bar[data-stage="2"] .progress_state_base {
+    background: repeating-linear-gradient(
+      45deg,
+      {{ settings.progress_color | default: 'var(--xinzuo-accent, #FFD380)' }},
+      {{ settings.progress_color | default: 'var(--xinzuo-accent, #FFD380)' }} 10px,
+      color-mix(in srgb, {{ settings.progress_color | default: 'var(--xinzuo-accent, #FFD380)' }} 85%, white) 10px,
+      color-mix(in srgb, {{ settings.progress_color | default: 'var(--xinzuo-accent, #FFD380)' }} 85%, white) 20px
+    );
+    background-size: 28px 28px;
+    animation: progress-stripes 1s linear infinite;
+  }
+
+  /* Express layer (gold - express shipping tier) */
+  .progress_state_express {
+    background: {{ settings.express_progress_color | default: '#FFA500' }};
+    height: 100%;
+    border-radius: 12px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    max-width: 100%;
+    transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    /* Shine effect on express layer */
+    overflow: hidden;
+  }
+
+  .progress_state_express::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    animation: progress-shine 2s infinite;
+  }
+
+  @keyframes progress-shine {
+    0% { left: -100%; }
+    100% { left: 100%; }
+  }
+
+  /* Hide dot - no longer needed */
+  .shipping-value {
+    display: none;
+  }
+{% endstyle %}
+
+{% stylesheet %}
+  .cart-items-component {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .cart-drawer__heading .cart-bubble {
+    width: fit-content;
+    border-radius: var(--style-border-radius-buttons-primary);
+    aspect-ratio: auto;
+    padding: var(--cart-padding);
+  }
+
+  .cart-drawer__heading .cart-bubble[data-maintain-ratio] {
+    aspect-ratio: 1;
+    min-width: 26px;
+  }
+
+  .cart-drawer__header {
+    background-color: var(--color-background);
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: var(--cart-drawer-padding);
+    border-bottom: var(--style-border-width) solid none;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+
+    @media screen and (min-width: 750px) {
+      padding: var(--cart-drawer-padding-desktop);
+    }
+  }
+
+  .cart-drawer__dialog {
+    overflow: hidden;
+  }
+
+  .cart-drawer__inner {
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .cart-drawer__content {
+    height: calc(100% - var(--header-height));
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .cart-drawer__items--scrollable {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    overflow-x: hidden;
+    min-height: 0;
+    
+    /* Firefox scrollbar - Xinzuo style */
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+  }
+
+  /* Webkit scrollbar styling - Xinzuo style (Chrome, Safari, Edge) */
+  .cart-drawer__items--scrollable::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .cart-drawer__items--scrollable::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+
+  .cart-drawer__items--scrollable::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+    transition: background-color 0.2s ease;
+  }
+
+  .cart-drawer__items--scrollable::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(255, 255, 255, 0.5);
+  }
+
+  .cart-drawer__recommended-fixed {
+    flex: 0 0 auto;
+    background-color: var(--color-background);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    max-height: 40vh;
+    overflow: hidden;
+  }
+
+  .cart-drawer-footer--fixed {
+    flex: 0 0 auto;
+    position: sticky;
+    bottom: 0;
+    background-color: var(--color-background);
+    z-index: 2;
+  }
+
+  .cart-drawer__summary {
+    background-color: var(--color-background);
+    position: sticky;
+    bottom: 0;
+    z-index: 1;
+  }
+
+  /* Hide engraving product from Essential Upsell recommendations */
+  /* Target by product ID, variant ID, or common patterns */
+  [data-product-id="7718263914547"],
+  [data-variant-id="43781283217459"],
+  [data-variant-id="43781283250227"],
+  [href*="engraving-fee"],
+  [href*="/products/engraving"],
+  .eu-upsell-item[data-product-id="7718263914547"] {
+    display: none !important;
+  }
+{% endstylesheet %}
+
+<script>
+  // Hide engraving product from any upsell/recommendation widgets (including Essential Upsell)
+  (function() {
+    const ENGRAVING_PRODUCT_ID = '7718263914547';
+    const ENGRAVING_VARIANTS = ['43781283217459', '43781283250227'];
+    const ENGRAVING_KEYWORDS = ['engraving', 'engraving-fee', 'one line', 'two line'];
+    const ENGRAVING_PRICE = '$19.00';
+
+    function hideEngravingUpsells() {
+      // Method 1: Standard upsell selectors
+      const standardSelectors = [
+        '[data-product-id]',
+        '[data-variant-id]',
+        '.eu-upsell-item',
+        '.upsell-product',
+        '.product-upsell'
+      ];
+
+      standardSelectors.forEach(selector => {
+        document.querySelectorAll(selector).forEach(el => {
+          const productId = el.dataset?.productId || el.getAttribute('data-product-id');
+          const variantId = el.dataset?.variantId || el.getAttribute('data-variant-id');
+          const href = el.getAttribute('href') || '';
+
+          if (productId === ENGRAVING_PRODUCT_ID || ENGRAVING_VARIANTS.includes(variantId) || href.includes('engraving-fee')) {
+            const container = el.closest('[class*="upsell"]') || el.closest('[class*="recommend"]') || el;
+            container.style.display = 'none';
+          }
+        });
+      });
+
+      // Method 2: Essential Upsell specific - find items containing engraving-related text
+      // Essential Upsell uses dynamic class names like x1ghz6dp
+      const euElements = document.querySelectorAll('[class*="x1ghz6dp"]');
+      euElements.forEach(el => {
+        // Check if this element or its children contain the engraving variant
+        const text = el.textContent || '';
+        const hasEngravingText = text.includes('One Line') && text.includes('$19.00');
+        const hasEngravingVariant = el.querySelector('option[value="43781283217459"], option[value="43781283250227"]');
+        
+        if (hasEngravingText || hasEngravingVariant) {
+          // Find the specific upsell item container (not the whole carousel)
+          // Walk up to find the item that contains only engraving
+          let itemContainer = el;
+          
+          // Check if this is an individual item (not the whole container)
+          // by checking if the text is relatively short (single item) vs the whole widget
+          if (text.length < 200 && hasEngravingText) {
+            // This is likely an individual item - hide it
+            while (itemContainer && !itemContainer.classList?.contains('x1heor9')) {
+              itemContainer = itemContainer.parentElement;
+            }
+            if (itemContainer && itemContainer.textContent.includes('One Line') && 
+                !itemContainer.textContent.includes('Chef Knife') && 
+                !itemContainer.textContent.includes('Santoku')) {
+              itemContainer.style.display = 'none';
+            }
+          }
+        }
+      });
+
+      // Method 3: Hide by looking for specific price and variant combination
+      document.querySelectorAll('select').forEach(select => {
+        const options = select.querySelectorAll('option');
+        options.forEach(opt => {
+          if (opt.value === '43781283217459' || opt.value === '43781283250227' || 
+              opt.textContent.includes('One Line') || opt.textContent.includes('Two Line')) {
+            // Find the parent upsell card and hide it
+            let card = select.closest('[class*="x1heor9"]') || select.closest('[class*="upsell"]');
+            if (card) {
+              card.style.display = 'none';
+            }
+          }
+        });
+      });
+    }
+
+    // Run on load
+    hideEngravingUpsells();
+
+    // Observe for dynamically added content
+    const observer = new MutationObserver((mutations) => {
+      let shouldCheck = false;
+      mutations.forEach(m => {
+        if (m.addedNodes.length > 0) shouldCheck = true;
+      });
+      if (shouldCheck) {
+        setTimeout(hideEngravingUpsells, 100);
+        setTimeout(hideEngravingUpsells, 500); // Run again after app fully loads
+      }
+    });
+
+    observer.observe(document.body, { childList: true, subtree: true });
+
+    // Also run after cart updates
+    document.addEventListener('cart:update', () => {
+      setTimeout(hideEngravingUpsells, 300);
+      setTimeout(hideEngravingUpsells, 800);
+    });
+  })();
+</script>
