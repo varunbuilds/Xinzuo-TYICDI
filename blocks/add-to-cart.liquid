@@ -10,10 +10,8 @@
   assign class = 'add-to-cart-button ' | append: block.settings.style_class
   assign id = 'BuyButtons-ProductSubmitButton-' | append: block.id
   
-  # Check if this is the engraving fee product (cannot be purchased directly)
-  assign engraving_product_id = 7718263914547
   assign is_engraving_product = false
-  if closest.product.id == engraving_product_id
+  if closest.product.handle == 'engraving-fee'
     assign is_engraving_product = true
   endif
 %}

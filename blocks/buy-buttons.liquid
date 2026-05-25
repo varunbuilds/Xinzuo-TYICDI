@@ -6,10 +6,8 @@
     assign product = collections.all.products.first
   endif
 
-  # Check if this is the engraving fee product (cannot be purchased directly)
-  assign engraving_product_id = 7718263914547
   assign is_engraving_product = false
-  if product.id == engraving_product_id
+  if product.handle == 'engraving-fee'
     assign is_engraving_product = true
   endif
 

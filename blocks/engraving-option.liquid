@@ -17,11 +17,11 @@
         <div class="engraving-line-toggle">
             <button type="button" class="engraving-line-btn selected" id="btn-one-line" data-lines="one">
                 <span class="line-btn-title">One Line</span>
-                <span class="line-btn-price">+${{ product.metafields.custom.knife_num | times: 19 }}</span>
+                <span class="line-btn-price">+${{ product.metafields.custom.knife_num | default: 1 | times: 19 }}</span>
             </button>
             <button type="button" class="engraving-line-btn" id="btn-two-lines" data-lines="two">
                 <span class="line-btn-title">Two Lines</span>
-                <span class="line-btn-price">+${{ product.metafields.custom.knife_num | times: 29 }}</span>
+                <span class="line-btn-price">+${{ product.metafields.custom.knife_num | default: 1 | times: 29 }}</span>
             </button>
         </div>
         
@@ -273,7 +273,7 @@
         window.engravingSecondSelected = false;
         window.engravingText = "";
         window.engravingText2 = "";
-        window.knife_num = {{ product.metafields.custom.knife_num }};
+        window.knife_num = {{ product.metafields.custom.knife_num | default: 1 }};
 
         // DOM elements
         const engraveDiv = document.getElementById("engrave-div");

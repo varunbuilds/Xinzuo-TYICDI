@@ -53,7 +53,7 @@
     <div class="cart-summary-prices">
       {% assign fee_price = 0 %}
       {% for item in cart.items %}
-        {% if item.variant_id == 43781283217459 or item.variant_id == 43781283250227 %}
+        {% if item.product.handle == 'engraving-fee' %}
           {% assign fee_price = fee_price | plus: item.original_line_price %}
         {% endif %}
       {% endfor %}

@@ -161,7 +161,6 @@ class ProductFormComponent extends Component {
    */
   handleSubmit(event) {
     event.preventDefault();
-    console.log(event)
 
     const form = this.querySelector("form");
     const formData = new FormData(form);
@@ -170,9 +169,11 @@ class ProductFormComponent extends Component {
 
     const SHOW_FEE = window.engravingSelected && window.engravingText;
     const SHOW_FEE2 = window.engravingSecondSelected && window.engravingText2;
-    const FEE_ID = 43781283217459;
-    const FEE_ID2 = 43781283250227;
-    const knife_num = window.knife_num;
+    const feeIds = typeof window.getXinzuoEngravingFeeVariantIds === 'function'
+      ? window.getXinzuoEngravingFeeVariantIds()
+      : { oneLine: null, twoLine: null };
+    const FEE_ID = SHOW_FEE2 ? feeIds.twoLine : feeIds.oneLine;
+    const knife_num = Number(window.knife_num) || 1;
 
     const addMainProduct = () => {
       return fetch("/cart/add.js", {
@@ -191,27 +192,16 @@ class ProductFormComponent extends Component {
     };
 
     const addFeeProduct = () => {
-      if (!SHOW_FEE) return Promise.resolve();
+      if (!SHOW_FEE || !FEE_ID) return Promise.resolve();
 
-      if (!SHOW_FEE2) {
-        return fetch("/cart/add.js", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            id: FEE_ID,
-            quantity: quantity * knife_num
-          })
-        });
-      } else {
-        return fetch("/cart/add.js", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            id: FEE_ID2,
-            quantity: quantity * knife_num
-          })
-        });
-      }
+      return fetch("/cart/add.js", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          id: FEE_ID,
+          quantity: quantity * knife_num,
+        }),
+      });
     };
 
     const refreshCartDrawer = async () => {

@@ -6,10 +6,14 @@
 (function() {
   'use strict';
 
-  // Constants
-  const FEE_ONE_LINE = 43781283217459;
-  const FEE_TWO_LINES = 43781283250227;
   const MAX_LENGTH = 20;
+
+  function getFeeVariantIds() {
+    if (typeof window.getXinzuoEngravingFeeVariantIds === 'function') {
+      return window.getXinzuoEngravingFeeVariantIds();
+    }
+    return { oneLine: null, twoLine: null };
+  }
 
   // State
   let currentItemData = null;
@@ -176,7 +180,11 @@
       });
       
       // Step 3: Add engraving fee (multiply by knife count for sets)
-      const feeVariantId = isTwoLines ? FEE_TWO_LINES : FEE_ONE_LINE;
+      const feeIds = getFeeVariantIds();
+      const feeVariantId = isTwoLines ? feeIds.twoLine : feeIds.oneLine;
+      if (!feeVariantId) {
+        throw new Error('Engraving fee product is not configured on this store');
+      }
       await fetch('/cart/add.js', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -243,16 +251,17 @@
       });
       
       // Find current fees
-      const feeOne = cart.items.find(i => i.variant_id === FEE_ONE_LINE);
-      const feeTwo = cart.items.find(i => i.variant_id === FEE_TWO_LINES);
+      const feeIds = getFeeVariantIds();
+      const feeOne = cart.items.find(i => i.variant_id === feeIds.oneLine);
+      const feeTwo = cart.items.find(i => i.variant_id === feeIds.twoLine);
       
       const currentOne = feeOne?.quantity || 0;
       const currentTwo = feeTwo?.quantity || 0;
       
       // Update if there are extras
       const updates = {};
-      if (currentOne > requiredOneLine) updates[FEE_ONE_LINE] = requiredOneLine;
-      if (currentTwo > requiredTwoLine) updates[FEE_TWO_LINES] = requiredTwoLine;
+      if (feeIds.oneLine && currentOne > requiredOneLine) updates[feeIds.oneLine] = requiredOneLine;
+      if (feeIds.twoLine && currentTwo > requiredTwoLine) updates[feeIds.twoLine] = requiredTwoLine;
       
       if (Object.keys(updates).length > 0) {
         await fetch('/cart/update.js', {

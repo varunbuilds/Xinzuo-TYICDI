@@ -1,0 +1,38 @@
+{%- liquid
+  assign engraving_fee_product = all_products['engraving-fee']
+  assign engraving_fee_variant_one_id = 0
+  assign engraving_fee_variant_two_id = 0
+  if engraving_fee_product != blank
+    for variant in engraving_fee_product.variants
+      assign option_label = variant.option1 | downcase | strip
+      if option_label contains 'one'
+        assign engraving_fee_variant_one_id = variant.id
+      elsif option_label contains 'two'
+        assign engraving_fee_variant_two_id = variant.id
+      endif
+    endfor
+  endif
+-%}
+<script>
+  window.XinzuoEngravingFee = {
+    productId: {{ engraving_fee_product.id | default: 0 | json }},
+    productHandle: 'engraving-fee',
+    oneLineVariantId: {{ engraving_fee_variant_one_id | json }},
+    twoLineVariantId: {{ engraving_fee_variant_two_id | json }},
+  };
+  window.getXinzuoEngravingFeeVariantIds = function () {
+    const c = window.XinzuoEngravingFee || {};
+    const one = parseInt(c.oneLineVariantId, 10);
+    const two = parseInt(c.twoLineVariantId, 10);
+    return {
+      productId: parseInt(c.productId, 10) || 0,
+      oneLine: Number.isFinite(one) && one > 0 ? one : null,
+      twoLine: Number.isFinite(two) && two > 0 ? two : null,
+    };
+  };
+  window.isXinzuoEngravingFeeVariant = function (variantId) {
+    const ids = window.getXinzuoEngravingFeeVariantIds();
+    const id = parseInt(variantId, 10);
+    return id === ids.oneLine || id === ids.twoLine;
+  };
+</script>

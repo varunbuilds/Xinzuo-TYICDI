@@ -567,7 +567,7 @@
               <div class="cart-drawer-total">
                 {% assign fee_price = 0 %}
                 {% for item in cart.items %}
-                  {% if item.variant_id == 43781283217459 or item.variant_id == 43781283250227 %}
+                  {% if item.product.handle == 'engraving-fee' %}
                     {% assign fee_price = fee_price | plus: item.original_line_price %}
                   {% endif %}
                 {% endfor %}
@@ -938,13 +938,15 @@
   }
 
   /* Hide engraving product from Essential Upsell recommendations */
-  /* Target by product ID, variant ID, or common patterns */
-  [data-product-id="7718263914547"],
-  [data-variant-id="43781283217459"],
-  [data-variant-id="43781283250227"],
+  {%- assign engraving_fee_product = all_products['engraving-fee'] -%}
+  {%- if engraving_fee_product != blank -%}
+  [data-product-id="{{ engraving_fee_product.id }}"],
+  .eu-upsell-item[data-product-id="{{ engraving_fee_product.id }}"] {
+    display: none !important;
+  }
+  {%- endif -%}
   [href*="engraving-fee"],
-  [href*="/products/engraving"],
-  .eu-upsell-item[data-product-id="7718263914547"] {
+  [href*="/products/engraving"] {
     display: none !important;
   }
 {% endstylesheet %}
@@ -952,8 +954,11 @@
 <script>
   // Hide engraving product from any upsell/recommendation widgets (including Essential Upsell)
   (function() {
-    const ENGRAVING_PRODUCT_ID = '7718263914547';
-    const ENGRAVING_VARIANTS = ['43781283217459', '43781283250227'];
+    const feeConfig = typeof window.getXinzuoEngravingFeeVariantIds === 'function'
+      ? window.getXinzuoEngravingFeeVariantIds()
+      : { productId: 0, oneLine: null, twoLine: null };
+    const ENGRAVING_PRODUCT_ID = String(feeConfig.productId || '');
+    const ENGRAVING_VARIANTS = [feeConfig.oneLine, feeConfig.twoLine].filter(Boolean).map(String);
     const ENGRAVING_KEYWORDS = ['engraving', 'engraving-fee', 'one line', 'two line'];
     const ENGRAVING_PRICE = '$19.00';
 
@@ -987,7 +992,8 @@
         // Check if this element or its children contain the engraving variant
         const text = el.textContent || '';
         const hasEngravingText = text.includes('One Line') && text.includes('$19.00');
-        const hasEngravingVariant = el.querySelector('option[value="43781283217459"], option[value="43781283250227"]');
+        const variantSelector = ENGRAVING_VARIANTS.map((id) => `option[value="${id}"]`).join(', ');
+        const hasEngravingVariant = variantSelector && el.querySelector(variantSelector);
         
         if (hasEngravingText || hasEngravingVariant) {
           // Find the specific upsell item container (not the whole carousel)
@@ -1014,7 +1020,7 @@
       document.querySelectorAll('select').forEach(select => {
         const options = select.querySelectorAll('option');
         options.forEach(opt => {
-          if (opt.value === '43781283217459' || opt.value === '43781283250227' || 
+          if (ENGRAVING_VARIANTS.includes(opt.value) ||
               opt.textContent.includes('One Line') || opt.textContent.includes('Two Line')) {
             // Find the parent upsell card and hide it
             let card = select.closest('[class*="x1heor9"]') || select.closest('[class*="upsell"]');

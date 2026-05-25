@@ -30,3 +30,43 @@ No theme Liquid/JS/CSS changes were required for this task — the implementatio
 - Test **Add Bundle to Cart** with 3+ selected knives and confirm cart drawer + checkout discount flow.
 - **Task 2:** Replace hardcoded production engraving variant IDs in theme JS/Liquid with dynamic lookup from the `engraving-fee` product on the dev store.
 - Continue: remove debug `console.log` / HTML comments, cart drawer edge cases, performance, SEO, accessibility.
+
+---
+
+## Task 2 — Engraving UI + cart fee
+
+### What I picked
+
+Fixing **product engraving** so the PDP toggle works reliably and the **engraving fee** is added to the cart with correct totals (matching xinzuo.com.au).
+
+### Why it's the highest-impact thing here
+
+- Engraving is a paid upsell on high-AOV knives; broken fee logic means lost revenue and incorrect checkout totals.
+- The UI depended on `custom.knife_num` (missing on dev store broke JavaScript); add-to-cart used **production-only** variant IDs for the hidden `engraving-fee` product, so `/cart/add.js` for the fee silently failed on any cloned dev store.
+
+### What I did
+
+**Admin (you):**
+
+1. Created product metafield definition **`custom.knife_num`** (integer, storefront API access on).
+2. Set **`knife_num = 1`** on the test chef knife (One Line +$19; use piece count on knife sets).
+3. Assigned the correct **product theme template** (e.g. `x05z-zhen-series`) so the engraving block appears.
+
+**Theme (code):**
+
+1. `snippets/engraving-fee-config.liquid` — resolves **One Line** / **Two Line** variant IDs from `all_products['engraving-fee']` and exposes `window.getXinzuoEngravingFeeVariantIds()`.
+2. `layout/theme.liquid` — loads that config on every page.
+3. `assets/product-form.js` — adds fee using dynamic variant IDs (removed debug `console.log`).
+4. `assets/cart-engraving.js`, `assets/component-cart-items.js` — same dynamic IDs for cart drawer engraving + qty sync.
+5. Cart Liquid (`cart-drawer`, `cart-summary`, `cart-products`, `cart-bubble`) — detect fee lines by **`item.product.handle == 'engraving-fee'`** instead of hardcoded variant IDs.
+6. `blocks/engraving-option.liquid` — `knife_num | default: 1` so JS never breaks when metafield is unset.
+7. `blocks/buy-buttons.liquid`, `blocks/add-to-cart.liquid` — engraving product guard uses **handle**, not production product ID.
+
+**Screenshots:** `before/task2.png` (or metafield before) → `after/task2.png` (fee line + Engraving Fee in totals).
+
+### What I'd do next
+
+- Confirm **Products → Engraving Fee** exists with **One Line** ($19) and **Two Line** ($29) variants.
+- Re-test two-line engraving and cart qty changes (fee should stay in sync).
+- Task 3: remove remaining debug noise (`custom.js`, cart recommendations HTML comment).
+- Task 4+: Shoplift guard, performance, SEO, accessibility.

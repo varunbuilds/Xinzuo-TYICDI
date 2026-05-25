@@ -300,8 +300,12 @@ class CartItemsComponent extends Component {
     const items = cartResponse.items;
     if (!items) return;
 
-    const FEE_ONE_LINE = 43781283217459;
-    const FEE_TWO_LINES = 43781283250227;
+    const feeIds = typeof window.getXinzuoEngravingFeeVariantIds === 'function'
+      ? window.getXinzuoEngravingFeeVariantIds()
+      : { oneLine: null, twoLine: null };
+    const FEE_ONE_LINE = feeIds.oneLine;
+    const FEE_TWO_LINES = feeIds.twoLine;
+    if (!FEE_ONE_LINE && !FEE_TWO_LINES) return;
 
     // Calculate required quantities for BOTH fee types
     let requiredOneLine = 0;
@@ -321,18 +325,18 @@ class CartItemsComponent extends Component {
     });
 
     // Find current fee items
-    const feeOneItem = items.find(i => i.variant_id === FEE_ONE_LINE);
-    const feeTwoItem = items.find(i => i.variant_id === FEE_TWO_LINES);
+    const feeOneItem = FEE_ONE_LINE ? items.find(i => i.variant_id === FEE_ONE_LINE) : undefined;
+    const feeTwoItem = FEE_TWO_LINES ? items.find(i => i.variant_id === FEE_TWO_LINES) : undefined;
 
     const currentOneLine = feeOneItem?.quantity || 0;
     const currentTwoLine = feeTwoItem?.quantity || 0;
 
     // Build updates object for any fees that need adjustment
     const updates = {};
-    if (currentOneLine !== requiredOneLine) {
+    if (FEE_ONE_LINE && currentOneLine !== requiredOneLine) {
       updates[FEE_ONE_LINE] = requiredOneLine;
     }
-    if (currentTwoLine !== requiredTwoLine) {
+    if (FEE_TWO_LINES && currentTwoLine !== requiredTwoLine) {
       updates[FEE_TWO_LINES] = requiredTwoLine;
     }
 

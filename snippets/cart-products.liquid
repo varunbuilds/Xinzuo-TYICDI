@@ -181,7 +181,7 @@
                 </tr>
               {%- endif -%}
 
-              {% if item.variant_id != 43781283217459 and item.variant_id != 43781283250227 %}
+              {% if item.product.handle != 'engraving-fee' %}
                 <tr
                   role="row"
                   class="cart-items__table-row{% if item.parent_relationship.parent != null %} cart-items__nested-line{% endif %}{% if is_bundle_item %} cart-bundle-item{% endif %}"
