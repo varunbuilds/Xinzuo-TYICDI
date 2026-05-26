@@ -79,7 +79,7 @@
 -%}
 
 <a class="xz-series-tile" href="{{ url }}" aria-label="{{ _aria | escape }}">
-  <div class="xz-series-tile__img-wrap">
+  <div class="xz-series-tile__img-wrap{% if image_obj == blank %} xz-series-tile__img-wrap--empty{% endif %}">
     {%- if image_obj != blank -%}
       <img class="xz-series-tile__img"
            src="{{ image_obj | image_url: width: 800 }}"

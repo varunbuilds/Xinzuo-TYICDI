@@ -1492,7 +1492,7 @@ aside {
 .xz-series-tile {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
   text-decoration: none;
   color: inherit;
   border-radius: 4px;
@@ -1506,20 +1506,30 @@ aside {
 
 .xz-series-tile__img-wrap {
   position: relative;
-  aspect-ratio: 1 / 1;
+  flex: none;
   width: 100%;
-  /* No own background — parent .xz-series-tile owns the bg, so transparent
-     PNGs (uploaded via custom.main_image metafield) show the hover bg
-     through transparent regions, matching Webflow. */
+  aspect-ratio: 1 / 1;
+  height: auto;
+  overflow: hidden;
+  background: var(--xz-bg, #000);
+}
+.xz-series-tile__img-wrap--empty {
+  background: rgba(255, 255, 255, 0.06);
 }
 .xz-series-tile__img {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
+  margin: 0;
   object-fit: cover;
+  object-position: center;
   display: block;
 }
 
 .xz-series-tile__info {
+  flex: none;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -1706,4 +1716,79 @@ aside {
   .xz-product-card .xz-card-atc      { font-size: 12px; }
   .xz-product-card .xz-card-atc:hover { background: var(--xz-accent, #FFD380); transform: none; }
   .xz-product-card .xz-card-promo-text { font-size: 12px; }
+}
+
+/* ==========================================================================
+   Header mega-menu overlay — identical card size (image + title) per column.
+   ========================================================================== */
+.header-dropdown > ul.xz-mega-series-list {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 16px;
+  align-items: stretch;
+  padding: 10px 16px 48px;
+  margin: 0;
+  list-style: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  --xz-mega-info-height: 5.5rem;
+}
+
+.header-dropdown > ul.xz-mega-series-list > li.menu-dropdown-list--series {
+  width: 100%;
+  min-width: 0;
+  display: flex;
+  align-self: stretch;
+  height: auto;
+  background: transparent;
+  overflow: visible;
+  padding: 0;
+  margin: 0;
+}
+
+.header-dropdown > ul.xz-mega-series-list > li.menu-dropdown-list--series > a.xz-series-tile {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 100%;
+  min-width: 0;
+  flex: 1 1 auto;
+  height: 100%;
+  margin: 0;
+  font-size: inherit;
+}
+
+/* Square image — width comes from grid column; height follows 1:1 ratio */
+.header-dropdown > ul.xz-mega-series-list .xz-series-tile__img-wrap {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  height: auto;
+  flex: 0 0 auto;
+  padding: 0;
+}
+
+/* Fixed title strip — same height on every card */
+.header-dropdown > ul.xz-mega-series-list .xz-series-tile__info {
+  flex: 0 0 var(--xz-mega-info-height);
+  width: 100%;
+  height: var(--xz-mega-info-height);
+  min-height: var(--xz-mega-info-height);
+  max-height: var(--xz-mega-info-height);
+  padding: 24px;
+  box-sizing: border-box;
+  overflow: hidden;
+  justify-content: center;
+}
+
+.header-dropdown > ul.xz-mega-series-list .xz-series-tile__title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+}
+
+.header-dropdown > ul.xz-mega-series-list .xz-series-tile__code {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
 }

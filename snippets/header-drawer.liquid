@@ -188,7 +188,15 @@
                   {%- if link.title == 'Top Picks' or link.title == 'TOP PICKS' or link.title == 'top picks' -%}
                     {%- assign is_top_picks_drawer = true -%}
                   {%- endif -%}
-                  <div class="header-category-div header-category-div-{{ forloop.index }} xz-drawer-type-grid{% if is_series_drawer or is_accessories_drawer or is_top_picks_drawer %} xz-drawer-series-grid{% endif %}">
+                  {%- assign is_type_drawer = false -%}
+                  {%- if link.title == 'KNIVES'
+                    or link.title == 'Knives'
+                    or link.title == 'Shop by Type'
+                    or link.title == 'SHOP BY TYPE'
+                  -%}
+                    {%- assign is_type_drawer = true -%}
+                  {%- endif -%}
+                  <div class="header-category-div header-category-div-{{ forloop.index }} xz-drawer-type-grid{% if is_series_drawer or is_accessories_drawer or is_top_picks_drawer or is_type_drawer %} xz-drawer-series-grid{% endif %}">
                     {% for sublink in link.links %}
                       {%- liquid
                         # Title overrides for navigation links
@@ -197,72 +205,47 @@
                           assign display_title = 'Chopping Boards'
                         endif
 
-                        # For non-series categories, fold the long "<CODE> <NAME...>
-                        # Series" label into "Lan (B37)" so the type-tile keeps a
-                        # single-line title on mobile. The series drawer (handled
-                        # below) does NOT need this — xz-series-tile renders the
-                        # name and code on separate lines.
-                        unless is_series_drawer
-                          assign _words = display_title | split: ' '
-                          assign _last  = _words | last
-                          if _words.size >= 3 and _last == 'Series'
-                            assign _code = _words | first
-                            assign _middle = ''
-                            for _w in _words
-                              unless forloop.first or forloop.last
-                                if _middle != ''
-                                  assign _middle = _middle | append: ' '
-                                endif
-                                assign _middle = _middle | append: _w
-                              endunless
-                            endfor
-                            if _middle != ''
-                              assign display_title = _middle | append: ' (' | append: _code | append: ')'
-                            endif
-                          endif
-                        endunless
-
                         assign collection_handle = sublink.url | split: '/' | last
                         assign collection = collections[collection_handle]
-                        # Custom override: collection.metafields.custom.main_image
-                        # wins over featured_image whenever the drawer renders a
-                        # tile.  xz-type-tile resolves this internally; xz-series-tile
-                        # is passed an `image:` arg so we resolve here.
                         assign drawer_img = collection.metafields.custom.main_image
                         if drawer_img == blank
                           assign drawer_img = collection.featured_image
                         endif
-                        # MediaImage (file_reference metafield) → unwrap to inner Image
+                        if drawer_img == blank and collection.products.first
+                          assign drawer_img = collection.products.first.featured_image
+                        endif
                         if drawer_img.image
                           assign drawer_img = drawer_img.image
                         endif
-                        # Highest discount % across the collection's products → promo badge
-                        assign sum = 0
-                        for product in collection.products
-                          if product.compare_at_price and product.compare_at_price > product.price
-                            assign discount = product.compare_at_price | minus: product.price
-                            assign percent = discount | times: 100 | divided_by: product.compare_at_price
-                            if sum < percent
-                              assign sum = percent
-                            endif
-                          endif
-                        endfor
-                        assign promo_text = blank
-                        if sum > 0
-                          assign promo_text = sum | append: '% OFF'
+
+                        if is_series_drawer
+                          assign tile_label = sublink.title
+                        else
+                          assign tile_label = display_title
                         endif
                       -%}
-                      {%- if is_series_drawer -%}
+                      {%- if is_series_drawer or is_accessories_drawer or is_top_picks_drawer or is_type_drawer -%}
                         {% render 'xz-series-tile',
                           url: sublink.url,
                           image: drawer_img,
-                          label: sublink.title %}
-                      {%- elsif is_accessories_drawer or is_top_picks_drawer -%}
-                        {% render 'xz-series-tile',
-                          url: sublink.url,
-                          image: drawer_img,
-                          title: display_title %}
+                          label: tile_label %}
                       {%- else -%}
+                        {%- liquid
+                          assign sum = 0
+                          for product in collection.products
+                            if product.compare_at_price and product.compare_at_price > product.price
+                              assign discount = product.compare_at_price | minus: product.price
+                              assign percent = discount | times: 100 | divided_by: product.compare_at_price
+                              if sum < percent
+                                assign sum = percent
+                              endif
+                            endif
+                          endfor
+                          assign promo_text = blank
+                          if sum > 0
+                            assign promo_text = sum | append: '% OFF'
+                          endif
+                        -%}
                         {% render 'xz-type-tile',
                           collection: collection,
                           type_label: display_title,

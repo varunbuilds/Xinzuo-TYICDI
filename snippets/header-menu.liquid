@@ -235,14 +235,12 @@
                   {%- assign is_type_menu = true -%}
                 {%- endif -%}
                 <ul
-                  {% if is_series_menu %}
+                  {% if is_series_menu
+                    or is_accessories_menu
+                    or is_top_picks_menu
+                    or is_type_menu
+                  %}
                     class="xz-mega-series-list"
-                  {% elsif is_accessories_menu %}
-                    class="xz-mega-series-list xz-mega-series-list--accessories"
-                  {% elsif is_top_picks_menu %}
-                    class="xz-mega-series-list xz-mega-series-list--top-picks"
-                  {% elsif is_type_menu %}
-                    class="xz-mega-type-list"
                   {% endif %}
                 >
                   {% for sublink in link.links %}
@@ -251,63 +249,23 @@
                     {% if sublink.title == 'Wood Chopping' %}
                       {% assign display_title = 'Chopping Boards' %}
                     {% endif %}
-                    {%- if is_series_menu -%}
+                    {%- if is_series_menu or is_accessories_menu or is_top_picks_menu or is_type_menu -%}
                       {%- liquid
-                        assign series_handle = sublink.url | split: '/' | last
-                        assign series_collection = collections[series_handle]
-                        # Custom override: collection.metafields.custom.main_image wins
-                        assign series_image = series_collection.metafields.custom.main_image
-                        if series_image == blank
-                          assign series_image = series_collection.featured_image
+                        assign tile_handle = sublink.url | split: '/' | last
+                        assign tile_collection = collections[tile_handle]
+                        assign tile_image = tile_collection.metafields.custom.main_image
+                        if tile_image == blank
+                          assign tile_image = tile_collection.featured_image
                         endif
-                        if series_image.image
-                          assign series_image = series_image.image
+                        if tile_image == blank and tile_collection.products.first
+                          assign tile_image = tile_collection.products.first.featured_image
+                        endif
+                        if tile_image.image
+                          assign tile_image = tile_image.image
                         endif
                       -%}
                       <li class="menu-dropdown-list menu-dropdown-list--series">
-                        {% render 'xz-series-tile', url: sublink.url, image: series_image, label: display_title %}
-                      </li>
-                    {%- elsif is_accessories_menu or is_top_picks_menu -%}
-                      {%- liquid
-                        assign simple_handle = sublink.url | split: '/' | last
-                        assign simple_collection = collections[simple_handle]
-                        assign simple_image = simple_collection.metafields.custom.main_image
-                        if simple_image == blank
-                          assign simple_image = simple_collection.featured_image
-                        endif
-                        if simple_image.image
-                          assign simple_image = simple_image.image
-                        endif
-                      -%}
-                      <li class="menu-dropdown-list menu-dropdown-list--series">
-                        {% render 'xz-series-tile', url: sublink.url, image: simple_image, title: display_title %}
-                      </li>
-                    {%- elsif is_type_menu -%}
-                      {%- liquid
-                        assign type_handle = sublink.url | split: '/' | last
-                        assign type_collection = collections[type_handle]
-                        assign type_promo = blank
-                        assign best_pct = 0
-                        for product in type_collection.products
-                          if product.compare_at_price and product.compare_at_price > product.price
-                            assign discount = product.compare_at_price | minus: product.price
-                            assign pct = discount | times: 100 | divided_by: product.compare_at_price
-                            if best_pct < pct
-                              assign best_pct = pct
-                            endif
-                          endif
-                        endfor
-                        if best_pct > 0
-                          assign type_promo = best_pct | append: '% OFF'
-                        endif
-                      -%}
-                      <li class="menu-dropdown-list menu-dropdown-list--type">
-                        {% render 'xz-type-tile',
-                          collection: type_collection,
-                          type_label: display_title,
-                          url: sublink.url,
-                          promo_text: type_promo
-                        %}
+                        {% render 'xz-series-tile', url: sublink.url, image: tile_image, label: display_title %}
                       </li>
                     {%- else -%}
                       <li class="menu-dropdown-list">
@@ -557,7 +515,7 @@
     margin: 0 !important;
   }
 
-  .header-dropdown > ul {
+  .header-dropdown > ul:not(.xz-mega-series-list) {
     display: flex;
     flex-wrap: wrap;
     padding: 10px 0 48px;
@@ -566,13 +524,13 @@
     border-top: 1px solid rgba(255, 255, 255, 0.05);
   }
 
-  .header-dropdown > ul {
+  .header-dropdown > ul:not(.xz-mega-series-list) {
     gap: 12px;
     padding-left: 16px;
     padding-right: 16px;
   }
 
-  .header-dropdown > ul > li {
+  .header-dropdown > ul:not(.xz-mega-series-list) > li {
     width: calc(20% - 10px);
     padding: 0;
     display: flex;
@@ -582,11 +540,11 @@
     background: rgba(255, 255, 255, 0.08);
   }
 
-  .header-dropdown > ul > li:first-child {
+  .header-dropdown > ul:not(.xz-mega-series-list) > li:first-child {
     border: none;
   }
 
-  .header-dropdown > ul > li a.mega-dropdown {
+  .header-dropdown > ul:not(.xz-mega-series-list) > li a.mega-dropdown {
     display: block;
     font-family: 'Sen', sans-serif;
     font-weight: 600;
@@ -602,7 +560,7 @@
     text-decoration: none;
   }
 
-  .header-dropdown > ul > li a {
+  .header-dropdown > ul:not(.xz-mega-series-list) > li a {
     display: block;
     font-family: 'Sen', sans-serif;
     font-weight: 600;
@@ -611,7 +569,7 @@
     margin-bottom: 24px;
   }
 
-  .header-dropdown > ul > li ul li a {
+  .header-dropdown > ul:not(.xz-mega-series-list) > li ul li a {
     font-family: 'Sen';
     font-weight: 400;
     font-size: 16px;
@@ -622,7 +580,7 @@
     transition: all 0.3s ease;
   }
 
-  .header-dropdown > ul > li ul li a::after {
+  .header-dropdown > ul:not(.xz-mega-series-list) > li ul li a::after {
     content: '→';
     position: absolute;
     left: -20px;
@@ -631,17 +589,17 @@
     transition: all 0.3s ease;
   }
 
-  .header-dropdown > ul > li ul li a:hover {
+  .header-dropdown > ul:not(.xz-mega-series-list) > li ul li a:hover {
     border-bottom: 1px solid grey;
     left: 20px;
   }
 
-  .header-dropdown > ul > li ul li a:hover::after {
+  .header-dropdown > ul:not(.xz-mega-series-list) > li ul li a:hover::after {
     opacity: 1;
     transform: translateX(0);
   }
 
-  .header-dropdown > ul > li img {
+  .header-dropdown > ul:not(.xz-mega-series-list) > li img {
     width: 100%;
     margin-top: auto;
     object-fit: cover;
@@ -649,7 +607,7 @@
     border-radius: 0;
   }
 
-  .header-dropdown > ul > li .menu-img {
+  .header-dropdown > ul:not(.xz-mega-series-list) > li .menu-img {
     margin-bottom: 0;
   }
 
@@ -694,36 +652,64 @@
     color: white;
   }
 
-  /* Shop By Series / Shop By Type mega-menu — override generic dropdown LI
-     chrome so the xz-*-tile owns the card look (bg #000, 4px radius,
-     hover #292a33). Grid (not flex) guarantees 5 cols regardless of
-     sub-pixel flex math. */
-  .header-dropdown > ul.xz-mega-series-list,
-  .header-dropdown > ul.xz-mega-type-list {
+  /* Shop By Series / Type / Accessories mega-menu — identical card sizes */
+  .header-dropdown > ul.xz-mega-series-list {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(5, minmax(0, 1fr));
     gap: 16px;
-    flex-wrap: nowrap;
+    align-items: stretch;
+    padding: 10px 16px 48px;
+    margin: 0;
+    list-style: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    --xz-mega-info-height: 5.5rem;
   }
-  .header-dropdown > ul.xz-mega-series-list > li.menu-dropdown-list--series,
-  .header-dropdown > ul.xz-mega-type-list > li.menu-dropdown-list--type {
-    width: auto; /* grid column owns the width */
+  .header-dropdown > ul.xz-mega-series-list > li.menu-dropdown-list--series {
+    width: 100%;
+    min-width: 0;
+    display: flex;
+    align-self: stretch;
     background: transparent;
     border-radius: 0;
     overflow: visible;
     padding: 0;
-    margin-bottom: 0;
+    margin: 0;
   }
-  .header-dropdown > ul.xz-mega-series-list > li.menu-dropdown-list--series .xz-series-tile,
-  .header-dropdown > ul.xz-mega-type-list > li.menu-dropdown-list--type .xz-type-tile {
+  .header-dropdown > ul.xz-mega-series-list > li.menu-dropdown-list--series > a.xz-series-tile {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
     width: 100%;
+    min-width: 0;
+    flex: 1 1 auto;
     height: 100%;
+    margin: 0;
+    font-size: inherit;
   }
-  /* Neutralise the generic ".header-dropdown > ul > li img" rule
-     (margin-top:auto pushes the img to the bottom of its container). */
-  .header-dropdown > ul.xz-mega-series-list > li.menu-dropdown-list--series img,
-  .header-dropdown > ul.xz-mega-type-list > li.menu-dropdown-list--type img {
-    margin-top: 0;
+  .header-dropdown > ul.xz-mega-series-list .xz-series-tile__img-wrap {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    height: auto;
+    flex: 0 0 auto;
+    padding: 0;
+  }
+  .header-dropdown > ul.xz-mega-series-list .xz-series-tile__info {
+    flex: 0 0 var(--xz-mega-info-height);
+    width: 100%;
+    height: var(--xz-mega-info-height);
+    min-height: var(--xz-mega-info-height);
+    max-height: var(--xz-mega-info-height);
+    padding: 24px;
+    box-sizing: border-box;
+    overflow: hidden;
+    justify-content: center;
+  }
+  .header-dropdown > ul.xz-mega-series-list .xz-series-tile__title,
+  .header-dropdown > ul.xz-mega-series-list .xz-series-tile__code {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 100%;
   }
 
   /* Switch to hamburger at <=1280px so nav links/chevrons never shrink.
