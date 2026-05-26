@@ -39,7 +39,7 @@ bundle-builder-component {
   font-family: "Sen", sans-serif;
   font-size: 16px;
   font-weight: 700;
-  color: #FFD380;
+  color: #ff0005;
   transition: color 0.3s ease;
 }
 
@@ -183,16 +183,16 @@ bundle-builder-component {
 }
 
 .bundle-tabs__tab--active {
-  color: var(--xinzuo-accent-text, #000000);
-  background: var(--xinzuo-accent, #FFD380);
-  border-color: var(--xinzuo-accent, #FFD380);
-  box-shadow: 0 2px 12px rgba(255, 211, 128, 0.35);
+  color: var(--xinzuo-accent-text, #FFFFFF);
+  background: var(--xinzuo-accent, #ff0005);
+  border-color: var(--xinzuo-accent, #ff0005);
+  box-shadow: 0 2px 12px rgba(255, 0, 5, 0.35);
 }
 
 .bundle-tabs__tab--active:hover {
-  background: var(--xinzuo-accent-hover, #FFDC99);
-  border-color: var(--xinzuo-accent-hover, #FFDC99);
-  color: var(--xinzuo-accent-text, #000000);
+  background: var(--xinzuo-accent-hover, #ff3338);
+  border-color: var(--xinzuo-accent-hover, #ff3338);
+  color: var(--xinzuo-accent-text, #FFFFFF);
 }
 
 .bundle-tabs__count {
@@ -525,8 +525,8 @@ bundle-builder-component {
 /* CTA Button */
 .bundle-summary__cta {
   padding: 14px 28px;
-  background: var(--xinzuo-accent, #FFD380);
-  color: var(--xinzuo-accent-text, #000000);
+  background: var(--xinzuo-accent, #ff0005);
+  color: var(--xinzuo-accent-text, #FFFFFF);
   border: none;
   border-radius: 4px;
   font-family: "Sen", sans-serif;
@@ -540,8 +540,8 @@ bundle-builder-component {
 }
 
 .bundle-summary__cta:hover:not(:disabled) {
-  background: var(--xinzuo-accent-hover, #FFDC99);
-  color: var(--xinzuo-accent-text, #000000);
+  background: var(--xinzuo-accent-hover, #ff3338);
+  color: var(--xinzuo-accent-text, #FFFFFF);
   transform: translateY(-1px);
 }
 
@@ -584,7 +584,7 @@ bundle-builder-component {
 }
 
 .bundle-summary__progress-fill--tier-active {
-  background: #FFD380;
+  background: #ff0005;
 }
 
 .bundle-summary__progress-fill--complete {

@@ -251,7 +251,7 @@
 
     /* Base layer (red - free shipping tier) */
     .progress_state_base {
-      background: {{ section.settings.progress_bar_color | default: settings.progress_color | default: 'var(--xinzuo-accent, #FFD380)' }};
+      background: {{ section.settings.progress_bar_color | default: settings.progress_color | default: 'var(--xinzuo-accent, #ff0005)' }};
       height: 100%;
       border-radius: 12px;
       position: absolute;
@@ -265,10 +265,10 @@
     #native-free-shipping-progress-bar[data-stage="2"] .progress_state_base {
       background: repeating-linear-gradient(
         45deg,
-        {{ section.settings.progress_bar_color | default: settings.progress_color | default: 'var(--xinzuo-accent, #FFD380)' }},
-        {{ section.settings.progress_bar_color | default: settings.progress_color | default: 'var(--xinzuo-accent, #FFD380)' }} 10px,
-        color-mix(in srgb, {{ section.settings.progress_bar_color | default: settings.progress_color | default: 'var(--xinzuo-accent, #FFD380)' }} 85%, white) 10px,
-        color-mix(in srgb, {{ section.settings.progress_bar_color | default: settings.progress_color | default: 'var(--xinzuo-accent, #FFD380)' }} 85%, white) 20px
+        {{ section.settings.progress_bar_color | default: settings.progress_color | default: 'var(--xinzuo-accent, #ff0005)' }},
+        {{ section.settings.progress_bar_color | default: settings.progress_color | default: 'var(--xinzuo-accent, #ff0005)' }} 10px,
+        color-mix(in srgb, {{ section.settings.progress_bar_color | default: settings.progress_color | default: 'var(--xinzuo-accent, #ff0005)' }} 85%, white) 10px,
+        color-mix(in srgb, {{ section.settings.progress_bar_color | default: settings.progress_color | default: 'var(--xinzuo-accent, #ff0005)' }} 85%, white) 20px
       );
       background-size: 28px 28px;
       animation: progress-stripes 1s linear infinite;
@@ -636,7 +636,7 @@
         "type": "color",
         "id": "progress_bar_color",
         "label": "Free Shipping Progress Color",
-        "default": "#FFD380"
+        "default": "#ff0005"
       },
       {
         "type": "color",

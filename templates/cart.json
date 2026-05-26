@@ -70,7 +70,7 @@
         "progress_message_stage2": "<p>🎉 Free Delivery Unlocked!</p>",
         "progress_message_stage2_secondary": "<p>Add &lcub;PRICE&rcub; more to unlock Free Express Delivery.</p>",
         "progress_message_stage3": "<p>🚀 Free Express Delivery Unlocked!</p>",
-        "progress_bar_color": "#FFD380",
+        "progress_bar_color": "#ff0005",
         "express_bar_color": "#ffa500",
         "show_progress_bar": true,
         "enable_express_shipping": true

@@ -54,21 +54,15 @@
     class="header-logo__image-container header-logo__image-container--original"
     data-testid="header-logo"
   >
-    {% comment %}
-      Use bundled xz-logo.webp (red square seal version) so the navbar logo
-      stays consistent regardless of theme settings. Display size is owned
-      by the .header-logo__image CSS below — keep that authoritative so
-      the visual size doesn't drift.
-    {% endcomment %}
-    <img
-      src="{{ 'xz-logo.webp' | asset_url }}"
-      alt="{{ shop.name }}"
-      class="header-logo__image"
-      width="50"
-      height="45"
-      loading="eager"
-      decoding="async"
-    >
+    {% comment %} Red logo from Shopify Files (logo-icon) via theme settings {% endcomment %}
+    {% render 'image',
+      image: settings.logo,
+      class: 'header-logo__image',
+      height: settings.logo_height,
+      text_fallback: shop.name,
+      style: logo_style,
+      alt: shop.name
+    %}
   </span>
 
   {% if use_inverse_logo %}

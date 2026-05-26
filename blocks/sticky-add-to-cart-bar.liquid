@@ -86,10 +86,10 @@
     justify-content: center;
     gap: 8px;
     padding: 14px 11px;
-    background-color: var(--xinzuo-accent, #FFD380);
+    background-color: var(--xinzuo-accent, #ff0005);
     border: none;
     border-radius: var(--xz-r, 4px);                          /* spec: 4px, never pill */
-    color: var(--xinzuo-accent-text, #000000) !important;
+    color: var(--xinzuo-accent-text, #FFFFFF) !important;
     font-family: "Sen", sans-serif;
     font-size: 15px;
     font-weight: 700;                                          /* Style Guide: only 400 + 700 */
@@ -99,7 +99,7 @@
     white-space: nowrap;
 
     /* Floating effect — gold glow to match the button colour */
-    box-shadow: 0 4px 16px rgba(255, 211, 128, 0.35), 0 2px 8px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 4px 16px rgba(255, 0, 5, 0.35), 0 2px 8px rgba(0, 0, 0, 0.25);
     
     /* Smooth animations - slightly slower to mask any rapid state changes */
     transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
@@ -146,23 +146,23 @@
   /* Button text — black on gold per CTA spec */
   .sticky-button-text {
     font-weight: 700;
-    color: var(--xinzuo-accent-text, #000000) !important;
+    color: var(--xinzuo-accent-text, #FFFFFF) !important;
   }
 
   .sticky-button-separator {
     opacity: 0.6;
     font-weight: 400;
-    color: var(--xinzuo-accent-text, #000000) !important;
+    color: var(--xinzuo-accent-text, #FFFFFF) !important;
   }
 
   .sticky-button-price {
     font-weight: 700;
-    color: var(--xinzuo-accent-text, #000000) !important;
+    color: var(--xinzuo-accent-text, #FFFFFF) !important;
   }
 
   /* Ensure all button content stays black on the gold bg */
   .sticky-add-to-cart-button * {
-    color: var(--xinzuo-accent-text, #000000) !important;
+    color: var(--xinzuo-accent-text, #FFFFFF) !important;
   }
 
   /* Extra safety - hide on desktop */

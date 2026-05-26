@@ -6,11 +6,11 @@
 :root {
   /* Primary accent — gold (CTAs, buttons, active states).
      Canonical values mirror --xz-* tokens defined in site-overrides.css. */
-  --xinzuo-accent: #FFD380;
-  --xinzuo-accent-hover: #FFDC99;
-  --xinzuo-accent-active: #E5BC73;
-  --xinzuo-accent-disabled: #FFD38088;
-  --xinzuo-accent-text: #000000;          /* Pure black per Style Guide v1.0 */
+  --xinzuo-accent: #ff0005;
+  --xinzuo-accent-hover: #ff3338;
+  --xinzuo-accent-active: #cc0004;
+  --xinzuo-accent-disabled: #ff000588;
+  --xinzuo-accent-text: #FFFFFF;
 
   /* Tag red (NEW badges, sale tags, promo callouts, notice borders) */
   --xinzuo-red: #C81E1E;
@@ -28,23 +28,10 @@
 
 /* --------------------------------------------------------------------------
    1. Global accent overrides — buttons, links, badges
-   CTAs use yellow accent with black text. Sale/promo badges stay red.
+   CTAs use red accent with white text. Sale/promo badges stay red.
    -------------------------------------------------------------------------- */
 
-/* --- CTA Buttons (cw-hero, bundle-intro) --- */
-.hero-cta-button {
-  background-color: var(--xinzuo-accent) !important;
-  color: var(--xinzuo-accent-text) !important;
-}
-.hero-cta-button:hover {
-  background-color: var(--xinzuo-accent-hover) !important;
-  color: var(--xinzuo-accent-text) !important;
-}
-.hero-cta-button:active {
-  background-color: var(--xinzuo-accent-active) !important;
-  color: var(--xinzuo-accent-text) !important;
-}
-
+/* --- CTA Buttons (bundle-intro) --- */
 .bundle-cta {
   background-color: var(--xinzuo-accent) !important;
   color: var(--xinzuo-accent-text) !important;
@@ -99,7 +86,7 @@
 
 /* --- Tier card hover border (bundle-intro) — yellow accent glow --- */
 .tier-card:hover {
-  border-color: rgba(255, 211, 128, 0.4) !important;
+  border-color: rgba(255, 0, 5, 0.4) !important;
 }
 
 
@@ -172,7 +159,7 @@
   color: var(--xinzuo-accent-text) !important;
 }
 
-/* --- ATC + Checkout CTA consistency: Sen 700 bold, pure black text, 4px radius (NEVER pill).
+/* --- ATC + Checkout CTA consistency: Sen 700 bold, white text, 4px radius (NEVER pill).
        Per Style Guide v1.0: button text is Sen Bold 12px UPPERCASE 0.06–0.08em letter-spacing.
        Border-radius forced to 4px because the Horizon theme defaults
        --style-border-radius-buttons-primary to 100px (fully pill on standard heights). --- */
@@ -184,20 +171,20 @@
   font-weight: 700 !important;
   letter-spacing: 0.06em !important;
   text-transform: uppercase !important;
-  color: var(--xinzuo-accent-text, #000000) !important;
-  background-color: var(--xinzuo-accent, #FFD380) !important;
-  border-color: var(--xinzuo-accent, #FFD380) !important;
+  color: var(--xinzuo-accent-text, #FFFFFF) !important;
+  background-color: var(--xinzuo-accent, #ff0005) !important;
+  border-color: var(--xinzuo-accent, #ff0005) !important;
   border-radius: var(--xz-r, 4px) !important;
 }
 .cart__checkout-button:hover,
 .cart__checkout-button.button:hover,
 .add-to-cart-button:hover,
 .add-to-cart-button.button:hover {
-  background-color: var(--xinzuo-accent-hover, #FFDC99) !important;
-  border-color: var(--xinzuo-accent-hover, #FFDC99) !important;
-  color: var(--xinzuo-accent-text, #1A1A1E) !important;
+  background-color: var(--xinzuo-accent-hover, #ff3338) !important;
+  border-color: var(--xinzuo-accent-hover, #ff3338) !important;
+  color: var(--xinzuo-accent-text, #FFFFFF) !important;
 }
-/* Ensure all spans/text inside the CTA inherit the bold weight + black colour */
+/* Ensure all spans/text inside the CTA inherit the bold weight + white colour */
 .cart__checkout-button *,
 .add-to-cart-button * {
   color: inherit !important;
@@ -206,7 +193,7 @@
 /* SVG icons inside CTAs follow text colour via currentColor */
 .cart__checkout-button svg,
 .add-to-cart-button svg {
-  color: var(--xinzuo-accent-text, #1A1A1E);
+  color: var(--xinzuo-accent-text, #FFFFFF);
 }
 .cart__checkout-button svg [stroke]:not([stroke="none"]),
 .add-to-cart-button svg [stroke]:not([stroke="none"]) {
@@ -230,20 +217,19 @@
   color: #fff !important;
 }
 
-/* Any inline background-color:var(--xinzuo-accent, #FFD380) used via Liquid settings.
-   NOTE: Do NOT use [style*="color: var(--xinzuo-accent, #FFD380)"] — it falsely matches
-   "background-color: var(--xinzuo-accent, #FFD380)" as a substring. */
-[style*="background-color: var(--xinzuo-accent, #FFD380)"],
-[style*="background-color:var(--xinzuo-accent, #FFD380)"],
-[style*="background: var(--xinzuo-accent, #FFD380)"],
-[style*="background:var(--xinzuo-accent, #FFD380)"] {
+/* Any inline background-color:var(--xinzuo-accent, #ff0005) used via Liquid settings.
+   NOTE: Do NOT use [style*="color: var(--xinzuo-accent, #ff0005)"] — it falsely matches
+   "background-color: var(--xinzuo-accent, #ff0005)" as a substring. */
+[style*="background-color: var(--xinzuo-accent, #ff0005)"],
+[style*="background-color:var(--xinzuo-accent, #ff0005)"],
+[style*="background: var(--xinzuo-accent, #ff0005)"],
+[style*="background:var(--xinzuo-accent, #ff0005)"] {
   background-color: var(--xinzuo-accent) !important;
   color: var(--xinzuo-accent-text) !important;
 }
 
 /* --- Global gold-CTA font: Sen Bold 700 per Style Guide v1.0 (never 500/600).
        Also force 4px border-radius — spec says NEVER pill-shaped buttons. --- */
-.hero-cta-button,
 .bundle-cta,
 #load-more,
 .button--primary,

@@ -23,8 +23,9 @@
   --xz-surface-2: #141414;     /* Raised surface */
   --xz-border: rgba(255, 255, 255, 0.08);
 
-  --xz-accent: #FFD380;        /* Main gold — CTAs, prices, highlights */
-  --xz-accent-hover: #FFDC99;  /* Button hover */
+  --xz-accent: #ff0005;        /* Primary accent — CTAs, prices, highlights */
+  --xz-accent-hover: #ff3338;  /* Button hover */
+  --xz-accent-active: #cc0004; /* Button pressed / added state */
   --xz-accent-deep: #D1AE6B;   /* Secondary gold — series labels, kickers */
 
   --xz-red: #C81E1E;           /* Promo / NEW tags ONLY */
@@ -34,7 +35,7 @@
   --xz-ink-80: rgba(255, 255, 255, 0.80);
   --xz-ink-60: rgba(255, 255, 255, 0.60);
   --xz-ink-40: rgba(255, 255, 255, 0.40);
-  --xz-on-accent: #000000;     /* Text on gold buttons */
+  --xz-on-accent: #FFFFFF;     /* Text on accent buttons */
 
   --xz-font: 'Sen', -apple-system, BlinkMacSystemFont, sans-serif;
   --xz-weight-reg: 400;
@@ -55,11 +56,11 @@
   --xz-page-edge: clamp(16px, 3.6vw, 80px);
 
   /* === Legacy --xinzuo-* aliases (do not remove — wired into existing CSS) === */
-  --xinzuo-accent: #FFD380;
-  --xinzuo-accent-hover: #FFDC99;
-  --xinzuo-accent-active: #E5BC73;
-  --xinzuo-accent-disabled: #FFD38088;
-  --xinzuo-accent-text: #000000;          /* aligned to --xz-on-accent (was #1A1A1E) */
+  --xinzuo-accent: #ff0005;
+  --xinzuo-accent-hover: #ff3338;
+  --xinzuo-accent-active: #cc0004;
+  --xinzuo-accent-disabled: #ff000588;
+  --xinzuo-accent-text: #FFFFFF;
 
   --xinzuo-red: #C81E1E;
   --xinzuo-red-hover: #A11919;
@@ -160,8 +161,8 @@ body.xinzuo-light .home-products-div > h2 {
   color: #1A1A1E !important;
 }
 body.xinzuo-light .home-products #load-more {
-  background-color: #FFD380 !important;
-  color: #1A1A1E !important;
+  background-color: #ff0005 !important;
+  color: #FFFFFF !important;
 }
 
 body > * {
@@ -169,27 +170,26 @@ body > * {
     margin: 0;
 }
 
-/* Transparent navbar + float over content (all breakpoints — no band above hero) */
-.header-section:has(> #header-component),
-header .header__row,
-header#header-component.header {
+/* Homepage only: transparent navbar floats over hero (all breakpoints) */
+body:has(main[data-template^="index"]) .header-section:has(> #header-component),
+body:has(main[data-template^="index"]) header .header__row,
+body:has(main[data-template^="index"]) header#header-component.header {
     background-color: transparent !important;
     --header-bg-color: transparent;
 }
 
-/* Header group must not reserve vertical space (theme uses display:contents + sticky) */
-#header-group:has(#header-component[sticky]) {
+body:has(main[data-template^="index"]) #header-group:has(#header-component[sticky]) {
     display: block;
     height: 0;
     overflow: visible;
     pointer-events: none;
 }
 
-#header-group:has(#header-component[sticky]) > * {
+body:has(main[data-template^="index"]) #header-group:has(#header-component[sticky]) > * {
     pointer-events: auto;
 }
 
-.header-section:has(> #header-component[sticky]) {
+body:has(main[data-template^="index"]) .header-section:has(> #header-component[sticky]) {
     position: fixed !important;
     top: 0;
     left: 0;
@@ -198,20 +198,38 @@ header#header-component.header {
     z-index: 100;
 }
 
+/* Non-homepage: solid navbar background (all breakpoints) */
+body:not(:has(main[data-template^="index"])) .header-section:has(> #header-component),
+body:not(:has(main[data-template^="index"])) header .header__row,
+body:not(:has(main[data-template^="index"])) header#header-component.header {
+    background-color: #000000 !important;
+    --header-bg-color: #000000;
+}
+
+body:not(:has(main[data-template^="index"])) #header-group:has(#header-component[sticky]) {
+    display: contents;
+    height: auto;
+    overflow: visible;
+    pointer-events: auto;
+}
+
+body:not(:has(main[data-template^="index"])) .header-section:has(> #header-component[sticky]) {
+    position: sticky !important;
+    top: -1px;
+    left: auto;
+    right: auto;
+    width: auto;
+    z-index: var(--layer-sticky, 100);
+}
+
 /* Full-bleed homepage hero under floating header */
-main[data-template="index"] .hero-banner {
+main[data-template^="index"] .hero-banner {
     min-height: 100svh;
 }
 
-/* Non-hero first sections: offset content below fixed header */
-main.content-for-layout > .shopify-section:first-child:not(:has(.hero-banner)):not(:has(.collection-hero-banner)) {
-    padding-top: var(--header-height, var(--xz-h-header-m, 56px));
-}
-
-@media screen and (min-width: 1281px) {
-    main.content-for-layout > .shopify-section:first-child:not(:has(.hero-banner)):not(:has(.collection-hero-banner)) {
-        padding-top: var(--header-height, var(--xz-h-header-d, 72px));
-    }
+/* Non-homepage: header sits in normal flow — no extra top offset on first section */
+body:not(:has(main[data-template^="index"])) main.content-for-layout > .shopify-section:first-child:not(:has(.hero-banner)):not(:has(.collection-hero-banner)) {
+    padding-top: 0;
 }
 
 header .mega-menu__list {
@@ -279,6 +297,10 @@ header .menu-list li.menu-list__list-item .menu-list__link .menu-list__link-titl
         min-width: 0;
     }
 
+    header .header__column--center header-menu {
+        margin-inline-start: 38px;
+    }
+
     header .header__column--center header-menu .overflow-menu::part(list) {
         justify-content: center;
     }
@@ -317,6 +339,14 @@ header .header__column--right .search-action {
         gap: 12px;
         width: max-content;
     }
+}
+
+/* Navbar logo — stronger contrast over transparent header / hero imagery */
+.header-logo .header-logo__image,
+header .menu-list li.menu-list__list-item .logo-block__image-wrapper img,
+header .dropdown-header-center img {
+    filter: contrast(1.3) saturate(1.2) brightness(1.05)
+        drop-shadow(0 2px 6px rgba(0, 0, 0, 0.65));
 }
 
 @media screen and (min-width: 1281px) and (max-width: 1350px) {
@@ -400,7 +430,7 @@ header .header__column--right .search-action {
 }
 
 .border-style.custom-section-content .spacing-style.layout-panel-flex.layout-panel-flex--column.section-content-wrapper.mobile-column rte-formatter h2:nth-child(even) {
-    color: #FFD380;
+    color: #ff0005;
 }
 
 .border-style.custom-section-content .spacing-style.layout-panel-flex.layout-panel-flex--column.section-content-wrapper.mobile-column rte-formatter h3 {
@@ -437,8 +467,8 @@ header .header__column--right .search-action {
     font-family: "Sen" !important;
     font-weight: 600 !important;
     font-size: 14px !important;
-    background-color: #FFD380 !important;
-    color: #1A1A1E !important;
+    background-color: #ff0005 !important;
+    color: #FFFFFF !important;
 }
 
 footer .menu-title {
@@ -563,14 +593,14 @@ footer .menu-title {
     }
 }
 
-/* Cart bubble in header icon — yellow bg, black text, Sen font */
+/* Cart bubble in header icon — accent bg, white text, Sen font */
 header-actions .cart-bubble .cart-bubble__background {
-    background-color: #FFD380;
+    background-color: #ff0005;
 }
 header-actions .cart-bubble .cart-bubble__text {
     font-family: "Sen", sans-serif;
     font-weight: 600;
-    color: #1A1A1E;
+    color: #FFFFFF;
 }
 
 header-actions .cart-bubble-item {
@@ -621,7 +651,7 @@ header .cart-drawer__inner .cart-drawer__header p {
 
 header .cart-drawer__inner .cart-drawer__header .progress-cart {
     width: 100%;
-    accent-color: #FFD380;
+    accent-color: #ff0005;
 }
 
 header .cart-drawer__inner .cart-items__table-row {
@@ -909,7 +939,7 @@ ul.media-gallery__grid li.product-media-container:first-child {
 
 
     aside {
-        background-color: #FFD380 !important;
+        background-color: #ff0005 !important;
     }
 
     results-list.section {
@@ -971,8 +1001,8 @@ footer footer {
 .contact-form button.submit-button {
     padding: 10px 30px;
     border-radius: 4px;
-    background-color: #FFD380;
-    color: #1A1A1E;
+    background-color: #ff0005;
+    color: #FFFFFF;
     font-family: "Albert Sans";
     font-size: 16px;
 }
@@ -1188,8 +1218,8 @@ aside {
 .xz-btn-gold {
   height: var(--xz-h-btn, 40px);
   padding: 0 16px;
-  background: var(--xz-accent, #FFD380);
-  color: var(--xz-on-accent, #000000);
+  background: var(--xz-accent, #ff0005);
+  color: var(--xz-on-accent, #FFFFFF);
   font-family: var(--xz-font, "Sen", sans-serif);
   font-size: 12px;
   font-weight: 700;
@@ -1205,7 +1235,7 @@ aside {
   transition: background 0.15s ease;
   text-decoration: none;
 }
-.xz-btn-gold:hover { background: var(--xz-accent-hover, #FFDC99); color: var(--xz-on-accent, #000000); }
+.xz-btn-gold:hover { background: var(--xz-accent-hover, #ff3338); color: var(--xz-on-accent, #FFFFFF); }
 .xz-btn-gold:disabled { opacity: 0.4; cursor: not-allowed; }
 .xz-btn-gold.xz-btn-gold--full { width: 100%; }
 .xz-btn-gold.xz-btn-gold--lg { height: var(--xz-h-btn-lg, 48px); font-size: 13px; }
@@ -1231,7 +1261,7 @@ aside {
   transition: border-color 0.15s ease, color 0.15s ease;
 }
 .xz-btn-outline:hover { border-color: rgba(255, 255, 255, 0.5); }
-.xz-btn-outline.is-active { border-color: var(--xz-accent, #FFD380); color: var(--xz-accent, #FFD380); }
+.xz-btn-outline.is-active { border-color: var(--xz-accent, #ff0005); color: var(--xz-accent, #ff0005); }
 
 /* White tag pill — size/material label, sits on product card image */
 .xz-tag {
@@ -1355,7 +1385,7 @@ aside {
   color: inherit;
 }
 .xz-product-card .xz-card-link:focus-visible {
-  outline: 2px solid var(--xz-accent, #FFD380);
+  outline: 2px solid var(--xz-accent, #ff0005);
   outline-offset: -2px;
 }
 
@@ -1480,8 +1510,8 @@ aside {
   width: 100%;
   height: 40px;
   padding: 0;
-  background: var(--xz-accent, #FFD380);
-  color: var(--xz-on-accent, #000);
+  background: var(--xz-accent, #ff0005);
+  color: var(--xz-on-accent, #FFFFFF);
   border: none;
   border-radius: 4px;
   display: flex;
@@ -1499,14 +1529,14 @@ aside {
               transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 .xz-product-card .xz-card-atc:hover {
-  background: var(--xz-accent-hover, #FFDC99);
-  color: var(--xz-on-accent, #000);
+  background: var(--xz-accent-hover, #ff3338);
+  color: var(--xz-on-accent, #FFFFFF);
   transform: scale(1.01);
 }
 .xz-product-card .xz-card-atc.is-loading,
 .xz-product-card .xz-card-atc.is-added {
-  background: var(--xz-accent-active, #E5BC73);
-  color: var(--xz-on-accent, #000);
+  background: var(--xz-accent-active, #cc0004);
+  color: var(--xz-on-accent, #FFFFFF);
   transform: none;
   cursor: default;
 }
@@ -1762,7 +1792,7 @@ aside {
   font-weight: 400;
 }
 .xz-type-tile__price-value {
-  color: var(--xz-accent, #FFD380);
+  color: var(--xz-accent, #ff0005);
   font-weight: 700;
 }
 
@@ -1790,7 +1820,7 @@ aside {
   .xz-product-card .xz-price-new     { font-size: 12px; }
   .xz-product-card .xz-price-old     { font-size: 12px; }
   .xz-product-card .xz-card-atc      { font-size: 12px; }
-  .xz-product-card .xz-card-atc:hover { background: var(--xz-accent, #FFD380); transform: none; }
+  .xz-product-card .xz-card-atc:hover { background: var(--xz-accent, #ff0005); transform: none; }
   .xz-product-card .xz-card-promo-text { font-size: 12px; }
 }
 

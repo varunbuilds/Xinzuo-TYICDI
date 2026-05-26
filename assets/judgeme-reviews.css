@@ -3,7 +3,7 @@
    Only loaded on pages that display reviews (product, collection, index, etc.)
 
    Fonts: Sen for headings/buttons/badges, Albert Sans for body/secondary text
-   Colors: Gold #D1AE6B for stars, Yellow #FFD380 for CTAs (black text), Red #C81E1E for verified badges
+   Colors: Gold #D1AE6B for stars, Red #ff0005 for CTAs (white text), Red #C81E1E for verified badges
    ========================================================================== */
 
 /* ==========================================================================
@@ -49,24 +49,24 @@
 }
 
 /* ==========================================================================
-   "Write a Review" button — Sen font, Xinzuo yellow accent (black text)
+   "Write a Review" button — Sen font, Xinzuo red accent (white text)
    ========================================================================== */
 
 .jdgm-write-rev-link {
     margin: 0 !important;
-    color: var(--xinzuo-accent-text, #1A1A1E) !important;
+    color: var(--xinzuo-accent-text, #FFFFFF) !important;
     font-family: "Sen", sans-serif !important;
     font-size: 16px;
     font-weight: 600;
-    background-color: var(--xinzuo-accent, #FFD380) !important;
-    border-color: var(--xinzuo-accent, #FFD380) !important;
-    border: 1px solid var(--xinzuo-accent, #FFD380) !important;
+    background-color: var(--xinzuo-accent, #ff0005) !important;
+    border-color: var(--xinzuo-accent, #ff0005) !important;
+    border: 1px solid var(--xinzuo-accent, #ff0005) !important;
 }
 
 .jdgm-write-rev-link:hover {
-    background-color: var(--xinzuo-accent-hover, #FFDC99) !important;
-    border-color: var(--xinzuo-accent-hover, #FFDC99) !important;
-    color: var(--xinzuo-accent-text, #1A1A1E) !important;
+    background-color: var(--xinzuo-accent-hover, #ff3338) !important;
+    border-color: var(--xinzuo-accent-hover, #ff3338) !important;
+    color: var(--xinzuo-accent-text, #FFFFFF) !important;
 }
 
 /* ==========================================================================
@@ -466,24 +466,24 @@ a.jdgm-rev__prod-link:hover {
 
 /* ==========================================================================
    Xinzuo accent — replaces Judge.me teal (#108474)
-   Buttons use yellow #FFD380 with black text. Verified badges stay red #C81E1E.
+   Buttons use red #ff0005 with white text. Verified badges stay red #C81E1E.
    ========================================================================== */
 
 /* Solid buttons: Submit Review, Load More — Sen font, yellow accent */
 .jdgm-btn--solid,
 .jdgm-all-reviews-page__load-more {
-    background-color: var(--xinzuo-accent, #FFD380) !important;
-    border-color: var(--xinzuo-accent, #FFD380) !important;
-    color: var(--xinzuo-accent-text, #1A1A1E) !important;
+    background-color: var(--xinzuo-accent, #ff0005) !important;
+    border-color: var(--xinzuo-accent, #ff0005) !important;
+    color: var(--xinzuo-accent-text, #FFFFFF) !important;
     font-family: "Sen", sans-serif !important;
     font-weight: 600;
 }
 
 .jdgm-btn--solid:hover,
 .jdgm-all-reviews-page__load-more:hover {
-    background-color: var(--xinzuo-accent-hover, #FFDC99) !important;
-    border-color: var(--xinzuo-accent-hover, #FFDC99) !important;
-    color: var(--xinzuo-accent-text, #1A1A1E) !important;
+    background-color: var(--xinzuo-accent-hover, #ff3338) !important;
+    border-color: var(--xinzuo-accent-hover, #ff3338) !important;
+    color: var(--xinzuo-accent-text, #FFFFFF) !important;
 }
 
 /* Tab container */
@@ -540,7 +540,7 @@ a.jdgm-rev__prod-link:hover {
 
 /* Histogram filled bars (rating breakdown) — yellow accent */
 .jdgm-histogram__bar-content {
-    background-color: var(--xinzuo-accent, #FFD380) !important;
+    background-color: var(--xinzuo-accent, #ff0005) !important;
 }
 
 /* "Verified" link text — kept red as a verification mark */

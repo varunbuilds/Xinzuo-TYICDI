@@ -158,14 +158,9 @@
               <a href="{{ link.url }}" aria-label="logo">
                 <span class="menu-list__link-title">
                   <div class="logo-block__image-wrapper">
-                    {% comment %}
-                      Same red xz-logo.webp as the main header block + the
-                      dropdown header below, so all three render the
-                      identical seal. Sized 33x45 to match the prior inline
-                      SVG dimensions — visual size unchanged.
-                    {% endcomment %}
+                    {% comment %} Same red logo-icon as main header (theme settings) {% endcomment %}
                     <img
-                      src="{{ 'xz-logo.webp' | asset_url }}"
+                      src="{{ settings.logo | image_url: width: 100 }}"
                       alt="{{ shop.name }}"
                       width="33"
                       height="45"
@@ -201,7 +196,7 @@
                   <div class="dropdown-header-center">
                     <a href="/" aria-label="Xinzuo home">
                       <img
-                        src="{{ 'xz-logo.webp' | asset_url }}"
+                        src="{{ settings.logo | image_url: width: 120 }}"
                         alt="Xinzuo"
                         width="56"
                         height="56"

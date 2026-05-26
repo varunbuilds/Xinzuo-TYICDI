@@ -367,8 +367,8 @@
   }
 
   .cart-drawer-footer .cart__checkout-button {
-    background-color: var(--xinzuo-accent, #FFD380);
-    color: var(--xinzuo-accent-text, #1A1A1E);
+    background-color: var(--xinzuo-accent, #ff0005);
+    color: var(--xinzuo-accent-text, #FFFFFF);
     height: 45px;
     font-family: "Sen";
   }
@@ -767,7 +767,7 @@
 
   /* Base layer (red - free shipping tier) */
   .progress_state_base {
-    background: {{ settings.progress_color | default: 'var(--xinzuo-accent, #FFD380)' }};
+    background: {{ settings.progress_color | default: 'var(--xinzuo-accent, #ff0005)' }};
     height: 100%;
     border-radius: 12px;
     position: absolute;
@@ -781,10 +781,10 @@
   .progress_bar[data-stage="2"] .progress_state_base {
     background: repeating-linear-gradient(
       45deg,
-      {{ settings.progress_color | default: 'var(--xinzuo-accent, #FFD380)' }},
-      {{ settings.progress_color | default: 'var(--xinzuo-accent, #FFD380)' }} 10px,
-      color-mix(in srgb, {{ settings.progress_color | default: 'var(--xinzuo-accent, #FFD380)' }} 85%, white) 10px,
-      color-mix(in srgb, {{ settings.progress_color | default: 'var(--xinzuo-accent, #FFD380)' }} 85%, white) 20px
+      {{ settings.progress_color | default: 'var(--xinzuo-accent, #ff0005)' }},
+      {{ settings.progress_color | default: 'var(--xinzuo-accent, #ff0005)' }} 10px,
+      color-mix(in srgb, {{ settings.progress_color | default: 'var(--xinzuo-accent, #ff0005)' }} 85%, white) 10px,
+      color-mix(in srgb, {{ settings.progress_color | default: 'var(--xinzuo-accent, #ff0005)' }} 85%, white) 20px
     );
     background-size: 28px 28px;
     animation: progress-stripes 1s linear infinite;
