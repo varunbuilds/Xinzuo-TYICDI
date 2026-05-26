@@ -164,7 +164,7 @@ Fixing **laggy cart drawer updates** (qty +/-, remove) and the **delayed empty-c
 
 **Screenshots:** `before/task4.png` → `after/task4.png` (cart drawer: engraved item with fee line + totals; qty/remove/empty-state fixes verified on store).
 
-**Also fixed:** Continue shopping in empty cart → `/collections/all-products` (same as homepage SHOP ALL); theme setting `empty_cart_button_link` legacy `/collections/all` overridden in Liquid; `settings_schema.json` url default left blank (Shopify rejects path defaults).
+**Also fixed:** Continue shopping in empty cart → `/collections/all-products` (same as homepage SHOP ALL). Theme setting default stays `/collections/all` (required by Shopify schema); Liquid remaps that legacy URL to `collections['all-products']`.
 
 ### What I'd do next
 
