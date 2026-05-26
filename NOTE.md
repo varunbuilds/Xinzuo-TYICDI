@@ -213,7 +213,48 @@ Fixing **header layout and navigation** at tablet and mobile widths: remove the 
 
 ### What I'd do next
 
-- **Task 6+:** Collection filters, accessibility, SEO structured data.
 - **Separate track:** Shoplift snippet guard when app metafields are missing.
 - **Near finish:** debug cleanup (`sticky-add-to-cart.js`, `custom.js`, etc.).
-- Assign **`custom.main_image`** on accessory collections missing overlay images (e.g. Carving Forks, Sharpening Rods) if placeholders are not enough.
+
+---
+
+## Task 6 — Collection filters (`/collections/all-products`)
+
+### What I picked
+
+Improving **custom collection filters** on the shop-all page: clear feedback when filters match nothing, reliable mobile drawer sync, and a visible product count — so filtering feels intentional instead of broken.
+
+### Why it's the highest-impact thing here
+
+- `/collections/all-products` is the main browse path after homepage and header nav (`?filter=knives` / `?filter=accessories` from the menu).
+- README calls out **filter UX, mobile layout, empty states** on the collection page.
+- Client-side filters (`custom-collection-filters.liquid`) could hide every product with **no message**, and the mobile drawer synced checkboxes **by index** (wrong when section order differed).
+
+### What I did
+
+**Empty state (`sections/main-collection.liquid`):**
+- Added `#collection-filter-empty` (reuses `.main-collection-grid__empty` styles) with **Clear all filters** action.
+- Shown when active filters match **zero** products; hides the product grid and load-more.
+
+**Product count (`sections/main-collection.liquid` + `snippets/custom-collection-filters.liquid`):**
+- Added `#collection-results-count` with `aria-live="polite"`.
+- Updates on filter/sort: e.g. `12 items` or `3 items match your filters`.
+
+**Filter logic (`snippets/custom-collection-filters.liquid`):**
+- `updateFilteredEmptyState()` after `applyFilters()`.
+- `syncAllFilterCheckboxes()` matches by `data-filter-type` + `data-filter-value` (not DOM index).
+- Mobile **Clear All** clears drawer + desktop, runs `applyFilters()`, updates badge.
+- Desktop **Clear All** also syncs mobile clones.
+- URL `?filter=knives` / `?filter=accessories` unchanged (already mapped to Category checkboxes).
+
+**Verified on storefront:**
+- Desktop: checkbox filters apply; count updates; zero results shows empty message.
+- Mobile: drawer Apply/Clear sync correctly with sidebar.
+- Header “VIEW ALL KNIVES” → `/collections/all-products?filter=knives` pre-checks filters.
+
+### What I'd do next
+
+- **Shoplift snippet guard** when app metafields are missing.
+- **Accessibility:** focus trap in mobile filter drawer, keyboard apply.
+- **SEO / structured data** on PDP and collection pages.
+- **Debug cleanup** (`console.log` in cart/theme JS).

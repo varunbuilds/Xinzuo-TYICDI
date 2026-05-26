@@ -553,6 +553,28 @@
     color: var(--xinzuo-accent-text, #1A1A1E);
   }
 
+  .collection-results-count {
+    margin: 0 0 16px;
+    font-family: 'Sen', sans-serif;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .collection-filter-empty__clear {
+    margin-left: 4px;
+    padding: 0;
+    border: none;
+    background: none;
+    color: var(--xinzuo-accent, #FFD380);
+    font: inherit;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
+  .collection-filter-empty__clear:hover {
+    color: var(--xinzuo-accent-hover, #FFDC99);
+  }
+
   /* Responsive */
   @media screen and (max-width: 1000px) {
     .custom-filters-sidebar {
@@ -1057,10 +1079,24 @@
 
       clearAllBtn.addEventListener('click', () => {
         checkboxes.forEach(cb => cb.checked = false);
+        syncAllFilterCheckboxes('desktop');
         applyFilters();
         updateClearAllButton();
         updateFilterCount();
       });
+
+      const emptyClearBtn = document.getElementById('collection-filter-empty-clear');
+      if (emptyClearBtn) {
+        emptyClearBtn.addEventListener('click', () => {
+          checkboxes.forEach(cb => cb.checked = false);
+          syncAllFilterCheckboxes('desktop');
+          applyFilters();
+          updateClearAllButton();
+          updateFilterCount();
+        });
+      }
+
+      updateResultsCount(document.querySelectorAll('.product-grid__item').length, false);
 
       // Initialize custom dropdowns
       initCustomDropdowns();
@@ -1387,12 +1423,10 @@
           }
         }
 
-        // Update product count
+        // Update product count + empty state
         var totalCount = hasActiveFilters ? matchingProducts.length : products.length;
-        const countEl = document.querySelector('[title*="product count"], .products-count-wrapper span');
-        if (countEl) {
-          countEl.textContent = totalCount + ' items';
-        }
+        updateResultsCount(totalCount, hasActiveFilters);
+        updateFilteredEmptyState(hasActiveFilters, matchingProducts.length);
 
         // Scroll to top of product grid when filters change
         if (hasActiveFilters) {
@@ -1495,6 +1529,52 @@
       }
     }
 
+    function updateResultsCount(totalCount, hasActiveFilters) {
+      const countEl = document.getElementById('collection-results-count');
+      if (!countEl) return;
+
+      const label = totalCount === 1 ? 'item' : 'items';
+      countEl.textContent = hasActiveFilters
+        ? totalCount + ' ' + label + ' match your filters'
+        : totalCount + ' ' + label;
+    }
+
+    function updateFilteredEmptyState(hasActiveFilters, matchCount) {
+      const emptyEl = document.getElementById('collection-filter-empty');
+      const grid = document.querySelector('.product-grid');
+      const showEmpty = hasActiveFilters && matchCount === 0;
+
+      if (emptyEl) {
+        emptyEl.hidden = !showEmpty;
+      }
+      if (grid) {
+        grid.style.display = showEmpty ? 'none' : '';
+      }
+    }
+
+    function syncAllFilterCheckboxes(source) {
+      const fromSelector = source === 'mobile' ? '.drawer-body' : '.custom-filters-sidebar';
+      const toSelector = source === 'mobile' ? '.custom-filters-sidebar' : '.drawer-body';
+
+      document.querySelectorAll(fromSelector + ' .filter-option input[type="checkbox"]').forEach(function(sourceCb) {
+        const type = sourceCb.dataset.filterType;
+        const value = sourceCb.dataset.filterValue;
+        if (!type || !value) return;
+
+        const targetCb = document.querySelector(
+          toSelector +
+            ' .filter-option input[type="checkbox"][data-filter-type="' +
+            CSS.escape(type) +
+            '"][data-filter-value="' +
+            CSS.escape(value) +
+            '"]'
+        );
+        if (targetCb) {
+          targetCb.checked = sourceCb.checked;
+        }
+      });
+    }
+
     function updateClearAllButton() {
       const anyChecked = document.querySelector('.custom-filters-sidebar .filter-option input[type="checkbox"]:checked');
       const clearBtn = document.getElementById('clear-all-filters');
@@ -1539,20 +1619,12 @@
         });
       });
 
-      // Sync checkboxes between desktop and mobile
-      const syncCheckboxes = () => {
-        const desktopCheckboxes = document.querySelectorAll('.custom-filters-sidebar .filter-option input');
-        const mobileCheckboxes = document.querySelectorAll('.drawer-body .filter-option input');
-        
-        desktopCheckboxes.forEach((desktopCb, index) => {
-          if (mobileCheckboxes[index]) {
-            mobileCheckboxes[index].checked = desktopCb.checked;
-          }
-        });
-      };
+      // Sync checkboxes between desktop and mobile (by filter value, not DOM index)
+      const syncCheckboxesToMobile = () => syncAllFilterCheckboxes('desktop');
+      const syncCheckboxesToDesktop = () => syncAllFilterCheckboxes('mobile');
 
       openBtn.addEventListener('click', () => {
-        syncCheckboxes();
+        syncCheckboxesToMobile();
         drawer.classList.add('active');
         document.body.style.overflow = 'hidden';
       });
@@ -1566,16 +1638,7 @@
       overlay.addEventListener('click', closeDrawer);
 
       applyBtn.addEventListener('click', () => {
-        // Sync mobile selections back to desktop
-        const mobileCheckboxes = document.querySelectorAll('.drawer-body .filter-option input');
-        const desktopCheckboxes = document.querySelectorAll('.custom-filters-sidebar .filter-option input');
-        
-        mobileCheckboxes.forEach((mobileCb, index) => {
-          if (desktopCheckboxes[index]) {
-            desktopCheckboxes[index].checked = mobileCb.checked;
-          }
-        });
-
+        syncCheckboxesToDesktop();
         applyFilters();
         updateClearAllButton();
         updateFilterCount();
@@ -1583,7 +1646,13 @@
       });
 
       mobileClearBtn.addEventListener('click', () => {
-        document.querySelectorAll('.drawer-body .filter-option input').forEach(cb => cb.checked = false);
+        document.querySelectorAll('.drawer-body .filter-option input').forEach(cb => {
+          cb.checked = false;
+        });
+        syncCheckboxesToDesktop();
+        applyFilters();
+        updateClearAllButton();
+        updateFilterCount();
       });
     }
   })();

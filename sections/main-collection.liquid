@@ -293,6 +293,7 @@
 
     <div class="collection-right-column" id="collection-right-column">
     {% paginate collection.products by 24 %}
+      <p class="collection-results-count" id="collection-results-count" aria-live="polite"></p>
       {% capture children %}
         {% assign product_display_index = 0 %}
         {% for product in collection.products %}
@@ -325,6 +326,20 @@
         products: collection.products,
         paginate: paginate
       %}
+
+      <div
+        id="collection-filter-empty"
+        class="main-collection-grid__empty collection-filter-empty"
+        hidden
+      >
+        <h2 class="main-collection-grid__empty-title h2">No products found</h2>
+        <p>
+          No products match your filters.
+          <button type="button" class="collection-filter-empty__clear" id="collection-filter-empty-clear">
+            Clear all filters
+          </button>
+        </p>
+      </div>
 
       {%- comment -%}
         Load More button — SEO-friendly: uses a real <a href> so Googlebot can follow
