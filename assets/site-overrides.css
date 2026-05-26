@@ -222,8 +222,21 @@ header .header__column--right .search-action {
     order: 1;
 }
 
-header .header__column--center > a.header-logo {
-    display: none;
+/* Mobile/tablet: center logo in header grid (see sections/header.liquid). Do not hide logo here — that broke Theme Editor "Center" and did not affect nav. */
+@media screen and (max-width: 1280px) {
+    .header-logo {
+        grid-area: center;
+        justify-self: center;
+        margin-inline: 0;
+    }
+
+    .header__drawer {
+        grid-area: leftA;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        width: max-content;
+    }
 }
 
 @media screen and (max-width: 1350px) {
@@ -393,15 +406,6 @@ footer .menu-title {
     .hero .hero__container {
         height: 100%;
         padding: 15px 0;
-    }
-
-    .header__column--center > a.header-logo {
-        display: flex !important;
-    }
-
-    .header__column--center > a.header-logo img {
-        width: 50px;
-        height: 50px;
     }
 
     .hero__content-wrapper {

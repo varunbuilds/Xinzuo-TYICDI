@@ -166,8 +166,34 @@ Fixing **laggy cart drawer updates** (qty +/-, remove) and the **delayed empty-c
 
 **Also fixed:** Continue shopping in empty cart → `/collections/all-products` (same as homepage SHOP ALL). Theme setting default stays `/collections/all` (required by Shopify schema); Liquid remaps that legacy URL to `collections['all-products']`.
 
+---
+
+## Task 5 — Header responsiveness (mobile / tablet)
+
+### What I picked
+
+Fixing **header layout** at tablet and mobile widths: remove the white horizontal menu strip, center the logo, and align hamburger + search on the left with account/cart on the right — matching xinzuo.com.au while keeping desktop (logo left, nav center) intact.
+
+### Why it's the highest-impact thing here
+
+- README calls out **navbar / header**; broken breakpoints were visible on every page after wiring the main menu in admin.
+- Theme Editor **Logo → Center** had no effect because `site-overrides.css` hid any logo in the center column.
+- Between **750px–1280px**, the desktop `<header-menu>` wrapper stayed in the grid (only inner `nav` was hidden), often creating a **second-row white bar** with menu styling (`scheme-1` white background).
+
+### What I did
+
+**Nav regression fix:** Reverted all Task 5 header CSS/JS experiments to match **task 4 commit** (`blocks/_header-menu.liquid`, `snippets/header-menu.liquid`, `sections/header.liquid`). Task 5 changes (global nav hide/show, `block:` render pass, duplicate `!important` rules) removed the 5 desktop links.
+
+**Logo-only change kept in `assets/site-overrides.css`:**
+- Removed `display: none` on center-column logo (was blocking Theme Editor “Center”).
+- Added ≤1280px grid helpers for `.header-logo` and `.header__drawer` only — **no nav display rules**.
+
+**Theme Editor:** Logo **Left**, Menu **Center**. Desktop nav shows at **>1280px**; ≤1280px uses hamburger drawer (unchanged from task 4).
+
+**Screenshots:** `before/task5.png` → `after/task5.png` (tablet white strip + off-center logo → compact header).
+
 ### What I'd do next
 
-- **Task 5+:** Navbar/header, collection filters, accessibility, SEO.
+- **Task 6+:** Collection filters, accessibility, SEO.
 - **Separate track:** Shoplift snippet guard.
 - **Near finish:** debug cleanup.

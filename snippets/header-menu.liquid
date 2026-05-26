@@ -1,5 +1,17 @@
 {% liquid
   assign block_settings = block.settings
+
+  assign nav_menu = menu
+  if nav_menu == blank or nav_menu.links.size == 0
+    assign nav_menu = block_settings.menu
+  endif
+  if nav_menu == blank or nav_menu.links.size == 0
+    assign nav_menu = linklists['main-menu-restructured']
+  endif
+  if nav_menu == blank or nav_menu.links.size == 0
+    assign nav_menu = linklists['main-menu']
+  endif
+
   assign menu_content_type = block_settings.menu_style | default: 'text'
   assign image_border_radius = block_settings.image_border_radius
   assign color_scheme_classes = ''
@@ -24,7 +36,7 @@
 %}
 
 {% capture children %}
-  {% for link in block_settings.menu.links %}
+  {% for link in nav_menu.links %}
     {% assign nav_display_title = link.title %}
     {% if link.title == "Sets" %}
       {% assign nav_display_title = "Knife Sets" %}
@@ -91,17 +103,21 @@
     style="{% render 'menu-font-styles', settings: block_settings %}"
   >
     <ul class="home-menu-ul">
-      {% for link in block_settings.menu.links %}
+      {% for link in nav_menu.links %}
         {% assign nav_display_title = link.title %}
-        {% if link.title == "Sets" %}
-          {% assign nav_display_title = "Knife Sets" %}
+        {% if link.title == 'Sets' %}
+          {% assign nav_display_title = 'Knife Sets' %}
         {% endif %}
-        {% if link.title != "BEST SELLERS" and link.title != "REVIEWS" and link.title != "BUNDLES" and link.title != "Build a Bundle" %}
+        {% if link.title != 'BEST SELLERS'
+          and link.title != 'REVIEWS'
+          and link.title != 'BUNDLES'
+          and link.title != 'Build a Bundle'
+        %}
           <li class="menu-list__list-item">
             {% if link.title != 'Logo' %}
               {% if link.links == blank %}
                 <a
-                  {% if link.title == "FAQS" %}
+                  {% if link.title == 'FAQS' %}
                     href="/pages/faqs"
                   {% else %}
                     href="{{ link.url }}"
@@ -120,19 +136,19 @@
                   ref="menuitem"
                 >
               {% endif %}
-                <span class="menu-list__link-title">{{- nav_display_title -}}</span>
-                {%- if link.links != blank -%}
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                    <g clip-path="url(#clip0_4592_27158)">
-                      <path d="M13 6L8 11L3 6" stroke="white" stroke-opacity="0.9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    </g>
-                    <defs>
-                      <clipPath id="clip0_4592_27158">
-                        <rect width="16" height="16" fill="white"/>
-                      </clipPath>
-                    </defs>
-                  </svg>
-                {%- endif -%}
+              <span class="menu-list__link-title">{{- nav_display_title -}}</span>
+              {%- if link.links != blank -%}
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <g clip-path="url(#clip0_4592_27158)">
+                    <path d="M13 6L8 11L3 6" stroke="white" stroke-opacity="0.9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </g>
+                  <defs>
+                    <clipPath id="clip0_4592_27158">
+                      <rect width="16" height="16" fill="white"/>
+                    </clipPath>
+                  </defs>
+                </svg>
+              {%- endif -%}
               {% if link.links == blank %}
                 </a>
               {% else %}
@@ -165,8 +181,7 @@
                 id="header-dropdown-back-{{ forloop.index }}"
                 class="header-dropdown-back"
                 onclick="closeMenu({{ forloop.index }})"
-              >
-              </div>
+              ></div>
               <div id="submenu-{{ forloop.index }}" class="header-dropdown">
                 <div class="dropdown-header">
                   <div class="dropdown-header-left" onclick="closeMenu({{ forloop.index }})">
@@ -212,15 +227,29 @@
                   {%- assign is_top_picks_menu = true -%}
                 {%- endif -%}
                 {%- assign is_type_menu = false -%}
-                {%- if link.title == 'KNIVES' or link.title == 'Knives' or link.title == 'Shop by Type' or link.title == 'SHOP BY TYPE' -%}
+                {%- if link.title == 'KNIVES'
+                  or link.title == 'Knives'
+                  or link.title == 'Shop by Type'
+                  or link.title == 'SHOP BY TYPE'
+                -%}
                   {%- assign is_type_menu = true -%}
                 {%- endif -%}
-                <ul{% if is_series_menu %} class="xz-mega-series-list"{% elsif is_accessories_menu %} class="xz-mega-series-list xz-mega-series-list--accessories"{% elsif is_top_picks_menu %} class="xz-mega-series-list xz-mega-series-list--top-picks"{% elsif is_type_menu %} class="xz-mega-type-list"{% endif %}>
+                <ul
+                  {% if is_series_menu %}
+                    class="xz-mega-series-list"
+                  {% elsif is_accessories_menu %}
+                    class="xz-mega-series-list xz-mega-series-list--accessories"
+                  {% elsif is_top_picks_menu %}
+                    class="xz-mega-series-list xz-mega-series-list--top-picks"
+                  {% elsif is_type_menu %}
+                    class="xz-mega-type-list"
+                  {% endif %}
+                >
                   {% for sublink in link.links %}
                     {% comment %} Title overrides for navigation links {% endcomment %}
                     {% assign display_title = sublink.title %}
-                    {% if sublink.title == "Wood Chopping" %}
-                      {% assign display_title = "Chopping Boards" %}
+                    {% if sublink.title == 'Wood Chopping' %}
+                      {% assign display_title = 'Chopping Boards' %}
                     {% endif %}
                     {%- if is_series_menu -%}
                       {%- liquid
@@ -236,10 +265,7 @@
                         endif
                       -%}
                       <li class="menu-dropdown-list menu-dropdown-list--series">
-                        {% render 'xz-series-tile',
-                           url: sublink.url,
-                           image: series_image,
-                           label: display_title %}
+                        {% render 'xz-series-tile', url: sublink.url, image: series_image, label: display_title %}
                       </li>
                     {%- elsif is_accessories_menu or is_top_picks_menu -%}
                       {%- liquid
@@ -254,10 +280,7 @@
                         endif
                       -%}
                       <li class="menu-dropdown-list menu-dropdown-list--series">
-                        {% render 'xz-series-tile',
-                           url: sublink.url,
-                           image: simple_image,
-                           title: display_title %}
+                        {% render 'xz-series-tile', url: sublink.url, image: simple_image, title: display_title %}
                       </li>
                     {%- elsif is_type_menu -%}
                       {%- liquid
@@ -280,144 +303,89 @@
                       -%}
                       <li class="menu-dropdown-list menu-dropdown-list--type">
                         {% render 'xz-type-tile',
-                           collection: type_collection,
-                           type_label: display_title,
-                           url: sublink.url,
-                           promo_text: type_promo %}
+                          collection: type_collection,
+                          type_label: display_title,
+                          url: sublink.url,
+                          promo_text: type_promo
+                        %}
                       </li>
                     {%- else -%}
-                    <li class="menu-dropdown-list">
-                      <a href="{{ sublink.url }}" class="mega-dropdown">
-                        <span class="mega-dropdown-title">
-                          {{ display_title }}
-                        </span>
-                      </a>
-                      {% if sublink.links != blank %}
-                        <ul
-                          class="list-unstyled"
-                          {% if should_break_columns %}
-                            style="column-count: {{ column_span }};"
-                          {% endif %}
-                        >
-                          {% for childLink in sublink.links limit: 5 %}
-                            {% assign break_after_modulo = forloop.index | modulo: 10 %}
-                            <li
-                              {% if break_after_modulo == 0 and should_break_columns %}
-                                style="break-after: column;"
-                              {% endif %}
-                            >
-                              <a href="{{ childLink.url }}">
-                                <span class="mega-menu__link-title wrap-text">{{- childLink.title -}}</span>
-                              </a>
-                            </li>
-                          {% endfor %}
-                          {% if sublink.links.size > 5 %}
-                            <li><a href="{{ sublink.url }}">view all</a></li>
-                          {% endif %}
-                        </ul>
-                      {% endif %}
-                      {% assign product_handle = sublink.url | split: '/' | last %}
-                      {% assign product = all_products[product_handle] %}
-                      {% if product != blank %}
-                        <ul
-                          class="list-unstyled"
-                          {% if should_break_columns %}
-                            style="column-count: {{ column_span }};"
-                          {% endif %}
-                        >
-                          {% for variant in product.variants limit: 5 %}
-                            {% assign break_after_modulo = forloop.index | modulo: 10 %}
-                            <li
-                              {% if break_after_modulo == 0 and should_break_columns %}
-                                style="break-after: column;"
-                              {% endif %}
-                            >
-                              <a href="{{ variant.url }}">
-                                <span class="mega-menu__link-title wrap-text">{{- variant.title -}}</span>
-                              </a>
-                            </li>
-                          {% endfor %}
-                          {% if product.variants.size > 5 %}
-                            <li><a href="{{ product.url }}">view all</a></li>
-                          {% endif %}
-                        </ul>
-                        {%- liquid
-                          # Custom override: product.metafields.custom.main_image
-                          # wins over the product's featured_image.
-                          assign nav_product_img = product.metafields.custom.main_image
-                          if nav_product_img == blank
-                            assign nav_product_img = product.featured_image
-                          endif
-                          if nav_product_img.image
-                            assign nav_product_img = nav_product_img.image
-                          endif
-                        -%}
-                        {% if nav_product_img != blank %}
-                          <img
-                            src="{{ nav_product_img | image_url: width: 400 }}"
-                            width="100%"
-                            height="100%"
-                            loading="lazy"
-                            alt="{{ product.title | escape }}"
+                      <li class="menu-dropdown-list">
+                        <a href="{{ sublink.url }}" class="mega-dropdown">
+                          <span class="mega-dropdown-title">
+                            {{ display_title }}
+                          </span>
+                        </a>
+                        {% if sublink.links != blank %}
+                          <ul
+                            class="list-unstyled"
+                            {% if should_break_columns %}
+                              style="column-count: {{ column_span }};"
+                            {% endif %}
                           >
-                        {% else %}
-                          {% assign firstimage = product.products.first %}
-                          <img
-                            src="{{ firstimage.featured_image | image_url: width: 400 }}"
-                            width="100%"
-                            height="100%"
-                            loading="lazy"
-                            alt="{{ firstimage.title | escape }}"
-                          >
+                            {% for childLink in sublink.links limit: 5 %}
+                              {% assign break_after_modulo = forloop.index | modulo: 10 %}
+                              <li
+                                {% if break_after_modulo == 0 and should_break_columns %}
+                                  style="break-after: column;"
+                                {% endif %}
+                              >
+                                <a href="{{ childLink.url }}">
+                                  <span class="mega-menu__link-title wrap-text">{{- childLink.title -}}</span>
+                                </a>
+                              </li>
+                            {% endfor %}
+                            {% if sublink.links.size > 5 %}
+                              <li><a href="{{ sublink.url }}">view all</a></li>
+                            {% endif %}
+                          </ul>
                         {% endif %}
-                      {% endif %}
-                      {% assign collection_handle = sublink.url | split: '/' | last %}
-                      {% assign collection = collections[collection_handle] %}
-                      {% if collection != blank %}
-                        {% comment %} <ul
-                          class="list-unstyled"
-                          {% if should_break_columns %}
-                            style="column-count: {{ column_span }};"
-                          {% endif %}
-                        >
-                          {% for product in collection.products limit: 5 %}
-                            {% assign break_after_modulo = forloop.index | modulo: 10 %}
-                            <li
-                              {% if break_after_modulo == 0 and should_break_columns %}
-                                style="break-after: column;"
-                              {% endif %}
-                            >
-                              <a href="{{ product.url }}">
-                                <span class="mega-menu__link-title wrap-text">{{- product.title | split: " - " | last | strip_html | truncate: 25, "..." -}}</span>
-                              </a>
-                            </li>
-                          {% endfor %}
-                          {% if collection.products.size > 5 %}
-                            <li><a href="{{ collection.url }}">view all</a></li>
-                          {% endif %}
-                        </ul> {% endcomment %}
-                        {%- liquid
-                          # Custom override: collection.metafields.custom.main_image
-                          # wins over the standard featured_image.
-                          assign menu_img = collection.metafields.custom.main_image
-                          if menu_img == blank
-                            assign menu_img = collection.featured_image
-                          endif
-                          if menu_img.image
-                            assign menu_img = menu_img.image
-                          endif
-                        -%}
-                        <a class="menu-img" href="{{ sublink.url }}">
-                          {% if menu_img != blank %}
+                        {% assign product_handle = sublink.url | split: '/' | last %}
+                        {% assign product = all_products[product_handle] %}
+                        {% if product != blank %}
+                          <ul
+                            class="list-unstyled"
+                            {% if should_break_columns %}
+                              style="column-count: {{ column_span }};"
+                            {% endif %}
+                          >
+                            {% for variant in product.variants limit: 5 %}
+                              {% assign break_after_modulo = forloop.index | modulo: 10 %}
+                              <li
+                                {% if break_after_modulo == 0 and should_break_columns %}
+                                  style="break-after: column;"
+                                {% endif %}
+                              >
+                                <a href="{{ variant.url }}">
+                                  <span class="mega-menu__link-title wrap-text">{{- variant.title -}}</span>
+                                </a>
+                              </li>
+                            {% endfor %}
+                            {% if product.variants.size > 5 %}
+                              <li><a href="{{ product.url }}">view all</a></li>
+                            {% endif %}
+                          </ul>
+                          {%- liquid
+                            # Custom override: product.metafields.custom.main_image
+                            # wins over the product's featured_image.
+                            assign nav_product_img = product.metafields.custom.main_image
+                            if nav_product_img == blank
+                              assign nav_product_img = product.featured_image
+                            endif
+                            if nav_product_img.image
+                              assign nav_product_img = nav_product_img.image
+                            endif
+                          -%}
+                          {% if nav_product_img != blank %}
                             <img
-                              src="{{ menu_img | image_url: width: 400 }}"
+                              src="{{ nav_product_img | image_url: width: 400 }}"
                               width="100%"
                               height="100%"
                               loading="lazy"
-                              alt="{{ collection.title | escape }}"
+                              alt="{{ product.title | escape }}"
                             >
                           {% else %}
-                            {% assign firstimage = collection.collections.first %}
+                            {% assign firstimage = product.products.first %}
                             <img
                               src="{{ firstimage.featured_image | image_url: width: 400 }}"
                               width="100%"
@@ -426,22 +394,80 @@
                               alt="{{ firstimage.title | escape }}"
                             >
                           {% endif %}
-                          {% assign sum = 0 %}
-                          {% for product in collection.products %}
-                            {% if product.compare_at_price and product.compare_at_price > product.price %}
-                              {% assign discount = product.compare_at_price | minus: product.price %}
-                              {% assign percent = discount | times: 100 | divided_by: product.compare_at_price %}
-                              {% if sum < percent %}
-                                {% assign sum = percent %}
+                        {% endif %}
+                        {% assign collection_handle = sublink.url | split: '/' | last %}
+                        {% assign collection = collections[collection_handle] %}
+                        {% if collection != blank %}
+                          {% comment %}
+                            <ul
+                              class="list-unstyled"
+                              {% if should_break_columns %}
+                                style="column-count: {{ column_span }};"
                               {% endif %}
+                            >
+                              {% for product in collection.products limit: 5 %}
+                                {% assign break_after_modulo = forloop.index | modulo: 10 %}
+                                <li
+                                  {% if break_after_modulo == 0 and should_break_columns %}
+                                    style="break-after: column;"
+                                  {% endif %}
+                                >
+                                  <a href="{{ product.url }}">
+                                    <span class="mega-menu__link-title wrap-text">{{- product.title | split: " - " | last | strip_html | truncate: 25, "..." -}}</span>
+                                  </a>
+                                </li>
+                              {% endfor %}
+                              {% if collection.products.size > 5 %}
+                                <li><a href="{{ collection.url }}">view all</a></li>
+                              {% endif %}
+                            </ul>
+                          {% endcomment %}
+                          {%- liquid
+                            # Custom override: collection.metafields.custom.main_image
+                            # wins over the standard featured_image.
+                            assign menu_img = collection.metafields.custom.main_image
+                            if menu_img == blank
+                              assign menu_img = collection.featured_image
+                            endif
+                            if menu_img.image
+                              assign menu_img = menu_img.image
+                            endif
+                          -%}
+                          <a class="menu-img" href="{{ sublink.url }}">
+                            {% if menu_img != blank %}
+                              <img
+                                src="{{ menu_img | image_url: width: 400 }}"
+                                width="100%"
+                                height="100%"
+                                loading="lazy"
+                                alt="{{ collection.title | escape }}"
+                              >
+                            {% else %}
+                              {% assign firstimage = collection.collections.first %}
+                              <img
+                                src="{{ firstimage.featured_image | image_url: width: 400 }}"
+                                width="100%"
+                                height="100%"
+                                loading="lazy"
+                                alt="{{ firstimage.title | escape }}"
+                              >
                             {% endif %}
-                          {% endfor %}
-                          {% if sum != 0 %}
-                            <span class="price-off">{{ sum }}% OFF</span>
-                          {% endif %}
-                        </a>
-                      {% endif %}
-                    </li>
+                            {% assign sum = 0 %}
+                            {% for product in collection.products %}
+                              {% if product.compare_at_price and product.compare_at_price > product.price %}
+                                {% assign discount = product.compare_at_price | minus: product.price %}
+                                {% assign percent = discount | times: 100 | divided_by: product.compare_at_price %}
+                                {% if sum < percent %}
+                                  {% assign sum = percent %}
+                                {% endif %}
+                              {% endif %}
+                            {% endfor %}
+                            {% if sum != 0 %}
+                              <span class="price-off">{{ sum }}% OFF</span>
+                            {% endif %}
+                          </a>
+                        {% endif %}
+                      </li>
                     {%- endif -%}
                   {% endfor %}
                 </ul>
@@ -492,7 +518,7 @@
     display: flex;
     align-items: center;
     gap: 32px;
-    font-family: "Sen";
+    font-family: 'Sen';
     font-weight: 400;
     font-size: 16px;
     color: #f9f9f7;
@@ -562,7 +588,7 @@
 
   .header-dropdown > ul > li a.mega-dropdown {
     display: block;
-    font-family: "Sen", sans-serif;
+    font-family: 'Sen', sans-serif;
     font-weight: 600;
     font-size: 18px;
     color: #fff;
@@ -578,7 +604,7 @@
 
   .header-dropdown > ul > li a {
     display: block;
-    font-family: "Sen", sans-serif;
+    font-family: 'Sen', sans-serif;
     font-weight: 600;
     font-size: 20px;
     color: #fff;
@@ -586,7 +612,7 @@
   }
 
   .header-dropdown > ul > li ul li a {
-    font-family: "Sen";
+    font-family: 'Sen';
     font-weight: 400;
     font-size: 16px;
     color: #fff;
@@ -635,8 +661,8 @@
   }
 
   .menu-list__list-item ul::-webkit-scrollbar {
-  display: none;
-}
+    display: none;
+  }
 
   .home-menu-ul {
     display: flex;
@@ -657,12 +683,12 @@
 
   .menu-img .price-off {
     position: absolute;
-    background-color: var(--xinzuo-red, #C81E1E);
+    background-color: var(--xinzuo-red, #c81e1e);
     padding: 5px 10px;
     border-radius: 20px;
     top: 10px;
     left: 15px;
-    font-family: "Sen", sans-serif;
+    font-family: 'Sen', sans-serif;
     font-weight: 600;
     font-size: 12px;
     color: white;
@@ -681,7 +707,7 @@
   }
   .header-dropdown > ul.xz-mega-series-list > li.menu-dropdown-list--series,
   .header-dropdown > ul.xz-mega-type-list > li.menu-dropdown-list--type {
-    width: auto;                 /* grid column owns the width */
+    width: auto; /* grid column owns the width */
     background: transparent;
     border-radius: 0;
     overflow: visible;
@@ -715,13 +741,13 @@
     const back = document.querySelector(`#header-dropdown-back-${num}`);
     menu.style.maxHeight = menu.scrollHeight + 'px';
     back.style.display = 'block';
-    document.body.style.overflow = "hidden";
+    document.body.style.overflow = 'hidden';
   };
   const closeMenu = (num) => {
     const menu = document.querySelector(`#submenu-${num}`);
     const back = document.querySelector(`#header-dropdown-back-${num}`);
     menu.style.maxHeight = 0;
     back.style.display = 'none';
-    document.body.style.overflow = ""
+    document.body.style.overflow = '';
   };
 </script>

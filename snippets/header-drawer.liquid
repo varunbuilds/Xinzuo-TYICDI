@@ -12,7 +12,24 @@
 {%- enddoc -%}
 
 {% liquid
-  assign block_settings = block.settings
+  if block != blank
+    assign block_settings = block.settings
+  endif
+
+  assign drawer_menu = menu
+  if drawer_menu == blank or drawer_menu.links.size == 0
+    assign drawer_menu = linklist
+  endif
+  if drawer_menu == blank or drawer_menu.links.size == 0
+    assign drawer_menu = block_settings.menu
+  endif
+  if drawer_menu == blank or drawer_menu.links.size == 0
+    assign drawer_menu = linklists['main-menu-restructured']
+  endif
+  if drawer_menu == blank or drawer_menu.links.size == 0
+    assign drawer_menu = linklists['main-menu']
+  endif
+
   assign max_featured_items = 4
   assign image_border_radius = block_settings.image_border_radius
 
@@ -138,7 +155,7 @@
           role="list"
         >
           {% assign animation_index = 0 %}
-          {%- for link in linklist.links -%}
+          {%- for link in drawer_menu.links -%}
             {% if link.title != "Logo" %}
               {% assign animation_index = animation_index | plus: 1 %}
               {% comment %} Title overrides for top-level navigation links {% endcomment %}
@@ -875,7 +892,7 @@
       </nav>
       <div
         class="menu-drawer__utility-links menu-drawer__animated-element"
-        style="--menu-drawer-animation-index: {{ linklist.links.size }};"
+        style="--menu-drawer-animation-index: {{ drawer_menu.links.size }};"
       >
         {% liquid
           assign show_language = section.settings.show_language

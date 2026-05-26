@@ -19,8 +19,11 @@
       {{ block.shopify_attributes }}
     >
       {% render 'header-drawer',
+        block: block,
+        section: section,
         class: 'header__drawer--mobile',
-        linklist: block_settings.menu,
+        linklist: block.settings.menu,
+        menu: block.settings.menu,
         data_header_drawer_type: 'mobile-drawer'
       %}
     </div>
@@ -67,7 +70,11 @@
       style="--submenu-animation-speed: {{ animation_speed }}ms;"
     >
       <div class="header-menu__inner">
-        {%- render 'header-menu' %}
+        {%- render 'header-menu',
+          block: block,
+          section: section,
+          menu: block.settings.menu
+        %}
       </div>
 
       <script
