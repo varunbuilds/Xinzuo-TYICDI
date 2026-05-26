@@ -28,8 +28,14 @@
       assign can_add_to_cart = false
     endif
   endif
+
+  comment
+    Sticky bar disabled sitewide — main buy-buttons on the PDP is the only add-to-cart CTA.
+  endcomment
+  assign show_sticky_atc_bar = false
 %}
 
+{% if show_sticky_atc_bar %}
 <script src="{{ 'sticky-add-to-cart.js' | asset_url }}" type="module"></script>
 
 <sticky-add-to-cart-bar
@@ -60,6 +66,7 @@
     </button>
   </form>
 </sticky-add-to-cart-bar>
+{% endif %}
 
 {% stylesheet %}
   /* Wrapper - no styles, just container */
@@ -186,7 +193,7 @@
       "type": "checkbox",
       "id": "enabled",
       "label": "Enable sticky bar",
-      "default": true,
+      "default": false,
       "info": "Mobile only (< 750px). Appears when main add-to-cart button is off-screen."
     }
   ],

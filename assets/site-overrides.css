@@ -161,8 +161,7 @@ body.xinzuo-light .home-products-div > h2 {
   color: #1A1A1E !important;
 }
 body.xinzuo-light .home-products #load-more {
-  background-color: #ff0005 !important;
-  color: #FFFFFF !important;
+  color: inherit !important;
 }
 
 body > * {
@@ -467,8 +466,6 @@ header .dropdown-header-center img {
     font-family: "Sen" !important;
     font-weight: 600 !important;
     font-size: 14px !important;
-    background-color: #ff0005 !important;
-    color: #FFFFFF !important;
 }
 
 footer .menu-title {
@@ -999,12 +996,7 @@ footer footer {
 }
 
 .contact-form button.submit-button {
-    padding: 10px 30px;
-    border-radius: 4px;
-    background-color: #ff0005;
-    color: #FFFFFF;
-    font-family: "Albert Sans";
-    font-size: 16px;
+    font-family: "Sen", sans-serif;
 }
 
 /* All h2 headings — Sen everywhere */
@@ -1214,29 +1206,30 @@ aside {
    etc) are styled in custom.css to inherit the same look.
    ========================================================================== */
 
-/* Primary gold button — 40px default, 48px large hero variant */
+/* Primary CTA utility — matches hero Shop All (see xinzuo-buttons.css) */
 .xz-btn-gold {
-  height: var(--xz-h-btn, 40px);
-  padding: 0 16px;
-  background: var(--xz-accent, #ff0005);
-  color: var(--xz-on-accent, #FFFFFF);
+  height: auto;
+  min-height: 40px;
+  padding: var(--xinzuo-btn-padding, 8px 24px);
+  background: transparent;
+  color: var(--xinzuo-btn-color, #fff);
+  border: 1.5px solid var(--xinzuo-btn-border, rgba(255, 255, 255, 0.7));
   font-family: var(--xz-font, "Sen", sans-serif);
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  border: none;
-  border-radius: var(--xz-r, 4px);
+  font-size: var(--xinzuo-btn-font-size, 13px);
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  text-transform: capitalize;
+  border-radius: 0;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 6px;
   cursor: pointer;
-  transition: background 0.15s ease;
+  transition: all 0.3s ease;
   text-decoration: none;
 }
-.xz-btn-gold:hover { background: var(--xz-accent-hover, #ff3338); color: var(--xz-on-accent, #FFFFFF); }
-.xz-btn-gold:disabled { opacity: 0.4; cursor: not-allowed; }
+.xz-btn-gold:hover { background: var(--xz-accent, #ff0005); border-color: var(--xz-accent, #ff0005); color: #fff; }
+.xz-btn-gold:disabled { opacity: 0.5; cursor: not-allowed; }
 .xz-btn-gold.xz-btn-gold--full { width: 100%; }
 .xz-btn-gold.xz-btn-gold--lg { height: var(--xz-h-btn-lg, 48px); font-size: 13px; }
 
@@ -1505,38 +1498,30 @@ aside {
   pointer-events: auto;
 }
 
-/* === ATC button === */
+/* === ATC button (outline — filled red on hover via xinzuo-buttons.css) === */
 .xz-product-card .xz-card-atc {
   width: 100%;
-  height: 40px;
-  padding: 0;
-  background: var(--xz-accent, #ff0005);
-  color: var(--xz-on-accent, #FFFFFF);
-  border: none;
-  border-radius: 4px;
+  min-height: 40px;
+  height: auto;
+  padding: 8px 16px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: var(--xz-font, "Sen", Arial, sans-serif);
-  font-size: 14px;
-  font-weight: 700;
-  line-height: 100%;
-  text-transform: uppercase;
-  letter-spacing: 0;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.2;
+  text-transform: capitalize;
+  letter-spacing: 0.3px;
   text-decoration: none;
   cursor: pointer;
-  transition: background-color 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-              transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-.xz-product-card .xz-card-atc:hover {
-  background: var(--xz-accent-hover, #ff3338);
-  color: var(--xz-on-accent, #FFFFFF);
-  transform: scale(1.01);
+  transition: all 0.3s ease;
 }
 .xz-product-card .xz-card-atc.is-loading,
 .xz-product-card .xz-card-atc.is-added {
-  background: var(--xz-accent-active, #cc0004);
-  color: var(--xz-on-accent, #FFFFFF);
+  background: var(--xz-accent-active, #cc0004) !important;
+  border-color: var(--xz-accent-active, #cc0004) !important;
+  color: #fff !important;
   transform: none;
   cursor: default;
 }
@@ -1820,7 +1805,7 @@ aside {
   .xz-product-card .xz-price-new     { font-size: 12px; }
   .xz-product-card .xz-price-old     { font-size: 12px; }
   .xz-product-card .xz-card-atc      { font-size: 12px; }
-  .xz-product-card .xz-card-atc:hover { background: var(--xz-accent, #ff0005); transform: none; }
+  .xz-product-card .xz-card-atc:hover { transform: none; }
   .xz-product-card .xz-card-promo-text { font-size: 12px; }
 }
 

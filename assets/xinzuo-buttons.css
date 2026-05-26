@@ -1,0 +1,309 @@
+/* ==========================================================================
+   Global CTA buttons — matches homepage hero "Shop All" outline style
+   Loaded last in theme.liquid so section-scoped styles do not override.
+   ========================================================================== */
+
+:root {
+  --xinzuo-btn-border: rgba(255, 255, 255, 0.7);
+  --xinzuo-btn-color: #ffffff;
+  --xinzuo-btn-padding: 8px 24px;
+  --xinzuo-btn-font-size: 13px;
+}
+
+/* Light surfaces: dark outline + dark text (hover still red fill) */
+body .home-products,
+body.xinzuo-light .home-products {
+  --xinzuo-btn-border: rgba(26, 26, 30, 0.7);
+  --xinzuo-btn-color: #1a1a1e;
+}
+
+body :is(
+  .hero-cta-button,
+  .bundle-cta,
+  #load-more,
+  #load-more-collection,
+  .load-more-btn:not(.load-more-btn--done),
+  .button--primary,
+  .button-primary,
+  .shopify-section .btn--primary,
+  .apply-filters-btn,
+  .email-signup__input-group button,
+  .email-signup__button,
+  .engraving-modal__btn--confirm,
+  .cart__checkout-button,
+  .add-to-cart-button:not(.button-secondary),
+  .mobile-btn,
+  .catalogue-card__btn,
+  .compare-btn-container a,
+  .best-reviews__cta a,
+  .xz-btn-gold,
+  .xz-product-card .xz-card-atc:not(.xz-card-atc--soldout),
+  .bundle-summary__cta,
+  .cart-recommended-product__add-btn,
+  .sticky-add-to-cart-button,
+  .contact-form button.submit-button,
+  .jdgm-btn--solid,
+  .jdgm-write-rev-link,
+  .jdgm-submit-rev,
+  .jdgm-all-reviews-page__load-more,
+  .header-drawer-shop-all,
+  .quick-question .quiz,
+  .home-modal-content div button,
+  .buy-button,
+  .comparison-shop-buttons a,
+  .blog-post-comments__form-submit,
+  .cart-discount__button,
+  .cart-items__empty-button,
+  .facets__see-results,
+  .password-dialog__submit-button,
+  .collection-wrapper .quick-add__button
+) {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  padding: var(--xinzuo-btn-padding) !important;
+  border: 1.5px solid var(--xinzuo-btn-border) !important;
+  background: transparent !important;
+  border-radius: 0 !important;
+  font-family: "Sen", sans-serif !important;
+  font-weight: 600 !important;
+  font-size: var(--xinzuo-btn-font-size) !important;
+  letter-spacing: 0.3px !important;
+  text-transform: capitalize !important;
+  line-height: 1.2 !important;
+  color: var(--xinzuo-btn-color) !important;
+  text-decoration: none !important;
+  cursor: pointer !important;
+  transition: all 0.3s ease !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+body :is(
+  .hero-cta-button,
+  .bundle-cta,
+  #load-more,
+  #load-more-collection,
+  .load-more-btn:not(.load-more-btn--done),
+  .button--primary,
+  .button-primary,
+  .shopify-section .btn--primary,
+  .apply-filters-btn,
+  .email-signup__input-group button,
+  .email-signup__button,
+  .engraving-modal__btn--confirm,
+  .cart__checkout-button,
+  .add-to-cart-button:not(.button-secondary),
+  .mobile-btn,
+  .catalogue-card__btn,
+  .compare-btn-container a,
+  .best-reviews__cta a,
+  .xz-btn-gold,
+  .xz-product-card .xz-card-atc:not(.xz-card-atc--soldout),
+  .bundle-summary__cta,
+  .cart-recommended-product__add-btn,
+  .sticky-add-to-cart-button,
+  .contact-form button.submit-button,
+  .jdgm-btn--solid,
+  .jdgm-write-rev-link,
+  .jdgm-submit-rev,
+  .jdgm-all-reviews-page__load-more,
+  .header-drawer-shop-all,
+  .quick-question .quiz,
+  .home-modal-content div button,
+  .buy-button,
+  .comparison-shop-buttons a,
+  .blog-post-comments__form-submit,
+  .cart-discount__button,
+  .cart-items__empty-button,
+  .facets__see-results,
+  .password-dialog__submit-button,
+  .collection-wrapper .quick-add__button
+):hover:not(:disabled):not(.load-more-btn--done) {
+  background: var(--xinzuo-accent, #ff0005) !important;
+  border-color: var(--xinzuo-accent, #ff0005) !important;
+  color: #ffffff !important;
+}
+
+body :is(
+  .hero-cta-button,
+  .bundle-cta,
+  #load-more,
+  #load-more-collection,
+  .load-more-btn:not(.load-more-btn--done),
+  .button--primary,
+  .button-primary,
+  .shopify-section .btn--primary,
+  .apply-filters-btn,
+  .email-signup__input-group button,
+  .email-signup__button,
+  .engraving-modal__btn--confirm,
+  .cart__checkout-button,
+  .add-to-cart-button:not(.button-secondary),
+  .mobile-btn,
+  .catalogue-card__btn,
+  .compare-btn-container a,
+  .best-reviews__cta a,
+  .xz-btn-gold,
+  .xz-product-card .xz-card-atc:not(.xz-card-atc--soldout),
+  .bundle-summary__cta,
+  .cart-recommended-product__add-btn,
+  .sticky-add-to-cart-button,
+  .contact-form button.submit-button,
+  .jdgm-btn--solid,
+  .jdgm-write-rev-link,
+  .jdgm-submit-rev,
+  .jdgm-all-reviews-page__load-more,
+  .header-drawer-shop-all,
+  .quick-question .quiz,
+  .home-modal-content div button,
+  .buy-button,
+  .comparison-shop-buttons a,
+  .blog-post-comments__form-submit,
+  .cart-discount__button,
+  .cart-items__empty-button,
+  .facets__see-results,
+  .password-dialog__submit-button,
+  .collection-wrapper .quick-add__button
+):active:not(:disabled):not(.load-more-btn--done) {
+  background: var(--xinzuo-accent-active, #cc0004) !important;
+  border-color: var(--xinzuo-accent-active, #cc0004) !important;
+  color: #ffffff !important;
+}
+
+body :is(
+  .hero-cta-button,
+  .bundle-cta,
+  #load-more,
+  #load-more-collection,
+  .load-more-btn,
+  .button--primary,
+  .button-primary,
+  .apply-filters-btn,
+  .cart__checkout-button,
+  .add-to-cart-button:not(.button-secondary),
+  .xz-product-card .xz-card-atc,
+  .bundle-summary__cta,
+  .sticky-add-to-cart-button,
+  .jdgm-btn--solid,
+  .jdgm-write-rev-link,
+  .jdgm-all-reviews-page__load-more
+):disabled,
+body :is(
+  #load-more,
+  .load-more-btn
+):disabled,
+body .xz-product-card .xz-card-atc--soldout {
+  opacity: 0.5 !important;
+  cursor: not-allowed !important;
+  transform: none !important;
+}
+
+/* Full-width card / drawer CTAs */
+body .xz-product-card .xz-card-atc:not(.xz-card-atc--soldout),
+body .header-drawer-shop-all,
+body .cart__checkout-button,
+body .sticky-add-to-cart-button {
+  width: auto;
+}
+
+body .xz-product-card .xz-card-atc:not(.xz-card-atc--soldout) {
+  width: 100% !important;
+  min-height: 40px !important;
+  height: auto !important;
+}
+
+/* Inherit typography inside buttons */
+body :is(
+  .hero-cta-button,
+  .bundle-cta,
+  #load-more,
+  .load-more-btn,
+  .cart__checkout-button,
+  .add-to-cart-button,
+  .mobile-btn,
+  .catalogue-card__btn,
+  .xz-card-atc,
+  .bundle-summary__cta,
+  .sticky-add-to-cart-button,
+  .header-drawer-shop-all
+) :is(span, strong, em) {
+  color: inherit !important;
+  font-family: inherit !important;
+  font-weight: inherit !important;
+  font-size: inherit !important;
+  letter-spacing: inherit !important;
+  text-transform: inherit !important;
+}
+
+body :is(
+  .hero-cta-button,
+  .bundle-cta,
+  #load-more,
+  .cart__checkout-button,
+  .add-to-cart-button
+) svg {
+  width: 14px !important;
+  height: 14px !important;
+  color: inherit !important;
+  flex-shrink: 0;
+}
+
+body :is(
+  .hero-cta-button,
+  .bundle-cta,
+  #load-more,
+  .cart__checkout-button,
+  .add-to-cart-button
+) svg [stroke]:not([stroke="none"]) {
+  stroke: currentColor !important;
+}
+
+/* Inline Liquid accent backgrounds → outline style */
+body [style*="background-color: var(--xinzuo-accent"],
+body [style*="background-color:var(--xinzuo-accent"],
+body [style*="background: var(--xinzuo-accent"],
+body [style*="background:var(--xinzuo-accent"] {
+  background: transparent !important;
+  border: 1.5px solid var(--xinzuo-btn-border) !important;
+  color: var(--xinzuo-btn-color) !important;
+}
+
+/* Sold-out + added/loading states */
+body .xz-product-card .xz-card-atc--soldout,
+body .xz-product-card .xz-card-atc--soldout:hover {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+  color: rgba(255, 255, 255, 0.4) !important;
+  opacity: 1 !important;
+}
+
+body .xz-product-card .xz-card-atc.is-loading,
+body .xz-product-card .xz-card-atc.is-added,
+body .xz-product-card .xz-card-atc.is-loading:hover,
+body .xz-product-card .xz-card-atc.is-added:hover {
+  background: var(--xinzuo-accent-active, #cc0004) !important;
+  border-color: var(--xinzuo-accent-active, #cc0004) !important;
+  color: #ffffff !important;
+  opacity: 1 !important;
+  cursor: default !important;
+}
+
+@media screen and (max-width: 750px) {
+  :root {
+    --xinzuo-btn-padding: 7px 18px;
+    --xinzuo-btn-font-size: 16px;
+  }
+
+  body :is(
+    .hero-cta-button,
+    .bundle-cta,
+    #load-more,
+    .cart__checkout-button,
+    .add-to-cart-button
+  ) svg {
+    width: 12px !important;
+    height: 12px !important;
+  }
+}

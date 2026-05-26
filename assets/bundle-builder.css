@@ -160,15 +160,15 @@ bundle-builder-component {
 /* Tab pills */
 .bundle-tabs__tab {
   font-family: "Sen", sans-serif;
-  font-weight: 700;
+  font-weight: 600;
   font-size: 13px;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.55);
+  letter-spacing: 0.3px;
+  text-transform: capitalize;
+  color: #fff;
   background: transparent;
-  border: 1.5px solid rgba(255, 255, 255, 0.12);
-  border-radius: 100px;
-  padding: 10px 22px;
+  border: 1.5px solid rgba(255, 255, 255, 0.7);
+  border-radius: 0;
+  padding: 8px 24px;
   cursor: pointer;
   transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
   white-space: nowrap;
@@ -178,8 +178,9 @@ bundle-builder-component {
 }
 
 .bundle-tabs__tab:hover {
-  color: rgba(255, 255, 255, 0.85);
-  border-color: rgba(255, 255, 255, 0.25);
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.7);
+  background: var(--xinzuo-accent-hover, #ff3338);
 }
 
 .bundle-tabs__tab--active {
@@ -522,27 +523,9 @@ bundle-builder-component {
   display: none;
 }
 
-/* CTA Button */
+/* CTA Button — base in xinzuo-buttons.css */
 .bundle-summary__cta {
-  padding: 14px 28px;
-  background: var(--xinzuo-accent, #ff0005);
-  color: var(--xinzuo-accent-text, #FFFFFF);
-  border: none;
-  border-radius: 4px;
-  font-family: "Sen", sans-serif;
-  font-weight: 700;
-  font-size: 16px;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  cursor: pointer;
-  transition: all 0.2s ease;
   white-space: nowrap;
-}
-
-.bundle-summary__cta:hover:not(:disabled) {
-  background: var(--xinzuo-accent-hover, #ff3338);
-  color: var(--xinzuo-accent-text, #FFFFFF);
-  transform: translateY(-1px);
 }
 
 .bundle-summary__cta:disabled {
