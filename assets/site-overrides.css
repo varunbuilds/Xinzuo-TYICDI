@@ -169,14 +169,48 @@ body > * {
     margin: 0;
 }
 
-header .header__row {
-    background-color: #292a33 !important;
+/* Transparent navbar + float over content (all breakpoints — no band above hero) */
+.header-section:has(> #header-component),
+header .header__row,
+header#header-component.header {
+    background-color: transparent !important;
+    --header-bg-color: transparent;
 }
 
+/* Header group must not reserve vertical space (theme uses display:contents + sticky) */
+#header-group:has(#header-component[sticky]) {
+    display: block;
+    height: 0;
+    overflow: visible;
+    pointer-events: none;
+}
 
-@media screen and (max-width: 480px) {
-    header .header__row {
-        background-color: #282932 !important;
+#header-group:has(#header-component[sticky]) > * {
+    pointer-events: auto;
+}
+
+.header-section:has(> #header-component[sticky]) {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: 100;
+}
+
+/* Full-bleed homepage hero under floating header */
+main[data-template="index"] .hero-banner {
+    min-height: 100svh;
+}
+
+/* Non-hero first sections: offset content below fixed header */
+main.content-for-layout > .shopify-section:first-child:not(:has(.hero-banner)):not(:has(.collection-hero-banner)) {
+    padding-top: var(--header-height, var(--xz-h-header-m, 56px));
+}
+
+@media screen and (min-width: 1281px) {
+    main.content-for-layout > .shopify-section:first-child:not(:has(.hero-banner)):not(:has(.collection-hero-banner)) {
+        padding-top: var(--header-height, var(--xz-h-header-d, 72px));
     }
 }
 
@@ -201,11 +235,57 @@ header .menu-list li.menu-list__list-item {
     padding: 0 30px;
 }
 
-header .menu-list li.menu-list__list-item .menu-list__link > span {
+header .menu-list li.menu-list__list-item .menu-list__link > span,
+header .menu-list li.menu-list__list-item .menu-list__link .menu-list__link-title {
     font-family: "Sen";
     font-weight: 600;
-    font-size: 18px;
     text-transform: uppercase;
+}
+
+/* Halve global `.section { padding: 0 80px }` on the header row (applies ≥951px viewport) */
+@media screen and (min-width: 951px) {
+    .header-section .header__row.section,
+    #header-component .header__row.section {
+        padding-inline: 40px !important;
+    }
+}
+
+/* Desktop nav only (>1280px): smaller top-level menu labels */
+@media screen and (min-width: 1281px) {
+    .header-section .header__columns,
+    #header-component .header__columns {
+        padding-inline: 0 !important;
+    }
+
+    header .menu-list li.menu-list__list-item .menu-list__link > span,
+    header .menu-list li.menu-list__list-item .menu-list__link .menu-list__link-title {
+        font-size: 14px;
+        letter-spacing: 0.04em;
+    }
+
+    /*
+     * Logo left + menu center column: shrink side columns to content so the nav
+     * sits in the gap between logo and icons with equal space on each side.
+     */
+    header .header__columns:has(.header__column--center header-menu) {
+        --header-left: auto;
+        --header-center: 1fr;
+        --header-right: auto;
+        --header-template-columns: auto 1fr auto;
+    }
+
+    header .header__column--center:has(header-menu) {
+        justify-content: center;
+        min-width: 0;
+    }
+
+    header .header__column--center header-menu .overflow-menu::part(list) {
+        justify-content: center;
+    }
+
+    header .menu-list li.menu-list__list-item {
+        padding: 0 22px;
+    }
 }
 
 header .menu-list li.menu-list__list-item .logo-block__image-wrapper img {
@@ -239,13 +319,9 @@ header .header__column--right .search-action {
     }
 }
 
-@media screen and (max-width: 1350px) {
+@media screen and (min-width: 1281px) and (max-width: 1350px) {
     header li.menu-list__list-item {
-        padding: 0 15px !important;
-    }
-
-    header li.menu-list__list-item span {
-        font-size: 14px;
+        padding: 0 16px !important;
     }
 }
 

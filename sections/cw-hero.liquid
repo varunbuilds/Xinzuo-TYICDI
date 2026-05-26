@@ -1,16 +1,20 @@
 {% style %}
    .section-{{ section.id }} {
        background-color: var(--xz-section-bg, #1A1A1E);
+       width: 100%;
+       max-width: none;
    }
 
    .section-{{ section.id }} .hero-banner {
-       /* background: radial-gradient(59.22% 45.55% at 100% 107.77%, #151515 0%, rgba(21, 21, 21, 0.00) 100%), linear-gradient(114deg, #252525 0.16%, rgba(37, 37, 37, 0.00) 26.55%, rgba(32, 32, 32, 0.00) 79.33%, #171717 105.71%), linear-gradient(250deg, #1E1E1E 0.63%, #222428 14.81%, #252527 36.15%, #252527 99.37%); */
        display: flex;
        justify-content: center;
+       align-items: stretch;
        background: #232325;
-       height: calc(100vh - 77px);
-       margin: auto;
        position: relative;
+       overflow: hidden;
+       width: 100%;
+       /* Full viewport hero; header floats over (site-overrides.css) */
+       min-height: 100svh;
    }
 
    .section-{{ section.id }} .hero-banner-content {
@@ -31,31 +35,14 @@
 
    .section-{{ section.id }} .hero-banner-content h1 {
        color: #fff;
-       font-size: 56px;
-       margin: 0;
-       line-height: 140%;
-   }
-
-   .section-{{ section.id }} .hero-banner-content h2 {
-       color: #c9c9cc;
-       font-family: "Inter", Helvetica, Arial, sans-serif;
-       font-size: 16px;
-       font-weight: 400;
-       line-height: 1.5;
-       margin: 0;
-       padding: 10px 0;
-   }
-
-   .section-{{ section.id }} .mobile h1 {
-       color: #fff;
-       font-family: "Sen";
+       font-family: "Sen", var(--xz-font, -apple-system, BlinkMacSystemFont, sans-serif);
        font-size: 56px;
        font-weight: 600;
        line-height: 120%;
        margin: 0;
    }
 
-   .section-{{ section.id }} .mobile h2 {
+   .section-{{ section.id }} .hero-banner-content h2 {
        color: #c9c9cc;
        font-family: "Inter", Helvetica, Arial, sans-serif;
        font-size: 16px;
@@ -83,6 +70,7 @@
        background-color: var(--xinzuo-accent, #FFD380);
        border: none;
        border-radius: 4px;
+       font-family: "Sen", var(--xz-font, -apple-system, BlinkMacSystemFont, sans-serif);
        font-weight: 600;
        font-size: 15px;
        letter-spacing: 0.5px;
@@ -118,19 +106,25 @@
    }
 
    .section-{{ section.id }} .hero-banner-img {
-       display: flex;
-       align-items: center;
-       justify-content: center;
+       position: absolute;
+       inset: 0;
+       z-index: 0;
+       width: 100%;
+       height: 100%;
    }
 
    .section-{{ section.id }} .hero-banner-img picture {
-       display: contents;
+       display: block;
+       width: 100%;
+       height: 100%;
    }
 
    .section-{{ section.id }} .hero-banner-img img {
-       height: 100%;
+       display: block;
        width: 100%;
+       height: 100%;
        object-fit: cover;
+       object-position: center center;
    }
 
    .section-{{ section.id }} .header-title {
@@ -144,12 +138,6 @@
        background-color: {{ section.settings.header_background }};
    }
 
-   @media screen and (max-width:1440px) {
-       .section-{{ section.id }} .hero-banner {
-           height: auto;
-       }
-   }
-
    @media screen and (max-width: 1150px) {
        .section-{{ section.id }} .hero-banner-content {
            width: 400px;
@@ -159,7 +147,7 @@
 
        .section-{{ section.id }} .hero-banner-content h1 {
            font-size: 36px;
-           line-height: 140%;
+           line-height: 120%;
        }
 
        .section-{{ section.id }} .hero-banner-content h2 {
@@ -198,9 +186,8 @@
     @media screen and (max-width: 850px) {
        .section-{{ section.id }} .hero-banner {
            justify-content: flex-end;
-           height: 65vh;
        }
-    }
+   }
 
    @media screen and (max-width: 760px) {
 
@@ -218,19 +205,9 @@
        }
    }
 
-   @media screen and (max-width: 600px) {
-    .section-{{ section.id }} .hero-banner {
-         height: 55vh;
-       }
-   }
-
    @media screen and (max-width: 480px) {
-      .section-{{ section.id }} .hero-banner {
-        height: auto;
-      }
-
       .section-{{ section.id }} .hero-banner-img img {
-          object-fit: contain;
+          object-position: center top;
       }
    }
 {% endstyle %}
