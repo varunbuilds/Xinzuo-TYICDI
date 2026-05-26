@@ -575,6 +575,12 @@
     color: var(--xinzuo-accent-hover, #FFDC99);
   }
 
+  /* `.main-collection-grid__empty` sets display:flex and can override the [hidden] attribute */
+  .collection-filter-empty[hidden],
+  .collection-filter-empty.is-empty-hidden {
+    display: none !important;
+  }
+
   /* Responsive */
   @media screen and (max-width: 1000px) {
     .custom-filters-sidebar {
@@ -1259,8 +1265,8 @@
           const newProducts = grid.querySelectorAll('.product-grid__item');
           tagVisibleProducts(newProducts, globalProductsData);
 
-          // Re-apply any active filters
-          reapplyActiveFilters();
+          // Re-apply any active filters (await so empty state stays in sync after grid swap)
+          await reapplyActiveFilters();
 
           // Reset Load More button state (back to page 1)
           const newWrapper = doc.querySelector('#load-more-wrapper');
@@ -1305,10 +1311,13 @@
     }
 
     // Re-apply currently checked filter checkboxes to the grid
-    function reapplyActiveFilters() {
+    async function reapplyActiveFilters() {
       const hasActiveFilters = document.querySelector('.custom-filters-sidebar .filter-option input[type="checkbox"]:checked');
-      if (!hasActiveFilters) return;
-      applyFilters();
+      if (!hasActiveFilters) {
+        updateFilteredEmptyState(false);
+        return;
+      }
+      await applyFilters();
     }
 
     // Sync dropdown selection with URL sort_by parameter on page load
@@ -1426,7 +1435,7 @@
         // Update product count + empty state
         var totalCount = hasActiveFilters ? matchingProducts.length : products.length;
         updateResultsCount(totalCount, hasActiveFilters);
-        updateFilteredEmptyState(hasActiveFilters, matchingProducts.length);
+        updateFilteredEmptyState(hasActiveFilters);
 
         // Scroll to top of product grid when filters change
         if (hasActiveFilters) {
@@ -1451,6 +1460,7 @@
         matchingProducts[i].style.display = '';
       }
       filteredShowCount = nextCount;
+      updateFilteredEmptyState(true);
 
       // Hide Load More when all filtered products are shown
       if (filteredShowCount >= matchingProducts.length) {
@@ -1539,13 +1549,27 @@
         : totalCount + ' ' + label;
     }
 
-    function updateFilteredEmptyState(hasActiveFilters, matchCount) {
+    function countVisibleGridProducts() {
+      return Array.from(document.querySelectorAll('.product-grid__item')).filter(function(item) {
+        if (item.style.display === 'none') return false;
+        return window.getComputedStyle(item).display !== 'none';
+      }).length;
+    }
+
+    function updateFilteredEmptyState(hasActiveFilters) {
       const emptyEl = document.getElementById('collection-filter-empty');
       const grid = document.querySelector('.product-grid');
-      const showEmpty = hasActiveFilters && matchCount === 0;
+      const visibleCount = countVisibleGridProducts();
+      const showEmpty = hasActiveFilters && visibleCount === 0;
 
       if (emptyEl) {
         emptyEl.hidden = !showEmpty;
+        emptyEl.classList.toggle('is-empty-hidden', !showEmpty);
+        if (showEmpty) {
+          emptyEl.style.removeProperty('display');
+        } else {
+          emptyEl.style.display = 'none';
+        }
       }
       if (grid) {
         grid.style.display = showEmpty ? 'none' : '';
