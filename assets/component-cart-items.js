@@ -1,5 +1,5 @@
 import { Component } from '@theme/component';
-import { fetchConfig, debounce, onAnimationEnd, prefersReducedMotion, resetShimmer } from '@theme/utilities';
+import { fetchConfig, resetShimmer } from '@theme/utilities';
 import { morphSection, sectionRenderer } from '@theme/section-renderer';
 import {
   ThemeEvents,
@@ -23,14 +23,12 @@ import { cartPerformance } from '@theme/performance';
  * @extends {Component<Refs>}
  */
 class CartItemsComponent extends Component {
-  #debouncedOnChange = debounce(this.#onQuantityChange, 300).bind(this);
-
   connectedCallback() {
     super.connectedCallback();
 
     document.addEventListener(ThemeEvents.cartUpdate, this.#handleCartUpdate);
     document.addEventListener(ThemeEvents.discountUpdate, this.handleDiscountUpdate);
-    document.addEventListener(ThemeEvents.quantitySelectorUpdate, this.#debouncedOnChange);
+    document.addEventListener(ThemeEvents.quantitySelectorUpdate, this.#onQuantityChange);
     this.addEventListener('click', this.#handleBundleRemoveClick);
   }
 
@@ -38,7 +36,7 @@ class CartItemsComponent extends Component {
     super.disconnectedCallback();
 
     document.removeEventListener(ThemeEvents.cartUpdate, this.#handleCartUpdate);
-    document.removeEventListener(ThemeEvents.quantitySelectorUpdate, this.#debouncedOnChange);
+    document.removeEventListener(ThemeEvents.quantitySelectorUpdate, this.#onQuantityChange);
     this.removeEventListener('click', this.#handleBundleRemoveClick);
   }
 
@@ -46,7 +44,7 @@ class CartItemsComponent extends Component {
    * Handles QuantitySelectorUpdateEvent change event.
    * @param {QuantitySelectorUpdateEvent} event - The event.
    */
-  #onQuantityChange(event) {
+  #onQuantityChange = (event) => {
     const { quantity, cartLine: line } = event.detail;
 
     if (!line) return;
@@ -66,40 +64,23 @@ class CartItemsComponent extends Component {
 
     const textComponent = /** @type {TextComponent | undefined} */ (lineItemRow.querySelector('text-component'));
     textComponent?.shimmer();
-  }
+  };
 
   /**
    * Handles the line item removal.
    * @param {number} line - The line item index.
    */
   onLineItemRemove(line) {
-    this.updateQuantity({
+    const isLastVisibleLine = this.refs.cartItemRows?.length === 1;
+    if (isLastVisibleLine) {
+      this.#syncCartDrawerEmptyState(true);
+    }
+
+    // Wait for section morph after API — optimistic row removal left stale footer/totals.
+    return this.updateQuantity({
       line,
       quantity: 0,
       action: 'clear',
-    });
-
-    const cartItemRowToRemove = this.refs.cartItemRows[line - 1];
-
-    if (!cartItemRowToRemove) return;
-
-    const rowsToRemove = [
-      cartItemRowToRemove,
-      // Get all nested lines of the row to remove
-      ...this.refs.cartItemRows.filter((row) => row.dataset.parentKey === cartItemRowToRemove.dataset.key),
-    ];
-
-    // Add class to the row to trigger the animation
-    rowsToRemove.forEach((row) => {
-      const remove = () => row.remove();
-
-      if (prefersReducedMotion()) return remove();
-
-      row.style.setProperty('--row-height', `${row.clientHeight}px`);
-      row.classList.add('removing');
-
-      // Remove the row after the animation ends
-      onAnimationEnd(row, remove);
     });
   }
 
@@ -134,27 +115,7 @@ class CartItemsComponent extends Component {
     });
 
     // Animate out the bundle header and all bundle item rows
-    const bundleId = triggerBtn.closest('.cart-bundle-header')?.dataset.bundleId;
-    if (bundleId) {
-      const bundleRows = this.querySelectorAll(
-        `.cart-bundle-header[data-bundle-id="${bundleId}"], .cart-bundle-item[data-bundle-id="${bundleId}"]`
-      );
-      bundleRows.forEach((row) => {
-        const remove = () => row.remove();
-        if (prefersReducedMotion()) return remove();
-        row.style.setProperty('--row-height', `${row.clientHeight}px`);
-        row.classList.add('removing');
-        onAnimationEnd(row, remove);
-      });
-    }
-
-    const cartItemsComponents = document.querySelectorAll('cart-items-component');
-    const sectionsToUpdate = new Set([this.sectionId]);
-    cartItemsComponents.forEach((item) => {
-      if (item instanceof HTMLElement && item.dataset.sectionId) {
-        sectionsToUpdate.add(item.dataset.sectionId);
-      }
-    });
+    const sectionsParam = this.#getSectionsParam();
 
     try {
       const response = await fetch('/cart/update.js', {
@@ -162,7 +123,7 @@ class CartItemsComponent extends Component {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           updates,
-          sections: Array.from(sectionsToUpdate).join(','),
+          sections: sectionsParam,
           sections_url: window.location.pathname,
         }),
       });
@@ -184,30 +145,14 @@ class CartItemsComponent extends Component {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             discount: applicableCodes.join(','),
-            sections: Array.from(sectionsToUpdate).join(','),
+            sections: sectionsParam,
             sections_url: window.location.pathname,
           }),
         });
         parsedResponse = await cleanupResponse.json();
       }
 
-      const newSectionHTML = new DOMParser().parseFromString(
-        parsedResponse.sections[this.sectionId],
-        'text/html'
-      );
-
-      const newCartHiddenItemCount = newSectionHTML.querySelector('[ref="cartItemCount"]')?.textContent;
-      const newCartItemCount = newCartHiddenItemCount ? parseInt(newCartHiddenItemCount, 10) : 0;
-
-      this.dispatchEvent(
-        new CartUpdateEvent({}, this.sectionId, {
-          itemCount: newCartItemCount,
-          source: 'cart-items-component',
-          sections: parsedResponse.sections,
-        })
-      );
-
-      morphSection(this.sectionId, parsedResponse.sections[this.sectionId]);
+      this.#applyCartSectionUpdate(parsedResponse);
     } catch (error) {
       console.error('Error removing bundle:', error);
     } finally {
@@ -229,26 +174,43 @@ class CartItemsComponent extends Component {
 
     const { line, quantity } = config;
     const { cartTotal } = this.refs;
-
-    const cartItemsComponents = document.querySelectorAll('cart-items-component');
-    const sectionsToUpdate = new Set([this.sectionId]);
-    cartItemsComponents.forEach((item) => {
-      if (item instanceof HTMLElement && item.dataset.sectionId) {
-        sectionsToUpdate.add(item.dataset.sectionId);
-      }
-    });
-
-    const body = JSON.stringify({
-      line: line,
-      quantity: quantity,
-      sections: Array.from(sectionsToUpdate).join(','),
-      sections_url: window.location.pathname,
-    });
+    const sectionsParam = this.#getSectionsParam();
 
     cartTotal?.shimmer();
 
     try {
-      // Single API call to update quantity and get sections
+      const combinedUpdates = this.#buildCartUpdatesForLine(line, quantity);
+
+      if (combinedUpdates) {
+        const response = await fetch('/cart/update.js', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            updates: combinedUpdates,
+            sections: sectionsParam,
+            sections_url: window.location.pathname,
+          }),
+        });
+
+        const parsedResponse = await response.json();
+        resetShimmer(this);
+
+        if (parsedResponse.errors) {
+          this.#handleCartError(line, parsedResponse);
+          return;
+        }
+
+        this.#applyCartSectionUpdate(parsedResponse);
+        return;
+      }
+
+      const body = JSON.stringify({
+        line,
+        quantity,
+        sections: sectionsParam,
+        sections_url: window.location.pathname,
+      });
+
       const response = await fetch(`${Theme.routes.cart_change_url}`, fetchConfig('json', { body }));
       const parsedResponseText = JSON.parse(await response.text());
 
@@ -259,33 +221,101 @@ class CartItemsComponent extends Component {
         return;
       }
 
-      // Handle engraving fee updates if needed (uses cart data from response)
-      await this.#updateEngravingFeeIfNeeded(parsedResponseText, line, quantity, sectionsToUpdate);
+      await this.#updateEngravingFeeIfNeeded(parsedResponseText, line, quantity, this.#getSectionsToUpdateSet());
 
-      const newSectionHTML = new DOMParser().parseFromString(
-        parsedResponseText.sections[this.sectionId],
-        'text/html'
-      );
-
-      // Grab the new cart item count from a hidden element
-      const newCartHiddenItemCount = newSectionHTML.querySelector('[ref="cartItemCount"]')?.textContent;
-      const newCartItemCount = newCartHiddenItemCount ? parseInt(newCartHiddenItemCount, 10) : 0;
-
-      this.dispatchEvent(
-        new CartUpdateEvent({}, this.sectionId, {
-          itemCount: newCartItemCount,
-          source: 'cart-items-component',
-          sections: parsedResponseText.sections,
-        })
-      );
-
-      morphSection(this.sectionId, parsedResponseText.sections[this.sectionId]);
+      this.#applyCartSectionUpdate(parsedResponseText);
     } catch (error) {
       console.error(error);
     } finally {
       this.#enableCartItems();
       cartPerformance.measureFromMarker(cartPerformaceUpdateMarker);
     }
+  }
+
+  /**
+   * @returns {Set<string>}
+   */
+  #getSectionsToUpdateSet() {
+    const sectionsToUpdate = new Set([this.sectionId]);
+    document.querySelectorAll('cart-items-component').forEach((item) => {
+      if (item instanceof HTMLElement && item.dataset.sectionId) {
+        sectionsToUpdate.add(item.dataset.sectionId);
+      }
+    });
+    return sectionsToUpdate;
+  }
+
+  /**
+   * @returns {string}
+   */
+  #getSectionsParam() {
+    return Array.from(this.#getSectionsToUpdateSet()).join(',');
+  }
+
+  /**
+   * One /cart/update.js request: line item key + engraving fee variant qty (avoids a second round-trip).
+   * @param {number} line
+   * @param {number} quantity
+   * @returns {Record<string, number> | null}
+   */
+  #buildCartUpdatesForLine(line, quantity) {
+    const row = this.refs.cartItemRows[line - 1];
+    const lineKey = row?.dataset?.key;
+    if (!lineKey) return null;
+
+    /** @type {Record<string, number>} */
+    const updates = { [lineKey]: quantity };
+
+    const feeIds = this.#getEngravingFeeVariantIds();
+    if (feeIds.oneLine || feeIds.twoLine) {
+      const required = this.#computeRequiredEngravingFees(line, quantity);
+      if (feeIds.oneLine) updates[feeIds.oneLine] = required.oneLine;
+      if (feeIds.twoLine) updates[feeIds.twoLine] = required.twoLine;
+    }
+
+    return updates;
+  }
+
+  /**
+   * @returns {{ oneLine: number | null, twoLine: number | null, productId: number }}
+   */
+  #getEngravingFeeVariantIds() {
+    if (typeof window.getXinzuoEngravingFeeVariantIds === 'function') {
+      return window.getXinzuoEngravingFeeVariantIds();
+    }
+    return { oneLine: null, twoLine: null, productId: 0 };
+  }
+
+  /**
+   * @param {number} changedLine
+   * @param {number} newQuantity
+   * @returns {{ oneLine: number, twoLine: number }}
+   */
+  #computeRequiredEngravingFees(changedLine, newQuantity) {
+    let requiredOneLine = 0;
+    let requiredTwoLine = 0;
+
+    this.refs.cartItemRows.forEach((cartRow, index) => {
+      if (cartRow.dataset.hasEngraving !== 'true') return;
+
+      const cartLine = index + 1;
+      const input = cartRow.querySelector('input[name="updates[]"]');
+      let qty = parseInt(input?.value || '0', 10);
+      if (cartLine === changedLine) qty = newQuantity;
+
+      if (qty <= 0) return;
+
+      const knifeNum = parseInt(cartRow.dataset.knifeNum || '1', 10) || 1;
+      const contribution = qty * knifeNum;
+
+      if (cartRow.dataset.engravingTwoLine === 'true') {
+        requiredTwoLine += contribution;
+      } else {
+        requiredOneLine += contribution;
+      }
+    });
+
+    return { oneLine: requiredOneLine, twoLine: requiredTwoLine };
   }
 
   /**
@@ -364,6 +394,43 @@ class CartItemsComponent extends Component {
   }
 
   /**
+   * Morph cart section HTML, sync drawer empty state, and broadcast cart update.
+   * @param {{ sections?: Record<string, string>, item_count?: number }} cartResponse
+   */
+  #applyCartSectionUpdate(cartResponse) {
+    const sectionHtml = cartResponse.sections?.[this.sectionId];
+    if (!sectionHtml) return;
+
+    let itemCount = typeof cartResponse.item_count === 'number' ? cartResponse.item_count : null;
+    if (itemCount === null) {
+      const parsed = new DOMParser().parseFromString(sectionHtml, 'text/html');
+      const countText = parsed.querySelector('[ref="cartItemCount"]')?.textContent;
+      itemCount = countText ? parseInt(countText, 10) : 0;
+    }
+
+    this.#syncCartDrawerEmptyState(itemCount === 0);
+
+    this.dispatchEvent(
+      new CartUpdateEvent({}, this.sectionId, {
+        itemCount,
+        source: 'cart-items-component',
+        sections: cartResponse.sections,
+      })
+    );
+
+    morphSection(this.sectionId, sectionHtml);
+  }
+
+  /**
+   * Toggles cart-drawer--empty on the drawer dialog (class is only set server-side otherwise).
+   * @param {boolean} isEmpty
+   */
+  #syncCartDrawerEmptyState(isEmpty) {
+    const dialog = this.closest('cart-drawer-component')?.querySelector('.cart-drawer__dialog');
+    dialog?.classList.toggle('cart-drawer--empty', isEmpty);
+  }
+
+  /**
    * Handles the discount update.
    * @param {DiscountUpdateEvent} event - The event.
    */
@@ -408,6 +475,12 @@ class CartItemsComponent extends Component {
     if (event.target === this) return;
 
     const cartItemsHtml = event.detail.data.sections?.[this.sectionId];
+    const itemCount = event.detail.data?.itemCount;
+
+    if (typeof itemCount === 'number') {
+      this.#syncCartDrawerEmptyState(itemCount === 0);
+    }
+
     if (cartItemsHtml) {
       morphSection(this.sectionId, cartItemsHtml);
     } else {

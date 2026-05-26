@@ -1,5 +1,5 @@
 import { DialogComponent } from '@theme/dialog';
-import { CartAddEvent } from '@theme/events';
+import { CartAddEvent, ThemeEvents } from '@theme/events';
 
 /**
  * A custom element that manages a cart drawer.
@@ -10,12 +10,25 @@ class CartDrawerComponent extends DialogComponent {
   connectedCallback() {
     super.connectedCallback();
     document.addEventListener(CartAddEvent.eventName, this.#handleCartAdd);
+    document.addEventListener(ThemeEvents.cartUpdate, this.#handleCartUpdate);
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
     document.removeEventListener(CartAddEvent.eventName, this.#handleCartAdd);
+    document.removeEventListener(ThemeEvents.cartUpdate, this.#handleCartUpdate);
   }
+
+  /**
+   * Keep empty-drawer layout in sync when cart is updated via AJAX.
+   * @param {CustomEvent} event
+   */
+  #handleCartUpdate = (event) => {
+    const itemCount = event.detail?.data?.itemCount;
+    if (itemCount === undefined) return;
+
+    this.refs.dialog?.classList.toggle('cart-drawer--empty', itemCount === 0);
+  };
 
   #handleCartAdd = () => {
     if (this.hasAttribute('auto-open')) {

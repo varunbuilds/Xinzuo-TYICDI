@@ -30,6 +30,7 @@
     window.CartRecommendedSlider = {
       swiperInstances: new WeakMap(),
       observerSetup: false,
+      reinitTimer: null,
       
       // Destroy a single slider's Swiper instance
       destroySlider: function(sliderContainer) {
@@ -167,10 +168,21 @@
             button.classList.add('cart-recommended-product__add-btn--adding');
             
             try {
+              const sectionIds = [...document.querySelectorAll('cart-items-component')]
+                .map((el) => el.dataset.sectionId)
+                .filter(Boolean);
+              const addBody = {
+                items: [{ id: parseInt(variantId, 10), quantity: 1 }],
+              };
+              if (sectionIds.length) {
+                addBody.sections = sectionIds.join(',');
+                addBody.sections_url = window.location.pathname;
+              }
+
               const response = await fetch('/cart/add.js', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ items: [{ id: parseInt(variantId), quantity: 1 }] })
+                body: JSON.stringify(addBody),
               });
               
               if (!response.ok) throw new Error('Failed to add to cart');
@@ -179,20 +191,25 @@
               button.classList.remove('cart-recommended-product__add-btn--adding');
               button.classList.add('cart-recommended-product__add-btn--added');
               
-              const cartResponse = await fetch('/cart.js');
-              const cart = await cartResponse.json();
+              const cart = await response.json();
               
               document.dispatchEvent(new CustomEvent('cart:update', {
                 bubbles: true,
-                detail: { data: { itemCount: cart.item_count, source: 'cart-recommended-products' } }
+                detail: {
+                  data: {
+                    itemCount: cart.item_count,
+                    source: 'cart-recommended-products',
+                    sections: cart.sections || {},
+                  },
+                },
               }));
               
               if (typeof CartAddEvent !== 'undefined') {
                 document.dispatchEvent(new CartAddEvent({}, variantId, {
                   source: 'cart-recommended-products',
                   itemCount: cart.item_count,
-                  productId: parseInt(button.dataset.productId),
-                  sections: [],
+                  productId: parseInt(button.dataset.productId, 10),
+                  sections: cart.sections || {},
                 }));
               }
               
@@ -242,7 +259,6 @@
         
         const observer = new MutationObserver((mutations) => {
           let shouldInit = false;
-          let shouldReinit = false;
           
           for (const mutation of mutations) {
             // Check for added nodes containing sliders
@@ -257,39 +273,19 @@
             }
             if (shouldInit) break;
             
-            // Check cart drawer content changes - these require reinit
-            if (mutation.type === 'childList' && mutation.target && mutation.target.closest) {
-              if (mutation.target.closest('.cart-drawer') || mutation.target.closest('cart-drawer-component') || mutation.target.closest('cart-items-component')) {
-                const slider = mutation.target.querySelector ? mutation.target.querySelector('[data-cart-recommended-slider]') : null;
-                if (slider) {
-                  shouldReinit = true;
-                  break;
-                }
-              }
-            }
           }
           
-          if (shouldReinit) {
-            // Content was morphed, need to reinitialize
-            requestAnimationFrame(() => self.reinitAll());
-            setTimeout(() => self.reinitAll(), 50);
-            setTimeout(() => self.reinitAll(), 150);
-          } else if (shouldInit) {
-            // New slider added, normal init
+          if (shouldInit) {
             requestAnimationFrame(() => self.initAll());
-            setTimeout(() => self.initAll(), 50);
-            setTimeout(() => self.initAll(), 150);
           }
         });
         
         observer.observe(document.body, { childList: true, subtree: true });
         
-        // Listen for cart:update events - always reinitialize
+        // Debounced reinit after cart morph (avoid 3x Swiper teardown per qty click)
         document.addEventListener('cart:update', () => {
-          // Use reinitAll to properly destroy and recreate Swiper instances
-          setTimeout(() => self.reinitAll(), 50);
-          setTimeout(() => self.reinitAll(), 150);
-          setTimeout(() => self.reinitAll(), 300);
+          clearTimeout(self.reinitTimer);
+          self.reinitTimer = setTimeout(() => self.reinitAll(), 120);
         });
       },
       
@@ -828,6 +824,19 @@
   .shipping-value {
     display: none;
   }
+
+  {%- comment -%} Hide engraving fee from upsell widgets (Liquid allowed in {% style %}, not {% stylesheet %}) {%- endcomment -%}
+  {%- assign engraving_fee_product = all_products['engraving-fee'] -%}
+  {%- if engraving_fee_product != blank -%}
+  [data-product-id="{{ engraving_fee_product.id }}"],
+  .eu-upsell-item[data-product-id="{{ engraving_fee_product.id }}"] {
+    display: none !important;
+  }
+  {%- endif -%}
+  [href*="engraving-fee"],
+  [href*="/products/engraving"] {
+    display: none !important;
+  }
 {% endstyle %}
 
 {% stylesheet %}
@@ -935,19 +944,6 @@
     position: sticky;
     bottom: 0;
     z-index: 1;
-  }
-
-  /* Hide engraving product from Essential Upsell recommendations */
-  {%- assign engraving_fee_product = all_products['engraving-fee'] -%}
-  {%- if engraving_fee_product != blank -%}
-  [data-product-id="{{ engraving_fee_product.id }}"],
-  .eu-upsell-item[data-product-id="{{ engraving_fee_product.id }}"] {
-    display: none !important;
-  }
-  {%- endif -%}
-  [href*="engraving-fee"],
-  [href*="/products/engraving"] {
-    display: none !important;
   }
 {% endstylesheet %}
 

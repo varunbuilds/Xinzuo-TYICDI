@@ -125,7 +125,49 @@ No admin changes.
 
 ### What I'd do next
 
-- **Task 4 (README — Cart drawer):** qty/remove/empty state, mobile, engraving fee sync edge cases.
 - **Task 5+:** Navbar/header, collection filters, accessibility, SEO structured data.
 - **Separate track:** Shoplift snippet guard when app metafields are missing.
 - **Near finish:** debug cleanup (`sticky-add-to-cart.js`, `custom.js`, `cart-smart-recommendations.liquid`).
+
+---
+
+## Task 4 — Cart drawer responsiveness & empty state
+
+### What I picked
+
+Fixing **laggy cart drawer updates** (qty +/-, remove) and the **delayed empty-cart UI** after removing the last item.
+
+### Why it's the highest-impact thing here
+
+- README calls out cart drawer UX (qty, remove, empty state). After engraving (Task 2), the drawer is a core checkout path.
+- Removing an item animated rows out immediately but left **footer, totals, and shipping bar** visible until a second API round-trip finished (~1–2s), then morphed to empty — felt broken.
+- `cart-drawer--empty` on `<dialog>` was only set on full page load, so AJAX empty state missed centered layout CSS.
+
+### What I did
+
+1. **`assets/component-cart-items.js`**
+   - Removed **optimistic row removal animation** before the cart API completes; section morph now drives the UI in one step.
+   - **Optimistic empty class** when removing the last visible line; **`#syncCartDrawerEmptyState`** after every cart morph.
+   - Reduced qty change debounce **300ms → 100ms**.
+   - Centralized **`#applyCartSectionUpdate`** (morph + event + empty sync).
+   - Bundle remove: skip pre-API row animation (same stale-footer issue).
+
+2. **`assets/cart-drawer.js`** — listen for `cart:update` and toggle **`cart-drawer--empty`** on the dialog.
+
+3. **`snippets/cart-drawer.liquid`** — recommended-product add requests **section HTML** in `/cart/add.js` (avoids slow full `sectionRenderer` refetch).
+
+4. **Performance follow-up (laggy qty still reported):**
+   - **Single `/cart/update.js`** for qty/remove when line `data-key` is present — updates the knife line **and** engraving fee variant qty together (removes the extra ~1s second round-trip after `/cart/change.js`).
+   - **`snippets/cart-products.liquid`** — `data-has-engraving`, `data-engraving-two-line`, `data-knife-num` on rows for client-side fee math.
+   - Removed **100ms debounce** on cart qty events (immediate +/- response).
+   - **Cart recommendations Swiper** — debounced one reinit on `cart:update` instead of 3× `setTimeout` + morph `MutationObserver` reinits.
+
+**Screenshots:** `before/task4.png` → `after/task4.png` (cart drawer: engraved item with fee line + totals; qty/remove/empty-state fixes verified on store).
+
+**Also fixed:** Continue shopping in empty cart → `/collections/all-products` (same as homepage SHOP ALL); theme setting `empty_cart_button_link` legacy `/collections/all` overridden in Liquid; `settings_schema.json` url default left blank (Shopify rejects path defaults).
+
+### What I'd do next
+
+- **Task 5+:** Navbar/header, collection filters, accessibility, SEO.
+- **Separate track:** Shoplift snippet guard.
+- **Near finish:** debug cleanup.

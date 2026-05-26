@@ -34,9 +34,21 @@
       </p>
     {%- endif -%}
 
+    {%- liquid
+      assign shop_all_url = collections['all-products'].url | default: '/collections/all-products'
+      assign empty_cart_url = shop_all_url
+      assign configured_empty_cart_link = settings.empty_cart_button_link
+      if configured_empty_cart_link != blank
+        if configured_empty_cart_link == '/collections/all' or configured_empty_cart_link == 'shopify://collections/all' or configured_empty_cart_link == routes.all_products_collection_url
+          assign empty_cart_url = shop_all_url
+        else
+          assign empty_cart_url = configured_empty_cart_link
+        endif
+      endif
+    -%}
     <a
       class="button cart-items__empty-button"
-      href="{{ settings.empty_cart_button_link | default: routes.all_products_collection_url }}"
+      href="{{ empty_cart_url }}"
     >
       {{ 'actions.continue_shopping' | t }}
     </a>
@@ -189,6 +201,11 @@
                   data-parent-key="{{ item.parent_relationship.parent.key }}"
                   data-key="{{ item.key }}"
                   {% if is_bundle_item %}data-bundle-id="{{ current_bundle_id }}"{% endif %}
+                  {% if item.properties['Engraving Text'] != blank %}
+                    data-has-engraving="true"
+                    {% if item.properties['Engraving Text2'] != blank %}data-engraving-two-line="true"{% endif %}
+                    data-knife-num="{{ item.properties['Knife Quantity'] | default: 1 }}"
+                  {% endif %}
                 >
                   {% comment %} {% if type != "drawer" %}
                     <td
