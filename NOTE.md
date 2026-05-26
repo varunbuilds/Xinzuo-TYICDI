@@ -172,28 +172,48 @@ Fixing **laggy cart drawer updates** (qty +/-, remove) and the **delayed empty-c
 
 ### What I picked
 
-Fixing **header layout** at tablet and mobile widths: remove the white horizontal menu strip, center the logo, and align hamburger + search on the left with account/cart on the right — matching xinzuo.com.au while keeping desktop (logo left, nav center) intact.
+Fixing **header layout and navigation** at tablet and mobile widths: remove the white horizontal menu strip, center the logo, align hamburger + search on the left with account/cart on the right, restore desktop + drawer menu links, and unify mega-menu overlay cards (Series / Type / Accessories) — matching xinzuo.com.au while keeping desktop (logo left, nav center) intact.
 
 ### Why it's the highest-impact thing here
 
 - README calls out **navbar / header**; broken breakpoints were visible on every page after wiring the main menu in admin.
 - Theme Editor **Logo → Center** had no effect because `site-overrides.css` hid any logo in the center column.
-- Between **750px–1280px**, the desktop `<header-menu>` wrapper stayed in the grid (only inner `nav` was hidden), often creating a **second-row white bar** with menu styling (`scheme-1` white background).
+- Between **750px–1280px**, the desktop `<header-menu>` wrapper could leave a **second-row white bar** (`scheme-1` background) when only the inner `nav` was hidden.
+- `{% render 'header-menu' %}` did not pass `menu` / `block` into the snippet, so `home-menu-ul` rendered **empty** on desktop and the hamburger drawer showed only Reviews / Contact.
+- Accessories overlay cards used mixed tile styles and legacy dropdown CSS, so image/title areas were uneven compared with Shop by Series.
 
 ### What I did
 
-**Nav regression fix:** Reverted all Task 5 header CSS/JS experiments to match **task 4 commit** (`blocks/_header-menu.liquid`, `snippets/header-menu.liquid`, `sections/header.liquid`). Task 5 changes (global nav hide/show, `block:` render pass, duplicate `!important` rules) removed the 5 desktop links.
-
-**Logo-only change kept in `assets/site-overrides.css`:**
+**Layout (`assets/site-overrides.css`, `sections/header.liquid`):**
 - Removed `display: none` on center-column logo (was blocking Theme Editor “Center”).
-- Added ≤1280px grid helpers for `.header-logo` and `.header__drawer` only — **no nav display rules**.
+- Added ≤1280px grid helpers for `.header-logo` and `.header__drawer` (logo centered, burger + search on the left).
+- Scoped legacy `.header-dropdown > ul > li` rules to `:not(.xz-mega-series-list)` so they do not fight the mega-menu grid.
 
-**Theme Editor:** Logo **Left**, Menu **Center**. Desktop nav shows at **>1280px**; ≤1280px uses hamburger drawer (unchanged from task 4).
+**Menu links (`blocks/_header-menu.liquid`, `snippets/header-menu.liquid`, `snippets/header-drawer.liquid`):**
+- Pass `block`, `section`, and `menu: block.settings.menu` from the header block into `header-menu` / drawer snippets (`{% render %}` does not inherit `block`).
+- Fallback chain: passed menu → `block.settings.menu` → `linklists['main-menu-restructured']` → `main-menu`.
+- Desktop nav at **>1280px**; hamburger drawer at **≤1280px** (unchanged breakpoint from task 4).
 
-**Screenshots:** `before/task5.png` → `after/task5.png` (tablet white strip + off-center logo → compact header).
+**Mega-menu overlays (Series / Type / Accessories):**
+- All three use **`xz-series-tile`** with the same image resolution (`custom.main_image` → featured → first product image).
+- Removed **FROM: $X** price line from Shop by Type overlay (was `xz-type-tile`).
+- **`assets/site-overrides.css` + `snippets/header-menu.liquid`:** equal grid columns (`minmax(0, 1fr)`), square image (`aspect-ratio: 1 / 1`, `object-fit: cover`), fixed title strip height (`5.5rem`), `align-items: stretch` so every card is the same size.
+
+**`assets/header-menu.js`:**
+- File was truncated (no `HeaderMenu` class) — restored minimal component: registers `<header-menu>`, lazy image preload, Horizon-compatible `activate` / `deactivate`. Xinzuo dropdowns still use `openMenu` / `closeMenu` in `snippets/header-menu.liquid`.
+
+**Theme Editor:** Logo **Left**, Menu **Center**, menu **`main-menu-restructured`**.
+
+**Verified on storefront:**
+- Desktop: 5 nav links (Shop by Series, Shop by Type, Accessories, Top Picks, Knife Sets).
+- Tablet/mobile: same links in hamburger; logo centered; no white link strip.
+- Overlays: consistent card geometry across Series, Type, and Accessories.
+
+**Screenshots:** `before/task5.png` → `after/task5.png` (tablet white strip + empty/broken nav → compact header + working menus + uniform overlay cards).
 
 ### What I'd do next
 
-- **Task 6+:** Collection filters, accessibility, SEO.
-- **Separate track:** Shoplift snippet guard.
-- **Near finish:** debug cleanup.
+- **Task 6+:** Collection filters, accessibility, SEO structured data.
+- **Separate track:** Shoplift snippet guard when app metafields are missing.
+- **Near finish:** debug cleanup (`sticky-add-to-cart.js`, `custom.js`, etc.).
+- Assign **`custom.main_image`** on accessory collections missing overlay images (e.g. Carving Forks, Sharpening Rods) if placeholders are not enough.
