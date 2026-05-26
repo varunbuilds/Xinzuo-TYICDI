@@ -23,9 +23,12 @@
   if preview_image_only
     assign widths = widths | default: '240, 352, 480, 600, 800'
     assign max_image_width = 800
+  elsif is_main_product_media
+    assign widths = widths | default: '240, 352, 832, 1200, 1600, 1920'
+    assign max_image_width = 1920
   else
-    assign widths = widths | default: '240, 352, 832, 1200, 1600, 1920, 2560, 3840'
-    assign max_image_width = 3840
+    assign widths = widths | default: '240, 352, 832, 1200'
+    assign max_image_width = 1200
   endif
   # Allow both 'product' and 'selected_product' parameters
   if product == blank and selected_product != blank

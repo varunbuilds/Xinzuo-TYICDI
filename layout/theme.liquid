@@ -13,20 +13,54 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
 
-    {% comment %} Performance: Preload LCP product image — eliminates 1,438ms load delay {% endcomment %}
-    {%- if request.path contains '/products/' and product.media.size > 0 -%}
-      <link
-        rel="preload"
-        as="image"
-        href="{{ product.media[0].preview_image | image_url: width: 1200 }}"
-        imagesrcset="{{ product.media[0].preview_image | image_url: width: 352 }} 352w, {{ product.media[0].preview_image | image_url: width: 832 }} 832w, {{ product.media[0].preview_image | image_url: width: 1200 }} 1200w, {{ product.media[0].preview_image | image_url: width: 1920 }} 1920w"
-        imagesizes="(min-width: 750px) calc(100vw - 25rem), 100vw"
-        fetchpriority="high"
-      >
+    {%- comment -%}
+      PDP LCP image preload — one request at the top of <head>.
+      featured_image when set, else first gallery media. imagesrcset + imagesizes
+      let the browser pick a single responsive variant (avoids competing preloads).
+    {%- endcomment -%}
+    {%- if template.name == 'product' and product -%}
+      {%- liquid
+        if product.featured_image
+          assign lcp_img = product.featured_image
+        elsif product.media.size > 0
+          assign lcp_img = product.media[0].preview_image
+        endif
+      -%}
+      {%- if lcp_img -%}
+        <link
+          rel="preload"
+          as="image"
+          href="{{ lcp_img | image_url: width: 832 }}"
+          imagesrcset="{{ lcp_img | image_url: width: 240 }} 240w, {{ lcp_img | image_url: width: 352 }} 352w, {{ lcp_img | image_url: width: 832 }} 832w, {{ lcp_img | image_url: width: 1200 }} 1200w"
+          imagesizes="(min-width: 95rem) 65rem, (min-width: 750px) calc(100vw - 25rem - 40px - 24px - 40px), 100vw"
+          fetchpriority="high"
+        >
+      {%- endif -%}
     {%- endif -%}
-    {%- if request.path contains '/collections/' and collection.products.size > 0 -%}
-      {%- assign _first_product = collection.products[0] -%}
-      {%- if _first_product.featured_media -%}
+    {%- comment -%}
+      Collection LCP: preload hero banner image (collection-hero-banner), not the first grid card.
+    {%- endcomment -%}
+    {%- if template.name == 'collection' and collection -%}
+      {%- liquid
+        assign collection_lcp_img = collection.metafields.custom.main_image
+        if collection_lcp_img == blank
+          assign collection_lcp_img = collection.image
+        endif
+        if collection_lcp_img != blank and collection_lcp_img.image
+          assign collection_lcp_img = collection_lcp_img.image
+        endif
+      -%}
+      {%- if collection_lcp_img != blank -%}
+        <link
+          rel="preload"
+          as="image"
+          href="{{ collection_lcp_img | image_url: width: 1200 }}"
+          imagesrcset="{{ collection_lcp_img | image_url: width: 800 }} 800w, {{ collection_lcp_img | image_url: width: 1200 }} 1200w, {{ collection_lcp_img | image_url: width: 1920 }} 1920w"
+          imagesizes="100vw"
+          fetchpriority="high"
+        >
+      {%- elsif collection.products.size > 0 and collection.products[0].featured_media -%}
+        {%- assign _first_product = collection.products[0] -%}
         <link
           rel="preload"
           as="image"
@@ -82,33 +116,6 @@
 
     {%- comment -%} Self-hosted Google Fonts (Albert Sans + Sen) — eliminates 2 third-party origins {%- endcomment -%}
     {%- render 'google-fonts' -%}
-
-    {%- comment -%}
-      PDP LCP image preload. The Mo Chef PDP trace showed the LCP image (the
-      first product gallery image) wasn't discovered by the parser until ~4s
-      into page load, then took ~30s to download on a Slow 4G profile because
-      it was competing with concurrent images for bandwidth at parse-time.
-      Preloading at the very top of <head> issues the request before the
-      parser even reaches the <img> tag, dedicating bandwidth to the LCP
-      element and getting it on screen materially faster.
-
-      We use imagesrcset + imagesizes so the browser picks the right
-      responsive variant at preload time (no wasted bytes).
-    {%- endcomment -%}
-    {%- if template.name == 'product' and product and product.featured_image -%}
-      {%- liquid
-        assign lcp_img = product.featured_image
-        assign lcp_alt = lcp_img.alt | default: product.title | escape
-      -%}
-      <link
-        rel="preload"
-        as="image"
-        href="{{ lcp_img | image_url: width: 832 }}"
-        imagesrcset="{{ lcp_img | image_url: width: 240 }} 240w, {{ lcp_img | image_url: width: 352 }} 352w, {{ lcp_img | image_url: width: 832 }} 832w, {{ lcp_img | image_url: width: 1200 }} 1200w"
-        imagesizes="(min-width: 95rem) 65rem, (min-width: 750px) calc(100vw - 25rem - 40px - 24px - 40px), 100vw"
-        fetchpriority="high"
-      >
-    {%- endif -%}
 
     {%- render 'stylesheets' -%}
     {%- render 'fonts' -%}

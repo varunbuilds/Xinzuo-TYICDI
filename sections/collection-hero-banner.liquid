@@ -293,7 +293,7 @@
   {%- if hero_image -%}
     <img
       class="collection-hero-banner__image"
-      src="{{ hero_image | image_url: width: 1920 }}"
+      src="{{ hero_image | image_url: width: 1200 }}"
       srcset="
         {{ hero_image | image_url: width: 800 }} 800w,
         {{ hero_image | image_url: width: 1200 }} 1200w,
@@ -303,6 +303,7 @@
       alt="{{ collection.title | escape }}"
       loading="eager"
       fetchpriority="high"
+      decoding="async"
       width="{{ hero_image.width }}"
       height="{{ hero_image.height }}"
     >
@@ -310,7 +311,7 @@
   {%- elsif section.settings.default_image != blank -%}
     <img
       class="collection-hero-banner__image"
-      src="{{ section.settings.default_image | image_url: width: 1920 }}"
+      src="{{ section.settings.default_image | image_url: width: 1200 }}"
       srcset="
         {{ section.settings.default_image | image_url: width: 800 }} 800w,
         {{ section.settings.default_image | image_url: width: 1200 }} 1200w,
@@ -320,6 +321,7 @@
       alt="{{ collection.title | escape }}"
       loading="eager"
       fetchpriority="high"
+      decoding="async"
       width="{{ section.settings.default_image.width }}"
       height="{{ section.settings.default_image.height }}"
     >

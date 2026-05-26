@@ -78,5 +78,54 @@ Fixing **product engraving** so the PDP toggle works reliably and the **engravin
 
 - Re-test **one-line** engraving ($19 fee) and **cart quantity changes** (fee qty should stay in sync via `component-cart-items.js`).
 - On future dev stores: ensure **`engraving-fee`** exists (slim seed omits it; full seed or manual admin create).
-- **Task 3:** remove remaining debug noise (`sticky-add-to-cart.js`, `custom.js`, cart recommendations HTML comment).
-- Task 4+: Shoplift guard, performance, SEO, accessibility.
+
+---
+
+## Task 3 — Site-wide LCP image loading
+
+### What I picked
+
+Tightening **LCP image loading** across PDP, collection, and homepage templates: one purposeful preload per page type, no competing hero requests, and smaller payloads for non-main gallery images.
+
+### Why it's the highest-impact thing here
+
+- README calls out **Performance** and **image preloading** (homepage, PDP, collection) as easy Lighthouse wins.
+- PDP had two competing preloads (832 + canceled 1920). Collection pages preloaded the **first grid card** while the real LCP is the **hero banner**. Homepage hero used `decoding="sync"` and oversized desktop preload hints.
+
+### What I did
+
+**PDP (`layout/theme.liquid`)**
+
+1. Merged duplicate PDP preloads into **one** early `<head>` preload (`featured_image`, else first gallery media; srcset max 1200w).
+2. Removed the second preload block that ran after fonts.
+
+**Collection (`layout/theme.liquid` + `sections/collection-hero-banner.liquid`)**
+
+3. Preload **collection hero** (`custom.main_image` or `collection.image`) instead of the first product card when a hero exists; keep card preload only as fallback.
+4. Hero `<img>`: default `src` at 1200w (srcset still serves 1920w on large screens), `decoding="async"`.
+
+**Homepage (`sections/cw-hero.liquid`)**
+
+5. Desktop hero preload `href` at 1200w (removed 2560w from preload srcset).
+6. Hero `<img>`: `decoding="async"`, default `src` 1200w, trimmed oversized srcset entries.
+
+**PDP gallery (`snippets/product-media.liquid`)**
+
+7. Main slide: max width **1920** (zoom/LCP). Additional slides: max **1200** with a smaller srcset so off-screen gallery images don’t pull 3840px assets.
+
+**Verified**
+
+- PDP Network (Img): single hero preload at 832, **no canceled 1920** row (`after/task3.png`).
+
+**Screenshots**
+
+- `before/task3.png` → `after/task3.png` (PDP Network Img)
+
+No admin changes.
+
+### What I'd do next
+
+- **Task 4 (README — Cart drawer):** qty/remove/empty state, mobile, engraving fee sync edge cases.
+- **Task 5+:** Navbar/header, collection filters, accessibility, SEO structured data.
+- **Separate track:** Shoplift snippet guard when app metafields are missing.
+- **Near finish:** debug cleanup (`sticky-add-to-cart.js`, `custom.js`, `cart-smart-recommendations.liquid`).
