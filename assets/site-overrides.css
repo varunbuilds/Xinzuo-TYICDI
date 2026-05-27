@@ -1506,7 +1506,7 @@ aside {
   pointer-events: auto;
 }
 
-/* === ATC button (outline — filled red on hover via xinzuo-buttons.css) === */
+/* === ATC button (white fill, muted gray hover via xinzuo-buttons.css) === */
 .xz-product-card .xz-card-atc {
   width: 100%;
   min-height: 40px;
