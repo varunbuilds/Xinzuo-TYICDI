@@ -1,5 +1,31 @@
 # Xinzuo Shopify clone — TYICDI hiring task
 
+## Submission — Varun Rewadi
+
+**Candidate:** Varun Rewadi · 22 · freelance developer (web design, web development, app development)
+
+I like building products, apps, and websites that people actually use — not demos that never ship. This repo is my timed work on the [TYICDI](https://apply.toldyouicoulddoit.com) Xinzuo theme challenge: theme fixes, UX polish, performance, and SEO on a production-shaped Shopify clone.
+
+|                         |                                                                                                  |
+| ----------------------- | ------------------------------------------------------------------------------------------------ |
+| **Portfolio**           | [varunbuilds.vercel.app](https://varunbuilds.vercel.app)                                         |
+| **Recent Shopify work** | [Kill Your Dreams (KYD)](https://killyourdreams.com) — streetwear brand; full Online Store build |
+| **Walkthrough (Loom)**  | _[Add your Loom share URL here — max 3 min, face + screen]_                                      |
+| **Task notes**          | [`NOTE.md`](./NOTE.md) — Tasks 1–9 (what I picked, why, what I did, what’s next)                 |
+| **Before / after**      | `before/` and `after/` folders (screenshots per task)                                            |
+
+### What I focused on
+
+Across nine tasks I prioritized **conversion paths and things reviewers feel immediately**: bundle builder wiring, engraving + cart fee, LCP/image loading, cart drawer + header on mobile, collection filters on `all-products`, CTA/checkout polish, theme-check stability, and SEO (canonicals on `?filter=` URLs, OG/Twitter images, breadcrumb JSON-LD). Details, verification steps, and admin-side follow-ups are in `NOTE.md`.
+
+### Hire me?
+
+Happy to walk through any commit or trade-off on a call. Portfolio and KYD store linked above; Loom covers the highest-impact changes end-to-end.
+
+---
+
+## About this repo (challenge brief)
+
 A sanitised, single-command clone of [xinzuo.com.au](https://xinzuo.com.au) running on your **own** free Shopify dev store: real Liquid theme, ~50 sample products (the ones the homepage actually references, plus backfill), 68 collections, 17 pages, 5 articles, and 162 optimised images. Your 2-hour timed window starts when you tick the commit gate on the [hiring portal](https://apply.toldyouicoulddoit.com). Setup below does **not** count against the timer — do it ahead of time.
 
 **Measured script time: under 5 minutes** (plus 10–15 min for first-time Shopify Partners signup if you've never used it — that part is one-time).
@@ -80,11 +106,14 @@ A **public** GitHub repo with **at least 3 commits inside your 2-hour window**, 
 4. `NOTE.md` — markdown with these headings:
    ```markdown
    ## What I picked
+
    ## Why it's the highest-impact thing here
+
    ## What I did
+
    ## What I'd do next
    ```
-5. Loom URL (max 3 min, face + screen, walking through the change) in your repo's `README.md`
+5. Loom URL (max 3 min, face + screen, walking through the change) in your repo's `README.md` — see **Submission — Varun Rewadi** at the top of this file
 
 Submit your repo + Loom + `NOTE.md` summary on the [hiring portal](https://apply.toldyouicoulddoit.com).
 
@@ -107,6 +136,7 @@ node scripts/setup.mjs
 ```
 
 Fine-grained:
+
 ```bash
 node scripts/seed-to-dev-store.mjs --write    # products + collections + pages + media only
 node scripts/push-theme.mjs --write           # theme only
@@ -116,19 +146,19 @@ node scripts/push-theme.mjs --write           # theme only
 
 ## Measured timing (fresh clean dev store, Win11, 1Gbps)
 
-| Step | Time |
-|---|---|
-| `git clone` | 4s |
-| Upload 162 media files (logo, hero, icons, testimonials, payment badges) | 80s |
-| Seed ~50 products + 68 collections + 17 pages + 5 articles | 65s |
-| Push + publish theme (584 files) | 130s |
-| **Total** | **~4.5 min** |
+| Step                                                                     | Time         |
+| ------------------------------------------------------------------------ | ------------ |
+| `git clone`                                                              | 4s           |
+| Upload 162 media files (logo, hero, icons, testimonials, payment badges) | 80s          |
+| Seed ~50 products + 68 collections + 17 pages + 5 articles               | 65s          |
+| Push + publish theme (584 files)                                         | 130s         |
+| **Total**                                                                | **~4.5 min** |
 
 ---
 
 ## Troubleshooting
 
-- **"REFUSED: store URL must end in *.myshopify.com"** — you put your custom domain in `.env`. Use the `*.myshopify.com` URL instead.
+- **"REFUSED: store URL must end in \*.myshopify.com"** — you put your custom domain in `.env`. Use the `*.myshopify.com` URL instead.
 - **401 on first request** — your token is wrong or you didn't tick all six scopes. Re-check step A.3.
 - **Some images don't render on the homepage** — wait a minute and reload; Shopify processes uploaded files asynchronously after the script completes.
 - **Bundle Builder page is empty** — that's intentional. It's one of the things you could fix.
@@ -149,13 +179,3 @@ node scripts/push-theme.mjs --write           # theme only
 The `media/` folder contains 162 images downsized to 1200px and converted to webp@q80 — visually identical to xinzuo.com.au, just optimised. Original `.png`/`.jpg` refs in the theme JSON are rewritten to `.webp` at push time.
 
 In short: only what you'd see by browsing xinzuo.com.au with DevTools open.
-
----
-
-## License
-
-Shared **solely for the TYICDI developer hiring task**. Brand, product names, copy and imagery © Xinzuo Australia / Told You I Could Do It.
-
-**You may** publish your own fix in a public GitHub repo for the sole purpose of submitting this challenge — that's how we read your work. Keep the brand assets attributed; don't claim the underlying content as your own.
-
-**You may not** use the brand, content, theme, or any derivative for commercial purposes, in a portfolio piece beyond a reference to "TYICDI hiring task", or fork it as the basis of another store.
