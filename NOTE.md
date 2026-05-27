@@ -185,26 +185,31 @@ Fixing **header layout and navigation** at tablet and mobile widths: remove the 
 ### What I did
 
 **Layout (`assets/site-overrides.css`, `sections/header.liquid`):**
+
 - Removed `display: none` on center-column logo (was blocking Theme Editor “Center”).
 - Added ≤1280px grid helpers for `.header-logo` and `.header__drawer` (logo centered, burger + search on the left).
 - Scoped legacy `.header-dropdown > ul > li` rules to `:not(.xz-mega-series-list)` so they do not fight the mega-menu grid.
 
 **Menu links (`blocks/_header-menu.liquid`, `snippets/header-menu.liquid`, `snippets/header-drawer.liquid`):**
+
 - Pass `block`, `section`, and `menu: block.settings.menu` from the header block into `header-menu` / drawer snippets (`{% render %}` does not inherit `block`).
 - Fallback chain: passed menu → `block.settings.menu` → `linklists['main-menu-restructured']` → `main-menu`.
 - Desktop nav at **>1280px**; hamburger drawer at **≤1280px** (unchanged breakpoint from task 4).
 
 **Mega-menu overlays (Series / Type / Accessories):**
+
 - All three use **`xz-series-tile`** with the same image resolution (`custom.main_image` → featured → first product image).
 - Removed **FROM: $X** price line from Shop by Type overlay (was `xz-type-tile`).
 - **`assets/site-overrides.css` + `snippets/header-menu.liquid`:** equal grid columns (`minmax(0, 1fr)`), square image (`aspect-ratio: 1 / 1`, `object-fit: cover`), fixed title strip height (`5.5rem`), `align-items: stretch` so every card is the same size.
 
 **`assets/header-menu.js`:**
+
 - File was truncated (no `HeaderMenu` class) — restored minimal component: registers `<header-menu>`, lazy image preload, Horizon-compatible `activate` / `deactivate`. Xinzuo dropdowns still use `openMenu` / `closeMenu` in `snippets/header-menu.liquid`.
 
 **Theme Editor:** Logo **Left**, Menu **Center**, menu **`main-menu-restructured`**.
 
 **Verified on storefront:**
+
 - Desktop: 5 nav links (Shop by Series, Shop by Type, Accessories, Top Picks, Knife Sets).
 - Tablet/mobile: same links in hamburger; logo centered; no white link strip.
 - Overlays: consistent card geometry across Series, Type, and Accessories.
@@ -233,14 +238,17 @@ Improving **custom collection filters** on the shop-all page: clear feedback whe
 ### What I did
 
 **Empty state (`sections/main-collection.liquid`):**
+
 - Added `#collection-filter-empty` (reuses `.main-collection-grid__empty` styles) with **Clear all filters** action.
 - Shown when active filters match **zero** products; hides the product grid and load-more.
 
 **Product count (`sections/main-collection.liquid` + `snippets/custom-collection-filters.liquid`):**
+
 - Added `#collection-results-count` with `aria-live="polite"`.
 - Updates on filter/sort: e.g. `12 items` or `3 items match your filters`.
 
 **Filter logic (`snippets/custom-collection-filters.liquid`):**
+
 - `updateFilteredEmptyState()` after `applyFilters()`.
 - `syncAllFilterCheckboxes()` matches by `data-filter-type` + `data-filter-value` (not DOM index).
 - Mobile **Clear All** clears drawer + desktop, runs `applyFilters()`, updates badge.
@@ -248,6 +256,7 @@ Improving **custom collection filters** on the shop-all page: clear feedback whe
 - URL `?filter=knives` / `?filter=accessories` unchanged (already mapped to Category checkboxes).
 
 **Verified on storefront:**
+
 - Desktop: checkbox filters apply; count updates; zero results shows empty message.
 - Mobile: drawer Apply/Clear sync correctly with sidebar.
 - Header “VIEW ALL KNIVES” → `/collections/all-products?filter=knives` pre-checks filters.
@@ -361,3 +370,46 @@ Fixing remaining **theme-check blockers/warnings** that could hurt reviewer conf
 
 - Keep section-level class naming convention strict (prefix with section/component namespace) to prevent future scope warnings.
 - Continue challenge submission prep (final screenshot audit + concise changelog quality pass).
+
+---
+
+## Task 9 — SEO / structured data
+
+### What I picked
+
+Tightening **SEO head tags and structured data** around the gaps called out in the README: canonical URLs on filtered catalog views, social preview images (OG/Twitter), and breadcrumb JSON-LD pointing at real collection URLs instead of hardcoded paths.
+
+### Why it's the highest-impact thing here
+
+- The theme already ships rich SEO (`snippets/meta-tags.liquid`, `snippets/seo-schema.liquid`, Product JSON-LD in `sections/product-information.liquid`), but a few edge cases undermine it on high-traffic URLs.
+- **`/collections/all-products?filter=knives`** is linked from the header; without a clean canonical + `noindex`, crawlers can treat filter states as duplicate content.
+- Missing **Twitter/OG image** fallbacks on pages where Shopify does not set `page_image` hurts link previews (Slack, iMessage, X).
+- **BreadcrumbList** URLs hardcoded to `/collections/knives` break if collection handles differ on the dev store.
+
+### What I did
+
+1. **`snippets/meta-tags.liquid`**
+   - When `?filter=` is present on a collection, set **`seo_canonical_url`** (and `og:url`) to the base collection URL (`shop.url` + `collection.url`).
+   - Treat `request.params.filter` as a filtered state for **`robots: noindex, follow`** (alongside native `/filter.` paths).
+   - Assign **`page_image`** fallbacks for products (featured image), collections (collection image or first product image), and pages with a featured image.
+   - Add **Twitter card image** fallbacks for homepage (logo), blog listing, and articles when `page_image` is still blank.
+
+2. **`snippets/seo-schema.liquid`**
+   - Collection **BreadcrumbList** parent links use `collections['knives']` / `collections['accessories']` URLs when those collections exist, with path fallbacks.
+
+3. **`sections/product-information.liquid`**
+   - Product **BreadcrumbList** category step uses the same dynamic collection URLs for knives vs accessories.
+
+**Files touched:** `snippets/meta-tags.liquid`, `snippets/seo-schema.liquid`, `sections/product-information.liquid`
+
+### Verification
+
+- View source on **`/collections/all-products?filter=knives`**: canonical should be `/collections/all-products` (no `filter` param); `robots` should be `noindex, follow`.
+- View source on a **PDP**: `og:image` and `twitter:image` present; Product + BreadcrumbList JSON-LD validate in [Google Rich Results Test](https://search.google.com/test/rich-results).
+- Optional: share a PDP/collection URL in Slack/iMessage and confirm preview image + title.
+
+### What I'd do next
+
+- Align `sections/seo-breadcrumbs.liquid` and `sections/collection-hero-banner.liquid` microdata breadcrumbs with the same `collections[...]` URL pattern.
+- Validate full JSON-LD graph on homepage (Organization + WebSite + FAQ) in Rich Results Test.
+- Add `WebPage` schema for key marketing pages (series comparison, bundle builder) if they lack page-level structured data.

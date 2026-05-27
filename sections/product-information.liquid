@@ -272,6 +272,15 @@
       endif
     endfor
   endif
+
+  assign product_breadcrumb_knives_url = shop.url | append: '/collections/knives'
+  assign product_breadcrumb_accessories_url = shop.url | append: '/collections/accessories'
+  if collections['knives']
+    assign product_breadcrumb_knives_url = collections['knives'].url | prepend: shop.url
+  endif
+  if collections['accessories']
+    assign product_breadcrumb_accessories_url = collections['accessories'].url | prepend: shop.url
+  endif
 -%}
 <script type="application/ld+json">
   {
@@ -288,7 +297,7 @@
         "@type": "ListItem",
         "position": 2,
         "name": {% if product.metafields.custom.isknife == true %}"Knives"{% else %}"Accessories"{% endif %},
-        "item": {% if product.metafields.custom.isknife == true %}{{ shop.url | append: "/collections/knives" | json }}{% else %}{{ shop.url | append: "/collections/accessories" | json }}{% endif %}
+        "item": {% if product.metafields.custom.isknife == true %}{{ product_breadcrumb_knives_url | json }}{% else %}{{ product_breadcrumb_accessories_url | json }}{% endif %}
       }{% if series_collection %},
       {
         "@type": "ListItem",

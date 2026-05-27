@@ -218,23 +218,31 @@
       {%- liquid
         assign bc_parent_name = ''
         assign bc_parent_url = ''
+        assign seo_knives_url = '/collections/knives'
+        assign seo_accessories_url = '/collections/accessories'
+        if collections['knives']
+          assign seo_knives_url = collections['knives'].url
+        endif
+        if collections['accessories']
+          assign seo_accessories_url = collections['accessories'].url
+        endif
         if collection.handle contains '-series'
           assign bc_parent_name = 'Knives'
-          assign bc_parent_url = '/collections/knives'
+          assign bc_parent_url = seo_knives_url
         elsif collection.handle contains 'under-'
           assign bc_parent_name = 'Knives'
-          assign bc_parent_url = '/collections/knives'
+          assign bc_parent_url = seo_knives_url
         elsif collection.handle == 'cutting-boards' or collection.handle == 'chopping-boards' or collection.handle == 'whetstones' or collection.handle == 'knife-stands' or collection.handle == 'magnetic-knife-holders' or collection.handle == 'knife-guards' or collection.handle == 'knife-rolls' or collection.handle == 'kitchen-scissors' or collection.handle == 'aprons' or collection.handle == 'chef-aprons' or collection.handle == 'knife-sharpening-tools' or collection.handle == 'wood-knife-sheaths' or collection.handle == 'chef-knife-roll-bags'
           assign bc_parent_name = 'Accessories'
-          assign bc_parent_url = '/collections/accessories'
+          assign bc_parent_url = seo_accessories_url
         elsif collection.handle contains 'knife' or collection.handle contains 'knives'
           unless collection.handle == 'knives'
             assign bc_parent_name = 'Knives'
-            assign bc_parent_url = '/collections/knives'
+            assign bc_parent_url = seo_knives_url
           endunless
         elsif collection.handle == 'cleavers' or collection.handle == 'chinese-cleaver' or collection.handle == 'carving-forks' or collection.handle == 'damascus'
           assign bc_parent_name = 'Knives'
-          assign bc_parent_url = '/collections/knives'
+          assign bc_parent_url = seo_knives_url
         endif
       -%}
       {%- if bc_parent_name != '' -%}

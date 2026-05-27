@@ -170,6 +170,28 @@
   if og_title == page_title
     assign og_title = seo_title
   endif
+
+  # Canonical / OG URL: client-side catalog filters use ?filter= (not Shopify native filters)
+  assign seo_canonical_url = canonical_url
+  if request.page_type == 'collection' and collection and request.params.filter != blank
+    assign seo_canonical_url = shop.url | append: collection.url
+    assign og_url = seo_canonical_url
+  endif
+
+  # Social preview image when Shopify does not set page_image
+  if page_image == blank
+    if request.page_type == 'product' and product and product.featured_image
+      assign page_image = product.featured_image
+    elsif request.page_type == 'collection' and collection
+      if collection.image
+        assign page_image = collection.image
+      elsif collection.products.first.featured_image
+        assign page_image = collection.products.first.featured_image
+      endif
+    elsif request.page_type == 'page' and page and page.image
+      assign page_image = page.image
+    endif
+  endif
 %}
 
 <meta
@@ -353,6 +375,33 @@
     name="twitter:image:alt"
     content="{{ page_image.alt | default: page_title | escape }}"
   >
+{%- elsif request.page_type == 'index' and settings.logo -%}
+  <meta
+    name="twitter:image"
+    content="https:{{ settings.logo | image_url: width: 1200 }}"
+  >
+  <meta
+    name="twitter:image:alt"
+    content="{{ shop.name }} - Premium Kitchen Knives"
+  >
+{%- elsif request.page_type == 'blog' and blog.articles.first.image -%}
+  <meta
+    name="twitter:image"
+    content="https:{{ blog.articles.first.image | image_url: width: 1200 }}"
+  >
+  <meta
+    name="twitter:image:alt"
+    content="{{ blog.title }} - {{ shop.name }}"
+  >
+{%- elsif request.page_type == 'article' and article.image -%}
+  <meta
+    name="twitter:image"
+    content="https:{{ article.image | image_url: width: 1200 }}"
+  >
+  <meta
+    name="twitter:image:alt"
+    content="{{ article.image.alt | default: article.title | escape }}"
+  >
 {%- endif -%}
 {%- if request.page_type == 'product' and product -%}
   <meta
@@ -386,13 +435,13 @@
 
 <link
   rel="canonical"
-  href="{{ canonical_url }}"
+  href="{{ seo_canonical_url }}"
 >
 
 {%- comment -%} SEO: Hreflang for Australian market (skip on 404/error pages) {%- endcomment -%}
 {%- unless template == '404' -%}
-<link rel="alternate" hreflang="en-AU" href="{{ canonical_url }}">
-<link rel="alternate" hreflang="x-default" href="{{ canonical_url }}">
+<link rel="alternate" hreflang="en-AU" href="{{ seo_canonical_url }}">
+<link rel="alternate" hreflang="x-default" href="{{ seo_canonical_url }}">
 {%- endunless -%}
 
 {%- comment -%} SEO: Geographic targeting {%- endcomment -%}
@@ -418,7 +467,7 @@
   if request.page_type == 'collection'
     # Check if we have filter parameters in the URL
     assign has_filters = false
-    if request.path contains '/filter.' or request.params.filter_v != blank
+    if request.path contains '/filter.' or request.params.filter_v != blank or request.params.filter != blank
       assign has_filters = true
     endif
     
