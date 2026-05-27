@@ -190,7 +190,7 @@
     color: var(--xinzuo-accent, #ff0005);
   }
 
-  .series-comparison-{{ section.id }} .rating-text {
+  .series-comparison-{{ section.id }} .series-rating-text {
     font-family: "Inter";
     font-weight: 400;
     font-size: 13px;
@@ -272,7 +272,7 @@
     margin-bottom: 14px;
   }
 
-  .series-comparison-{{ section.id }} .afterpay-text {
+  .series-comparison-{{ section.id }} .series-afterpay-text {
     font-family: "Inter";
     font-size: 12px;
     font-weight: 400;
@@ -280,7 +280,7 @@
     line-height: 1.4;
   }
 
-  .series-comparison-{{ section.id }} .afterpay-logo {
+  .series-comparison-{{ section.id }} .series-afterpay-logo {
     width: 70px;
     height: auto;
     display: inline-block;
@@ -811,7 +811,7 @@
                   <span class="star empty">★</span>
                 {% endif %}
               {% endfor %}
-              <span class="rating-text">{{ rating_value }} ({{ review_count_text }})</span>
+              <span class="series-rating-text">{{ rating_value }} ({{ review_count_text }})</span>
             </div>
           </div>
 
@@ -941,11 +941,11 @@
             {% if block.settings.pricing_product != blank %}
               {% assign installment_amount = block.settings.pricing_product.price | divided_by: 4.0 %}
               <div class="afterpay-message">
-                <span class="afterpay-text">or 4 interest-free payments of {{ installment_amount | money }} with</span>
+                <span class="series-afterpay-text">or 4 interest-free payments of {{ installment_amount | money }} with</span>
                 <img 
                   src="https://cdn.shopify.com/s/files/1/0668/0441/6563/files/afterpay-logo.webp?v=1763090600" 
                   alt="Afterpay" 
-                  class="afterpay-logo"
+                  class="series-afterpay-logo"
                   width="64"
                   height="13"
                   loading="lazy"
@@ -1063,7 +1063,7 @@
       "label": "Show Comparison Notes",
       "default": true,
       "info": "Shows dynamic notes based on which two series are being compared. Add comparison note blocks below to define comparison text for each series pair."
-    },
+    }
   ],
   "blocks": [
     {

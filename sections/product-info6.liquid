@@ -187,10 +187,26 @@
                     <span>{{ section.settings.left_title }}</span>
                     <span>{{ section.settings.left_content }}</span>
                 </div>
-                <img src="{{ section.settings.left_img | image_url: width: 800 }}" alt="{{ section.settings.left_title | strip_html | truncate: 100 | default: 'Product detail left image' }}">
+                {{
+                  section.settings.left_img
+                  | image_url: width: 800
+                  | image_tag:
+                    loading: 'lazy',
+                    widths: '400,600,800',
+                    sizes: '(max-width: 750px) 100vw, 50vw',
+                    alt: section.settings.left_title | strip_html | truncate: 100 | default: 'Product detail left image'
+                }}
             </div>
             <div class="product-info6-div right">
-                <img src="{{ section.settings.right_img | image_url: width: 800 }}" alt="{{ section.settings.right_title | strip_html | truncate: 100 | default: 'Product detail right image' }}">
+                {{
+                  section.settings.right_img
+                  | image_url: width: 800
+                  | image_tag:
+                    loading: 'lazy',
+                    widths: '400,600,800',
+                    sizes: '(max-width: 750px) 100vw, 50vw',
+                    alt: section.settings.right_title | strip_html | truncate: 100 | default: 'Product detail right image'
+                }}
                 <div>
                     <span>{{ section.settings.right_title }}</span>
                     <span>{{ section.settings.right_content }}</span>
@@ -228,7 +244,7 @@
         {
             "type": "richtext",
             "id": "heading_content",
-            "label": "Header Content",
+            "label": "Header Content"
         },
         {
             "type": "select",
@@ -305,7 +321,7 @@
             "step": 2,
             "unit": "px",
             "default": 80
-        },
+        }
     ],
     "presets": [
         {

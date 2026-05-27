@@ -316,3 +316,48 @@ Finalizing **homepage/header behavior + CTA consistency** to match the target vi
 - Run one final breakpoint QA sweep (mobile/tablet/desktop) for header + button states.
 - Remove/trim any temporary stylistic overlap in `xinzuo-buttons.css` once UI is locked.
 - Optional: move GSAP/ScrollTrigger to theme assets for tighter control/version pinning.
+
+---
+
+## Task 8 — Section stability + lint cleanup
+
+### What I picked
+
+Fixing remaining **theme-check blockers/warnings** that could hurt reviewer confidence: invalid section schema JSON, broken quick-question modal handlers, and missing image dimensions warnings.
+
+### Why it's the highest-impact thing here
+
+- Invalid section schema JSON can break Theme Editor parsing and is an immediate quality red flag in a hiring submission.
+- Runtime `ReferenceError` in a customer-facing section (“Quick Question”) is a visible functional defect.
+- Clearing lint noise makes the final submission look deliberate and production-minded, even in challenge scope.
+
+### What I did
+
+1. Fixed invalid schema JSON (trailing commas) in:
+   - `sections/series-comparison.liquid`
+   - `sections/product-info6.liquid`
+   - `sections/product-info7.liquid`
+
+2. Fixed quick-question modal runtime handlers in `sections/quick-question.liquid`:
+   - Exposed `openModal`, `closeModal`, `nextModal` to `window` so inline `onclick` calls resolve.
+   - Added null-safety checks for modal/step nodes.
+
+3. Resolved image width/height lint errors by replacing raw `<img>` with Shopify `image_tag`:
+   - `sections/product-info6.liquid` (left/right images)
+   - `sections/product-info7.liquid` (main image)
+
+4. Resolved remaining class-scope warnings in `sections/series-comparison.liquid` by scoping class names:
+   - `rating-text` → `series-rating-text`
+   - `afterpay-text` → `series-afterpay-text`
+   - `afterpay-logo` → `series-afterpay-logo`
+   - Updated both CSS and corresponding markup.
+
+### Verification
+
+- Re-ran lints on touched files and full workspace.
+- Result: **no linter warnings/errors** remaining in workspace diagnostics.
+
+### What I'd do next
+
+- Keep section-level class naming convention strict (prefix with section/component namespace) to prevent future scope warnings.
+- Continue challenge submission prep (final screenshot audit + concise changelog quality pass).

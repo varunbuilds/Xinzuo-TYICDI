@@ -183,7 +183,15 @@
             </div>
         </div>
         <div class="product-info7-img">
-            <img src="{{ section.settings.img | image_url: width: 800 }}" alt="{{ section.settings.heading_title | default: 'Product detail' | escape }}">
+            {{
+              section.settings.img
+              | image_url: width: 800
+              | image_tag:
+                loading: 'lazy',
+                widths: '400,600,800',
+                sizes: '(max-width: 750px) 100vw, 70vw',
+                alt: section.settings.heading_title | default: 'Product detail' | escape
+            }}
             <div class="product-info7-blocks">
                 {% if section.blocks.size > 0 %}
                     {% for block in section.blocks %}
@@ -226,7 +234,7 @@
         {
             "type": "richtext",
             "id": "heading_content",
-            "label": "Header Content",
+            "label": "Header Content"
         },
         {
             "type": "select",
@@ -278,7 +286,7 @@
             "step": 2,
             "unit": "px",
             "default": 80
-        },
+        }
     ],
     "blocks": [
         {
