@@ -175,6 +175,14 @@ body:has(main[data-template^="index"]) header .header__row,
 body:has(main[data-template^="index"]) header#header-component.header {
     background-color: transparent !important;
     --header-bg-color: transparent;
+    transition: background-color 0.35s ease;
+}
+
+body.is-homepage-scrolled:has(main[data-template^="index"]) .header-section:has(> #header-component),
+body.is-homepage-scrolled:has(main[data-template^="index"]) header .header__row,
+body.is-homepage-scrolled:has(main[data-template^="index"]) header#header-component.header {
+    background-color: #000000 !important;
+    --header-bg-color: #000000;
 }
 
 body:has(main[data-template^="index"]) #header-group:has(#header-component[sticky]) {

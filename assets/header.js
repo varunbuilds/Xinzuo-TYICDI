@@ -251,6 +251,17 @@ if (!customElements.get('header-component')) {
 onDocumentLoaded(() => {
   const header = document.querySelector('#header-component');
   const headerGroup = document.querySelector('#header-group');
+  const homepageMain = document.querySelector("main[data-template^='index']");
+
+  if (homepageMain) {
+    const homepageHeaderScrollThreshold = 24;
+    const syncHomepageHeaderScrollState = () => {
+      document.body.classList.toggle('is-homepage-scrolled', window.scrollY > homepageHeaderScrollThreshold);
+    };
+
+    syncHomepageHeaderScrollState();
+    document.addEventListener('scroll', syncHomepageHeaderScrollState, { passive: true });
+  }
 
   // Update header group height on resize of any child
   if (headerGroup) {
