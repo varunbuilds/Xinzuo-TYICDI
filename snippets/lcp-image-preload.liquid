@@ -1,0 +1,13 @@
+{%- doc -%}
+  LCP image preload for <head> only.
+  Uses preload_tag (Link header + rel=preload) — never outputs a visible <img> in the document.
+  @param {image} image - Required Shopify image object.
+  @param {number} [width] - Preload target width. Default 1200.
+{%- enddoc -%}
+{%- liquid
+  unless image
+    break
+  endunless
+  assign preload_width = width | default: 1200
+-%}
+{{ image | image_url: width: preload_width | preload_tag: as: 'image', fetchpriority: 'high' }}

@@ -14,9 +14,8 @@
     <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
 
     {%- comment -%}
-      PDP LCP image preload — one request at the top of <head>.
-      featured_image when set, else first gallery media. imagesrcset + imagesizes
-      let the browser pick a single responsive variant (avoids competing preloads).
+      PDP / collection / search LCP preloads — preload_tag only (no <img> in <head>).
+      Using image_tag with sizes/loading in <head> can render a full-width image above the header.
     {%- endcomment -%}
     {%- if template.name == 'product' and product -%}
       {%- liquid
@@ -27,22 +26,9 @@
         endif
       -%}
       {%- if lcp_img -%}
-        {{
-          lcp_img
-          | image_url: width: 1200
-          | image_tag:
-            preload: true,
-            widths: '240, 352, 832, 1200',
-            sizes: '(min-width: 95rem) 65rem, (min-width: 750px) calc(100vw - 25rem - 40px - 24px - 40px), 100vw',
-            fetchpriority: 'high',
-            loading: 'eager',
-            alt: product.title
-        }}
+        {%- render 'lcp-image-preload', image: lcp_img, width: 1200 -%}
       {%- endif -%}
     {%- endif -%}
-    {%- comment -%}
-      Collection LCP: preload hero banner image (collection-hero-banner), not the first grid card.
-    {%- endcomment -%}
     {%- if template.name == 'collection' and collection -%}
       {%- liquid
         assign collection_lcp_img = collection.metafields.custom.main_image
@@ -54,46 +40,21 @@
         endif
       -%}
       {%- if collection_lcp_img != blank -%}
-        {{
-          collection_lcp_img
-          | image_url: width: 1920
-          | image_tag:
-            preload: true,
-            widths: '800, 1200, 1920',
-            sizes: '100vw',
-            fetchpriority: 'high',
-            loading: 'eager',
-            alt: collection.title
-        }}
+        {%- render 'lcp-image-preload', image: collection_lcp_img, width: 1920 -%}
       {%- elsif collection.products.size > 0 and collection.products[0].featured_media -%}
-        {%- assign first_collection_product = collection.products[0] -%}
-        {{
-          first_collection_product.featured_media.preview_image
-          | image_url: width: 600
-          | image_tag:
-            preload: true,
-            widths: '240, 352, 480, 600',
-            sizes: '(max-width: 749px) 45vw, (max-width: 1199px) 30vw, 22vw',
-            fetchpriority: 'high',
-            loading: 'eager',
-            alt: first_collection_product.title
-        }}
+        {%- render 'lcp-image-preload',
+          image: collection.products[0].featured_media.preview_image,
+          width: 600
+        -%}
       {%- endif -%}
     {%- endif -%}
     {%- if request.path == '/search' and search.results.size > 0 -%}
       {%- assign search_lcp_product = search.results.first -%}
       {%- if search_lcp_product.featured_media -%}
-        {{
-          search_lcp_product.featured_media.preview_image
-          | image_url: width: 600
-          | image_tag:
-            preload: true,
-            widths: '240, 352, 480, 600',
-            sizes: '(max-width: 749px) 45vw, (max-width: 1199px) 30vw, 22vw',
-            fetchpriority: 'high',
-            loading: 'eager',
-            alt: search_lcp_product.title
-        }}
+        {%- render 'lcp-image-preload',
+          image: search_lcp_product.featured_media.preview_image,
+          width: 600
+        -%}
       {%- endif -%}
     {%- endif -%}
 
