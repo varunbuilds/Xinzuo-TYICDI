@@ -1,13 +1,13 @@
-
 {% assign block_settings = block.settings %}
 
-{%- assign block_settings = block.settings -%}
+{%- liquid
+  assign icon_source = block_settings.icon_source | default: 'brand'
+  assign payment_icon_files = 'Amex.webp,ApplePay.webp,GooglePay.webp,Mastercard.webp,ShopPay.webp,Visa.webp' | split: ','
+  assign payment_icon_alts = 'American Express,Apple Pay,Google Pay,Mastercard,Shop Pay,Visa' | split: ','
+-%}
 
 <div
-  class="
-    payment-icons
-    spacing-style
-  "
+  class="payment-icons payment-icons--product spacing-style"
   style="
     {% render 'spacing-padding', settings: block_settings %}
     --icon-gap: {{ block_settings.gap }}px;
@@ -16,32 +16,81 @@
   {{ block.shopify_attributes }}
 >
   <span class="visually-hidden">{{ 'blocks.payment_methods' | t }}</span>
-  <ul
-    class="payment-icons__list"
-    role="list"
-  >
-    {%- for type in shop.enabled_payment_types -%}
-      <li class="payment-icons__item">
-        {{ type | payment_type_svg_tag: class: 'icon icon--full-color' }}
-      </li>
-    {%- endfor -%}
-  </ul>
+
+  {% if icon_source == 'shopify' and shop.enabled_payment_types.size > 0 %}
+    <ul class="payment-icons__list" role="list">
+      {%- for type in shop.enabled_payment_types -%}
+        <li class="payment-icons__item">
+          {{ type | payment_type_svg_tag: class: 'icon icon--full-color' }}
+        </li>
+      {%- endfor -%}
+    </ul>
+  {% else %}
+    <ul class="payment-icons__list payment-icons__list--brand" role="list">
+      {%- for icon_file in payment_icon_files -%}
+        {%- assign icon_index = forloop.index0 -%}
+        <li class="payment-icons__item">
+          <img
+            src="{{ icon_file | file_url }}"
+            alt="{{ payment_icon_alts[icon_index] }}"
+            width="42"
+            height="28"
+            loading="lazy"
+            class="payment-icons__image"
+          >
+        </li>
+      {%- endfor -%}
+    </ul>
+  {% endif %}
 </div>
 
 {% stylesheet %}
+  .payment-icons--product {
+    width: 100%;
+  }
+
   .payment-icons__list {
     display: flex;
     align-items: center;
-    justify-content: var(--alignment);
+    justify-content: var(--alignment, center);
     flex-wrap: wrap;
-    gap: var(--icon-gap);
+    gap: var(--icon-gap, 8px);
     margin: 0;
     padding: 0;
+    list-style: none;
+  }
+
+  .payment-icons__list--brand {
+    flex-wrap: nowrap;
+    justify-content: center;
+    gap: 8px;
+    margin-block: 20px 24px;
   }
 
   .payment-icons__item {
     display: flex;
     align-items: center;
+    flex: 0 0 auto;
+  }
+
+  .payment-icons__image {
+    display: block;
+    width: 42px;
+    height: 28px;
+    object-fit: contain;
+    border-radius: 4px;
+  }
+
+  @media screen and (max-width: 750px) {
+    .payment-icons__list--brand {
+      gap: 6px;
+      margin-block: 16px 20px;
+    }
+
+    .payment-icons__image {
+      width: 36px;
+      height: 24px;
+    }
   }
 {% endstylesheet %}
 
@@ -50,6 +99,22 @@
   "name": "t:names.payment_icons",
   "tag": null,
   "settings": [
+    {
+      "type": "select",
+      "id": "icon_source",
+      "label": "Icon source",
+      "options": [
+        {
+          "value": "brand",
+          "label": "Brand images"
+        },
+        {
+          "value": "shopify",
+          "label": "Shopify payment types"
+        }
+      ],
+      "default": "brand"
+    },
     {
       "type": "select",
       "id": "horizontal_alignment",
@@ -72,7 +137,7 @@
           "label": "t:options.space_between"
         }
       ],
-      "default": "flex-start"
+      "default": "center"
     },
     {
       "type": "range",
@@ -82,7 +147,7 @@
       "max": 100,
       "step": 1,
       "unit": "px",
-      "default": 10
+      "default": 8
     },
     {
       "type": "header",
