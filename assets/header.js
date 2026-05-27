@@ -252,6 +252,45 @@ onDocumentLoaded(() => {
   const header = document.querySelector('#header-component');
   const headerGroup = document.querySelector('#header-group');
   const homepageMain = document.querySelector("main[data-template^='index']");
+  const headerContainer = header?.closest('.header-section') || header;
+  /** @type {any} */
+  const win = window;
+
+  const initDirectionalAwareHeaderScroll = () => {
+    if (!headerContainer || !header || !header.hasAttribute('sticky')) return;
+    if (!win.gsap || !win.ScrollTrigger) return;
+
+    const { gsap, ScrollTrigger } = win;
+    gsap.registerPlugin(ScrollTrigger);
+
+    if (win.__xinzuoDirectionalHeaderTween) {
+      win.__xinzuoDirectionalHeaderTween.kill();
+      win.__xinzuoDirectionalHeaderTween = null;
+    }
+
+    if (win.__xinzuoDirectionalHeaderTrigger) {
+      win.__xinzuoDirectionalHeaderTrigger.kill();
+      win.__xinzuoDirectionalHeaderTrigger = null;
+    }
+
+    const showAnim = gsap.from(headerContainer, {
+      yPercent: -100,
+      paused: true,
+      duration: 0.2,
+    }).progress(1);
+
+    const trigger = ScrollTrigger.create({
+      start: 'top top',
+      end: 'max',
+      /** @param {any} self */
+      onUpdate: (self) => {
+        self.direction === -1 ? showAnim.play() : showAnim.reverse();
+      },
+    });
+
+    win.__xinzuoDirectionalHeaderTween = showAnim;
+    win.__xinzuoDirectionalHeaderTrigger = trigger;
+  };
 
   if (homepageMain) {
     const homepageHeaderScrollThreshold = 24;
@@ -262,6 +301,8 @@ onDocumentLoaded(() => {
     syncHomepageHeaderScrollState();
     document.addEventListener('scroll', syncHomepageHeaderScrollState, { passive: true });
   }
+
+  initDirectionalAwareHeaderScroll();
 
   // Update header group height on resize of any child
   if (headerGroup) {
