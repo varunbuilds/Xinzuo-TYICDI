@@ -258,3 +258,61 @@ Improving **custom collection filters** on the shop-all page: clear feedback whe
 - **Accessibility:** focus trap in mobile filter drawer, keyboard apply.
 - **SEO / structured data** on PDP and collection pages.
 - **Debug cleanup** (`console.log` in cart/theme JS).
+
+---
+
+## Task 7 — Homepage/header + CTA polish
+
+### What I picked
+
+Finalizing **homepage/header behavior + CTA consistency** to match the target visual spec: transparent homepage header at top, black-on-scroll behavior, and corrected button states across PDP, product cards, and cart drawer.
+
+### Why it's the highest-impact thing here
+
+- Header and CTAs are visible on every key conversion path (homepage → collection → PDP → cart).
+- Task 7 combined brand consistency work and functional polish (scroll behavior + button state feedback).
+- Several regressions surfaced while iterating (sticky bar syntax, conflicting button selectors), so this pass focused on stable end-state behavior.
+
+### What I did
+
+**Homepage / header behavior**
+
+1. Homepage header remains transparent at top and turns black after scroll threshold.
+2. Added smoother transition (non-instant switch) for scrolled state.
+3. Added directional-aware header show/hide using GSAP + ScrollTrigger (hide on down-scroll, show on up-scroll).
+4. Kept non-homepage headers solid dark.
+
+**PDP / collection / cart CTA styling**
+
+5. PDP add-to-cart default changed to white background with dark text/icon.
+6. PDP add-to-cart hover updated to no-fill + white text/icon as requested.
+7. Product-grid card add-to-cart loading/added states changed to white (instead of red).
+8. Cart drawer **Secure Checkout** switched to payment-like green default with slightly darker hover/active.
+9. Cart drawer recommendations (“You might also like”) add button restored to its local style and set to white default; “Adding...” also kept white.
+
+**PDP support content**
+
+10. Payment method icons placed between detail icons and DESCRIPTION area on PDP.
+
+**Stability fix**
+
+11. Fixed Liquid error in `blocks/sticky-add-to-cart-bar.liquid` by moving `{% stylesheet %}` outside conditional block; sticky bar remains disabled as requested.
+
+**Files touched in this task window**
+
+- `assets/site-overrides.css`
+- `assets/header.js`
+- `layout/theme.liquid`
+- `assets/xinzuo-buttons.css`
+- `snippets/cart-recommended-products.liquid`
+- `blocks/payment-icons.liquid`
+- `blocks/_product-details.liquid`
+- `blocks/sticky-add-to-cart-bar.liquid`
+
+**Screenshots:** `before/task7.png` → `after/task7.png`
+
+### What I'd do next
+
+- Run one final breakpoint QA sweep (mobile/tablet/desktop) for header + button states.
+- Remove/trim any temporary stylistic overlap in `xinzuo-buttons.css` once UI is locked.
+- Optional: move GSAP/ScrollTrigger to theme assets for tighter control/version pinning.
