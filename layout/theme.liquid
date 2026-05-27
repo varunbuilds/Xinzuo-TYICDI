@@ -27,14 +27,17 @@
         endif
       -%}
       {%- if lcp_img -%}
-        <link
-          rel="preload"
-          as="image"
-          href="{{ lcp_img | image_url: width: 832 }}"
-          imagesrcset="{{ lcp_img | image_url: width: 240 }} 240w, {{ lcp_img | image_url: width: 352 }} 352w, {{ lcp_img | image_url: width: 832 }} 832w, {{ lcp_img | image_url: width: 1200 }} 1200w"
-          imagesizes="(min-width: 95rem) 65rem, (min-width: 750px) calc(100vw - 25rem - 40px - 24px - 40px), 100vw"
-          fetchpriority="high"
-        >
+        {{
+          lcp_img
+          | image_url: width: 1200
+          | image_tag:
+            preload: true,
+            widths: '240, 352, 832, 1200',
+            sizes: '(min-width: 95rem) 65rem, (min-width: 750px) calc(100vw - 25rem - 40px - 24px - 40px), 100vw',
+            fetchpriority: 'high',
+            loading: 'eager',
+            alt: product.title
+        }}
       {%- endif -%}
     {%- endif -%}
     {%- comment -%}
@@ -51,39 +54,47 @@
         endif
       -%}
       {%- if collection_lcp_img != blank -%}
-        <link
-          rel="preload"
-          as="image"
-          href="{{ collection_lcp_img | image_url: width: 1200 }}"
-          imagesrcset="{{ collection_lcp_img | image_url: width: 800 }} 800w, {{ collection_lcp_img | image_url: width: 1200 }} 1200w, {{ collection_lcp_img | image_url: width: 1920 }} 1920w"
-          imagesizes="100vw"
-          fetchpriority="high"
-        >
+        {{
+          collection_lcp_img
+          | image_url: width: 1920
+          | image_tag:
+            preload: true,
+            widths: '800, 1200, 1920',
+            sizes: '100vw',
+            fetchpriority: 'high',
+            loading: 'eager',
+            alt: collection.title
+        }}
       {%- elsif collection.products.size > 0 and collection.products[0].featured_media -%}
-        {%- assign _first_product = collection.products[0] -%}
-        <link
-          rel="preload"
-          as="image"
-          href="{{ _first_product.featured_media.preview_image | image_url: width: 600 }}"
-          imagesrcset="{{ _first_product.featured_media.preview_image | image_url: width: 240 }} 240w, {{ _first_product.featured_media.preview_image | image_url: width: 352 }} 352w, {{ _first_product.featured_media.preview_image | image_url: width: 480 }} 480w, {{ _first_product.featured_media.preview_image | image_url: width: 600 }} 600w"
-          imagesizes="(max-width: 749px) 45vw, (max-width: 1199px) 30vw, 22vw"
-          fetchpriority="high"
-        >
+        {%- assign first_collection_product = collection.products[0] -%}
+        {{
+          first_collection_product.featured_media.preview_image
+          | image_url: width: 600
+          | image_tag:
+            preload: true,
+            widths: '240, 352, 480, 600',
+            sizes: '(max-width: 749px) 45vw, (max-width: 1199px) 30vw, 22vw',
+            fetchpriority: 'high',
+            loading: 'eager',
+            alt: first_collection_product.title
+        }}
       {%- endif -%}
     {%- endif -%}
     {%- if request.path == '/search' and search.results.size > 0 -%}
-      {%- for _result in search.results limit: 1 -%}
-        {%- if _result.featured_media -%}
-          <link
-            rel="preload"
-            as="image"
-            href="{{ _result.featured_media.preview_image | image_url: width: 600 }}"
-            imagesrcset="{{ _result.featured_media.preview_image | image_url: width: 240 }} 240w, {{ _result.featured_media.preview_image | image_url: width: 352 }} 352w, {{ _result.featured_media.preview_image | image_url: width: 480 }} 480w, {{ _result.featured_media.preview_image | image_url: width: 600 }} 600w"
-            imagesizes="(max-width: 749px) 45vw, (max-width: 1199px) 30vw, 22vw"
-            fetchpriority="high"
-          >
-        {%- endif -%}
-      {%- endfor -%}
+      {%- assign search_lcp_product = search.results.first -%}
+      {%- if search_lcp_product.featured_media -%}
+        {{
+          search_lcp_product.featured_media.preview_image
+          | image_url: width: 600
+          | image_tag:
+            preload: true,
+            widths: '240, 352, 480, 600',
+            sizes: '(max-width: 749px) 45vw, (max-width: 1199px) 30vw, 22vw',
+            fetchpriority: 'high',
+            loading: 'eager',
+            alt: search_lcp_product.title
+        }}
+      {%- endif -%}
     {%- endif -%}
 
     {%- if settings.favicon != blank -%}
@@ -134,14 +145,7 @@
 
     {{ content_for_header }}
 
-    <link
-      rel="preload"
-      href="{{ 'swiper-bundle.min.css' | asset_url }}"
-      as="style"
-      onload="this.onload=null;this.rel='stylesheet'"
-      fetchpriority="low"
-    >
-    <noscript><link rel="stylesheet" href="{{ 'swiper-bundle.min.css' | asset_url }}"></noscript>
+    {{ 'swiper-bundle.min.css' | asset_url | stylesheet_tag: preload: true, fetchpriority: 'low' }}
     <script src="{{ 'swiper-bundle.min.js' | asset_url }}" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
@@ -159,8 +163,7 @@
       endif
     -%}
     {%- if needs_judgeme_css or request.design_mode -%}
-      <link rel="preload" href="{{ 'judgeme-reviews.css' | asset_url }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
-      <noscript><link rel="stylesheet" href="{{ 'judgeme-reviews.css' | asset_url }}"></noscript>
+      {{ 'judgeme-reviews.css' | asset_url | stylesheet_tag: preload: true }}
       <script src="{{ 'judgeme-card-enhancer.js' | asset_url }}" defer></script>
     {%- endif -%}
 

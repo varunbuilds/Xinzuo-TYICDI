@@ -263,7 +263,17 @@
 <section class="section-{{ section.id }} section section--page-width color-{{ section.settings.color_scheme }}">
   <div class="product-info">
     {% if section.settings.image != blank %}
-      <img src="{{ section.settings.image | image_url: width: 800 }}" alt="{{ section.settings.heading | default: 'Product information' | escape }}">
+      {{
+        section.settings.image
+        | image_url: width: 800
+        | image_tag:
+          width: section.settings.image.width,
+          height: section.settings.image.height,
+          widths: '400, 600, 800',
+          sizes: '(min-width: 750px) 50vw, 100vw',
+          alt: section.settings.heading | default: 'Product information',
+          loading: 'lazy'
+      }}
     {% endif %}
     <div>
       {% if section.settings.header_type == 'left' %}

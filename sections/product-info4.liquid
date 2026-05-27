@@ -443,11 +443,17 @@
           {% for product in collection.products %}
             <div class="swiper-slide swiper-slide-{{ forloop.index }}">
               <a href="{{ product.url }}" class="relative-product">
-                <img
-                  src="{{ product.featured_image | image_url: width: 800 }}"
-                  loading="lazy"
-                  alt="{{ product.title | escape }}"
-                >
+                {{
+                  product.featured_image
+                  | image_url: width: 800
+                  | image_tag:
+                    width: product.featured_image.width,
+                    height: product.featured_image.height,
+                    widths: '400,600,800',
+                    sizes: '100vw',
+                    alt: product.title,
+                    loading: 'lazy'
+                }}
                 {% if product.compare_at_price and product.compare_at_price > product.price %}
                   {% assign discount = product.compare_at_price | minus: product.price %}
                   {% assign percent = discount | times: 100 | divided_by: product.compare_at_price %}
@@ -538,14 +544,34 @@
         <div>
           <div class="product-info4-div">
             <div></div>
-            <img src="{{ section.settings.footer-img1 | image_url: width: 800 }}" alt="{{ section.settings.footer_content1 | strip_html | truncate: 100 | default: 'Product feature icon' }}">
+            {{
+              section.settings.footer-img1
+              | image_url: width: 800
+              | image_tag:
+                width: section.settings.footer-img1.width,
+                height: section.settings.footer-img1.height,
+                widths: '400,600,800',
+                sizes: '100vw',
+                alt: section.settings.footer_content1 | strip_html | truncate: 100 | default: 'Product feature icon',
+                loading: 'lazy'
+            }}
             <span>{{ section.settings.footer_content1 }}</span>
           </div>
         </div>
         <div>
           <div class="product-info4-div">
             <div></div>
-            <img src="{{ section.settings.footer-img2 | image_url: width: 800 }}" alt="{{ section.settings.footer_content2 | strip_html | truncate: 100 | default: 'Product feature icon' }}">
+            {{
+              section.settings.footer-img2
+              | image_url: width: 800
+              | image_tag:
+                width: section.settings.footer-img2.width,
+                height: section.settings.footer-img2.height,
+                widths: '400,600,800',
+                sizes: '100vw',
+                alt: section.settings.footer_content2 | strip_html | truncate: 100 | default: 'Product feature icon',
+                loading: 'lazy'
+            }}
             <span>{{ section.settings.footer_content2 }}</span>
           </div>
         </div>

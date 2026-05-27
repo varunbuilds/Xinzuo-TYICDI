@@ -49,99 +49,19 @@
     assign is_transparent = false
   endif
 
-  assign fetch_priority = 'auto'
-
-  if section.index == 1
-    assign fetch_priority = 'high'
-  endif
 %}
 
-{% capture media %}
-  {%- if has_image_1 -%}
-    {% assign media_count = media_count | plus: 1 %}
-    {{
-      section.settings.image_1
-      | image_url: width: 3840
-      | image_tag:
-        width: section.settings.image_1.width,
-        widths: widths,
-        height: section.settings.image_1.height,
-        alt: section.settings.image_1.alt,
-        class: 'hero__image',
-        sizes: sizes,
-        fetchpriority: fetch_priority
-    }}
-  {%- endif -%}
-
-  {%- if has_video_1 -%}
-    {% assign media_count = media_count | plus: 1 %}
-    <div class="hero__video-wrapper">
-      {%- if section.settings.video_1.preview_image -%}
-        {% liquid
-          assign fetch_priority_poster = false
-          if section.index == 1
-            assign fetch_priority_poster = 'high'
-          endif
-        %}
-        {{
-          section.settings.video_1.preview_image
-          | image_url: width: 3840
-          | image_tag:
-            width: section.settings.video_1.preview_image.width,
-            widths: widths,
-            height: section.settings.video_1.preview_image.height,
-            alt: section.settings.video_1.alt,
-            class: 'hero__video-poster',
-            sizes: sizes,
-            fetchpriority: fetch_priority_poster
-        }}
-      {%- endif -%}
-      {{
-        section.settings.video_1
-        | video_tag:
-          poster: nil,
-          autoplay: true,
-          loop: true,
-          controls: false,
-          muted: true,
-          class: 'hero__video'
-      }}
-    </div>
-  {%- endif -%}
-
-  {%- if has_video_2 -%}
-    {% assign media_count = media_count | plus: 1 %}
-    <div class="hero__video-wrapper">
-      {%- if section.settings.video_2.preview_image -%}
-        {{
-          section.settings.video_2.preview_image
-          | image_url: width: 3840
-          | image_tag:
-            width: section.settings.video_2.preview_image.width,
-            widths: widths,
-            height: section.settings.video_2.preview_image.height,
-            alt: section.settings.video_2.alt,
-            class: 'hero__video-poster',
-            sizes: sizes
-        }}
-      {%- endif -%}
-      {{
-        section.settings.video_2
-        | video_tag:
-          poster: nil,
-          autoplay: true,
-          loop: true,
-          controls: false,
-          muted: true,
-          class: 'hero__video'
-      }}
-    </div>
-  {%- endif -%}
-
-  {% if has_media == false and is_transparent %}
-    {{ 'hero-apparel-1' | placeholder_svg_tag: 'hero__image' }}
-  {%- endif -%}
-{% endcapture %}
+{% liquid
+  if has_image_1
+    assign media_count = media_count | plus: 1
+  endif
+  if has_video_1
+    assign media_count = media_count | plus: 1
+  endif
+  if has_video_2
+    assign media_count = media_count | plus: 1
+  endif
+%}
 
 {% capture media_blurred %}
   {% if has_image_1 %}
@@ -221,7 +141,6 @@
         endif
       %}
       <img src="{{ section.settings.image_1 | image_url: width: 800 }}" width="100%" height="100%" alt="Desktop background" style="width: 100%; height: 100%; object-fit: cover;">
-      {% comment %} {{ media }} {% endcomment %}
     </div>
     {% if section.settings.image_2 != blank %}
       <div

@@ -256,9 +256,9 @@
     "
   >
     {% if block_settings.enable_filtering %}
-      <div class="facets-toggle__wrapper">
+      <div class="filters-block__toggle-wrapper">
         <button
-          class="button facets-toggle__button button-unstyled button-unstyled--with-icon"
+          class="button filters-block__toggle-button button-unstyled button-unstyled--with-icon"
           on:click="#filters-drawer/showDialog"
           type="button"
         >
@@ -271,14 +271,14 @@
           {% if total_active_values > 0 %}
             <div
               id="filter-count-bubble-toggle"
-              class="filter-count-bubble"
+              class="filters-block__filter-count-bubble"
               aria-label="{{ 'accessibility.filter_count' | t: count: total_active_values }}"
             >
-              <span class="filter-count-bubble__background"></span>
+              <span class="filters-block__filter-count-bubble-background"></span>
 
               <span
                 ref="cartBubbleText"
-                class="filter-count-bubble__text"
+                class="filters-block__filter-count-bubble-text"
                 aria-hidden="true"
               >
                 {{ total_active_values }}
@@ -473,6 +473,43 @@
     @media screen and (max-width: 749px) {
       margin: 0;
     }
+  }
+
+  .filters-block__toggle-wrapper {
+    margin-left: var(--icon-offset, -3px);
+  }
+
+  .filters-block__toggle-button {
+    box-shadow: none;
+
+    @media screen and (min-width: 750px) {
+      display: none;
+    }
+  }
+
+  .filters-block__filter-count-bubble {
+    position: relative;
+    width: 20px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    display: grid;
+    line-height: normal;
+    place-content: center;
+    color: var(--color-foreground);
+    border: var(--icon-stroke-width) solid var(--color-background);
+  }
+
+  .filters-block__filter-count-bubble-background {
+    position: absolute;
+    inset: 0;
+    background-color: rgb(var(--color-foreground-rgb) / var(--opacity-10-25));
+    border-radius: var(--style-border-radius-50);
+  }
+
+  .filters-block__filter-count-bubble-text {
+    font-size: 11px;
+    font-weight: var(--font-paragraph--weight);
+    aspect-ratio: 1 / 1;
   }
 
   .facets-mobile-wrapper {

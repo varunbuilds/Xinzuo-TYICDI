@@ -97,6 +97,12 @@
     assign skip_mobile_search = true
   endif
 
+  if section.settings.search_row == 'bottom' or search_style != 'none' and skip_mobile_search == false
+    capture mobile_search
+      render 'search', class: 'desktop:hidden', style: search_style
+    endcapture
+  endif
+
   assign show_language = section.settings.show_language
   if localization.available_languages.size <= 1
     assign show_language = false

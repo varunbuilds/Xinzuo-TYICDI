@@ -456,7 +456,7 @@
           </a>
         {%- endfor -%}
       </div>
-      <a id="load-more" href="/collections/all-products" data-page="1">
+      <a id="load-more" href="{{ collections['all-products'].url }}" data-page="1">
         <span>SHOP ALL</span>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -477,7 +477,7 @@
           </defs>
         </svg>
       </a>
-      <a href="/collections/all-products" id="view-all-products" class="view-all-link">
+      <a href="{{ collections['all-products'].url }}" id="view-all-products" class="view-all-link">
         <span>View All Products</span>
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
           <g clip-path="url(#clip0_shop_all)">

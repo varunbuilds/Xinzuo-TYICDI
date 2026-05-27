@@ -1,15 +1,15 @@
 {% style %}
-    .section-{{ section.id }} .collection-image {
+    .section-{{ section.id }} .collection-image-section {
         display: flex;
         align-items: center;
         gap: 48px;
     }
 
-    .section-{{ section.id }} .collection-image img {
+    .section-{{ section.id }} .collection-image-section img {
         width: 45%;
     }
 
-    .section-{{ section.id }} .collection-info {
+    .section-{{ section.id }} .collection-image-section__info {
         width: 40%;
         padding: 24px 20px;
         display: flex;
@@ -17,11 +17,11 @@
         gap: 54px;
     }
 
-    .section-{{ section.id }} .collection-info-div {
+    .section-{{ section.id }} .collection-image-section__info-div {
         width: fit-content;
     }
 
-    .section-{{ section.id }} .collection-info-div > h2 {
+    .section-{{ section.id }} .collection-image-section__info-div > h2 {
         font-family: "Sen";
         font-weight: 600;
         font-size: 48px;
@@ -34,14 +34,14 @@
         line-height: 125%;
     }
 
-    .section-{{ section.id }} .collection-info-div > div {
+    .section-{{ section.id }} .collection-image-section__info-div > div {
         width: 100%;
         display: flex;
         flex-direction: column;
         gap: 48px;
     }
 
-    .section-{{ section.id }} .collection-info-block p {
+    .section-{{ section.id }} .collection-image-section__info-block p {
         font-family: "Sen";
         font-weight: 600;
         font-size: 22px;
@@ -49,7 +49,7 @@
         margin: 0;
     }
 
-    .section-{{ section.id }} .collection-info-block h2 {
+    .section-{{ section.id }} .collection-image-section__info-block h2 {
         font-family: "Sen";
         font-weight: 600;
         font-size: 30px;
@@ -59,9 +59,9 @@
 {% endstyle %}
 
 <section class="section-{{ section.id }} color-{{ section.settings.color_scheme }}">
-    <div class="collection-image" {% if block.settings.image_position == "right" %}style="flex-direction: row-reverse;"{% endif %}>
-        {% if block.settings.image != blank %}
-            <img srcset="{{ block.settings.image | image_url: width: 600 }} 600w, {{ block.settings.image | image_url: width: 1000 }} 1000w, {{ block.settings.image | image_url: width: 1400 }} 1400w" sizes="(max-width: 750px) 100vw, 60vw" src="{{ block.settings.image | image_url: width: 1000 }}" width="100%" height="100%" loading="lazy" alt="{{ collection.title | escape }}">
+    <div class="collection-image-section" {% if section.settings.image_position == "right" %}style="flex-direction: row-reverse;"{% endif %}>
+        {% if section.settings.image != blank %}
+            <img srcset="{{ section.settings.image | image_url: width: 600 }} 600w, {{ section.settings.image | image_url: width: 1000 }} 1000w, {{ section.settings.image | image_url: width: 1400 }} 1400w" sizes="(max-width: 750px) 100vw, 60vw" src="{{ section.settings.image | image_url: width: 1000 }}" width="100%" height="100%" loading="lazy" alt="{{ collection.title | escape }}">
         {% else %}
             {% if collection.featured_image != blank %}
                 <img srcset="{{ collection.featured_image | image_url: width: 600 }} 600w, {{ collection.featured_image | image_url: width: 1000 }} 1000w, {{ collection.featured_image | image_url: width: 1400 }} 1400w" sizes="(max-width: 750px) 100vw, 60vw" src="{{ collection.featured_image | image_url: width: 1000 }}" width="100%" height="100%" loading="lazy" alt="{{ collection.title | escape }}">
@@ -70,24 +70,24 @@
                 <img srcset="{{ firstimage.featured_image | image_url: width: 600 }} 600w, {{ firstimage.featured_image | image_url: width: 1000 }} 1000w, {{ firstimage.featured_image | image_url: width: 1400 }} 1400w" sizes="(max-width: 750px) 100vw, 60vw" src="{{ firstimage.featured_image | image_url: width: 1000 }}" width="100%" height="100%" loading="lazy" alt="{{ collection.title | escape }}">
             {% endif %}
         {% endif %}
-        <div class="collection-info" {% if block.settings.image_position == "right" %}style="justify-content: flex-end;"{% endif %}>
-            <div class="collection-info-div">
+        <div class="collection-image-section__info" {% if section.settings.image_position == "right" %}style="justify-content: flex-end;"{% endif %}>
+            <div class="collection-image-section__info-div">
                 <h2>{{ collection.title }}</h2>
                 <div>
-                    <div class="collection-info-block">
-                        <p>{{ block.settings.first_block_header }}</p>
-                        <h2>{{ block.settings.first_block_content }}</h2>
-                        <p>{{ block.settings.first_block_footer }}</p>
+                    <div class="collection-image-section__info-block">
+                        <p>{{ section.settings.first_block_header }}</p>
+                        <h2>{{ section.settings.first_block_content }}</h2>
+                        <p>{{ section.settings.first_block_footer }}</p>
                     </div>
-                    <div class="collection-info-block">
-                        <p>{{ block.settings.second_block_header }}</p>
-                        <h2>{{ block.settings.second_block_content }}</h2>
-                        <p>{{ block.settings.second_block_footer }}</p>
+                    <div class="collection-image-section__info-block">
+                        <p>{{ section.settings.second_block_header }}</p>
+                        <h2>{{ section.settings.second_block_content }}</h2>
+                        <p>{{ section.settings.second_block_footer }}</p>
                     </div>
-                    <div class="collection-info-block">
-                        <p>{{ block.settings.third_block_header }}</p>
-                        <h2>{{ block.settings.third_block_content }}</h2>
-                        <p>{{ block.settings.third_block_footer }}</p>
+                    <div class="collection-image-section__info-block">
+                        <p>{{ section.settings.third_block_header }}</p>
+                        <h2>{{ section.settings.third_block_content }}</h2>
+                        <p>{{ section.settings.third_block_footer }}</p>
                     </div>
                 </div>
             </div>

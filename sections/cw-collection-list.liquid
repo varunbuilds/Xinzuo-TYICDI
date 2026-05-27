@@ -22,18 +22,18 @@
         gap: 80px;
     }
 
-    .section-{{ section.id }} .collection-image {
+    .section-{{ section.id }} .cw-collection-list__image {
         display: flex;
         align-items: center;
         gap: 48px;
         justify-content: space-between;
     }
 
-    .section-{{ section.id }} .collection-image img {
+    .section-{{ section.id }} .cw-collection-list__image img {
         width: 600px;
     }
 
-    .section-{{ section.id }} .collection-info {
+    .section-{{ section.id }} .cw-collection-list__info {
         width: 40%;
         padding: 24px 20px;
         display: flex;
@@ -41,11 +41,11 @@
         gap: 54px;
     }
 
-    .section-{{ section.id }} .collection-info-div {
+    .section-{{ section.id }} .cw-collection-list__info-div {
         width: fit-content;
     }
 
-    .section-{{ section.id }} .collection-info-div > h2 {
+    .section-{{ section.id }} .cw-collection-list__info-div > h2 {
         font-family: "Sen";
         font-weight: 600;
         font-size: 48px;
@@ -58,14 +58,14 @@
         line-height: 125%;
     }
 
-    .section-{{ section.id }} .collection-info-div > div {
+    .section-{{ section.id }} .cw-collection-list__info-div > div {
         width: 100%;
         display: flex;
         flex-direction: column;
         gap: 48px;
     }
 
-    .section-{{ section.id }} .collection-info-block p {
+    .section-{{ section.id }} .cw-collection-list__info-block p {
         font-family: "Sen";
         font-weight: 600;
         font-size: 22px;
@@ -73,7 +73,7 @@
         margin: 0;
     }
 
-    .section-{{ section.id }} .collection-info-block h2 {
+    .section-{{ section.id }} .cw-collection-list__info-block h2 {
         font-family: "Sen";
         font-weight: 600;
         font-size: 48px;
@@ -189,22 +189,22 @@
             margin-bottom: 36px;
         }
 
-        .section-{{ section.id }} .collection-image {
+        .section-{{ section.id }} .cw-collection-list__image {
             gap: 24px;
             padding: 0 80px;
         }
 
-        .section-{{ section.id }} .collection-info-div > h2 {
+        .section-{{ section.id }} .cw-collection-list__info-div > h2 {
             font-size: 24px;
             padding-bottom: 12px;
             margin-bottom: 24px;
         }
 
-        .section-{{ section.id }} .collection-info-block p {
+        .section-{{ section.id }} .cw-collection-list__info-block p {
             font-size: 16px;
         }
 
-        .section-{{ section.id }} .collection-info-block h2 {
+        .section-{{ section.id }} .cw-collection-list__info-block h2 {
             font-size: 24px;
         }
 
@@ -231,7 +231,7 @@
     }
 
     @media screen and (max-width: 750px) {
-        .section-{{ section.id }} .collection-info-div > h2 {
+        .section-{{ section.id }} .cw-collection-list__info-div > h2 {
             font-size: 36px;
         }
 
@@ -239,33 +239,33 @@
             font-size: 36px;
         }
 
-        .section-{{ section.id }} .collection-image {
+        .section-{{ section.id }} .cw-collection-list__image {
             flex-direction: column !important;
             padding: 0;
             gap: 24px;
         }
 
-        .section-{{ section.id }} .collection-image img {
+        .section-{{ section.id }} .cw-collection-list__image img {
             width: 100%;
         }
 
-        .section-{{ section.id }} .collection-info {
+        .section-{{ section.id }} .cw-collection-list__info {
             width: 100%;
         }
 
-        .section-{{ section.id }} .collection-info-block h2 {
+        .section-{{ section.id }} .cw-collection-list__info-block h2 {
             font-size: 28px;
         }
 
-        .section-{{ section.id }} .collection-info-div {
+        .section-{{ section.id }} .cw-collection-list__info-div {
             width: 100%;
         }
 
-        .section-{{ section.id }} .collection-info-div > div {
+        .section-{{ section.id }} .cw-collection-list__info-div > div {
             gap: 24px;
         }
 
-        .section-{{ section.id }} .collection-info-div > h2 {
+        .section-{{ section.id }} .cw-collection-list__info-div > h2 {
             font-size: 28px;
             width: 100%;
         }
@@ -292,7 +292,7 @@
         {% for block in section.blocks %}
             {% assign collection = block.settings.collection %}
             <div class="cw-collection">
-                <div class="collection-image" {% if block.settings.image_position == "right" %}style="flex-direction: row-reverse;"{% endif %}>
+                <div class="cw-collection-list__image" {% if block.settings.image_position == "right" %}style="flex-direction: row-reverse;"{% endif %}>
                     {% if block.settings.image != blank %}
                         <img srcset="{{ block.settings.image | image_url: width: 600 }} 600w, {{ block.settings.image | image_url: width: 1000 }} 1000w, {{ block.settings.image | image_url: width: 1400 }} 1400w" sizes="(max-width: 750px) 100vw, 60vw" src="{{ block.settings.image | image_url: width: 1000 }}" width="100%" height="100%" loading="lazy" alt="{{ collection.title | escape }}">
                     {% else %}
@@ -303,21 +303,21 @@
                             <img srcset="{{ firstimage.featured_image | image_url: width: 600 }} 600w, {{ firstimage.featured_image | image_url: width: 1000 }} 1000w, {{ firstimage.featured_image | image_url: width: 1400 }} 1400w" sizes="(max-width: 750px) 100vw, 60vw" src="{{ firstimage.featured_image | image_url: width: 1000 }}" width="100%" height="100%" loading="lazy" alt="{{ collection.title | escape }}">
                         {% endif %}
                     {% endif %}
-                    <div class="collection-info" {% if block.settings.image_position == "right" %}style="justify-content: flex-end;"{% endif %}>
-                        <div class="collection-info-div">
+                    <div class="cw-collection-list__info" {% if block.settings.image_position == "right" %}style="justify-content: flex-end;"{% endif %}>
+                        <div class="cw-collection-list__info-div">
                             <h2>{{ collection.title }}</h2>
                             <div>
-                                <div class="collection-info-block">
+                                <div class="cw-collection-list__info-block">
                                     <p>{{ block.settings.first_block_header }}</p>
                                     <h2>{{ block.settings.first_block_content }}</h2>
                                     <p>{{ block.settings.first_block_footer }}</p>
                                 </div>
-                                <div class="collection-info-block">
+                                <div class="cw-collection-list__info-block">
                                     <p>{{ block.settings.second_block_header }}</p>
                                     <h2>{{ block.settings.second_block_content }}</h2>
                                     <p>{{ block.settings.second_block_footer }}</p>
                                 </div>
-                                <div class="collection-info-block">
+                                <div class="cw-collection-list__info-block">
                                     <p>{{ block.settings.third_block_header }}</p>
                                     <h2>{{ block.settings.third_block_content }}</h2>
                                     <p>{{ block.settings.third_block_footer }}</p>

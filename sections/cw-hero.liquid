@@ -234,43 +234,6 @@
   }
 {% endstyle %}
 
-{%- comment -%}
-  Performance: Preload LCP hero image - smallest possible for mobile
-{%- endcomment -%}
-{%- if section.settings.mobile_img -%}
-  <link
-    rel="preload"
-    as="image"
-    href="{{ section.settings.mobile_img | image_url: width: 750 }}"
-    imagesrcset="{{ section.settings.mobile_img | image_url: width: 480 }} 480w, {{ section.settings.mobile_img | image_url: width: 640 }} 640w, {{ section.settings.mobile_img | image_url: width: 750 }} 750w"
-    imagesizes="100vw"
-    media="(max-width: 480px)"
-    fetchpriority="high"
-  >
-{%- endif -%}
-{%- if section.settings.middle_desktop_img -%}
-  <link
-    rel="preload"
-    as="image"
-    href="{{ section.settings.middle_desktop_img | image_url: width: 1200 }}"
-    imagesrcset="{{ section.settings.middle_desktop_img | image_url: width: 800 }} 800w, {{ section.settings.middle_desktop_img | image_url: width: 1000 }} 1000w, {{ section.settings.middle_desktop_img | image_url: width: 1200 }} 1200w"
-    imagesizes="100vw"
-    media="(min-width: 481px) and (max-width: 850px)"
-    fetchpriority="high"
-  >
-{%- endif -%}
-{%- if section.settings.desktop_img -%}
-  <link
-    rel="preload"
-    as="image"
-    href="{{ section.settings.desktop_img | image_url: width: 1200 }}"
-    imagesrcset="{{ section.settings.desktop_img | image_url: width: 1200 }} 1200w, {{ section.settings.desktop_img | image_url: width: 1600 }} 1600w, {{ section.settings.desktop_img | image_url: width: 1920 }} 1920w"
-    imagesizes="100vw"
-    media="(min-width: 851px)"
-    fetchpriority="high"
-  >
-{%- endif -%}
-
 <section class="section-{{ section.id }}">
   <div>
     {% if section.settings.header_title != blank %}
@@ -282,7 +245,7 @@
         <span class="mobile">{{ section.settings.heading_mobile }}</span>
         <span class="desktop">{{ section.settings.content_desktop }}</span>
         <span class="mobile">{{ section.settings.content_mobile }}</span>
-        <a href="/collections/all-products" class="hero-cta-button">
+        <a href="{{ collections['all-products'].url }}" class="hero-cta-button">
           <span>SHOP ALL</span>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -320,17 +283,20 @@
             sizes="100vw"
           >
           {%- comment -%} Desktop: High quality for large screens {%- endcomment -%}
-          <img
-            srcset="{{ section.settings.desktop_img | image_url: width: 1200 }} 1200w, {{ section.settings.desktop_img | image_url: width: 1600 }} 1600w, {{ section.settings.desktop_img | image_url: width: 1920 }} 1920w"
-            sizes="100vw"
-            src="{{ section.settings.desktop_img | image_url: width: 1200 }}"
-            alt="XINZUO Premium Kitchen Knives - Japanese & Damascus Steel"
-            width="1920"
-            height="1080"
-            fetchpriority="high"
-            decoding="async"
-            style="width:100%;height:100%"
-          >
+          {{
+            section.settings.desktop_img
+            | image_url: width: 1920
+            | image_tag:
+              preload: true,
+              widths: '1200,1600,1920',
+              sizes: '100vw',
+              alt: 'XINZUO Premium Kitchen Knives - Japanese & Damascus Steel',
+              width: 1920,
+              height: 1080,
+              fetchpriority: 'high',
+              decoding: 'async',
+              style: 'width:100%;height:100%'
+          }}
         </picture>
       </div>
     </div>
