@@ -114,19 +114,10 @@
     {%- comment -%} Site-wide custom overrides — loaded on every page {%- endcomment -%}
     <link rel="stylesheet" href="{{ 'site-overrides.css' | asset_url }}">
 
-    {%- comment -%} Judge.me review widget styles — only on pages with reviews {%- endcomment -%}
-    {%- liquid
-      assign needs_judgeme_css = false
-      if template == 'index' or template.name == 'product' or template.name == 'collection' or template == 'list-collections'
-        assign needs_judgeme_css = true
-      elsif template.suffix == 'series-comparison' or template.suffix == 'best-sellers' or template.suffix == 'bundles' or template.suffix == 'reviews'
-        assign needs_judgeme_css = true
-      endif
-    -%}
-    {%- if needs_judgeme_css or request.design_mode -%}
-      {{ 'judgeme-reviews.css' | asset_url | stylesheet_tag: preload: true }}
-      <script src="{{ 'judgeme-card-enhancer.js' | asset_url }}" defer></script>
-    {%- endif -%}
+    {%- comment -%}
+      Reviews UI disabled for challenge submission:
+      do not load Judge.me review widget assets globally.
+    {%- endcomment -%}
 
     {% comment %} Critical CSS: Prevent layout shift on product pages {% endcomment %}
     {% if request.path contains '/products/' %}

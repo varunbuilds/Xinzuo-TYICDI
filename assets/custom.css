@@ -56,9 +56,11 @@
   color: var(--xinzuo-accent) !important;
 }
 
-/* --- Tier card hover border (bundle-intro) — yellow accent glow --- */
-.tier-card:hover {
-  border-color: rgba(255, 0, 5, 0.4) !important;
+/* --- Tier card hover border (bundle-intro) — match gold discount text --- */
+.tier-card:hover,
+.tier-card:focus,
+.tier-card:active {
+  border-color: var(--xinzuo-gold, #D1AE6B) !important;
 }
 
 

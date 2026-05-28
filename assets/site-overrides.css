@@ -3,6 +3,16 @@
    Loaded on every page. Do not confuse with judgeme-reviews.css (review-only).
    ========================================================================== */
 
+/* Reviews UI disabled globally (Judge.me + custom rating wrappers). */
+.jdgm-widget,
+.jdgm-rev-widg,
+.jdgm-all-reviews-widget,
+#judgeme_product_reviews,
+.custom-product-rating,
+.xz-rating {
+  display: none !important;
+}
+
 /* ==========================================================================
    Xinzuo Brand Design Tokens — Gold Theme (canonical, from Style Guide v1.0)
 
