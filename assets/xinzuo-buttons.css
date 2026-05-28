@@ -10,15 +10,23 @@
   --xinzuo-btn-font-size: 13px;
 }
 
-/* Light surfaces: dark outline + dark text (hover still red fill) */
-body .home-products,
-body.xinzuo-light .home-products {
+/* Light-themed product grids only — dark outline on white section bg */
+body.xinzuo-light .home-products,
+body.xinzuo-hybrid .home-products {
   --xinzuo-btn-border: rgba(26, 26, 30, 0.7);
   --xinzuo-btn-color: #1a1a1e;
 }
 
+/* Dark featured-products section — match hero CTA (white outline) */
+body:not(.xinzuo-light):not(.xinzuo-hybrid) .home-products .hero-cta-button,
+body:not(.xinzuo-light):not(.xinzuo-hybrid) .home-products #view-all-products {
+  --xinzuo-btn-border: rgba(255, 255, 255, 0.7);
+  --xinzuo-btn-color: #ffffff;
+}
+
 body :is(
   .hero-cta-button,
+  #view-all-products,
   .bundle-cta,
   #load-more,
   #load-more-collection,
@@ -76,6 +84,7 @@ body :is(
 
 body :is(
   .hero-cta-button,
+  #view-all-products,
   .bundle-cta,
   #load-more,
   #load-more-collection,
@@ -116,6 +125,7 @@ body :is(
 
 body :is(
   .hero-cta-button,
+  #view-all-products,
   .bundle-cta,
   #load-more,
   #load-more-collection,
@@ -156,6 +166,7 @@ body :is(
 
 body :is(
   .hero-cta-button,
+  #view-all-products,
   .bundle-cta,
   #load-more,
   #load-more-collection,
@@ -192,6 +203,7 @@ body .xz-product-card .xz-card-atc:not(.xz-card-atc--soldout) {
 /* Inherit typography inside buttons */
 body :is(
   .hero-cta-button,
+  #view-all-products,
   .bundle-cta,
   #load-more,
   .load-more-btn,
@@ -214,6 +226,7 @@ body :is(
 
 body :is(
   .hero-cta-button,
+  #view-all-products,
   .bundle-cta,
   #load-more,
   .cart__checkout-button,
@@ -227,6 +240,7 @@ body :is(
 
 body :is(
   .hero-cta-button,
+  #view-all-products,
   .bundle-cta,
   #load-more,
   .cart__checkout-button,
@@ -273,6 +287,7 @@ body .xz-product-card .xz-card-atc.is-added:hover {
 
   body :is(
     .hero-cta-button,
+    #view-all-products,
     .bundle-cta,
     #load-more,
     .cart__checkout-button,

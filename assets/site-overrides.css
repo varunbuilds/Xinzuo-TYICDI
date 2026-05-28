@@ -170,10 +170,6 @@ body.xinzuo-light .home-products .collection-link {
 body.xinzuo-light .home-products-div > h2 {
   color: #1A1A1E !important;
 }
-body.xinzuo-light .home-products #load-more {
-  color: inherit !important;
-}
-
 body > * {
     padding: 0;
     margin: 0;

@@ -448,7 +448,7 @@
             "accordion_row_pcXW9Y": {
               "type": "_accordion-row",
               "settings": {
-                "heading": "You've got four main series. What's the actual difference?",
+                "heading": "What is the difference between Xinzuo knife series?",
                 "content": "",
                 "open_by_default": false,
                 "icon": "none",
@@ -458,7 +458,7 @@
                 "text_7EtcXB": {
                   "type": "text",
                   "settings": {
-                    "text": "<p><strong>Supreme (The Workhorse):</strong> Your durable, reliable first great knife.</p><p><strong>Retro (The Upgrade):</strong> A big step up. Stays seriously sharp, for longer.</p><p><strong>Mo (The Stunner):</strong> All the sharpness of the Upgrade, in a beautiful Damascus finish.</p><p><strong>LAN (The Pro):</strong> Our absolute best. Elite steel for an edge that just doesn't quit.</p>",
+                    "text": "<p>Xinzuo groups its kitchen knives into four core series, each designed for a different budget and performance level:</p><p><strong>Supreme Series</strong> — dependable everyday knives with strong edge retention for home cooks upgrading from supermarket blades.</p><p><strong>Retro Series</strong> — a step up in steel and finish, holding a sharper edge for longer between honing sessions.</p><p><strong>Mo Series</strong> — high-performance blades with genuine Damascus cladding and a distinctive layered pattern.</p><p><strong>LAN Series</strong> — our flagship range, built with premium steels and refined balance for serious cooks and professional kitchens.</p><p>Compare series on our <a href=\"/pages/series-comparison\">series comparison page</a> or shop by type in <a href=\"/collections/all-products\">all products</a>.</p>",
                     "width": "100%",
                     "max_width": "normal",
                     "alignment": "left",
@@ -488,7 +488,7 @@
             "accordion_row_6tQbnh": {
               "type": "_accordion-row",
               "settings": {
-                "heading": "Is the wavy 'Damascus' pattern on the Mo and LAN series real?",
+                "heading": "Is the Damascus pattern on Mo and LAN series knives real?",
                 "content": "",
                 "open_by_default": false,
                 "icon": "none",
@@ -498,7 +498,7 @@
                 "text_g7yrea": {
                   "type": "text",
                   "settings": {
-                    "text": "<p>Oh, 100%. That’s not a cheap laser-etch you’ll see on knock-offs. </p><p>It’s the real, beautiful result of folding 67+ layers of steel over that high-performance core. It looks incredible, and it even helps food slide right off the blade. This is the real deal.</p>",
+                    "text": "<p>Yes. On Mo and LAN series knives, the Damascus appearance comes from layered steel forged around a high-performance core—not a surface print or laser etch.</p><p>Multiple steel layers are folded and clad to create the wave pattern you see on the blade. This construction is part of the knife's structure and can also help reduce sticking when slicing proteins and vegetables.</p>",
                     "width": "100%",
                     "max_width": "normal",
                     "alignment": "left",
@@ -529,7 +529,7 @@
               "type": "_accordion-row",
               "name": "t:names.accordion_dash_row",
               "settings": {
-                "heading": "So... can I put my knife in the dishwasher?",
+                "heading": "Can Xinzuo kitchen knives go in the dishwasher?",
                 "content": "",
                 "open_by_default": false,
                 "icon": "none",
@@ -540,7 +540,7 @@
                   "type": "text",
                   "name": "t:names.text",
                   "settings": {
-                    "text": "<p>That's the one hard \"no.\" A dishwasher's high heat and harsh soap are brutal on a sharp blade and a beautiful handle.</p><p><strong>The simple fix:</strong> Just give it a 10-second hand wash with warm, soapy water right after use. Done.</p>",
+                    "text": "<p>We do not recommend putting Xinzuo knives in the dishwasher. High heat, moisture, and harsh detergents can dull the edge, damage handles, and may affect warranty coverage.</p><p>For best results, hand-wash with mild soap, dry immediately, and store in a knife block, sheath, or magnetic holder. This routine protects sharpness and extends the life of your blade.</p>",
                     "width": "100%",
                     "max_width": "normal",
                     "alignment": "left",
@@ -571,7 +571,7 @@
               "type": "_accordion-row",
               "name": "t:names.accordion_dash_row",
               "settings": {
-                "heading": "Aren't these just 'Made in China' knives?",
+                "heading": "Where are Xinzuo kitchen knives made?",
                 "content": "",
                 "open_by_default": false,
                 "icon": "none",
@@ -582,7 +582,7 @@
                   "type": "text",
                   "name": "t:names.text",
                   "settings": {
-                    "text": "<p>Yep. They’re made in Yangjiang, the \"Capital of Knives.\"</p><p>Here’s a fun fact: Yangjiang has been mastering this craft for over 1,400 years. That’s centuries before the famous hubs in Germany and Japan even got started.</p><p>So we take world-class steel, send it to the city with the longest history of making world-class blades, and skip the legacy-brand markups. It’s not just a good knife; it's a smart one.</p>",
+                    "text": "<p>Xinzuo knives are manufactured in Yangjiang, China—widely known as the knife-making capital of the world, with a craft heritage spanning more than 1,400 years.</p><p>We work with specialist forges and heat-treatment partners there, then sell direct to Australian customers. That model lets us use premium steels and construction at a fair price, without the markups typical of legacy retail brands.</p>",
                     "width": "100%",
                     "max_width": "normal",
                     "alignment": "left",
@@ -613,7 +613,7 @@
               "type": "_accordion-row",
               "name": "t:names.accordion_dash_row",
               "settings": {
-                "heading": "What's the warranty? What if I don't like it?",
+                "heading": "What warranty and returns does Xinzuo Australia offer?",
                 "content": "",
                 "open_by_default": false,
                 "icon": "none",
@@ -624,7 +624,7 @@
                   "type": "text",
                   "name": "t:names.text",
                   "settings": {
-                    "text": "<p>Easy. If it's not love at first slice, send it back within 30 days for a full refund.</p><p>You're also covered by a lifetime warranty against manufacturing defects. And as a 100% Aussie company, you’re always protected by Australian Consumer Law. We’ve got your back.</p>",
+                    "text": "<p>Eligible orders include a <strong>30-day change-of-mind return</strong> window, plus a <strong>lifetime warranty</strong> against manufacturing defects (such as blade or handle faults from production).</p><p>Normal wear, misuse, and damage from improper care (including dishwasher use) are not covered. Your purchase is also protected under <strong>Australian Consumer Law</strong>.</p><p>For returns, warranty, or order help, contact us at <a href=\"mailto:support@xinzuo.com.au\">support@xinzuo.com.au</a> or visit our <a href=\"/pages/warranty\">warranty page</a>.</p>",
                     "width": "100%",
                     "max_width": "normal",
                     "alignment": "left",

@@ -108,7 +108,7 @@
             "accordion_row_m39BHE": {
               "type": "_accordion-row",
               "settings": {
-                "heading": "What is the return policy?",
+                "heading": "What is Xinzuo Australia's return and refund policy?",
                 "open_by_default": false,
                 "icon": "none",
                 "width": 20
@@ -117,7 +117,7 @@
                 "text_DQRGqb": {
                   "type": "text",
                   "settings": {
-                    "text": "<p>Our goal is for every customer to be totally satisfied with their purchase. If this isn’t the case, let us know and we’ll do our best to work with you to make it right. </p>",
+                    "text": "<p>We want you to be confident in your purchase. Eligible items can be returned within <strong>30 days</strong> for a refund or exchange, provided they are unused and in original condition.</p><p>Start a return by emailing <a href=\"mailto:support@xinzuo.com.au\">support@xinzuo.com.au</a> with your order number. Our team will guide you through the next steps.</p>",
                     "width": "100%",
                     "max_width": "normal",
                     "alignment": "left",
@@ -147,7 +147,7 @@
             "accordion_row_dRHNjY": {
               "type": "_accordion-row",
               "settings": {
-                "heading": "Are any purchases final sale?",
+                "heading": "Are any Xinzuo products final sale or non-returnable?",
                 "open_by_default": false,
                 "icon": "none",
                 "width": 20
@@ -156,7 +156,7 @@
                 "text_ftKVcA": {
                   "type": "text",
                   "settings": {
-                    "text": "<p>We are unable to accept returns on certain items. These will be carefully marked before purchase.</p>",
+                    "text": "<p>Some items cannot be returned once customised or used. This includes <strong>engraved knives</strong> and products clearly marked as final sale at checkout.</p><p>If you are unsure before ordering, contact us and we will confirm eligibility for your specific product.</p>",
                     "width": "100%",
                     "max_width": "normal",
                     "alignment": "left",
@@ -187,7 +187,7 @@
               "type": "_accordion-row",
               "name": "t:names.accordion_dash_row",
               "settings": {
-                "heading": "When will I get my order?",
+                "heading": "How long does shipping take within Australia?",
                 "open_by_default": false,
                 "icon": "none",
                 "width": 20
@@ -197,7 +197,7 @@
                   "type": "text",
                   "name": "t:names.text",
                   "settings": {
-                    "text": "<p>We will work quickly to ship your order as soon as possible. Once your order has shipped, you will receive an email with further information. Delivery times vary depending on your location.</p>",
+                    "text": "<p>Orders are dispatched from our Australian warehouse as quickly as possible. You will receive a shipping confirmation email with tracking once your parcel leaves our facility.</p><p>Typical delivery times are <strong>2–7 business days</strong> depending on your location. Remote areas may take slightly longer. Express shipping may be available at checkout where offered.</p>",
                     "width": "100%",
                     "max_width": "normal",
                     "alignment": "left",
@@ -228,7 +228,7 @@
               "type": "_accordion-row",
               "name": "t:names.accordion_dash_row",
               "settings": {
-                "heading": "Where are your products manufactured?",
+                "heading": "Where are Xinzuo kitchen knives manufactured?",
                 "open_by_default": false,
                 "icon": "none",
                 "width": 20
@@ -238,7 +238,7 @@
                   "type": "text",
                   "name": "t:names.text",
                   "settings": {
-                    "text": "<p>Our products are manufactured both locally and globally. We carefully select our manufacturing partners to ensure our products are high quality and a fair value. </p>",
+                    "text": "<p>Xinzuo knives are forged and finished in <strong>Yangjiang, China</strong>—a region recognised globally for knife-making expertise spanning more than 1,400 years.</p><p>We partner with specialist manufacturers for steel selection, heat treatment, and quality control. Xinzuo Australia is the official distributor, with stock dispatched locally to customers across Australia.</p>",
                     "width": "100%",
                     "max_width": "normal",
                     "alignment": "left",
@@ -269,7 +269,7 @@
               "type": "_accordion-row",
               "name": "t:names.accordion_dash_row",
               "settings": {
-                "heading": "How much does shipping cost?",
+                "heading": "How much does shipping cost, and is free shipping available?",
                 "open_by_default": false,
                 "icon": "none",
                 "width": 20
@@ -279,7 +279,7 @@
                   "type": "text",
                   "name": "t:names.text",
                   "settings": {
-                    "text": "<p>Shipping is calculated based on your location and the items in your order. You will always know the shipping price before you purchase.</p>",
+                    "text": "<p>Shipping rates are calculated at checkout based on your delivery address and order weight. You will always see the full shipping cost before you pay.</p><p>We offer <strong>free standard shipping on Australian orders over $100</strong>. For orders below that threshold, a flat rate applies and is shown during checkout.</p>",
                     "width": "100%",
                     "max_width": "normal",
                     "alignment": "left",

@@ -4,7 +4,7 @@
 
 **Candidate:** Varun Rewadi · 22 · freelance developer (web design, web development, app development)
 
-I like building products, apps, and websites that people actually use — not demos that never ship. This repo is my timed work on the [TYICDI](https://apply.toldyouicoulddoit.com) Xinzuo theme challenge: theme fixes, UX polish, performance, and SEO on a production-shaped Shopify clone.
+I like building products, apps, or websites that can be of use to someone. This repo is my work on the [TYICDI](https://apply.toldyouicoulddoit.com) Xinzuo theme challenge: theme fixes, UX polish, performance, and SEO on a production-shaped Shopify clone.
 
 |                         |                                                                                                  |
 | ----------------------- | ------------------------------------------------------------------------------------------------ |
