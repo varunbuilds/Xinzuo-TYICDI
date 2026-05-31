@@ -1,11 +1,12 @@
 # Xinzuo Shopify clone — TYICDI hiring task
 
+(https://xinzuo-tyicdi.myshopify.com/) (password: ididit)
+
 ## Submission — Varun Rewadi
 
 **Candidate:** Varun Rewadi · 22 · freelance developer (web design, web development, app development)
 
 I like building products, apps, or websites that can be of use to someone. This repo is my work on the [TYICDI](https://apply.toldyouicoulddoit.com) Xinzuo theme challenge: theme fixes, UX polish, performance, and SEO on a production-shaped Shopify clone.
-
 
 |                                   |                                                                                                  |
 | --------------------------------- | ------------------------------------------------------------------------------------------------ |
@@ -14,7 +15,6 @@ I like building products, apps, or websites that can be of use to someone. This 
 | **Walkthrough (Loom)**            | [LOOM VIDEO](https://www.loom.com/share/233db0c193b24bad899e250320189aae)                        |
 | **Task notes**                    | `[NOTE.md](./NOTE.md)` — Tasks 1–9 (what I picked, why, what I did, what’s next)                 |
 | **Before / after**                | `before/` and `after/` folders (screenshots per task)                                            |
-
 
 ### What I focused on
 
@@ -25,4 +25,3 @@ Across nine tasks I prioritized **conversion paths and things reviewers feel imm
 I am a dedicated and focused individual. I'm fluent in english. I don't mind working long hours. I work towards building and developing stuff daily. I have experience and open to exploring new experiences as well.
 
 ---
-
